@@ -1,1 +1,63 @@
-h1 { font-family: Arial, Helvetica, sans-serif; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+html {
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  height: 100vh;
+}
+
+.bg-gradient-to-r {
+  background-image: linear-gradient(to right, #4f46e5, #06b6d4);
+}
+
+/* TV Servis Yönetim Sistemi Custom Styles */
+.section {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.nav-btn {
+  transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Card hover effects */
+.hover\\:shadow-md:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Loading animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
