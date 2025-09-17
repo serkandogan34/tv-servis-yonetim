@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV Servis Yönetim Sistemi - Teknik Kullanım Kılavuzu</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #e74c3c;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            border-left: 4px solid #e74c3c;
+            padding-left: 15px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #2c3e50;
+            margin-top: 25px;
+        }
+        .code {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .critical {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #e74c3c;
+            color: white;
+            font-weight: bold;
+        }
+        .endpoint {
+            background: #f8f9fa;
+            padding: 10px;
+            border-left: 3px solid #17a2b8;
+            margin: 10px 0;
+        }
+        .method {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: bold;
+            color: white;
+        }
+        .get { background-color: #28a745; }
+        .post { background-color: #007bff; }
+        .put { background-color: #ffc107; color: #000; }
+        .delete { background-color: #dc3545; }
+        .schema {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .tech-list {
+            list-style: none;
+            padding: 0;
+        }
+        .tech-list li {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .tech-list li:before {
+            content: "⚙️ ";
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TV SERVİS YÖNETİM SİSTEMİ</h1>
+        <h1>TEKNİK KULLANIM KILAVUZU</h1>
+        
+        <div class="info">
+            <strong>Versiyon:</strong> 1.0<br>
+            <strong>Tarih:</strong> Aralık 2024<br>
+            <strong>Framework:</strong> Hono + TypeScript<br>
+            <strong>Platform:</strong> Cloudflare Workers/Pages<br>
+            <strong>Veritabanı:</strong> Cloudflare D1 SQLite<br>
+            <strong>Repository:</strong> https://github.com/username/webapp
+        </div>
+
+        <h2>1. SİSTEM MİMARİSİ</h2>
+        
+        <h3>1.1 Teknoloji Yığını</h3>
+        <ul class="tech-list">
+            <li><strong>Backend Framework:</strong> Hono v4.x</li>
+            <li><strong>Runtime:</strong> Cloudflare Workers</li>
+            <li><strong>Veritabanı:</strong> Cloudflare D1 SQLite</li>
+            <li><strong>Authentication:</strong> JWT Tokens</li>
+            <li><strong>Payment Gateway:</strong> PayTR</li>
+            <li><strong>Frontend:</strong> Vanilla JavaScript + TailwindCSS</li>
+            <li><strong>Deployment:</strong> Cloudflare Pages</li>
+            <li><strong>Monitoring:</strong> Custom Health Dashboard</li>
+        </ul>
+
+        <h3>1.2 Proje Yapısı</h3>
+        <div class="code">webapp/
+├── src/
+│   ├── index.tsx              # Ana uygulama dosyası
+│   ├── utils/
+│   │   ├── auth.ts            # JWT ve şifre işlemleri
+│   │   ├── adminAuth.ts       # Admin kimlik doğrulama
+│   │   ├── paytr.ts           # PayTR entegrasyonu
+│   │   ├── logger.ts          # Gelişmiş log sistemi
+│   │   ├── database.ts        # Veritabanı optimizasyonu
+│   │   ├── monitoring.ts      # Performans izleme
+│   │   └── notifications.ts   # Email bildirim sistemi
+│   └── middleware/
+│       ├── validation.ts      # Giriş doğrulama
+│       └── errorHandler.ts    # Hata yönetimi
+├── migrations/                # Veritabanı migration'ları
+├── public/static/            # Frontend dosyaları
+├── docs/                     # Dokümantasyon
+└── wrangler.jsonc           # Cloudflare konfigürasyonu</div>
+
+        <h3>1.3 Veritabanı Şeması</h3>
+        <div class="schema">
+-- İşler tablosu
+CREATE TABLE isler (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    baslik TEXT NOT NULL,
+    aciklama TEXT,
+    il TEXT NOT NULL,
+    fiyat INTEGER NOT NULL,
+    musteri_adi TEXT,
+    musteri_telefon TEXT,
+    musteri_adres TEXT,
+    durum TEXT DEFAULT 'bekliyor',
+    satin_alan_id INTEGER,
+    olusturulma_tarihi DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Bayiler tablosu
+CREATE TABLE bayiler (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT UNIQUE NOT NULL,
+    sifre TEXT NOT NULL,
+    ad TEXT NOT NULL,
+    il TEXT NOT NULL,
+    kredi_bakiyesi INTEGER DEFAULT 0,
+    olusturulma_tarihi DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Ödemeler tablosu
+CREATE TABLE odemeler (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    bayi_id INTEGER NOT NULL,
+    tutar INTEGER NOT NULL,
+    tip TEXT NOT NULL,
+    durum TEXT DEFAULT 'bekliyor',
+    havale_makbuzu TEXT,
+    admin_notu TEXT,
+    olusturulma_tarihi DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (bayi_id) REFERENCES bayiler(id)
+);
+
+-- Admin kullanıcıları tablosu
+CREATE TABLE admin_users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);</div>
+
+        <h2>2. API ENDPOINT'LERİ</h2>
+        
+        <h3>2.1 Bayi Authentication</h3>
+        
+        <div class="endpoint">
+            <span class="method post">POST</span> <strong>/api/bayi/register</strong>
+            <p><strong>Açıklama:</strong> Yeni bayi kaydı</p>
+            <div class="code">{
+  "email": "bayi@example.com",
+  "sifre": "guclu_sifre",
+  "ad": "Bayi Adı",
+  "il": "Istanbul"
+}</div>
+        </div>
+
+        <div class="endpoint">
+            <span class="method post">POST</span> <strong>/api/bayi/login</strong>
+            <p><strong>Açıklama:</strong> Bayi girişi</p>
+            <div class="code">{
+  "email": "bayi@example.com",
+  "sifre": "sifre"
+}</div>
+            <p><strong>Dönüş:</strong> JWT token</p>
+        </div>
+
+        <h3>2.2 İş Yönetimi</h3>
+        
+        <div class="endpoint">
+            <span class="method get">GET</span> <strong>/api/isler/mevcut</strong>
+            <p><strong>Açıklama:</strong> Bayinin ilindeki mevcut işleri listeler</p>
+            <p><strong>Headers:</strong> Authorization: Bearer {token}</p>
+        </div>
+
+        <div class="endpoint">
+            <span class="method get">GET</span> <strong>/api/isler/satin-alinan</strong>
+            <p><strong>Açıklama:</strong> Bayinin satın aldığı işleri listeler</p>
+            <p><strong>Headers:</strong> Authorization: Bearer {token}</p>
+        </div>
+
+        <div class="endpoint">
+            <span class="method post">POST</span> <strong>/api/isler/satin-al/:id</strong>
+            <p><strong>Açıklama:</strong> İş satın alma (race condition korumalı)</p>
+            <p><strong>Headers:</strong> Authorization: Bearer {token}</p>
+        </div>
+
+        <h3>2.3 Ödeme İşlemleri</h3>
+        
+        <div class="endpoint">
+            <span class="method post">POST</span> <strong>/api/odeme/kredi-karti</strong>
+            <p><strong>Açıklama:</strong> PayTR ile kredi kartı ödemesi</p>
+            <div class="code">{
+  "tutar": 100
+}</div>
+        </div>
+
+        <div class="endpoint">
+            <span class="method post">POST</span> <strong>/api/odeme/banka-havalesi</strong>
+            <p><strong>Açıklama:</strong> Banka havalesi bildirimi</p>
+            <div class="code">{
+  "tutar": 100,
+  "havale_makbuzu": "base64_makbuz_data"
+}</div>
+        </div>
+
+        <div class="endpoint">
+            <span class="method post">POST</span> <strong>/api/paytr/callback</strong>
+            <p><strong>Açıklama:</strong> PayTR ödeme callback'i</p>
+            <p><strong>Not:</strong> PayTR tarafından otomatik çağrılır</p>
+        </div>
+
+        <h3>2.4 Admin Endpoints</h3>
+        
+        <div class="endpoint">
+            <span class="method get">GET</span> <strong>/api/admin/bekleyen-odemeler</strong>
+            <p><strong>Açıklama:</strong> Onay bekleyen ödemeleri listeler</p>
+            <p><strong>Headers:</strong> Authorization: Bearer {admin_token}</p>
+        </div>
+
+        <div class="endpoint">
+            <span class="method post">POST</span> <strong>/api/admin/odeme-onayla/:id</strong>
+            <p><strong>Açıklama:</strong> Ödemeyi onaylar</p>
+            <div class="code">{
+  "admin_notu": "Ödeme onaylandı"
+}</div>
+        </div>
+
+        <h3>2.5 N8N Webhook</h3>
+        
+        <div class="endpoint">
+            <span class="method post">POST</span> <strong>/api/n8n/webhook</strong>
+            <p><strong>Açıklama:</strong> N8N'den gelen iş verilerini işler</p>
+            <div class="code">{
+  "baslik": "TV Ekran Değişimi",
+  "aciklama": "55 inç TV ekranı",
+  "il": "Istanbul",
+  "fiyat": 50,
+  "musteri_adi": "Ahmet Yılmaz",
+  "musteri_telefon": "05001234567",
+  "musteri_adres": "Kadıköy/İstanbul"
+}</div>
+        </div>
+
+        <h3>2.6 Monitoring & Health Check</h3>
+        
+        <div class="endpoint">
+            <span class="method get">GET</span> <strong>/api/health</strong>
+            <p><strong>Açıklama:</strong> Sistem sağlık durumu (JSON)</p>
+        </div>
+
+        <div class="endpoint">
+            <span class="method get">GET</span> <strong>/dashboard</strong>
+            <p><strong>Açıklama:</strong> Görsel sistem izleme dashboard'u</p>
+        </div>
+
+        <h2>3. GELİŞTİRME ORTAMI KURULUMU</h2>
+        
+        <h3>3.1 Gereksinimler</h3>
+        <ul class="tech-list">
+            <li>Node.js v18+</li>
+            <li>npm veya yarn</li>
+            <li>Cloudflare hesabı</li>
+            <li>Wrangler CLI</li>
+        </ul>
+
+        <h3>3.2 Kurulum Adımları</h3>
+        <div class="code"># Repository'yi klonla
+git clone https://github.com/username/webapp.git
+cd webapp
+
+# Bağımlılıkları yükle
+npm install
+
+# Wrangler'ı global olarak yükle
+npm install -g wrangler
+
+# Cloudflare'e giriş yap
+wrangler login
+
+# D1 veritabanı oluştur
+wrangler d1 create webapp-production
+
+# Migration'ları çalıştır
+wrangler d1 migrations apply webapp-production --local
+
+# Local development başlat
+npm run build
+npm run dev</div>
+
+        <h3>3.3 Ortam Değişkenleri</h3>
+        <div class="code"># .dev.vars dosyası
+JWT_SECRET=your-jwt-secret-key
+ADMIN_JWT_SECRET=your-admin-jwt-secret
+PAYTR_MERCHANT_ID=your-paytr-merchant-id
+PAYTR_MERCHANT_KEY=your-paytr-merchant-key
+PAYTR_MERCHANT_SALT=your-paytr-merchant-salt
+EMAIL_API_KEY=your-email-api-key
+EMAIL_FROM=noreply@yourdomain.com</div>
+
+        <h2>4. DEPLOYMENT</h2>
+        
+        <h3>4.1 Cloudflare Pages Deployment</h3>
+        <div class="code"># Projeyi build et
+npm run build
+
+# Cloudflare Pages'e deploy et
+wrangler pages deploy dist --project-name webapp
+
+# Production migration'ları çalıştır
+wrangler d1 migrations apply webapp-production</div>
+
+        <h3>4.2 Secrets Yönetimi</h3>
+        <div class="code"># Production secrets'ları ayarla
+wrangler pages secret put JWT_SECRET --project-name webapp
+wrangler pages secret put ADMIN_JWT_SECRET --project-name webapp
+wrangler pages secret put PAYTR_MERCHANT_ID --project-name webapp
+wrangler pages secret put PAYTR_MERCHANT_KEY --project-name webapp
+wrangler pages secret put PAYTR_MERCHANT_SALT --project-name webapp</div>
+
+        <h2>5. VERİTABANI YÖNETİMİ</h2>
+        
+        <h3>5.1 Migration Sistemi</h3>
+        <div class="code"># Yeni migration oluştur
+echo "ALTER TABLE bayiler ADD COLUMN telefon TEXT;" > migrations/0004_add_phone.sql
+
+# Local'da uygula
+wrangler d1 migrations apply webapp-production --local
+
+# Production'da uygula
+wrangler d1 migrations apply webapp-production</div>
+
+        <h3>5.2 Veritabanı Backup</h3>
+        <div class="code"># Local veritabanını backup al
+wrangler d1 execute webapp-production --local --command=".backup backup.db"
+
+# Production backup (SQL dump)
+wrangler d1 execute webapp-production --command=".dump" > backup.sql</div>
+
+        <h2>6. GÜVENLİK</h2>
+        
+        <h3>6.1 Authentication & Authorization</h3>
+        <div class="critical">
+            <strong>Kritik Güvenlik Önlemleri:</strong><br>
+            • JWT secret'ları güçlü ve unique olmalı<br>
+            • Şifreler bcrypt ile hash'lenmeli (şu anda geçici bypass var)<br>
+            • Rate limiting aktif<br>
+            • Input validation her endpoint'te uygulanmalı<br>
+            • HTTPS zorunlu (Cloudflare otomatik sağlar)
+        </div>
+
+        <h3>6.2 Race Condition Koruması</h3>
+        <div class="code">// İş satın alma race condition koruması
+const checkJob = await db.prepare(
+    "SELECT * FROM isler WHERE id = ? AND durum = 'bekliyor'"
+).bind(jobId).first();
+
+if (!checkJob) {
+    throw new Error('İş bulunamadı veya zaten satıldı');
+}
+
+// Double-check locking pattern kullanılıyor</div>
+
+        <h2>7. MONITORING VE LOGGING</h2>
+        
+        <h3>7.1 Log Seviyeleri</h3>
+        <table>
+            <tr>
+                <th>Level</th>
+                <th>Açıklama</th>
+                <th>Örnek</th>
+            </tr>
+            <tr>
+                <td>ERROR</td>
+                <td>Sistem hataları</td>
+                <td>Database bağlantı hatası</td>
+            </tr>
+            <tr>
+                <td>WARN</td>
+                <td>Potansiyel sorunlar</td>
+                <td>Yavaş response time</td>
+            </tr>
+            <tr>
+                <td>INFO</td>
+                <td>Genel bilgi</td>
+                <td>Başarılı ödeme</td>
+            </tr>
+            <tr>
+                <td>DEBUG</td>
+                <td>Detaylı debug bilgisi</td>
+                <td>API çağrı detayları</td>
+            </tr>
+        </table>
+
+        <h3>7.2 Performance Metrikleri</h3>
+        <div class="code">// Monitoring middleware örneği
+app.use('/api/*', async (c, next) => {
+    const start = Date.now();
+    
+    await next();
+    
+    const duration = Date.now() - start;
+    logger.info('API_CALL', {
+        method: c.req.method,
+        url: c.req.url,
+        status: c.res.status,
+        duration: `${duration}ms`
+    });
+});</div>
+
+        <h2>8. TESTİNG</h2>
+        
+        <h3>8.1 API Testing</h3>
+        <div class="code"># Bayi login test
+curl -X POST http://localhost:3000/api/bayi/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@test.com","sifre":"test123"}'
+
+# İş listesi test (token gerekli)
+curl -X GET http://localhost:3000/api/isler/mevcut \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+
+# Health check test
+curl http://localhost:3000/api/health</div>
+
+        <h3>8.2 Load Testing</h3>
+        <div class="code"># Artillery ile load test
+npm install -g artillery
+artillery quick --count 100 --num 10 http://localhost:3000/api/health</div>
+
+        <h2>9. SORUN GİDERME</h2>
+        
+        <h3>9.1 Yaygın Sorunlar</h3>
+        <table>
+            <tr>
+                <th>Sorun</th>
+                <th>Sebep</th>
+                <th>Çözüm</th>
+            </tr>
+            <tr>
+                <td>D1 bağlantı hatası</td>
+                <td>Yanlış binding</td>
+                <td>wrangler.jsonc'yi kontrol et</td>
+            </tr>
+            <tr>
+                <td>JWT verification failed</td>
+                <td>Yanlış secret</td>
+                <td>Environment variable'ları kontrol et</td>
+            </tr>
+            <tr>
+                <td>PayTR callback çalışmıyor</td>
+                <td>Hash mismatch</td>
+                <td>Merchant key/salt kontrolü</td>
+            </tr>
+            <tr>
+                <td>CORS hatası</td>
+                <td>Yanlış origin</td>
+                <td>CORS middleware ayarları</td>
+            </tr>
+        </table>
+
+        <h3>9.2 Debug Komutları</h3>
+        <div class="code"># Wrangler logs
+wrangler pages deployment tail --project-name webapp
+
+# Local D1 console
+wrangler d1 execute webapp-production --local --command="SELECT * FROM bayiler;"
+
+# Health check detaylı
+curl -v http://localhost:3000/api/health | jq</div>
+
+        <h2>10. GELİŞTİRME ROADMAP</h2>
+        
+        <h3>10.1 Öncelikli İyileştirmeler</h3>
+        <ul class="tech-list">
+            <li><strong>Bcrypt Entegrasyonu:</strong> Gerçek şifre hashleme</li>
+            <li><strong>Email Service:</strong> Sendgrid/Mailgun entegrasyonu</li>
+            <li><strong>Push Notifications:</strong> Real-time bildirimler</li>
+            <li><strong>File Upload:</strong> R2 ile dosya yükleme</li>
+            <li><strong>Advanced Analytics:</strong> Detaylı raporlama</li>
+        </ul>
+
+        <h3>10.2 Potansiyel Yeni Özellikler</h3>
+        <ul class="tech-list">
+            <li><strong>Mobile App:</strong> React Native uygulama</li>
+            <li><strong>Real-time Chat:</strong> Bayi-müşteri iletişim</li>
+            <li><strong>GPS Tracking:</strong> Servis takibi</li>
+            <li><strong>Invoice System:</strong> Otomatik fatura oluşturma</li>
+            <li><strong>Multi-tenancy:</strong> Şirket bazlı ayrım</li>
+        </ul>
+
+        <h2>11. PERFORMANS OPTİMİZASYONU</h2>
+        
+        <h3>11.1 Database Optimizasyonu</h3>
+        <div class="code"># Index'ler
+CREATE INDEX idx_isler_il ON isler(il);
+CREATE INDEX idx_isler_durum ON isler(durum);
+CREATE INDEX idx_bayiler_email ON bayiler(email);
+CREATE INDEX idx_odemeler_bayi_id ON odemeler(bayi_id);</div>
+
+        <h3>11.2 Caching Stratejisi</h3>
+        <div class="code">// KV Cache örneği (gelecek implementasyon)
+const cacheKey = `jobs:${il}:${Date.now().toString().slice(0, -4)}`;
+const cached = await env.KV.get(cacheKey);
+
+if (cached) {
+    return JSON.parse(cached);
+}
+
+// Cache miss, fetch from DB and cache
+const jobs = await fetchJobsFromDB(il);
+await env.KV.put(cacheKey, JSON.stringify(jobs), { expirationTtl: 60 });
+
+return jobs;</div>
+
+        <div class="critical">
+            <strong>Önemli Not:</strong> Bu dokümantasyon sistemin mevcut durumunu yansıtır. Geliştirme sürecinde değişiklikler olabilir. Her deployment sonrası güncellemeyi unutmayın.
+        </div>
+
+        <hr style="margin: 40px 0;">
+        <div style="text-align: center; color: #666; font-size: 12px;">
+            TV Servis Yönetim Sistemi - Teknik Kullanım Kılavuzu v1.0<br>
+            © 2024 - Geliştiriciler ve Sistem Yöneticileri İçin
+        </div>
+    </div>
+</body>
+</html>

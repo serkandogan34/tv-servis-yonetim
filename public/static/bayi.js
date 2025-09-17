@@ -490,14 +490,452 @@ function updateJobStatus(jobId) {
 
 // Open credit modal
 function openCreditModal() {
-    // TODO: Kredi yükleme modalı (PayTR entegrasyonu)
-    alert('Kredi yükleme özelliği Faz 3\'te PayTR ile implementasyona eklenecek');
+    // Create modal HTML
+    const modalHTML = `
+        <div id="creditModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold">
+                        <i class="fas fa-credit-card mr-2"></i> Kredi Yükle
+                    </h3>
+                    <button onclick="closeCreditModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <div class="mb-4">
+                    <p class="text-sm text-gray-600 mb-2">Mevcut Bakiye:</p>
+                    <p class="text-2xl font-bold text-green-600">${(krediBilgileri.kredi_bakiye || 0)} ₺</p>
+                </div>
+                
+                <form id="creditForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Yüklenecek Tutar (TL)
+                        </label>
+                        <div class="flex space-x-2 mb-3">
+                            <button type="button" onclick="setCreditAmount(100)" class="flex-1 bg-gray-200 hover:bg-gray-300 py-2 px-3 rounded text-sm">
+                                100 ₺
+                            </button>
+                            <button type="button" onclick="setCreditAmount(250)" class="flex-1 bg-gray-200 hover:bg-gray-300 py-2 px-3 rounded text-sm">
+                                250 ₺
+                            </button>
+                            <button type="button" onclick="setCreditAmount(500)" class="flex-1 bg-gray-200 hover:bg-gray-300 py-2 px-3 rounded text-sm">
+                                500 ₺
+                            </button>
+                            <button type="button" onclick="setCreditAmount(1000)" class="flex-1 bg-gray-200 hover:bg-gray-300 py-2 px-3 rounded text-sm">
+                                1000 ₺
+                            </button>
+                        </div>
+                        <input 
+                            type="number" 
+                            id="creditAmount" 
+                            name="amount" 
+                            min="100" 
+                            max="10000" 
+                            step="10"
+                            required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Tutar girin (min: 100 ₺)"
+                        />
+                        <p class="text-xs text-gray-500 mt-1">Minimum: 100 ₺ - Maksimum: 10.000 ₺</p>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-3 rounded">
+                        <div class="flex items-start space-x-2">
+                            <i class="fas fa-info-circle text-blue-500 mt-0.5"></i>
+                            <div class="text-sm text-blue-700">
+                                <p class="font-medium">PayTR Güvenli Ödeme</p>
+                                <p>Kredi kartınız ile güvenli ödeme yapabilirsiniz. Ödeme sonrası bakiyeniz otomatik güncellenecektir.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-3">
+                        <button type="button" onclick="closeCreditModal()" class="flex-1 bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded">
+                            İptal
+                        </button>
+                        <button type="submit" class="flex-1 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded" id="payBtn">
+                            <i class="fas fa-credit-card mr-1"></i> Ödeme Yap
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
+    
+    // Add modal to body
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Add form submit handler
+    document.getElementById('creditForm').addEventListener('submit', handleCreditPayment);
+}
+
+// Close credit modal
+function closeCreditModal() {
+    const modal = document.getElementById('creditModal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+// Set credit amount
+function setCreditAmount(amount) {
+    document.getElementById('creditAmount').value = amount;
+}
+
+// Handle credit payment
+async function handleCreditPayment(e) {
+    e.preventDefault();
+    
+    const amount = parseInt(document.getElementById('creditAmount').value);
+    const payBtn = document.getElementById('payBtn');
+    
+    if (!amount || amount < 100) {
+        alert('Lütfen geçerli bir tutar girin (minimum 100 ₺)');
+        return;
+    }
+    
+    if (amount > 10000) {
+        alert('Maksimum kredi yükleme tutarı 10.000 ₺');
+        return;
+    }
+    
+    try {
+        // Loading state
+        payBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Ödeme Hazırlanıyor...';
+        payBtn.disabled = true;
+        
+        console.log('PayTR ödeme başlatılıyor...', amount);
+        
+        const response = await makeAuthRequest('/api/payment/paytr/init', {
+            method: 'POST',
+            data: { amount: amount }
+        });
+        
+        if (response.data.success) {
+            // Close modal
+            closeCreditModal();
+            
+            // Show payment info
+            showSuccess(`${amount} ₺ kredi yükleme işlemi başlatıldı. PayTR ödeme sayfasına yönlendiriliyorsunuz...`);
+            
+            // Test mode - Show payment details
+            if (response.data.paytr_request) {
+                console.log('PayTR Test Request:', response.data.paytr_request);
+                
+                // Test için ödeme simülasyonu
+                const confirmPayment = confirm(
+                    `TEST MODE: PayTR Ödeme Simülasyonu\\n\\n` +
+                    `Tutar: ${amount} ₺\\n` +
+                    `Merchant OID: ${response.data.merchant_oid}\\n\\n` +
+                    `Bu test ödemesini başarılı olarak işaretlemek istiyor musunuz?`
+                );
+                
+                if (confirmPayment) {
+                    // Test callback simülasyonu
+                    await simulatePayTRCallback(response.data.merchant_oid, amount);
+                } else {
+                    showError('Test ödemesi iptal edildi');
+                }
+            } else {
+                // Production mode - Redirect to PayTR
+                window.open(response.data.payment_url, '_blank', 'width=800,height=600');
+                
+                // Refresh data after payment (user will manually refresh)
+                setTimeout(() => {
+                    loadBayiDashboard();
+                    loadBayiCredits();
+                }, 5000);
+            }
+        }
+    } catch (error) {
+        console.error('Credit payment error:', error);
+        const errorMessage = error.response?.data?.error || 'Ödeme işlemi başlatılamadı';
+        showError(errorMessage);
+    } finally {
+        // Reset button
+        if (payBtn) {
+            payBtn.innerHTML = '<i class="fas fa-credit-card mr-1"></i> Ödeme Yap';
+            payBtn.disabled = false;
+        }
+    }
+}
+
+// Test için PayTR callback simülasyonu
+async function simulatePayTRCallback(merchantOid, amount) {
+    try {
+        console.log('Test PayTR callback simülasyonu başlatılıyor...');
+        
+        // Simulated callback data
+        const callbackData = new FormData();
+        callbackData.append('merchant_oid', merchantOid);
+        callbackData.append('status', 'success');
+        callbackData.append('total_amount', (amount * 100).toString()); // Kuruş cinsinden
+        callbackData.append('hash', 'test_hash_simulation'); // Test hash
+        
+        // Call callback endpoint
+        const response = await fetch('/api/payment/paytr/callback', {
+            method: 'POST',
+            body: callbackData
+        });
+        
+        if (response.ok) {
+            showSuccess(`Test ödemesi başarılı! ${amount} ₺ kredi yüklendi.`);
+            
+            // Refresh data
+            await loadBayiDashboard();
+            await loadBayiCredits();
+            await loadBayiProfile();
+        } else {
+            showError('Test callback başarısız');
+        }
+    } catch (error) {
+        console.error('Test callback error:', error);
+        showError('Test callback hatası');
+    }
 }
 
 // Request transfer
 function requestTransfer() {
-    // TODO: Havale bildirimi modalı
-    alert('Havale bildirimi özelliği geliştirilecek');
+    // Get bank account info first
+    showBankAccountInfo();
+}
+
+// Show bank account info and transfer form
+function showBankAccountInfo() {
+    const modalHTML = `
+        <div id="transferModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg p-6 w-full max-w-lg mx-4 max-h-screen overflow-y-auto">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold">
+                        <i class="fas fa-university mr-2"></i> Havale ile Kredi Yükleme
+                    </h3>
+                    <button onclick="closeTransferModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <!-- Bank Account Info -->
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                    <h4 class="font-semibold text-blue-800 mb-3">
+                        <i class="fas fa-info-circle mr-1"></i> Havale Bilgileri
+                    </h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Hesap Sahibi:</span>
+                            <span class="font-medium">TV Servis Yönetim A.Ş.</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">IBAN:</span>
+                            <span class="font-mono font-medium">TR123456789012345678901234</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Hesap No:</span>
+                            <span class="font-mono font-medium">1234567890</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded text-sm">
+                        <p class="font-medium text-yellow-800 mb-1">
+                            <i class="fas fa-exclamation-triangle mr-1"></i> Önemli Not:
+                        </p>
+                        <p class="text-yellow-700">
+                            Havale açıklamasına mutlaka "<strong>${bayiInfo?.bayi_kodu || bayiInfo?.id}</strong>" bayi kodunuzu yazın.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Transfer Notification Form -->
+                <div class="border-t pt-4">
+                    <h4 class="font-semibold mb-3">Havale Bildirimi</h4>
+                    <p class="text-sm text-gray-600 mb-4">
+                        Havaleyi yaptıktan sonra aşağıdaki formu doldurarak bize bildirin. 
+                        Admin onayından sonra kredi bakiyeniz güncellenecektir.
+                    </p>
+                    
+                    <form id="transferForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Havale Tutarı (TL) <span class="text-red-500">*</span>
+                            </label>
+                            <input 
+                                type="number" 
+                                id="transferAmount" 
+                                name="amount" 
+                                min="100" 
+                                step="1"
+                                required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Örnek: 500"
+                            />
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Havale Tarihi <span class="text-red-500">*</span>
+                            </label>
+                            <input 
+                                type="date" 
+                                id="transferDate" 
+                                name="transfer_date" 
+                                required
+                                max="${new Date().toISOString().split('T')[0]}"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Referans Numarası / İşlem No <span class="text-red-500">*</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="transferReference" 
+                                name="reference" 
+                                required
+                                maxlength="50"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Bankadan aldığınız referans/işlem numarası"
+                            />
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Açıklama (İsteğe bağlı)
+                            </label>
+                            <textarea 
+                                id="transferDescription" 
+                                name="description" 
+                                rows="3"
+                                maxlength="200"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Ek bilgiler (varsa)"
+                            ></textarea>
+                        </div>
+                        
+                        <div class="flex space-x-3">
+                            <button type="button" onclick="closeTransferModal()" class="flex-1 bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded">
+                                İptal
+                            </button>
+                            <button type="submit" class="flex-1 bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded" id="transferBtn">
+                                <i class="fas fa-paper-plane mr-1"></i> Bildirimi Gönder
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Add modal to body
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Set today as default date
+    document.getElementById('transferDate').value = new Date().toISOString().split('T')[0];
+    
+    // Add form submit handler
+    document.getElementById('transferForm').addEventListener('submit', handleTransferNotification);
+}
+
+// Close transfer modal
+function closeTransferModal() {
+    const modal = document.getElementById('transferModal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+// Handle transfer notification
+async function handleTransferNotification(e) {
+    e.preventDefault();
+    
+    const amount = parseFloat(document.getElementById('transferAmount').value);
+    const transferDate = document.getElementById('transferDate').value;
+    const reference = document.getElementById('transferReference').value.trim();
+    const description = document.getElementById('transferDescription').value.trim();
+    const transferBtn = document.getElementById('transferBtn');
+    
+    // Validations
+    if (!amount || amount < 100) {
+        alert('Minimum havale tutarı 100 TL olmalıdır');
+        return;
+    }
+    
+    if (!transferDate) {
+        alert('Havale tarihini seçin');
+        return;
+    }
+    
+    if (!reference) {
+        alert('Referans numarasını girin');
+        return;
+    }
+    
+    try {
+        // Loading state
+        transferBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Bildiriliyor...';
+        transferBtn.disabled = true;
+        
+        console.log('Havale bildirimi gönderiliyor...', { amount, reference });
+        
+        const response = await makeAuthRequest('/api/payment/transfer/notify', {
+            method: 'POST',
+            data: {
+                amount: amount,
+                reference: reference,
+                description: description,
+                transfer_date: transferDate
+            }
+        });
+        
+        if (response.data.success) {
+            closeTransferModal();
+            
+            showSuccess(response.data.message);
+            
+            // Show notification details
+            setTimeout(() => {
+                alert(`✅ Havale Bildirimi Alındı!\\n\\n` +
+                      `Referans: ${response.data.reference}\\n` +
+                      `Tutar: ${response.data.amount} ₺\\n` +
+                      `Durum: ${response.data.status}\\n\\n` +
+                      `Admin onayından sonra kredi bakiyeniz güncellenecektir.`);
+            }, 1000);
+            
+            // Refresh data
+            await loadBayiCredits();
+        }
+    } catch (error) {
+        console.error('Transfer notification error:', error);
+        const errorMessage = error.response?.data?.error || 'Havale bildirimi gönderilemedi';
+        showError(errorMessage);
+    } finally {
+        // Reset button
+        if (transferBtn) {
+            transferBtn.innerHTML = '<i class="fas fa-paper-plane mr-1"></i> Bildirimi Gönder';
+            transferBtn.disabled = false;
+        }
+    }
+}
+
+// Check transfer status
+async function checkTransferStatus(reference) {
+    try {
+        const response = await makeAuthRequest(`/api/payment/transfer/status/${reference}`);
+        
+        const transfer = response.data;
+        alert(`Havale Durumu\\n\\n` +
+              `Referans: ${transfer.reference}\\n` +
+              `Tutar: ${transfer.amount} ₺\\n` +
+              `Durum: ${transfer.status_text}\\n` +
+              `Tarih: ${new Date(transfer.created_at).toLocaleString('tr-TR')}`);
+              
+    } catch (error) {
+        console.error('Transfer status error:', error);
+        const errorMessage = error.response?.data?.error || 'Havale durumu sorgulanamadı';
+        showError(errorMessage);
+    }
 }
 
 // Make authenticated request
@@ -586,5 +1024,9 @@ window.purchaseJob = purchaseJob;
 window.viewJobDetails = viewJobDetails;
 window.updateJobStatus = updateJobStatus;
 window.openCreditModal = openCreditModal;
+window.closeCreditModal = closeCreditModal;
+window.setCreditAmount = setCreditAmount;
 window.requestTransfer = requestTransfer;
+window.closeTransferModal = closeTransferModal;
+window.checkTransferStatus = checkTransferStatus;
 window.logout = logout;

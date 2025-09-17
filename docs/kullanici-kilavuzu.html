@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV Servis Yönetim Sistemi - Kullanıcı Kullanım Kılavuzu</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #2c3e50;
+            margin-top: 25px;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .info {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .steps {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .step {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-left: 3px solid #3498db;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        .screenshot {
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        .url {
+            background: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .feature-list li:before {
+            content: "✓ ";
+            color: #27ae60;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TV SERVİS YÖNETİM SİSTEMİ</h1>
+        <h1>KULLANICI KULLANIM KILAVUZU</h1>
+        
+        <div class="info">
+            <strong>Versiyon:</strong> 1.0<br>
+            <strong>Tarih:</strong> Aralık 2024<br>
+            <strong>Platform:</strong> Cloudflare Pages<br>
+            <strong>Sistem URL'si:</strong> <span class="url">https://webapp.pages.dev</span>
+        </div>
+
+        <h2>1. SİSTEM HAKKINDA</h2>
+        
+        <h3>1.1 Genel Bakış</h3>
+        <p>TV Servis Yönetim Sistemi, Türkiye genelindeki 81 ilde TV ekran değişimi hizmetlerini yöneten kapsamlı bir platformdur. Sistem, iş takibi, bayi yönetimi, ödeme işlemleri ve admin kontrolü sağlar.</p>
+        
+        <h3>1.2 Ana Özellikler</h3>
+        <ul class="feature-list">
+            <li>81 il bazında iş dağıtımı</li>
+            <li>Kredi sistemi ile iş satın alma</li>
+            <li>WhatsApp ve form entegrasyonu (N8N)</li>
+            <li>PayTR ve banka havalesi ödeme seçenekleri</li>
+            <li>Real-time sistem durumu takibi</li>
+            <li>Admin onay sistemi</li>
+            <li>Email bildirim sistemi</li>
+        </ul>
+
+        <h2>2. BAYİ KULLANICISI REHBERİ</h2>
+        
+        <h3>2.1 Giriş Yapma</h3>
+        <div class="steps">
+            <div class="step">
+                <strong>Adım 1:</strong> Bayi paneline erişim: <span class="url">https://webapp.pages.dev/bayi</span>
+            </div>
+            <div class="step">
+                <strong>Adım 2:</strong> Email adresinizi girin
+            </div>
+            <div class="step">
+                <strong>Adım 3:</strong> Şifrenizi girin
+            </div>
+            <div class="step">
+                <strong>Adım 4:</strong> "Giriş Yap" butonuna tıklayın
+            </div>
+        </div>
+
+        <div class="warning">
+            <strong>Önemli:</strong> Şifrenizi kimseyle paylaşmayın. Güvenlik için düzenli olarak değiştirin.
+        </div>
+
+        <h3>2.2 Dashboard Kullanımı</h3>
+        <p>Giriş yaptıktan sonra ana dashboard'da şu bilgileri görebilirsiniz:</p>
+        
+        <table>
+            <tr>
+                <th>Bölüm</th>
+                <th>Açıklama</th>
+            </tr>
+            <tr>
+                <td>Kredi Bakiyesi</td>
+                <td>Mevcut kredi miktarınız</td>
+            </tr>
+            <tr>
+                <td>Aktif İşler</td>
+                <td>Satın aldığınız işlerin listesi</td>
+            </tr>
+            <tr>
+                <td>Mevcut İşler</td>
+                <td>İlinizde bulunan satın alınabilir işler</td>
+            </tr>
+            <tr>
+                <td>Ödeme Geçmişi</td>
+                <td>Yaptığınız ödemelerin kayıtları</td>
+            </tr>
+        </table>
+
+        <h3>2.3 İş Satın Alma Süreci</h3>
+        <div class="steps">
+            <div class="step">
+                <strong>Adım 1:</strong> "Mevcut İşler" bölümünden istediğiniz işi seçin
+            </div>
+            <div class="step">
+                <strong>Adım 2:</strong> İş detaylarını inceleyin (fiyat, açıklama vb.)
+            </div>
+            <div class="step">
+                <strong>Adım 3:</strong> Yeterli kredi bakiyeniz olduğundan emin olun
+            </div>
+            <div class="step">
+                <strong>Adım 4:</strong> "Satın Al" butonuna tıklayın
+            </div>
+            <div class="step">
+                <strong>Adım 5:</strong> Satın alma işlemi tamamlandıktan sonra müşteri iletişim bilgilerini görebilirsiniz
+            </div>
+        </div>
+
+        <div class="info">
+            <strong>Not:</strong> İşler ilk ödeyen alır kuralına göre satılır. Hızlı olmanız önemlidir!
+        </div>
+
+        <h3>2.4 Kredi Yükleme</h3>
+        
+        <h4>2.4.1 Kredi Kartı ile Ödeme (PayTR)</h4>
+        <div class="steps">
+            <div class="step">
+                <strong>Adım 1:</strong> "Kredi Yükle" butonuna tıklayın
+            </div>
+            <div class="step">
+                <strong>Adım 2:</strong> Yüklemek istediğiniz tutarı girin
+            </div>
+            <div class="step">
+                <strong>Adım 3:</strong> "Kredi Kartı ile Öde" seçeneğini seçin
+            </div>
+            <div class="step">
+                <strong>Adım 4:</strong> PayTR sayfasına yönlendirileceksiniz
+            </div>
+            <div class="step">
+                <strong>Adım 5:</strong> Kredi kartı bilgilerinizi girin ve ödemeyi tamamlayın
+            </div>
+        </div>
+
+        <h4>2.4.2 Banka Havalesi ile Ödeme</h4>
+        <div class="steps">
+            <div class="step">
+                <strong>Adım 1:</strong> "Kredi Yükle" butonuna tıklayın
+            </div>
+            <div class="step">
+                <strong>Adım 2:</strong> "Banka Havalesi" seçeneğini seçin
+            </div>
+            <div class="step">
+                <strong>Adım 3:</strong> Sistem size banka bilgilerini gösterecek
+            </div>
+            <div class="step">
+                <strong>Adım 4:</strong> Havale/EFT işlemini gerçekleştirin
+            </div>
+            <div class="step">
+                <strong>Adım 5:</strong> Havale makbuzunu sisteme yükleyin
+            </div>
+            <div class="step">
+                <strong>Adım 6:</strong> Admin onayını bekleyin (genellikle 1-2 iş günü)
+            </div>
+        </div>
+
+        <h2>3. ADMİN KULLANICISI REHBERİ</h2>
+        
+        <h3>3.1 Admin Panel Erişimi</h3>
+        <div class="steps">
+            <div class="step">
+                <strong>Adım 1:</strong> Admin paneline erişim: <span class="url">https://webapp.pages.dev/admin</span>
+            </div>
+            <div class="step">
+                <strong>Adım 2:</strong> Admin kullanıcı adınızı girin
+            </div>
+            <div class="step">
+                <strong>Adım 3:</strong> Admin şifrenizi girin
+            </div>
+            <div class="step">
+                <strong>Adım 4:</strong> "Admin Girişi" butonuna tıklayın
+            </div>
+        </div>
+
+        <h3>3.2 Ödeme Onayları</h3>
+        <p>Admin panelinde bekleyen banka havalesi onaylarını yönetebilirsiniz:</p>
+        
+        <div class="steps">
+            <div class="step">
+                <strong>Adım 1:</strong> "Bekleyen Ödemeler" bölümüne gidin
+            </div>
+            <div class="step">
+                <strong>Adım 2:</strong> Her ödeme için makbuz ve detayları inceleyin
+            </div>
+            <div class="step">
+                <strong>Adım 3:</strong> Ödeme doğru ise "Onayla" butonuna tıklayın
+            </div>
+            <div class="step">
+                <strong>Adım 4:</strong> Ödeme yanlış ise "Reddet" butonuna tıklayın ve açıklama yazın
+            </div>
+        </div>
+
+        <h3>3.3 Sistem Durumu İzleme</h3>
+        <p>Sistem sağlığını dashboard üzerinden takip edebilirsiniz:</p>
+        <div class="screenshot">
+            <strong>Sağlık Dashboard'u:</strong> <span class="url">https://webapp.pages.dev/dashboard</span>
+        </div>
+
+        <table>
+            <tr>
+                <th>Gösterge</th>
+                <th>Anlamı</th>
+                <th>Müdahale</th>
+            </tr>
+            <tr>
+                <td>🟢 Yeşil LED</td>
+                <td>Sistem normal çalışıyor</td>
+                <td>Müdahale gerekmiyor</td>
+            </tr>
+            <tr>
+                <td>🔴 Kırmızı LED</td>
+                <td>Sorun var</td>
+                <td>Hemen kontrol edin</td>
+            </tr>
+            <tr>
+                <td>Response Time > 1000ms</td>
+                <td>Yavaş performans</td>
+                <td>Sistem optimizasyonu gerekli</td>
+            </tr>
+        </table>
+
+        <h2>4. MOBIL KULLANIM</h2>
+        
+        <h3>4.1 Mobil Erişim</h3>
+        <p>Sistem mobil cihazlardan da kullanılabilir. Tüm özellikler mobil uyumludur.</p>
+        
+        <div class="info">
+            <strong>Tavsiye:</strong> Hızlı erişim için tarayıcınızın "Ana ekrana ekle" özelliğini kullanın.
+        </div>
+
+        <h2>5. GÜVENLİK VE EN İYİ UYGULAMALAR</h2>
+        
+        <h3>5.1 Güvenlik Tavsiyeleri</h3>
+        <ul class="feature-list">
+            <li>Şifrenizi düzenli olarak değiştirin</li>
+            <li>Şifrenizi başkalarıyla paylaşmayın</li>
+            <li>Güvenli internet bağlantısı kullanın</li>
+            <li>Tarayıcıdan çıkarken oturumu kapatın</li>
+            <li>Şüpheli aktivite durumunda hemen bildirin</li>
+        </ul>
+
+        <h3>5.2 Sistem Bakımı</h3>
+        <p>Sistem düzenli bakım dönemlerinde geçici olarak erişilemeyebilir. Bakım duyuruları önceden yapılır.</p>
+
+        <h2>6. SORUN GİDERME</h2>
+        
+        <table>
+            <tr>
+                <th>Sorun</th>
+                <th>Olası Sebep</th>
+                <th>Çözüm</th>
+            </tr>
+            <tr>
+                <td>Giriş yapamıyorum</td>
+                <td>Yanlış şifre</td>
+                <td>Şifre sıfırlama isteği gönderin</td>
+            </tr>
+            <tr>
+                <td>İş satın alamıyorum</td>
+                <td>Yetersiz kredi</td>
+                <td>Kredi yükleyin</td>
+            </tr>
+            <tr>
+                <td>Ödeme işlemi başarısız</td>
+                <td>Kart sorunu</td>
+                <td>Bankayı arayın veya banka havalesi kullanın</td>
+            </tr>
+            <tr>
+                <td>Sayfa yüklenmiyor</td>
+                <td>İnternet sorunu</td>
+                <td>Bağlantınızı kontrol edin</td>
+            </tr>
+        </table>
+
+        <h2>7. DESTEK VE İLETİŞİM</h2>
+        
+        <div class="info">
+            <strong>Teknik Destek:</strong><br>
+            • Email: support@tvservis.com<br>
+            • Telefon: 0850 XXX XX XX<br>
+            • Çalışma Saatleri: Pazartesi-Cuma 09:00-18:00<br>
+            • Acil Durum: 24/7 online destek
+        </div>
+
+        <div class="warning">
+            <strong>Önemli Not:</strong> Bu kılavuz sistem güncellemeleri ile birlikte değişebilir. Güncel versiyonu daima sistem üzerinden kontrol edin.
+        </div>
+
+        <hr style="margin: 40px 0;">
+        <div style="text-align: center; color: #666; font-size: 12px;">
+            TV Servis Yönetim Sistemi - Kullanıcı Kullanım Kılavuzu v1.0<br>
+            © 2024 - Tüm hakları saklıdır
+        </div>
+    </div>
+</body>
+</html>

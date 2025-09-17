@@ -2,6 +2,14 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { serveStatic } from 'hono/cloudflare-workers'
 import { generateBayiToken, verifyBayiAuth, hashPassword, comparePassword, generateSessionToken } from './utils/auth'
+import { createPayTRPaymentRequest, verifyPayTRCallback, getPayTRConfig, PayTRPaymentRequest } from './utils/paytr'
+import { generateAdminToken, verifyAdminToken, hashAdminPassword, verifyAdminPassword, requireAdminAuth, AdminUser } from './utils/adminAuth'
+import { SystemLogger, createErrorResponse, createSuccessResponse } from './utils/logger'
+import { DatabaseHelper } from './utils/database'
+import { errorHandler, BusinessError, AuthenticationError, ValidationError } from './middleware/errorHandler'
+import { validateInput, rateLimit, securityHeaders, requestLogger, ValidationRules } from './middleware/validation'
+import { PerformanceMonitor, performanceMonitoring } from './utils/monitoring'
+import { NotificationService } from './utils/notifications'
 
 // Type definitions for Cloudflare bindings
 type Bindings = {
@@ -10,8 +18,17 @@ type Bindings = {
 
 const app = new Hono<{ Bindings: Bindings }>()
 
+// Global middleware
+app.use('*', errorHandler())
+app.use('*', securityHeaders())
+app.use('*', requestLogger())
+app.use('*', performanceMonitoring())
+
 // Enable CORS for API routes
 app.use('/api/*', cors())
+
+// Rate limiting for API routes
+app.use('/api/*', rateLimit(50, 60000)) // 50 requests per minute
 
 // Serve static files from public directory
 app.use('/static/*', serveStatic({ root: './public' }))
@@ -236,31 +253,35 @@ app.post('/api/webhook/form', async (c) => {
 // =============================================================================
 
 // Bayi login endpoint
-app.post('/api/bayi/login', async (c) => {
-  const { DB } = c.env
-  const { email, password } = await c.req.json()
-  
-  try {
-    // Email ve şifre kontrolü
-    if (!email || !password) {
-      return c.json({ error: 'Email ve şifre gerekli' }, 400)
-    }
+app.post('/api/bayi/login', 
+  validateInput(ValidationRules.bayiLogin),
+  async (c) => {
+    const { DB } = c.env
+    const { email, password } = c.get('validatedBody')
+    const dbHelper = new DatabaseHelper(DB)
     
-    // Bayiyi veritabanında ara
-    const bayi = await DB.prepare(`
-      SELECT id, login_email, password_hash, firma_adi, yetkili_adi, 
-             telefon, il_id, aktif_login, kredi_bakiye
-      FROM bayiler 
-      WHERE login_email = ? AND aktif = 1
-    `).bind(email.toLowerCase()).first()
+    try {
+      SystemLogger.info('Auth', 'Bayi login attempt', { email })
     
-    if (!bayi) {
-      return c.json({ error: 'Geçersiz email veya şifre' }, 401)
-    }
-    
-    if (!bayi.aktif_login) {
-      return c.json({ error: 'Hesabınız deaktif edilmiş' }, 401)
-    }
+      // Bayiyi veritabanında ara  
+      const bayi = await PerformanceMonitor.monitorDatabaseQuery('getBayiByEmail', async () => {
+        return await DB.prepare(`
+          SELECT id, login_email, password_hash, firma_adi, yetkili_adi, 
+                 telefon, il_id, aktif_login, kredi_bakiye
+          FROM bayiler 
+          WHERE login_email = ? AND aktif = 1
+        `).bind(email.toLowerCase()).first()
+      })
+      
+      if (!bayi) {
+        SystemLogger.warn('Auth', 'Bayi not found', { email })
+        throw new AuthenticationError('Geçersiz email veya şifre')
+      }
+      
+      if (!bayi.aktif_login) {
+        SystemLogger.warn('Auth', 'Bayi account deactivated', { email })
+        throw new AuthenticationError('Hesabınız deaktif edilmiş')
+      }
     
     // Geçici: şifre kontrolü basit karşılaştırma (geliştirme için)
     // Production'da güvenli hash kullanılacak
@@ -637,6 +658,785 @@ app.post('/api/bayi/buy-job/:id', async (c) => {
 })
 
 // =============================================================================
+// PayTR Ödeme Sistemi API Routes
+// =============================================================================
+
+// PayTR kredi yükleme başlatma
+app.post('/api/payment/paytr/init', async (c) => {
+  const { DB } = c.env
+  const authHeader = c.req.header('Authorization')
+  const { amount } = await c.req.json()
+  
+  try {
+    const bayiAuth = await verifyBayiAuth(authHeader, DB)
+    if (!bayiAuth) {
+      return c.json({ error: 'Geçersiz token' }, 401)
+    }
+    
+    // Minimum tutar kontrolü
+    const minAmount = 100; // Minimum 100 TL
+    if (!amount || amount < minAmount) {
+      return c.json({ error: `Minimum kredi yükleme tutarı ${minAmount} TL` }, 400)
+    }
+    
+    if (amount > 10000) {
+      return c.json({ error: 'Maksimum kredi yükleme tutarı 10.000 TL' }, 400)
+    }
+    
+    // Bayi bilgilerini al
+    const bayi = await DB.prepare(`
+      SELECT id, firma_adi, yetkili_adi, telefon, login_email
+      FROM bayiler WHERE id = ?
+    `).bind(bayiAuth.bayiId).first()
+    
+    if (!bayi) {
+      return c.json({ error: 'Bayi bulunamadı' }, 404)
+    }
+    
+    // PayTR konfigürasyonu al
+    const paytrConfig = await getPayTRConfig(DB)
+    
+    // User IP al
+    const userIp = c.req.header('cf-connecting-ip') || 
+                   c.req.header('x-forwarded-for') || 
+                   c.req.header('x-real-ip') || 
+                   '127.0.0.1'
+    
+    // PayTR payment request oluştur
+    const paymentRequest = createPayTRPaymentRequest(paytrConfig, {
+      bayiId: bayi.id,
+      email: bayi.login_email,
+      amount: amount,
+      bayiName: bayi.firma_adi,
+      bayiPhone: bayi.telefon,
+      userIp: userIp
+    })
+    
+    // Ödeme işlemi kaydı oluştur (beklemede durumunda)
+    const odemeResult = await DB.prepare(`
+      INSERT INTO odeme_islemleri (
+        bayi_id, odeme_turu, tutar, durum, paytr_merchant_oid, created_at
+      ) VALUES (?, 'kredi_karti', ?, 'beklemede', ?, datetime('now'))
+    `).bind(bayi.id, amount, paymentRequest.merchant_oid).run()
+    
+    console.log(`PayTR ödeme başlatıldı - Bayi: ${bayi.id}, Tutar: ${amount} TL, OID: ${paymentRequest.merchant_oid}`)
+    
+    return c.json({
+      success: true,
+      payment_url: 'https://www.paytr.com/odeme/guvenli/' + (paymentRequest.paytr_token || 'test'),
+      merchant_oid: paymentRequest.merchant_oid,
+      amount: amount,
+      paytr_request: paymentRequest, // Test için - production'da kaldırılacak
+      message: `${amount} TL kredi yükleme işlemi başlatıldı`
+    })
+    
+  } catch (error) {
+    console.error('PayTR init error:', error)
+    return c.json({ 
+      error: 'Ödeme işlemi başlatılamadı', 
+      details: error.message 
+    }, 500)
+  }
+})
+
+// PayTR callback endpoint (POST)
+app.post('/api/payment/paytr/callback', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const formData = await c.req.formData()
+    const params = {
+      merchant_oid: formData.get('merchant_oid') as string,
+      status: formData.get('status') as string,
+      total_amount: formData.get('total_amount') as string,
+      hash: formData.get('hash') as string
+    }
+    
+    console.log('PayTR callback alındı:', params)
+    
+    if (!params.merchant_oid || !params.status || !params.hash) {
+      console.error('PayTR callback eksik parametreler')
+      return c.text('ERR', 400)
+    }
+    
+    // PayTR konfigürasyonu al
+    const paytrConfig = await getPayTRConfig(DB)
+    
+    // Hash doğrulama
+    const isValidHash = verifyPayTRCallback(paytrConfig, params)
+    if (!isValidHash) {
+      console.error('PayTR callback hash doğrulanamadı')
+      return c.text('ERR', 400)
+    }
+    
+    // Ödeme işlemini bul
+    const odeme = await DB.prepare(`
+      SELECT id, bayi_id, tutar, durum FROM odeme_islemleri 
+      WHERE paytr_merchant_oid = ?
+    `).bind(params.merchant_oid).first()
+    
+    if (!odeme) {
+      console.error('PayTR callback - ödeme bulunamadı:', params.merchant_oid)
+      return c.text('ERR', 404)
+    }
+    
+    if (odeme.durum !== 'beklemede') {
+      console.log('PayTR callback - ödeme zaten işlenmiş:', params.merchant_oid)
+      return c.text('OK')
+    }
+    
+    // Ödeme başarılı mı?
+    if (params.status === 'success') {
+      // Bayi kredi bakiyesini güncelle
+      const oncekiBakiye = await DB.prepare(`
+        SELECT kredi_bakiye FROM bayiler WHERE id = ?
+      `).bind(odeme.bayi_id).first()
+      
+      const yeniBakiye = (oncekiBakiye?.kredi_bakiye || 0) + odeme.tutar
+      
+      await DB.prepare(`
+        UPDATE bayiler SET kredi_bakiye = ?, updated_at = datetime('now') WHERE id = ?
+      `).bind(yeniBakiye, odeme.bayi_id).run()
+      
+      // Ödeme işlemini tamamlandı olarak işaretle
+      await DB.prepare(`
+        UPDATE odeme_islemleri SET 
+          durum = 'tamamlandi', 
+          paytr_payment_id = ?, 
+          updated_at = datetime('now') 
+        WHERE id = ?
+      `).bind(params.total_amount, odeme.id).run()
+      
+      // Kredi hareketi kaydet
+      await DB.prepare(`
+        INSERT INTO kredi_hareketleri (
+          bayi_id, hareket_turu, tutar, onceki_bakiye, yeni_bakiye, 
+          aciklama, odeme_id, created_at
+        ) VALUES (?, 'yükleme', ?, ?, ?, ?, ?, datetime('now'))
+      `).bind(
+        odeme.bayi_id,
+        odeme.tutar,
+        oncekiBakiye?.kredi_bakiye || 0,
+        yeniBakiye,
+        `PayTR ile kredi yükleme - ${params.merchant_oid}`,
+        odeme.id
+      ).run()
+      
+      console.log(`✅ PayTR ödeme başarılı - Bayi: ${odeme.bayi_id}, Tutar: ${odeme.tutar} TL`)
+      
+      return c.text('OK')
+    } else {
+      // Ödeme başarısız
+      await DB.prepare(`
+        UPDATE odeme_islemleri SET 
+          durum = 'iptal', 
+          updated_at = datetime('now') 
+        WHERE id = ?
+      `).bind(odeme.id).run()
+      
+      console.log(`❌ PayTR ödeme başarısız - Bayi: ${odeme.bayi_id}, OID: ${params.merchant_oid}`)
+      
+      return c.text('OK')
+    }
+    
+  } catch (error) {
+    console.error('PayTR callback error:', error)
+    return c.text('ERR', 500)
+  }
+})
+
+// PayTR başarılı ödeme sayfası
+app.get('/api/payment/paytr/success', (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ödeme Başarılı - TV Servis</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    </head>
+    <body class="bg-green-50 min-h-screen flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl p-8 max-w-md mx-4">
+            <div class="text-center">
+                <i class="fas fa-check-circle text-green-500 text-6xl mb-4"></i>
+                <h1 class="text-2xl font-bold text-gray-800 mb-2">Ödeme Başarılı!</h1>
+                <p class="text-gray-600 mb-6">Kredi yükleme işleminiz tamamlandı. Bakiyeniz kısa sürede güncellenecektir.</p>
+                <div class="space-y-3">
+                    <button onclick="window.close()" class="w-full bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded">
+                        <i class="fas fa-times mr-1"></i> Pencereyi Kapat
+                    </button>
+                    <a href="/bayi/dashboard" class="block w-full bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded text-center">
+                        <i class="fas fa-dashboard mr-1"></i> Dashboard'a Dön
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            // 3 saniye sonra otomatik kapat (popup ise)
+            setTimeout(() => {
+                if (window.opener) {
+                    window.close();
+                }
+            }, 3000);
+        </script>
+    </body>
+    </html>
+  `)
+})
+
+// PayTR başarısız ödeme sayfası  
+app.get('/api/payment/paytr/failed', (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ödeme Başarısız - TV Servis</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    </head>
+    <body class="bg-red-50 min-h-screen flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl p-8 max-w-md mx-4">
+            <div class="text-center">
+                <i class="fas fa-times-circle text-red-500 text-6xl mb-4"></i>
+                <h1 class="text-2xl font-bold text-gray-800 mb-2">Ödeme Başarısız</h1>
+                <p class="text-gray-600 mb-6">Kredi yükleme işleminiz tamamlanamadı. Lütfen tekrar deneyin.</p>
+                <div class="space-y-3">
+                    <button onclick="window.close()" class="w-full bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded">
+                        <i class="fas fa-times mr-1"></i> Pencereyi Kapat
+                    </button>
+                    <a href="/bayi/dashboard" class="block w-full bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded text-center">
+                        <i class="fas fa-dashboard mr-1"></i> Dashboard'a Dön
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            // 5 saniye sonra otomatik kapat (popup ise)  
+            setTimeout(() => {
+                if (window.opener) {
+                    window.close();
+                }
+            }, 5000);
+        </script>
+    </body>
+    </html>
+  `)
+})
+
+// =============================================================================
+// Havale Sistemi API Routes
+// =============================================================================
+
+// Havale bildirimi yapma
+app.post('/api/payment/transfer/notify', async (c) => {
+  const { DB } = c.env
+  const authHeader = c.req.header('Authorization')
+  const { amount, reference, description, transfer_date } = await c.req.json()
+  
+  try {
+    const bayiAuth = await verifyBayiAuth(authHeader, DB)
+    if (!bayiAuth) {
+      return c.json({ error: 'Geçersiz token' }, 401)
+    }
+    
+    // Validations
+    if (!amount || amount < 100) {
+      return c.json({ error: 'Minimum havale tutarı 100 TL' }, 400)
+    }
+    
+    if (!reference) {
+      return c.json({ error: 'Havale referans numarası gerekli' }, 400)
+    }
+    
+    if (!transfer_date) {
+      return c.json({ error: 'Havale tarihi gerekli' }, 400)
+    }
+    
+    // Aynı referans ile daha önce bildirim yapılmış mı?
+    const existingTransfer = await DB.prepare(`
+      SELECT id FROM odeme_islemleri 
+      WHERE havale_referans = ? AND bayi_id = ?
+    `).bind(reference, bayiAuth.bayiId).first()
+    
+    if (existingTransfer) {
+      return c.json({ error: 'Bu referans numarası ile daha önce havale bildirimi yapılmış' }, 409)
+    }
+    
+    // Havale bildirimi kaydı oluştur
+    const odemeResult = await DB.prepare(`
+      INSERT INTO odeme_islemleri (
+        bayi_id, odeme_turu, tutar, durum, havale_referans, havale_aciklama, 
+        admin_onay, created_at, updated_at
+      ) VALUES (?, 'havale', ?, 'beklemede', ?, ?, 0, ?, ?)
+    `).bind(
+      bayiAuth.bayiId, 
+      amount, 
+      reference, 
+      description || `Havale bildirimi - ${amount} TL`,
+      new Date().toISOString(),
+      new Date().toISOString()
+    ).run()
+    
+    console.log(`Havale bildirimi alındı - Bayi: ${bayiAuth.bayiId}, Tutar: ${amount} TL, Ref: ${reference}`)
+    
+    return c.json({
+      success: true,
+      message: 'Havale bildirimi başarıyla alındı. Admin onayından sonra kredi bakiyeniz güncellenecektir.',
+      transfer_id: odemeResult.meta.last_row_id,
+      reference: reference,
+      amount: amount,
+      status: 'admin_onayinda'
+    })
+    
+  } catch (error) {
+    console.error('Transfer notify error:', error)
+    return c.json({ 
+      error: 'Havale bildirimi kaydedilemedi', 
+      details: error.message 
+    }, 500)
+  }
+})
+
+// Havale durumu sorgulama
+app.get('/api/payment/transfer/status/:reference', async (c) => {
+  const { DB } = c.env
+  const authHeader = c.req.header('Authorization')
+  const reference = c.req.param('reference')
+  
+  try {
+    const bayiAuth = await verifyBayiAuth(authHeader, DB)
+    if (!bayiAuth) {
+      return c.json({ error: 'Geçersiz token' }, 401)
+    }
+    
+    const transfer = await DB.prepare(`
+      SELECT id, tutar, durum, havale_aciklama, admin_onay, created_at, updated_at
+      FROM odeme_islemleri 
+      WHERE havale_referans = ? AND bayi_id = ? AND odeme_turu = 'havale'
+    `).bind(reference, bayiAuth.bayiId).first()
+    
+    if (!transfer) {
+      return c.json({ error: 'Havale kaydı bulunamadı' }, 404)
+    }
+    
+    const statusMap = {
+      'beklemede': 'Admin onayı bekleniyor',
+      'tamamlandi': 'Onaylandı ve kredi yüklendi',
+      'iptal': 'Reddedildi'
+    };
+    
+    return c.json({
+      reference: reference,
+      amount: transfer.tutar,
+      status: transfer.durum,
+      status_text: statusMap[transfer.durum] || transfer.durum,
+      admin_approved: transfer.admin_onay === 1,
+      description: transfer.havale_aciklama,
+      created_at: transfer.created_at,
+      updated_at: transfer.updated_at
+    })
+    
+  } catch (error) {
+    console.error('Transfer status error:', error)
+    return c.json({ 
+      error: 'Havale durumu sorgulanamadı' 
+    }, 500)
+  }
+})
+
+// =============================================================================
+// Admin API Routes - Payment Management & System Administration
+// =============================================================================
+
+// Admin login endpoint
+app.post('/api/admin/login', async (c) => {
+  const { DB } = c.env
+  const { kullanici_adi, sifre } = await c.req.json()
+  
+  try {
+    // Kullanıcı adı ve şifre kontrolü
+    if (!kullanici_adi || !sifre) {
+      return c.json({ error: 'Kullanıcı adı ve şifre gerekli' }, 400)
+    }
+    
+    // Admin kullanıcısını bul
+    const admin = await DB.prepare(`
+      SELECT * FROM admin_kullanicilari 
+      WHERE kullanici_adi = ? AND aktif = 1
+    `).bind(kullanici_adi).first() as AdminUser | null
+    
+    if (!admin) {
+      return c.json({ error: 'Geçersiz kullanıcı adı veya şifre' }, 401)
+    }
+    
+    // Şifre kontrolü (geliştirme için basit kontrol)
+    const isValidPassword = await verifyAdminPassword(sifre, admin.sifre_hash)
+    if (!isValidPassword) {
+      return c.json({ error: 'Geçersiz kullanıcı adı veya şifre' }, 401)
+    }
+    
+    // JWT token oluştur
+    const token = await generateAdminToken(admin)
+    
+    // Oturum kaydı oluştur
+    const sessionToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+    await DB.prepare(`
+      INSERT INTO admin_oturumlar (admin_id, token, ip_adresi, user_agent)
+      VALUES (?, ?, ?, ?)
+    `).bind(admin.id, sessionToken, 'unknown', 'unknown').run()
+    
+    // Son giriş tarihini güncelle
+    await DB.prepare(`
+      UPDATE admin_kullanicilari SET son_giris = datetime('now') WHERE id = ?
+    `).bind(admin.id).run()
+    
+    return c.json({
+      success: true,
+      message: 'Giriş başarılı',
+      token: token,
+      admin: {
+        id: admin.id,
+        kullanici_adi: admin.kullanici_adi,
+        ad_soyad: admin.ad_soyad,
+        yetki_seviyesi: admin.yetki_seviyesi
+      }
+    })
+    
+  } catch (error) {
+    console.error('Admin login error:', error)
+    return c.json({ error: 'Giriş işlemi başarısız' }, 500)
+  }
+})
+
+// Admin dashboard istatistikleri
+app.get('/api/admin/dashboard', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    // Bekleyen ödemeler
+    const pendingPayments = await DB.prepare(`
+      SELECT COUNT(*) as count FROM odeme_islemleri 
+      WHERE durum = 'beklemede'
+    `).first()
+    
+    // Toplam kredi işlemleri (ekleme türündeki hareketler)
+    const totalCredits = await DB.prepare(`
+      SELECT SUM(tutar) as total FROM kredi_hareketleri 
+      WHERE hareket_turu = 'ekleme'
+    `).first()
+    
+    // Aktif bayiler
+    const activeDealers = await DB.prepare(`
+      SELECT COUNT(*) as count FROM bayiler WHERE aktif = 1
+    `).first()
+    
+    // Bu ayki ödemeler
+    const monthlyPayments = await DB.prepare(`
+      SELECT COUNT(*) as count, SUM(tutar) as total 
+      FROM odeme_islemleri 
+      WHERE strftime('%Y-%m', created_at) = strftime('%Y-%m', 'now')
+      AND durum = 'tamamlandi'
+    `).first()
+    
+    return c.json({
+      success: true,
+      stats: {
+        bekleyen_odemeler: pendingPayments?.count || 0,
+        toplam_kredi: totalCredits?.total || 0,
+        aktif_bayiler: activeDealers?.count || 0,
+        aylik_odemeler: {
+          sayi: monthlyPayments?.count || 0,
+          tutar: monthlyPayments?.total || 0
+        }
+      }
+    })
+    
+  } catch (error) {
+    console.error('Admin dashboard error:', error)
+    return c.json({ error: 'Dashboard verileri alınamadı' }, 500)
+  }
+})
+
+// Bekleyen bank transferlerini listele
+app.get('/api/admin/payments/pending', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const pendingTransfers = await DB.prepare(`
+      SELECT 
+        o.id,
+        o.bayi_id,
+        o.tutar,
+        o.havale_referans as referans_no,
+        o.havale_aciklama as aciklama,
+        o.created_at,
+        b.firma_adi,
+        (SELECT i.il_adi FROM iller i WHERE i.id = b.il_id) as il_adi,
+        b.email,
+        b.telefon
+      FROM odeme_islemleri o
+      JOIN bayiler b ON o.bayi_id = b.id
+      WHERE o.durum = 'beklemede' AND o.odeme_turu = 'havale'
+      ORDER BY o.created_at DESC
+    `).all()
+    
+    return c.json({
+      success: true,
+      transfers: pendingTransfers.results || []
+    })
+    
+  } catch (error) {
+    console.error('Pending payments error:', error)
+    return c.json({ error: 'Bekleyen ödemeler listelenemedi' }, 500)
+  }
+})
+
+// Transfer onaylama/reddetme
+app.post('/api/admin/payments/:id/approve', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  const paymentId = c.req.param('id')
+  const { action, aciklama } = await c.req.json() // action: 'approve' veya 'reject'
+  const adminInfo = c.get('admin')
+  
+  try {
+    // Ödeme işlemini bul
+    const payment = await DB.prepare(`
+      SELECT * FROM odeme_islemleri WHERE id = ? AND durum = 'beklemede'
+    `).bind(paymentId).first()
+    
+    if (!payment) {
+      return c.json({ error: 'Ödeme işlemi bulunamadı' }, 404)
+    }
+    
+    let newStatus: string
+    let logDescription: string
+    
+    if (action === 'approve') {
+      newStatus = 'tamamlandi'
+      logDescription = `Transfer onaylandı${aciklama ? ': ' + aciklama : ''}`
+      
+      // Mevcut bakiyeyi al
+      const bayi = await DB.prepare(`
+        SELECT kredi_bakiye FROM bayiler WHERE id = ?
+      `).bind(payment.bayi_id).first()
+      
+      const oncekiBakiye = bayi?.kredi_bakiye || 0
+      const yeniBakiye = oncekiBakiye + payment.tutar
+      
+      // Bayinin kredi bakiyesini güncelle
+      await DB.prepare(`
+        UPDATE bayiler 
+        SET kredi_bakiye = ?
+        WHERE id = ?
+      `).bind(yeniBakiye, payment.bayi_id).run()
+      
+      // Kredi hareketi kaydet
+      await DB.prepare(`
+        INSERT INTO kredi_hareketleri (bayi_id, hareket_turu, tutar, onceki_bakiye, yeni_bakiye, aciklama, odeme_id)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+      `).bind(
+        payment.bayi_id, 
+        'ekleme',
+        payment.tutar,
+        oncekiBakiye,
+        yeniBakiye,
+        `Admin onayı: ${payment.havale_referans || 'No ref'}`,
+        payment.id
+      ).run()
+      
+    } else if (action === 'reject') {
+      newStatus = 'iptal_edildi'
+      logDescription = `Transfer reddedildi${aciklama ? ': ' + aciklama : ''}`
+    } else {
+      return c.json({ error: 'Geçersiz işlem' }, 400)
+    }
+    
+    // Ödeme durumunu güncelle
+    await DB.prepare(`
+      UPDATE odeme_islemleri 
+      SET durum = ?, admin_onay = ?, updated_at = datetime('now')
+      WHERE id = ?
+    `).bind(newStatus, action === 'approve' ? 1 : 0, paymentId).run()
+    
+    // Log kaydı oluştur
+    await DB.prepare(`
+      INSERT INTO odeme_onay_loglari (odeme_id, admin_id, onceki_durum, yeni_durum, aciklama)
+      VALUES (?, ?, 'beklemede', ?, ?)
+    `).bind(paymentId, adminInfo.adminId, newStatus, logDescription).run()
+    
+    // Send email notification
+    try {
+      const bayi = await DB.prepare(`SELECT * FROM bayiler WHERE id = ?`).bind(payment.bayi_id).first()
+      
+      if (action === 'approve') {
+        await NotificationService.notifyPaymentApproval(bayi, payment, aciklama)
+        SystemLogger.info('Notification', 'Payment approval notification sent', { paymentId, bayiId: payment.bayi_id })
+      } else {
+        await NotificationService.notifyPaymentRejection(bayi, payment, aciklama || 'Red nedeni belirtilmedi')
+        SystemLogger.info('Notification', 'Payment rejection notification sent', { paymentId, bayiId: payment.bayi_id })
+      }
+    } catch (notificationError) {
+      SystemLogger.error('Notification', 'Failed to send notification', { error: notificationError.message })
+      // Don't fail the approval process if notification fails
+    }
+    
+    return c.json(createSuccessResponse({
+      paymentId: paymentId,
+      action: action,
+      amount: payment.tutar,
+      newStatus: newStatus
+    }, action === 'approve' ? 'Transfer başarıyla onaylandı' : 'Transfer başarıyla reddedildi'))
+    
+  } catch (error) {
+    console.error('Payment approval error:', error)
+    return c.json({ error: 'İşlem gerçekleştirilemedi' }, 500)
+  }
+})
+
+// Ödeme geçmişi ve raporlama
+app.get('/api/admin/payments/history', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  const { page = '1', limit = '20', durum = 'all', bayi_id = '' } = c.req.query()
+  
+  try {
+    let whereClause = '1=1'
+    const bindings: any[] = []
+    
+    if (durum !== 'all') {
+      whereClause += ' AND o.durum = ?'
+      bindings.push(durum)
+    }
+    
+    if (bayi_id) {
+      whereClause += ' AND o.bayi_id = ?'
+      bindings.push(parseInt(bayi_id))
+    }
+    
+    const offset = (parseInt(page) - 1) * parseInt(limit)
+    bindings.push(parseInt(limit), offset)
+    
+    const payments = await DB.prepare(`
+      SELECT 
+        o.id,
+        o.bayi_id,
+        o.tutar,
+        o.odeme_turu as odeme_yontemi,
+        o.durum,
+        o.havale_referans as referans_no,
+        o.havale_aciklama as aciklama,
+        o.admin_onay,
+        o.created_at,
+        o.updated_at as islem_tarihi,
+        b.firma_adi,
+        (SELECT i.il_adi FROM iller i WHERE i.id = b.il_id) as il_adi
+      FROM odeme_islemleri o
+      JOIN bayiler b ON o.bayi_id = b.id
+      WHERE ${whereClause}
+      ORDER BY o.created_at DESC
+      LIMIT ? OFFSET ?
+    `).bind(...bindings).all()
+    
+    // Toplam kayıt sayısı
+    const totalCount = await DB.prepare(`
+      SELECT COUNT(*) as count FROM odeme_islemleri o WHERE ${whereClause}
+    `).bind(...bindings.slice(0, -2)).first()
+    
+    return c.json({
+      success: true,
+      payments: payments.results || [],
+      pagination: {
+        page: parseInt(page),
+        limit: parseInt(limit),
+        total: totalCount?.count || 0,
+        totalPages: Math.ceil((totalCount?.count || 0) / parseInt(limit))
+      }
+    })
+    
+  } catch (error) {
+    console.error('Payment history error:', error)
+    return c.json({ error: 'Ödeme geçmişi alınamadı' }, 500)
+  }
+})
+
+// =============================================================================
+// System Monitoring & Health Check Routes
+// =============================================================================
+
+// System health check endpoint
+app.get('/health', async (c) => {
+  try {
+    const { DB } = c.env
+    
+    // Database connectivity check
+    const dbCheck = await PerformanceMonitor.monitorDatabaseQuery('healthCheck', async () => {
+      return await DB.prepare('SELECT 1 as test').first()
+    })
+    
+    // Performance metrics
+    const healthData = await PerformanceMonitor.healthCheck()
+    
+    const response = {
+      status: 'healthy',
+      timestamp: new Date().toISOString(),
+      version: '1.0.0',
+      database: dbCheck ? 'connected' : 'disconnected',
+      performance: healthData,
+      uptime: 'workers_env'
+    }
+    
+    SystemLogger.info('Health', 'Health check completed', response)
+    return c.json(response)
+    
+  } catch (error) {
+    SystemLogger.error('Health', 'Health check failed', { error: error.message })
+    return c.json({
+      status: 'unhealthy',
+      timestamp: new Date().toISOString(),
+      error: error.message
+    }, 503)
+  }
+})
+
+// Performance metrics endpoint (admin only)
+app.get('/api/admin/metrics', requireAdminAuth(), async (c) => {
+  try {
+    const since = parseInt(c.req.query('since') || '0') || (Date.now() - 3600000) // Last hour
+    
+    const metrics = {
+      summary: PerformanceMonitor.getSummary(since),
+      recent: PerformanceMonitor.getMetrics(undefined, since),
+      health: await PerformanceMonitor.healthCheck()
+    }
+    
+    return c.json(createSuccessResponse(metrics, 'Performans metrikleri alındı'))
+    
+  } catch (error) {
+    SystemLogger.error('Metrics', 'Failed to get metrics', { error: error.message })
+    throw new BusinessError('Metrikler alınamadı')
+  }
+})
+
+// Clean up old metrics (internal endpoint)
+app.post('/api/admin/cleanup', requireAdminAuth(), async (c) => {
+  try {
+    PerformanceMonitor.cleanup()
+    SystemLogger.info('Cleanup', 'Metrics cleanup triggered')
+    
+    return c.json(createSuccessResponse({}, 'Temizlik işlemi tamamlandı'))
+    
+  } catch (error) {
+    SystemLogger.error('Cleanup', 'Cleanup failed', { error: error.message })
+    throw new BusinessError('Temizlik işlemi başarısız')
+  }
+})
+
+// =============================================================================
 // Frontend Routes
 // =============================================================================
 
@@ -671,6 +1471,15 @@ app.get('/', (c) => {
                     <button onclick="showSection('dealers')" class="nav-btn bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded">
                         <i class="fas fa-users mr-1"></i> Bayiler
                     </button>
+                    <a href="/dashboard" class="nav-btn bg-purple-500 hover:bg-purple-700 px-4 py-2 rounded inline-block">
+                        <i class="fas fa-chart-line mr-1"></i> Sistem İzleme
+                    </a>
+                    <a href="/bayi/login" class="nav-btn bg-green-500 hover:bg-green-700 px-4 py-2 rounded inline-block">
+                        <i class="fas fa-user mr-1"></i> Bayi Girişi
+                    </a>
+                    <a href="/admin" class="nav-btn bg-red-500 hover:bg-red-700 px-4 py-2 rounded inline-block">
+                        <i class="fas fa-user-shield mr-1"></i> Admin
+                    </a>
                 </div>
             </div>
         </nav>
@@ -793,6 +1602,266 @@ app.get('/', (c) => {
 
         <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
         <script src="/static/app.js"></script>
+    </body>
+    </html>
+  `)
+})
+
+// Admin paneli
+app.get('/admin', (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Admin Paneli - TV Servis Yönetim Sistemi</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    </head>
+    <body class="bg-gray-100">
+        <!-- Login Screen -->
+        <div id="admin-login" class="hidden">
+            <div class="min-h-screen flex items-center justify-center">
+                <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+                    <div class="text-center mb-6">
+                        <i class="fas fa-user-shield text-4xl text-blue-600 mb-4"></i>
+                        <h1 class="text-2xl font-bold text-gray-800">Admin Paneli</h1>
+                        <p class="text-gray-600">TV Servis Yönetim Sistemi</p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Kullanıcı Adı</label>
+                            <input type="text" id="username" 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                   placeholder="Kullanıcı adınızı girin">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Şifre</label>
+                            <input type="password" id="password"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                   placeholder="Şifrenizi girin">
+                        </div>
+                        
+                        <button onclick="adminLogin()" 
+                                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200">
+                            <i class="fas fa-sign-in-alt mr-2"></i>
+                            Giriş Yap
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div id="admin-dashboard" class="hidden">
+            <!-- Header -->
+            <header class="bg-white shadow">
+                <div class="flex justify-between items-center px-6 py-4">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-user-shield text-2xl text-blue-600"></i>
+                        <h1 class="text-xl font-semibold text-gray-800">Admin Paneli</h1>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="text-right">
+                            <p class="text-sm text-gray-600">Hoş geldiniz,</p>
+                            <p class="font-semibold text-gray-800" id="admin-name">Admin</p>
+                        </div>
+                        <button onclick="adminLogout()" 
+                                class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">
+                            <i class="fas fa-sign-out-alt mr-2"></i>
+                            Çıkış
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Layout -->
+            <div class="flex">
+                <!-- Sidebar -->
+                <div class="w-64 bg-blue-600 min-h-screen">
+                    <nav class="p-4">
+                        <ul class="space-y-2">
+                            <li>
+                                <button onclick="showSection('dashboard')" 
+                                        class="nav-item w-full text-left px-4 py-3 text-white rounded-lg hover:bg-blue-700 flex items-center gap-3 bg-blue-700">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    Ana Sayfa
+                                </button>
+                            </li>
+                            <li>
+                                <button onclick="showSection('payments')" 
+                                        class="nav-item w-full text-left px-4 py-3 text-white rounded-lg hover:bg-blue-700 flex items-center gap-3">
+                                    <i class="fas fa-credit-card"></i>
+                                    Ödeme Geçmişi
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <!-- Main Content -->
+                <div class="flex-1 p-6">
+                    <!-- Dashboard Section -->
+                    <div id="admin-dashboard-section" class="admin-section">
+                        <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                            <i class="fas fa-tachometer-alt mr-2"></i>
+                            Yönetim Paneli
+                        </h2>
+                        
+                        <!-- Stats Cards -->
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-600">Bekleyen Ödemeler</p>
+                                        <p class="text-3xl font-bold text-yellow-600" id="pending-payments-count">-</p>
+                                    </div>
+                                    <i class="fas fa-hourglass-half text-yellow-500 text-2xl"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-600">Toplam Kredi</p>
+                                        <p class="text-3xl font-bold text-green-600" id="total-credits">-</p>
+                                    </div>
+                                    <i class="fas fa-coins text-green-500 text-2xl"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-600">Aktif Bayiler</p>
+                                        <p class="text-3xl font-bold text-blue-600" id="active-dealers">-</p>
+                                    </div>
+                                    <i class="fas fa-users text-blue-500 text-2xl"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-600">Bu Ay Ödemeler</p>
+                                        <p class="text-3xl font-bold text-purple-600" id="monthly-payments">-</p>
+                                    </div>
+                                    <i class="fas fa-calendar text-purple-500 text-2xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Pending Payments -->
+                        <div class="bg-white rounded-lg shadow">
+                            <div class="px-6 py-4 border-b border-gray-200">
+                                <h3 class="text-lg font-semibold text-gray-800">
+                                    <i class="fas fa-clock mr-2"></i>
+                                    Onay Bekleyen Transferler
+                                </h3>
+                            </div>
+                            <div class="p-6">
+                                <div id="pending-payments-list" class="space-y-4">
+                                    Veriler yükleniyor...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment History Section -->
+                    <div id="admin-payments-section" class="admin-section hidden">
+                        <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                            <i class="fas fa-credit-card mr-2"></i>
+                            Ödeme Geçmişi
+                        </h2>
+                        
+                        <div class="bg-white rounded-lg shadow">
+                            <div class="px-6 py-4 border-b border-gray-200">
+                                <h3 class="text-lg font-semibold text-gray-800">Tüm Ödeme İşlemleri</h3>
+                            </div>
+                            <div class="p-6">
+                                <div id="payment-history-list">
+                                    Veriler yükleniyor...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+        <script src="/static/admin.js"></script>
+    </body>
+    </html>
+  `)
+})
+
+// Health Dashboard sayfası
+app.get('/dashboard', (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>🖥️ Sistem Dashboard - TV Servis Yönetim</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <style>
+            .metric-card {
+                transition: all 0.3s ease;
+                border: 1px solid #374151;
+            }
+            .metric-card:hover {
+                border-color: #3B82F6;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+            }
+            .alert-item {
+                animation: slideIn 0.3s ease-out;
+            }
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateX(-20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            .status-indicator {
+                animation: pulse 2s infinite;
+            }
+            @keyframes pulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.8; }
+            }
+            
+            /* Dark scrollbar */
+            ::-webkit-scrollbar {
+                width: 8px;
+            }
+            ::-webkit-scrollbar-track {
+                background: #1F2937;
+            }
+            ::-webkit-scrollbar-thumb {
+                background: #4B5563;
+                border-radius: 4px;
+            }
+            ::-webkit-scrollbar-thumb:hover {
+                background: #6B7280;
+            }
+        </style>
+    </head>
+    <body class="bg-gray-900">
+        <!-- Dashboard content will be generated by JavaScript -->
+        
+        <script src="/static/health-dashboard.js"></script>
     </body>
     </html>
   `)
@@ -1057,6 +2126,74 @@ app.get('/bayi/dashboard', (c) => {
     </body>
     </html>
   `)
+})
+
+// Default route - Ana sayfa
+app.get('/', (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TV Servis Yönetim Sistemi</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    </head>
+    <body class="bg-gray-100">
+        <div class="min-h-screen flex items-center justify-center">
+            <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-bold text-gray-800 mb-4">
+                        <i class="fas fa-tv mr-2 text-blue-600"></i>
+                        TV Servis Yönetim
+                    </h1>
+                    <p class="text-gray-600">Türkiye geneli TV ekran servisi yönetim sistemi</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <a href="/bayi" class="block w-full bg-blue-600 text-white text-center py-3 rounded-lg hover:bg-blue-700 transition duration-300">
+                        <i class="fas fa-user-tie mr-2"></i>
+                        Bayi Girişi
+                    </a>
+                    
+                    <a href="/admin" class="block w-full bg-red-600 text-white text-center py-3 rounded-lg hover:bg-red-700 transition duration-300">
+                        <i class="fas fa-user-shield mr-2"></i>
+                        Admin Girişi
+                    </a>
+                    
+                    <a href="/dashboard" class="block w-full bg-green-600 text-white text-center py-3 rounded-lg hover:bg-green-700 transition duration-300">
+                        <i class="fas fa-chart-line mr-2"></i>
+                        Sistem Durumu
+                    </a>
+                    
+                    <div class="border-t pt-4 mt-6">
+                        <p class="text-sm font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-book mr-2"></i>Kullanım Kılavuzları
+                        </p>
+                        
+                        <div class="space-y-2">
+                            <a href="/static/TV-Servis-Kullanici-Kilavuzu.pdf" target="_blank" class="block w-full bg-purple-600 text-white text-center py-2 rounded-lg hover:bg-purple-700 transition duration-300 text-sm">
+                                <i class="fas fa-file-pdf mr-2"></i>
+                                Kullanıcı Kılavuzu (PDF)
+                            </a>
+                            
+                            <a href="/static/TV-Servis-Teknik-Kilavuz.pdf" target="_blank" class="block w-full bg-orange-600 text-white text-center py-2 rounded-lg hover:bg-orange-700 transition duration-300 text-sm">
+                                <i class="fas fa-code mr-2"></i>
+                                Teknik Kılavuz (PDF)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 text-center text-sm text-gray-500">
+                    <p>Güvenli ve hızlı servis yönetimi</p>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>
+  `);
 })
 
 export default app
