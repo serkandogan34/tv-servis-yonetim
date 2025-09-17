@@ -497,6 +497,145 @@ app.get('/api/bayi/my-jobs', async (c) => {
   }
 })
 
+// İş satın alma endpoint - Kredi ile ödeme
+app.post('/api/bayi/buy-job/:id', async (c) => {
+  const { DB } = c.env
+  const authHeader = c.req.header('Authorization')
+  const jobId = c.req.param('id')
+  
+  try {
+    const bayiAuth = await verifyBayiAuth(authHeader, DB)
+    if (!bayiAuth) {
+      return c.json({ error: 'Geçersiz token' }, 401)
+    }
+    
+    // Transaction başlat (SQLite'da manuel transaction yönetimi)
+    console.log(`Bayi ${bayiAuth.bayiId} işi ${jobId} satın almaya çalışıyor...`)
+    
+    // 1. İş mevcut mu ve satın alınmış mı kontrol et
+    const job = await DB.prepare(`
+      SELECT it.id, it.talep_kodu, it.is_fiyati, it.satin_alan_bayi_id, it.durum,
+             m.il_id, m.ad_soyad, m.telefon, m.adres
+      FROM is_talepleri it
+      JOIN musteriler m ON it.musteri_id = m.id
+      WHERE it.id = ? AND it.durum IN ('yeni', 'atandı')
+    `).bind(jobId).first()
+    
+    if (!job) {
+      return c.json({ error: 'İş bulunamadı veya artık mevcut değil' }, 404)
+    }
+    
+    // 2. İş zaten satın alınmış mı?
+    if (job.satin_alan_bayi_id) {
+      return c.json({ error: 'Bu iş başka bir bayi tarafından satın alındı' }, 409)
+    }
+    
+    // 3. İş bayinin ilinde mi?
+    if (job.il_id !== bayiAuth.ilId) {
+      return c.json({ error: 'Bu iş sizin ilinizde değil' }, 403)
+    }
+    
+    // 4. Bayi kredi bakiyesi yeterli mi?
+    const bayi = await DB.prepare(`
+      SELECT id, kredi_bakiye FROM bayiler WHERE id = ?
+    `).bind(bayiAuth.bayiId).first()
+    
+    if (!bayi || bayi.kredi_bakiye < job.is_fiyati) {
+      return c.json({ 
+        error: `Yetersiz kredi bakiyesi. Gerekli: ${job.is_fiyati} ₺, Mevcut: ${bayi.kredi_bakiye || 0} ₺` 
+      }, 402)
+    }
+    
+    // 5. Race condition check - Tekrar kontrol et (double-check locking)
+    const finalCheck = await DB.prepare(`
+      SELECT satin_alan_bayi_id FROM is_talepleri WHERE id = ?
+    `).bind(jobId).first()
+    
+    if (finalCheck?.satin_alan_bayi_id) {
+      return c.json({ error: 'İş bu sırada başka bir bayi tarafından satın alındı' }, 409)
+    }
+    
+    // 6. İşi satın al - İlk işi güncelle
+    const satinAlmaTarihi = new Date().toISOString()
+    await DB.prepare(`
+      UPDATE is_talepleri 
+      SET satin_alan_bayi_id = ?, 
+          satin_alma_tarihi = ?, 
+          satin_alma_fiyati = ?,
+          durum = 'atandı',
+          goruntuleme_durumu = 'tam',
+          updated_at = ?
+      WHERE id = ? AND satin_alan_bayi_id IS NULL
+    `).bind(bayiAuth.bayiId, satinAlmaTarihi, job.is_fiyati, satinAlmaTarihi, jobId).run()
+    
+    // 7. Kredi bakiyesini güncelle
+    const yeniBakiye = bayi.kredi_bakiye - job.is_fiyati
+    await DB.prepare(`
+      UPDATE bayiler SET kredi_bakiye = ?, updated_at = datetime('now') WHERE id = ?
+    `).bind(yeniBakiye, bayiAuth.bayiId).run()
+    
+    // 8. Ödeme işlemi kaydı oluştur
+    const odemeResult = await DB.prepare(`
+      INSERT INTO odeme_islemleri (
+        bayi_id, is_talep_id, odeme_turu, tutar, durum, created_at, updated_at
+      ) VALUES (?, ?, 'kredi_kullanim', ?, 'tamamlandi', ?, ?)
+    `).bind(bayiAuth.bayiId, jobId, job.is_fiyati, satinAlmaTarihi, satinAlmaTarihi).run()
+    
+    // 9. Kredi hareketi kaydet
+    await DB.prepare(`
+      INSERT INTO kredi_hareketleri (
+        bayi_id, hareket_turu, tutar, onceki_bakiye, yeni_bakiye, 
+        aciklama, odeme_id, is_talep_id, created_at
+      ) VALUES (?, 'harcama', ?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+      bayiAuth.bayiId, 
+      job.is_fiyati, 
+      bayi.kredi_bakiye, 
+      yeniBakiye,
+      `İş satın alma: ${job.talep_kodu}`,
+      odemeResult.meta.last_row_id,
+      jobId,
+      satinAlmaTarihi
+    ).run()
+    
+    // 10. İş geçmişi kaydet
+    await DB.prepare(`
+      INSERT INTO is_gecmisi (is_talep_id, eski_durum, yeni_durum, aciklama, degistiren, created_at)
+      VALUES (?, 'yeni', 'atandı', ?, ?, ?)
+    `).bind(
+      jobId, 
+      `Bayi tarafından satın alındı - ${job.is_fiyati} ₺`,
+      bayiAuth.firmaAdi,
+      satinAlmaTarihi
+    ).run()
+    
+    console.log(`✅ İş ${jobId} başarıyla satın alındı - Bayi: ${bayiAuth.bayiId}, Tutar: ${job.is_fiyati} ₺`)
+    
+    return c.json({
+      success: true,
+      message: `İş başarıyla satın alındı! ${job.is_fiyati} ₺ kredi bakiyenizden düşüldü.`,
+      job: {
+        id: job.id,
+        talep_kodu: job.talep_kodu,
+        satin_alma_fiyati: job.is_fiyati,
+        musteri_bilgileri: {
+          ad_soyad: job.ad_soyad,
+          telefon: job.telefon,
+          adres: job.adres
+        }
+      },
+      yeni_bakiye: yeniBakiye
+    })
+    
+  } catch (error) {
+    console.error('İş satın alma hatası:', error)
+    return c.json({ 
+      error: 'İş satın alma işlemi başarısız', 
+      details: error.message 
+    }, 500)
+  }
+})
+
 // =============================================================================
 // Frontend Routes
 // =============================================================================

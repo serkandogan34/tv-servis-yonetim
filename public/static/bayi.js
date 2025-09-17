@@ -422,17 +422,57 @@ function displayBayiCredits() {
 
 // Purchase job function
 async function purchaseJob(jobId) {
-    if (!confirm('Bu işi satın almak istediğinizden emin misiniz?')) {
+    const job = currentJobs.find(j => j.id == jobId);
+    if (!job) {
+        showError('İş bulunamadı');
+        return;
+    }
+    
+    const confirmMessage = `Bu işi ${job.is_fiyati} ₺ kredi ile satın almak istediğinizden emin misiniz?\n\nİş: ${job.talep_kodu}\nServis: ${job.servis_turu}\nMüşteri: ${job.musteri_adi}`;
+    
+    if (!confirm(confirmMessage)) {
         return;
     }
     
     try {
-        // TODO: İş satın alma API'si implementasyonu
-        // Şimdilik alert göster
-        alert('İş satın alma özelliği Faz 3\'te implementasyona eklenecek. Job ID: ' + jobId);
+        console.log('İş satın alınıyor...', jobId);
+        
+        const response = await makeAuthRequest(`/api/bayi/buy-job/${jobId}`, {
+            method: 'POST'
+        });
+        
+        if (response.data.success) {
+            showSuccess(response.data.message);
+            
+            // Bakiye güncelle
+            if (bayiInfo) {
+                bayiInfo.kredi_bakiye = response.data.yeni_bakiye;
+                localStorage.setItem('bayiInfo', JSON.stringify(bayiInfo));
+                updateBayiInfo();
+            }
+            
+            // İş listesini yenile
+            await loadBayiJobs();
+            await loadBayiMyJobs();
+            await loadBayiDashboard();
+            
+            // Başarılı satın alma detayları göster
+            const jobDetails = response.data.job;
+            setTimeout(() => {
+                alert(`✅ İş Başarıyla Satın Alındı!\n\n` +
+                      `İş Kodu: ${jobDetails.talep_kodu}\n` +
+                      `Müşteri: ${jobDetails.musteri_bilgileri.ad_soyad}\n` +
+                      `Telefon: ${jobDetails.musteri_bilgileri.telefon}\n` +
+                      `Adres: ${jobDetails.musteri_bilgileri.adres}\n\n` +
+                      `Ödenen Tutar: ${jobDetails.satin_alma_fiyati} ₺\n` +
+                      `Yeni Bakiye: ${response.data.yeni_bakiye} ₺\n\n` +
+                      `Artık müşteri ile iletişime geçebilirsiniz!`);
+            }, 1000);
+        }
     } catch (error) {
         console.error('Purchase job error:', error);
-        showError('İş satın alınamadı');
+        const errorMessage = error.response?.data?.error || 'İş satın alınamadı';
+        showError(errorMessage);
     }
 }
 
