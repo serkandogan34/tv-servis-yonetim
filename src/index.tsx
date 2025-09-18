@@ -341,6 +341,9 @@ app.post('/api/bayi/login',
     })
   } catch (error) {
     console.error('Bayi login error:', error)
+    if (error instanceof AuthenticationError) {
+      return c.json({ error: error.message }, 401)
+    }
     return c.json({ error: 'Giriş işlemi başarısız' }, 500)
   }
 })
