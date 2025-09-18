@@ -2140,17 +2140,17 @@ app.get('/', (c) => {
                     </div>
                     <div class="flex items-center space-x-1">
                         <!-- View Switcher -->
-                        <div class="flex bg-slate-100 p-1 minimal-corner mr-4">
+                        <div class="flex bg-slate-800 p-1 minimal-corner mr-4">
                             <button onclick="showProviderView()" id="provider-tab" class="px-4 py-2 text-sm font-medium transition duration-200 sharp-corner bg-orange-600 text-white">
                                 HİZMET VEREN
                             </button>
-                            <button onclick="showCustomerView()" id="customer-tab" class="px-4 py-2 text-sm font-medium transition duration-200 sharp-corner text-slate-600 hover:text-slate-800">
+                            <button onclick="showCustomerView()" id="customer-tab" class="px-4 py-2 text-sm font-medium transition duration-200 sharp-corner text-orange-100 hover:text-white">
                                 MÜŞTERİ
                             </button>
                         </div>
                         
                         <!-- Action Button -->
-                        <a href="/bayi" id="action-button" class="bg-orange-600 text-white px-6 py-2 sharp-corner font-semibold hover:bg-orange-700 transition duration-200">
+                        <a href="/bayi" id="action-button" class="bg-slate-800 text-white px-6 py-2 sharp-corner font-semibold hover:bg-slate-900 transition duration-200">
                             BAYI GİRİŞİ
                         </a>
                     </div>
@@ -2159,20 +2159,20 @@ app.get('/', (c) => {
         </nav>
 
         <!-- Hero Section -->
-        <section class="corporate-gradient text-white py-24">
+        <section class="bg-orange-600 text-white py-24">
             <div class="max-w-7xl mx-auto px-6">
                 <!-- Provider View (Default) -->
                 <div class="text-center" id="provider-hero">
                     <h1 class="text-6xl font-bold mb-8 tracking-tight">
                         PROFESYONEL
-                        <span class="block text-orange-400">İŞ ORTAKLIĞI</span>
+                        <span class="block text-slate-800">İŞ ORTAKLIĞI</span>
                     </h1>
                     <p class="text-xl mb-10 opacity-95 max-w-2xl mx-auto font-light">
                         Garantor360'da hizmet verin, garantili iş hacmi ve güvenli ödeme sistemi ile 
                         gelir elde edin. 6 farklı sektörde fırsatlar.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="/bayi" class="bg-orange-600 text-white px-10 py-4 sharp-corner font-bold text-lg hover:bg-orange-700 transition duration-200 shadow-xl">
+                        <a href="/bayi" class="bg-slate-800 text-white px-10 py-4 sharp-corner font-bold text-lg hover:bg-slate-900 transition duration-200 shadow-xl">
                             BAYI BAŞVURU
                         </a>
                         <button onclick="scrollToStats()" class="border-2 border-white text-white px-10 py-4 sharp-corner font-bold text-lg hover:bg-white hover:text-slate-800 transition duration-200">
@@ -2185,14 +2185,14 @@ app.get('/', (c) => {
                 <div class="text-center hidden" id="customer-hero">
                     <h1 class="text-6xl font-bold mb-8 tracking-tight">
                         GÜVENLİ HİZMET
-                        <span class="block text-orange-400">ALMAK BU KADAR KOLAY!</span>
+                        <span class="block text-slate-800">ALMAK BU KADAR KOLAY!</span>
                     </h1>
                     <p class="text-xl mb-10 opacity-95 max-w-2xl mx-auto font-light">
                         Garantor360 ile ödeme güvenliği, işçilik garantisi ve hukuki koruma altında 
                         profesyonel hizmet alın. Artık endişe yok!
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <button onclick="scrollToServices()" class="bg-orange-600 text-white px-10 py-4 sharp-corner font-bold text-lg hover:bg-orange-700 transition duration-200 shadow-xl">
+                        <button onclick="scrollToServices()" class="bg-slate-800 text-white px-10 py-4 sharp-corner font-bold text-lg hover:bg-slate-900 transition duration-200 shadow-xl">
                             HİZMET AL
                         </button>
                         <button onclick="scrollToGuarantee()" class="border-2 border-white text-white px-10 py-4 sharp-corner font-bold text-lg hover:bg-white hover:text-slate-800 transition duration-200">
@@ -2501,7 +2501,7 @@ app.get('/', (c) => {
         </section>
 
         <!-- Benefits Section -->
-        <section class="py-20 corporate-gradient text-white">
+        <section class="py-20 bg-slate-800 text-white">
             <div class="max-w-7xl mx-auto px-6">
                 <!-- Provider Benefits -->
                 <div id="provider-benefits">
@@ -2609,10 +2609,10 @@ app.get('/', (c) => {
                     Sıfır yatırım, garantili kazanç.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                    <a href="/bayi" class="bg-slate-800 text-white px-12 py-4 sharp-corner font-bold text-lg hover:bg-slate-900 transition duration-200 shadow-lg">
+                    <a href="/bayi" class="bg-orange-600 text-white px-12 py-4 sharp-corner font-bold text-lg hover:bg-orange-700 transition duration-200 shadow-lg">
                         BAŞVURU YAP
                     </a>
-                    <a href="tel:+905001234567" class="border-2 border-slate-800 text-slate-800 px-12 py-4 sharp-corner font-bold text-lg hover:bg-slate-800 hover:text-white transition duration-200">
+                    <a href="tel:+905001234567" class="border-2 border-orange-600 text-orange-600 px-12 py-4 sharp-corner font-bold text-lg hover:bg-orange-600 hover:text-white transition duration-200">
                         0 500 123 45 67
                     </a>
                 </div>
@@ -2801,7 +2801,7 @@ app.get('/', (c) => {
         function showProviderView() {
             // Update tabs
             document.getElementById('provider-tab').className = 'px-4 py-2 text-sm font-medium transition duration-200 sharp-corner bg-orange-600 text-white';
-            document.getElementById('customer-tab').className = 'px-4 py-2 text-sm font-medium transition duration-200 sharp-corner text-slate-600 hover:text-slate-800';
+            document.getElementById('customer-tab').className = 'px-4 py-2 text-sm font-medium transition duration-200 sharp-corner text-orange-100 hover:text-white';
             
             // Update hero sections
             document.getElementById('provider-hero').classList.remove('hidden');
@@ -2818,6 +2818,7 @@ app.get('/', (c) => {
             // Update action button
             document.getElementById('action-button').innerHTML = 'BAYI GİRİŞİ';
             document.getElementById('action-button').href = '/bayi';
+            document.getElementById('action-button').className = 'bg-slate-800 text-white px-6 py-2 sharp-corner font-semibold hover:bg-slate-900 transition duration-200';
             
             // Update service categories to provider view
             updateServiceCategories('provider');
@@ -2829,7 +2830,7 @@ app.get('/', (c) => {
         function showCustomerView() {
             // Update tabs
             document.getElementById('customer-tab').className = 'px-4 py-2 text-sm font-medium transition duration-200 sharp-corner bg-orange-600 text-white';
-            document.getElementById('provider-tab').className = 'px-4 py-2 text-sm font-medium transition duration-200 sharp-corner text-slate-600 hover:text-slate-800';
+            document.getElementById('provider-tab').className = 'px-4 py-2 text-sm font-medium transition duration-200 sharp-corner text-orange-100 hover:text-white';
             
             // Update hero sections
             document.getElementById('customer-hero').classList.remove('hidden');
@@ -2846,6 +2847,7 @@ app.get('/', (c) => {
             // Update action button
             document.getElementById('action-button').innerHTML = 'HİZMET AL';
             document.getElementById('action-button').href = '#services';
+            document.getElementById('action-button').className = 'bg-orange-600 text-white px-6 py-2 sharp-corner font-semibold hover:bg-orange-700 transition duration-200';
             
             // Update service categories to customer view
             updateServiceCategories('customer');
@@ -2904,14 +2906,18 @@ app.get('/', (c) => {
                 descElement.textContent = '5 dakikada başvuru yapın ve profesyonel iş ağımızın bir parçası olun. Sıfır yatırım, garantili kazanç.';
                 primaryButton.textContent = 'BAŞVURU YAP';
                 primaryButton.href = '/bayi';
+                primaryButton.className = 'bg-orange-600 text-white px-12 py-4 sharp-corner font-bold text-lg hover:bg-orange-700 transition duration-200 shadow-lg';
                 secondaryButton.textContent = '0 500 123 45 67';
+                secondaryButton.className = 'border-2 border-orange-600 text-orange-600 px-12 py-4 sharp-corner font-bold text-lg hover:bg-orange-600 hover:text-white transition duration-200';
                 footerText.innerHTML = '<span class="inline-block w-2 h-2 bg-orange-600 sharp-corner mr-2"></span>Başvuru ücretsiz • Ön ödeme yok • Anında değerlendirme';
             } else {
                 titleElement.textContent = 'GÜVENLİ HİZMET ALMAYA BAŞLA';
                 descElement.textContent = 'Hemen ihtiyacınızı belirtin, doğrulanmış uzmanlardan teklif alın. Ödeme güvenliği, işçilik garantisi dahil.';
                 primaryButton.textContent = 'HİZMET TALEBİ';
                 primaryButton.href = '#service-request';
+                primaryButton.className = 'bg-slate-800 text-white px-12 py-4 sharp-corner font-bold text-lg hover:bg-slate-900 transition duration-200 shadow-lg';
                 secondaryButton.textContent = 'CANLI DESTEK';
+                secondaryButton.className = 'border-2 border-slate-800 text-slate-800 px-12 py-4 sharp-corner font-bold text-lg hover:bg-slate-800 hover:text-white transition duration-200';
                 footerText.innerHTML = '<span class="inline-block w-2 h-2 bg-orange-600 sharp-corner mr-2"></span>Ücretsiz teklif • 6 ay garanti • 7/24 destek';
             }
         }
@@ -3070,7 +3076,7 @@ app.get('/', (c) => {
                             <span class="font-bold text-slate-800">\${city.growth}</span>
                         </div>
                     </div>
-                    <button onclick="window.location.href='/bayi'" class="w-full mt-6 bg-slate-800 text-white py-3 sharp-corner font-bold hover:bg-slate-900 transition duration-200">
+                    <button onclick="window.location.href='/bayi'" class="w-full mt-6 bg-orange-600 text-white py-3 sharp-corner font-bold hover:bg-orange-700 transition duration-200">
                         BAŞVUR
                     </button>
                 \`;
