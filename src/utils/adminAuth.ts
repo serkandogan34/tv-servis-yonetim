@@ -55,7 +55,8 @@ export async function hashAdminPassword(password: string): Promise<string> {
 
 export async function verifyAdminPassword(password: string, hashedPassword: string): Promise<boolean> {
   // Temporary implementation for development
-  return `hashed_${password}` === hashedPassword
+  // Direkt karşılaştırma (geçici admin hesabı için)
+  return password === hashedPassword
 }
 
 export function requireAdminAuth(minYetkiSeviyesi: number = 1) {

@@ -38,7 +38,8 @@ async function adminLogin() {
     }
     
     try {
-        const response = await axios.post('/api/admin/login', {
+        const baseURL = window.location.origin; // Dynamic domain detection
+        const response = await axios.post(`${baseURL}/api/admin/login`, {
             kullanici_adi,
             sifre
         });
@@ -73,7 +74,8 @@ function adminLogout() {
 // Load dashboard statistics
 async function loadDashboardStats() {
     try {
-        const response = await axios.get('/api/admin/dashboard', {
+        const baseURL = window.location.origin;
+        const response = await axios.get(`${baseURL}/api/admin/dashboard`, {
             headers: { Authorization: `Bearer ${adminToken}` }
         });
         
@@ -95,7 +97,8 @@ async function loadDashboardStats() {
 // Load pending payments
 async function loadPendingPayments() {
     try {
-        const response = await axios.get('/api/admin/payments/pending', {
+        const baseURL = window.location.origin;
+        const response = await axios.get(`${baseURL}/api/admin/payments/pending`, {
             headers: { Authorization: `Bearer ${adminToken}` }
         });
         
@@ -164,7 +167,8 @@ async function approvePayment(paymentId) {
     
     if (confirm('Bu transferi onaylamak istediğinizden emin misiniz?')) {
         try {
-            const response = await axios.post(`/api/admin/payments/${paymentId}/approve`, {
+            const baseURL = window.location.origin;
+            const response = await axios.post(`${baseURL}/api/admin/payments/${paymentId}/approve`, {
                 action: 'approve',
                 aciklama: aciklama
             }, {
@@ -193,7 +197,8 @@ async function rejectPayment(paymentId) {
     
     if (confirm('Bu transferi reddetmek istediğinizden emin misiniz?')) {
         try {
-            const response = await axios.post(`/api/admin/payments/${paymentId}/approve`, {
+            const baseURL = window.location.origin;
+            const response = await axios.post(`${baseURL}/api/admin/payments/${paymentId}/approve`, {
                 action: 'reject',
                 aciklama: aciklama
             }, {
@@ -247,7 +252,8 @@ function showSection(sectionName) {
 // Load payment history
 async function loadPaymentHistory() {
     try {
-        const response = await axios.get('/api/admin/payments/history', {
+        const baseURL = window.location.origin;
+        const response = await axios.get(`${baseURL}/api/admin/payments/history`, {
             headers: { Authorization: `Bearer ${adminToken}` }
         });
         

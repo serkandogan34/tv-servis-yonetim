@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV Servis Yönetim Sistemi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md transform hover:scale-105 transition-all duration-300">
+            <div class="text-center mb-8">
+                <div class="mx-auto w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-tv text-3xl text-blue-600"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">
+                    TV Servis Yönetim
+                </h1>
+                <p class="text-gray-600 mb-4">Türkiye geneli TV ekran servisi yönetim sistemi</p>
+                
+                <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-3 rounded-lg text-sm">
+                    <i class="fas fa-rocket mr-2"></i>
+                    <strong>Demo Sürüm v1.0</strong> - Hosting'e kuruldu
+                </div>
+            </div>
+            
+            <div class="space-y-4">
+                <button onclick="showFeatures()" class="block w-full bg-blue-600 text-white text-center py-3 rounded-lg hover:bg-blue-700 transition duration-300 shadow-lg">
+                    <i class="fas fa-user-tie mr-2"></i>
+                    Bayi Sistemi
+                </button>
+                
+                <button onclick="showFeatures()" class="block w-full bg-red-600 text-white text-center py-3 rounded-lg hover:bg-red-700 transition duration-300 shadow-lg">
+                    <i class="fas fa-user-shield mr-2"></i>
+                    Admin Paneli
+                </button>
+                
+                <button onclick="showDashboard()" class="block w-full bg-green-600 text-white text-center py-3 rounded-lg hover:bg-green-700 transition duration-300 shadow-lg">
+                    <i class="fas fa-chart-line mr-2"></i>
+                    Demo Dashboard
+                </button>
+                
+                <div class="border-t pt-4 mt-6">
+                    <p class="text-sm font-semibold text-gray-700 mb-3 text-center">
+                        <i class="fas fa-book mr-2"></i>Dokümantasyon
+                    </p>
+                    
+                    <div class="space-y-2">
+                        <a href="docs/TV-Servis-Kullanici-Kilavuzu.pdf" target="_blank" class="block w-full bg-purple-600 text-white text-center py-2 rounded-lg hover:bg-purple-700 transition duration-300 text-sm shadow">
+                            <i class="fas fa-file-pdf mr-2"></i>
+                            Kullanıcı Kılavuzu
+                        </a>
+                        
+                        <a href="docs/TV-Servis-Teknik-Kilavuz.pdf" target="_blank" class="block w-full bg-orange-600 text-white text-center py-2 rounded-lg hover:bg-orange-700 transition duration-300 text-sm shadow">
+                            <i class="fas fa-code mr-2"></i>
+                            Teknik Kılavuz
+                        </a>
+                        
+                        <button onclick="showInfo()" class="block w-full bg-gray-600 text-white text-center py-2 rounded-lg hover:bg-gray-700 transition duration-300 text-sm shadow">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            Sistem Hakkında
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center">
+                <div class="flex justify-center space-x-4 text-xs text-gray-500 mb-2">
+                    <span><i class="fas fa-shield-alt mr-1"></i>Güvenli</span>
+                    <span><i class="fas fa-bolt mr-1"></i>Hızlı</span>
+                    <span><i class="fas fa-mobile-alt mr-1"></i>Mobil</span>
+                </div>
+                <p class="text-xs text-gray-400">© 2024 TV Servis Yönetim Sistemi</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feature Modal -->
+    <div id="featureModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl max-w-lg w-full mx-4 p-6 transform scale-95 modal-enter">
+            <div class="text-center">
+                <div class="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-cogs text-2xl text-blue-600"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">Sistem Özellikleri</h3>
+                
+                <div class="text-left bg-gray-50 p-4 rounded-lg mb-6">
+                    <h4 class="font-semibold mb-3 text-blue-600">
+                        <i class="fas fa-check-circle mr-2"></i>Mevcut Özellikler:
+                    </h4>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><i class="fas fa-star text-yellow-500 mr-2"></i>Modern arayüz tasarımı</li>
+                        <li><i class="fas fa-star text-yellow-500 mr-2"></i>Responsive mobil uyumluluk</li>
+                        <li><i class="fas fa-star text-yellow-500 mr-2"></i>PDF dokümantasyon sistemi</li>
+                        <li><i class="fas fa-star text-yellow-500 mr-2"></i>Güvenli hosting yapısı</li>
+                    </ul>
+                    
+                    <h4 class="font-semibold mb-3 mt-4 text-purple-600">
+                        <i class="fas fa-rocket mr-2"></i>Geliştirilecek Özellikler:
+                    </h4>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><i class="fas fa-plus text-green-500 mr-2"></i>Bayi kayıt ve giriş sistemi</li>
+                        <li><i class="fas fa-plus text-green-500 mr-2"></i>İş takip ve satın alma</li>
+                        <li><i class="fas fa-plus text-green-500 mr-2"></i>Ödeme entegrasyonu (PayTR)</li>
+                        <li><i class="fas fa-plus text-green-500 mr-2"></i>Admin onay sistemi</li>
+                        <li><i class="fas fa-plus text-green-500 mr-2"></i>Real-time dashboard</li>
+                        <li><i class="fas fa-plus text-green-500 mr-2"></i>Email bildirimler</li>
+                    </ul>
+                </div>
+                
+                <div class="flex space-x-3">
+                    <button onclick="closeModal('featureModal')" class="flex-1 bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-600 transition">
+                        Kapat
+                    </button>
+                    <button onclick="showUpgrade()" class="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                        <i class="fas fa-arrow-up mr-1"></i>
+                        Geliştir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Modal -->
+    <div id="dashboardModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl max-w-2xl w-full mx-4 p-6">
+            <div class="text-center mb-6">
+                <h3 class="text-2xl font-bold">Demo Dashboard</h3>
+                <p class="text-gray-600">Sistem durumu ve istatistikler</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div class="bg-blue-100 p-4 rounded-lg text-center">
+                    <i class="fas fa-users text-2xl text-blue-600 mb-2"></i>
+                    <div class="text-2xl font-bold text-blue-800">156</div>
+                    <div class="text-sm text-blue-600">Toplam Bayi</div>
+                </div>
+                <div class="bg-green-100 p-4 rounded-lg text-center">
+                    <i class="fas fa-tasks text-2xl text-green-600 mb-2"></i>
+                    <div class="text-2xl font-bold text-green-800">89</div>
+                    <div class="text-sm text-green-600">Aktif İş</div>
+                </div>
+                <div class="bg-yellow-100 p-4 rounded-lg text-center">
+                    <i class="fas fa-clock text-2xl text-yellow-600 mb-2"></i>
+                    <div class="text-2xl font-bold text-yellow-800">234</div>
+                    <div class="text-sm text-yellow-600">Bekleyen</div>
+                </div>
+                <div class="bg-purple-100 p-4 rounded-lg text-center">
+                    <i class="fas fa-chart-line text-2xl text-purple-600 mb-2"></i>
+                    <div class="text-2xl font-bold text-purple-800">67</div>
+                    <div class="text-sm text-purple-600">Bu Ay</div>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                <h4 class="font-semibold mb-2">Son Aktiviteler:</h4>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between">
+                        <span>İstanbul - TV Ekran Değişimi</span>
+                        <span class="text-green-600">Tamamlandı</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Ankara - Sistem Kurulumu</span>
+                        <span class="text-yellow-600">Beklemede</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>İzmir - Bakım Hizmeti</span>
+                        <span class="text-blue-600">Devam Ediyor</span>
+                    </div>
+                </div>
+            </div>
+            
+            <button onclick="closeModal('dashboardModal')" class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
+                <i class="fas fa-times mr-2"></i>Kapat
+            </button>
+        </div>
+    </div>
+
+    <!-- Info Modal -->
+    <div id="infoModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl max-w-md w-full mx-4 p-6">
+            <div class="text-center">
+                <i class="fas fa-info-circle text-4xl text-blue-500 mb-4"></i>
+                <h3 class="text-xl font-bold mb-4">Sistem Bilgileri</h3>
+                
+                <div class="text-left space-y-3 text-sm">
+                    <div class="flex justify-between">
+                        <span class="font-semibold">Versiyon:</span>
+                        <span>Demo v1.0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-semibold">Durum:</span>
+                        <span class="text-green-600">Aktif</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-semibold">Hosting:</span>
+                        <span>Shared Hosting</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-semibold">Kurulum:</span>
+                        <span>Static HTML</span>
+                    </div>
+                </div>
+                
+                <button onclick="closeModal('infoModal')" class="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                    Tamam
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upgrade Modal -->
+    <div id="upgradeModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl max-w-lg w-full mx-4 p-6">
+            <div class="text-center">
+                <i class="fas fa-rocket text-4xl text-purple-500 mb-4"></i>
+                <h3 class="text-xl font-bold mb-4">Sistem Geliştirme</h3>
+                
+                <div class="bg-gradient-to-r from-purple-100 to-blue-100 p-4 rounded-lg mb-4">
+                    <p class="text-sm text-gray-700 mb-3">
+                        Tam özellikli sisteme geçmek için aşağıdaki seçeneklerden birini tercih edebilirsiniz:
+                    </p>
+                    
+                    <div class="space-y-2 text-xs">
+                        <div class="bg-white p-2 rounded flex justify-between">
+                            <span><i class="fas fa-server mr-1"></i>PHP + MySQL Hosting</span>
+                            <span class="text-green-600">Orta maliyet</span>
+                        </div>
+                        <div class="bg-white p-2 rounded flex justify-between">
+                            <span><i class="fas fa-cloud mr-1"></i>Cloudflare Pages</span>
+                            <span class="text-blue-600">Düşük maliyet</span>
+                        </div>
+                        <div class="bg-white p-2 rounded flex justify-between">
+                            <span><i class="fas fa-bolt mr-1"></i>VPS/Cloud Server</span>
+                            <span class="text-yellow-600">Yüksek maliyet</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button onclick="closeModal('upgradeModal')" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition">
+                    <i class="fas fa-check mr-2"></i>Anladım
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showFeatures() {
+            document.getElementById('featureModal').classList.remove('hidden');
+            document.getElementById('featureModal').classList.add('flex');
+        }
+
+        function showDashboard() {
+            document.getElementById('dashboardModal').classList.remove('hidden');
+            document.getElementById('dashboardModal').classList.add('flex');
+        }
+
+        function showInfo() {
+            document.getElementById('infoModal').classList.remove('hidden');
+            document.getElementById('infoModal').classList.add('flex');
+        }
+
+        function showUpgrade() {
+            closeModal('featureModal');
+            setTimeout(() => {
+                document.getElementById('upgradeModal').classList.remove('hidden');
+                document.getElementById('upgradeModal').classList.add('flex');
+            }, 200);
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+            document.getElementById(modalId).classList.remove('flex');
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('fixed')) {
+                const modals = ['featureModal', 'dashboardModal', 'infoModal', 'upgradeModal'];
+                modals.forEach(modalId => {
+                    if (e.target.id === modalId) {
+                        closeModal(modalId);
+                    }
+                });
+            }
+        });
+
+        // Add some animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('button, a');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                });
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+
+    <style>
+        .modal-enter {
+            animation: modalEnter 0.3s ease-out;
+        }
+        
+        @keyframes modalEnter {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+    </style>
+</body>
+</html>

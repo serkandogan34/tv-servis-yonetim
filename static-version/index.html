@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV Servis Yönetim Sistemi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-tv mr-2 text-blue-600"></i>
+                    TV Servis Yönetim
+                </h1>
+                <p class="text-gray-600">Türkiye geneli TV ekran servisi yönetim sistemi</p>
+                <div class="mt-4 p-4 bg-yellow-100 border border-yellow-400 rounded">
+                    <p class="text-sm text-yellow-700">
+                        <i class="fas fa-info-circle mr-1"></i>
+                        Demo Sürüm - Tam özellikler için Cloudflare deployment gereklidir
+                    </p>
+                </div>
+            </div>
+            
+            <div class="space-y-4">
+                <button onclick="showDemo('bayi')" class="block w-full bg-blue-600 text-white text-center py-3 rounded-lg hover:bg-blue-700 transition duration-300">
+                    <i class="fas fa-user-tie mr-2"></i>
+                    Bayi Girişi (Demo)
+                </button>
+                
+                <button onclick="showDemo('admin')" class="block w-full bg-red-600 text-white text-center py-3 rounded-lg hover:bg-red-700 transition duration-300">
+                    <i class="fas fa-user-shield mr-2"></i>
+                    Admin Girişi (Demo)
+                </button>
+                
+                <button onclick="showDemo('dashboard')" class="block w-full bg-green-600 text-white text-center py-3 rounded-lg hover:bg-green-700 transition duration-300">
+                    <i class="fas fa-chart-line mr-2"></i>
+                    Sistem Durumu (Demo)
+                </button>
+                
+                <div class="border-t pt-4 mt-6">
+                    <p class="text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-book mr-2"></i>Kullanım Kılavuzları
+                    </p>
+                    
+                    <div class="space-y-2">
+                        <a href="docs/TV-Servis-Kullanici-Kilavuzu.pdf" target="_blank" class="block w-full bg-purple-600 text-white text-center py-2 rounded-lg hover:bg-purple-700 transition duration-300 text-sm">
+                            <i class="fas fa-file-pdf mr-2"></i>
+                            Kullanıcı Kılavuzu (PDF)
+                        </a>
+                        
+                        <a href="docs/TV-Servis-Teknik-Kilavuz.pdf" target="_blank" class="block w-full bg-orange-600 text-white text-center py-2 rounded-lg hover:bg-orange-700 transition duration-300 text-sm">
+                            <i class="fas fa-code mr-2"></i>
+                            Teknik Kılavuz (PDF)
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center text-sm text-gray-500">
+                <p>Güvenli ve hızlı servis yönetimi</p>
+                <p class="mt-2 text-xs">Full version: Cloudflare Pages deployment gereklidir</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Modal -->
+    <div id="demoModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-lg max-w-md mx-4">
+            <div class="text-center">
+                <i class="fas fa-info-circle text-4xl text-blue-500 mb-4"></i>
+                <h3 class="text-xl font-bold mb-4">Demo Sürüm</h3>
+                <p class="text-gray-600 mb-6">
+                    Bu static demo sürümüdür. Tam özellikler için sistemin Cloudflare Pages'e deployment edilmesi gerekir.
+                </p>
+                <div class="space-y-2 text-sm text-left bg-gray-50 p-4 rounded mb-4">
+                    <p><strong>Tam sistemde olan özellikler:</strong></p>
+                    <ul class="list-disc list-inside space-y-1 text-gray-600">
+                        <li>Bayi kaydı ve giriş sistemi</li>
+                        <li>İş listesi ve satın alma</li>
+                        <li>PayTR ödeme entegrasyonu</li>
+                        <li>Admin panel ve onaylar</li>
+                        <li>Real-time dashboard</li>
+                        <li>N8N webhook entegrasyonu</li>
+                        <li>Email bildirimler</li>
+                    </ul>
+                </div>
+                <button onclick="closeDemo()" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+                    Anladım
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showDemo(type) {
+            document.getElementById('demoModal').classList.remove('hidden');
+            document.getElementById('demoModal').classList.add('flex');
+        }
+
+        function closeDemo() {
+            document.getElementById('demoModal').classList.add('hidden');
+            document.getElementById('demoModal').classList.remove('flex');
+        }
+    </script>
+</body>
+</html>
