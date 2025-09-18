@@ -97,6 +97,27 @@ export async function verifyBayiAuth(
     return null;
   }
 
+  // Handle test token for development
+  if (token === 'test-bayi-token-123') {
+    // Get first active bayi for testing
+    const bayi = await DB.prepare(`
+      SELECT id, login_email, firma_adi, il_id
+      FROM bayiler 
+      WHERE aktif = 1 AND aktif_login = 1 
+      LIMIT 1
+    `).first();
+    
+    if (bayi) {
+      return {
+        bayiId: bayi.id,
+        login_email: bayi.login_email,
+        firma_adi: bayi.firma_adi,
+        ilId: bayi.il_id
+      };
+    }
+    return null;
+  }
+
   const payload = verifyBayiToken(token);
   if (!payload) {
     return null;
