@@ -1810,6 +1810,339 @@ app.get('/dashboard', (c) => {
   return c.redirect('/admin#system-monitoring')
 })
 
+// Bayi Landing Page - Service Provider Focused
+app.get('/bayi', (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Garantor360 Bayi Başvuru | Profesyonel İş Ortaklığı ve Garantili Kazanç</title>
+        <meta name="description" content="Garantor360 bayi olun! Garantili ödeme, sürekli iş akışı ve profesyonel destek ile gelir artırın. 6 sektörde iş fırsatları. Hemen başvuru yapın!">
+        <meta name="keywords" content="bayi başvuru, iş fırsatları, garantili ödeme, hizmet verme, profesyonel ortaklık, gelir artırma">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+        <style>
+            .corporate-gradient { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); }
+            .card-corporate { 
+              transition: all 0.2s ease; 
+              border: 2px solid transparent;
+            }
+            .card-corporate:hover { 
+              transform: translateY(-2px); 
+              box-shadow: 0 8px 25px rgba(30, 41, 59, 0.15);
+              border-color: #ea580c;
+            }
+            .pulse-dot { 
+              animation: pulseDot 1.5s ease-in-out infinite; 
+            }
+            @keyframes pulseDot {
+              0%, 100% { opacity: 0.8; transform: scale(1); }
+              50% { opacity: 1; transform: scale(1.05); }
+            }
+            .stats-counter { 
+              font-weight: 700; 
+              color: #1e293b;
+            }
+            .section-divider {
+              height: 2px;
+              background: linear-gradient(90deg, transparent, #ea580c, transparent);
+            }
+            .sharp-corner {
+              border-radius: 0;
+            }
+            .minimal-corner {
+              border-radius: 4px;
+            }
+        </style>
+    </head>
+    <body class="bg-slate-100">
+        <!-- Navigation -->
+        <nav class="bg-white shadow-sm sticky top-0 z-50 border-b border-slate-200">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center">
+                        <!-- Navigation Logo -->
+                        <div class="relative mr-3">
+                            <div class="w-8 h-8 bg-orange-600 sharp-corner flex items-center justify-center">
+                                <i class="fas fa-shield-alt text-white text-sm"></i>
+                            </div>
+                            <div class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-slate-800 sharp-corner flex items-center justify-center">
+                                <div class="w-1 h-1 bg-white sharp-corner"></div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col leading-tight">
+                            <span class="font-bold text-lg text-slate-800 tracking-tight">GARANTOR</span>
+                            <span class="text-orange-600 font-bold text-xs tracking-widest -mt-1">360</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <!-- Provider Action Buttons -->
+                        <a href="/" class="text-slate-600 hover:text-slate-800 font-medium transition duration-200">
+                            Müşteri misiniz?
+                        </a>
+                        <a href="/bayi/login" class="bg-orange-600 text-white px-6 py-2 sharp-corner font-semibold hover:bg-orange-700 transition duration-200">
+                            BAYI GİRİŞİ
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section - Provider Focused -->
+        <section class="bg-slate-800 text-white py-24">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center">
+                    <h1 class="text-6xl font-bold mb-8 tracking-tight">
+                        PROFESYONEL
+                        <span class="block text-orange-400">İŞ ORTAKLIĞI</span>
+                    </h1>
+                    <p class="text-xl mb-10 opacity-95 max-w-2xl mx-auto font-light">
+                        Garantor360'da hizmet verin, garantili iş hacmi ve güvenli ödeme sistemi ile 
+                        gelir elde edin. 6 farklı sektörde fırsatlar.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button onclick="scrollToApplication()" class="bg-orange-600 text-white px-10 py-4 sharp-corner font-bold text-lg hover:bg-orange-700 transition duration-200 shadow-xl">
+                            BAŞVURU YAP
+                        </button>
+                        <button onclick="scrollToStats()" class="border-2 border-white text-white px-10 py-4 sharp-corner font-bold text-lg hover:bg-white hover:text-slate-800 transition duration-200">
+                            FIRSATLARI GÖR
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Statistics for Providers -->
+        <section id="stats" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <!-- Provider Stats Header -->
+                <div class="text-center mb-16">
+                    <div class="section-divider w-20 mx-auto mb-6"></div>
+                    <h2 class="text-4xl font-bold text-slate-800 mb-4 tracking-tight">
+                        CANLI İŞ FIRSATLARI
+                    </h2>
+                    <p class="text-slate-600 text-lg font-medium">Son 24 saatte gerçekleşen iş hacmi</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                    <div class="bg-slate-800 text-white p-8 minimal-corner card-corporate">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-slate-300 text-sm font-medium mb-2">BUGÜN AÇILAN İŞ</p>
+                                <p class="text-4xl font-bold stats-counter text-white" id="daily-jobs">127</p>
+                            </div>
+                            <div class="w-3 h-3 bg-orange-600 sharp-corner pulse-dot"></div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-700">
+                            <span class="text-orange-400 text-sm font-semibold">
+                                ↗ +23% önceki güne göre
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border-2 border-slate-200 p-8 minimal-corner card-corporate">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-slate-600 text-sm font-medium mb-2">GÜNLÜK ORTALAMA KAZANÇ</p>
+                                <p class="text-4xl font-bold stats-counter text-slate-800">₺<span id="daily-earnings">850</span></p>
+                            </div>
+                            <div class="w-3 h-3 bg-orange-600 sharp-corner"></div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-200">
+                            <span class="text-slate-600 text-sm font-semibold">
+                                Bayi başına ortalama
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border-2 border-slate-200 p-8 minimal-corner card-corporate">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-slate-600 text-sm font-medium mb-2">AKTİF BAYİLER</p>
+                                <p class="text-4xl font-bold stats-counter text-slate-800" id="active-dealers">412</p>
+                            </div>
+                            <div class="w-3 h-3 bg-orange-600 sharp-corner"></div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-200">
+                            <span class="text-slate-600 text-sm font-semibold">
+                                Bu ay %18 artış
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="bg-orange-600 text-white p-8 minimal-corner card-corporate">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-orange-100 text-sm font-medium mb-2">ORTALAMA İŞ ÜCRETİ</p>
+                                <p class="text-4xl font-bold stats-counter text-white">₺<span id="avg-price">272</span></p>
+                            </div>
+                            <div class="w-3 h-3 bg-white sharp-corner pulse-dot"></div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-orange-700">
+                            <span class="text-orange-100 text-sm font-semibold">
+                                ↗ Sürekli yükseliş
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Provider Benefits -->
+        <section class="py-20 bg-slate-800 text-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-6 tracking-tight">BAYİ AVANTAJLARI</h2>
+                    <p class="text-xl opacity-95 font-light">Garantor360'da hizmet vermenin getirdikleri</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
+                        <h3 class="text-xl font-bold mb-4 tracking-tight">GARANTİLİ ÖDEME</h3>
+                        <p class="opacity-90 font-medium">İş tamamlandığında ödemeniz garantili. Platform güvencesi altında.</p>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
+                        <h3 class="text-xl font-bold mb-4 tracking-tight">SÜREKLİ İŞ AKIŞI</h3>
+                        <p class="opacity-90 font-medium">Platform üzerinden düzenli iş talepleri. İş bulmak artık kolay.</p>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
+                        <h3 class="text-xl font-bold mb-4 tracking-tight">PROFESYONEL İMAJ</h3>
+                        <p class="opacity-90 font-medium">Garantor360 kalite belgesi ile müşteri güveni kazanın.</p>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
+                        <h3 class="text-xl font-bold mb-4 tracking-tight">PAZARLAMA DESTEĞİ</h3>
+                        <p class="opacity-90 font-medium">Platform kendi pazarlamasını yapıyor. Siz sadece işe odaklanın.</p>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
+                        <h3 class="text-xl font-bold mb-4 tracking-tight">HUKUKİ KORUMA</h3>
+                        <p class="opacity-90 font-medium">Anlaşmazlıklarda hukuki destek. Garantor360 sizi korur.</p>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
+                        <h3 class="text-xl font-bold mb-4 tracking-tight">EĞİTİM & GELIŞIM</h3>
+                        <p class="opacity-90 font-medium">Sürekli eğitim programları ile kendinizi geliştirin.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action - Provider Application -->
+        <section class="py-20 bg-white" id="application">
+            <div class="max-w-4xl mx-auto text-center px-6">
+                <div class="section-divider w-32 mx-auto mb-8"></div>
+                <h2 class="text-5xl font-bold text-slate-800 mb-8 tracking-tight">
+                    PROFESYONEL ORTAKLIK
+                </h2>
+                <p class="text-xl text-slate-600 mb-12 font-medium max-w-2xl mx-auto">
+                    5 dakikada başvuru yapın ve profesyonel iş ağımızın bir parçası olun. 
+                    Sıfır yatırım, garantili kazanç.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                    <a href="/bayi/login" class="bg-orange-600 text-white px-12 py-4 sharp-corner font-bold text-lg hover:bg-orange-700 transition duration-200 shadow-lg">
+                        BAŞVURU YAP
+                    </a>
+                    <a href="tel:+905001234567" class="border-2 border-orange-600 text-orange-600 px-12 py-4 sharp-corner font-bold text-lg hover:bg-orange-600 hover:text-white transition duration-200">
+                        0 500 123 45 67
+                    </a>
+                </div>
+                <p class="text-sm text-slate-600 font-semibold">
+                    <span class="inline-block w-2 h-2 bg-orange-600 sharp-corner mr-2"></span>
+                    Başvuru ücretsiz • Ön ödeme yok • Anında değerlendirme
+                </p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-slate-800 text-white py-8">
+            <div class="max-w-7xl mx-auto px-6 text-center">
+                <div class="flex items-center justify-center mb-4">
+                    <div class="relative mr-3">
+                        <div class="w-8 h-8 bg-orange-600 sharp-corner flex items-center justify-center">
+                            <i class="fas fa-shield-alt text-white text-sm"></i>
+                        </div>
+                    </div>
+                    <div class="flex flex-col leading-tight">
+                        <span class="font-bold text-lg tracking-tight">GARANTOR</span>
+                        <span class="text-orange-600 font-bold text-xs tracking-widest -mt-1">360</span>
+                    </div>
+                </div>
+                <p class="text-slate-300 mb-4">Türkiye'nin güvenli hizmet platformu</p>
+                <div class="flex justify-center space-x-6 text-sm">
+                    <a href="#" class="text-slate-400 hover:text-orange-600 transition duration-200">Gizlilik</a>
+                    <a href="#" class="text-slate-400 hover:text-orange-600 transition duration-200">Kullanım Şartları</a>
+                    <a href="/" class="text-slate-400 hover:text-orange-600 transition duration-200">Müşteri Sayfası</a>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+        // Provider page scroll functions
+        function scrollToStats() {
+            document.getElementById('stats').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function scrollToApplication() {
+            document.getElementById('application').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Stats update for provider page
+        function updateProviderStats() {
+            // Daily jobs counter
+            const dailyJobsEl = document.getElementById('daily-jobs');
+            if (dailyJobsEl) {
+                const current = parseInt(dailyJobsEl.textContent) || 127;
+                const newValue = current + Math.floor(Math.random() * 3);
+                dailyJobsEl.textContent = newValue;
+            }
+
+            // Daily earnings for providers
+            const earningsEl = document.getElementById('daily-earnings');
+            if (earningsEl) {
+                const earnings = [750, 820, 890, 740, 920, 680, 950, 780, 860, 810];
+                earningsEl.textContent = earnings[Math.floor(Math.random() * earnings.length)];
+            }
+
+            // Active dealers
+            const dealersEl = document.getElementById('active-dealers');
+            if (dealersEl) {
+                const current = parseInt(dealersEl.textContent) || 412;
+                const change = Math.random() > 0.7 ? (Math.random() > 0.5 ? 1 : -1) : 0;
+                dealersEl.textContent = current + change;
+            }
+
+            // Average price
+            const avgPriceEl = document.getElementById('avg-price');
+            if (avgPriceEl) {
+                const prices = [245, 267, 289, 234, 312, 198, 356, 276, 234, 287];
+                avgPriceEl.textContent = prices[Math.floor(Math.random() * prices.length)];
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update provider stats every 12 seconds
+            setInterval(updateProviderStats, 12000);
+        });
+        </script>
+    </body>
+    </html>
+  `)
+})
+
 // Bayi login sayfası
 app.get('/bayi/login', (c) => {
   return c.html(`
@@ -2071,7 +2404,7 @@ app.get('/bayi/dashboard', (c) => {
   `)
 })
 
-// Default route - Dealer Recruitment Vitrin (Corporate Design)
+// Default route - Customer Landing Page
 app.get('/', (c) => {
   return c.html(`
     <!DOCTYPE html>
@@ -2079,7 +2412,9 @@ app.get('/', (c) => {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Garantor360 - Tüm Hizmetlerde Güvence ve Garanti</title>
+        <title>Garantor360 - Güvenli Hizmet Alın | Ödeme Güvencesi ve İşçilik Garantisi</title>
+        <meta name="description" content="Garantor360 ile ev tamiri, temizlik, nakliye ve tüm hizmetlerde ödeme güvenliği, 6 ay işçilik garantisi ve sigorta koruması. Güvenli hizmet almanın en kolay yolu!">
+        <meta name="keywords" content="güvenli hizmet, ödeme güvencesi, işçilik garantisi, ev tamiri, temizlik hizmeti, nakliye, sigorta koruması">
         <script src="https://cdn.tailwindcss.com"></script>
         <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -2138,51 +2473,23 @@ app.get('/', (c) => {
                             <span class="text-orange-600 font-bold text-xs tracking-widest -mt-1">360</span>
                         </div>
                     </div>
-                    <div class="flex items-center space-x-1">
-                        <!-- View Switcher -->
-                        <div class="flex bg-slate-800 p-1 minimal-corner mr-4">
-                            <button onclick="showProviderView()" id="provider-tab" class="px-4 py-2 text-sm font-medium transition duration-200 sharp-corner bg-orange-600 text-white">
-                                HİZMET VEREN
-                            </button>
-                            <button onclick="showCustomerView()" id="customer-tab" class="px-4 py-2 text-sm font-medium transition duration-200 sharp-corner text-orange-100 hover:text-white">
-                                MÜŞTERİ
-                            </button>
-                        </div>
-                        
-                        <!-- Action Button -->
-                        <a href="/bayi" id="action-button" class="bg-slate-800 text-white px-6 py-2 sharp-corner font-semibold hover:bg-slate-900 transition duration-200">
-                            BAYI GİRİŞİ
+                    <div class="flex items-center space-x-4">
+                        <!-- Customer Action Buttons -->
+                        <a href="/bayi" class="text-slate-600 hover:text-slate-800 font-medium transition duration-200">
+                            Hizmet Veren misiniz?
+                        </a>
+                        <a href="#hizmet-al" class="bg-orange-600 text-white px-6 py-2 sharp-corner font-semibold hover:bg-orange-700 transition duration-200">
+                            HİZMET AL
                         </a>
                     </div>
                 </div>
             </div>
         </nav>
 
-        <!-- Hero Section -->
+        <!-- Hero Section - Customer Focused -->
         <section class="bg-orange-600 text-white py-24">
             <div class="max-w-7xl mx-auto px-6">
-                <!-- Provider View (Default) -->
-                <div class="text-center" id="provider-hero">
-                    <h1 class="text-6xl font-bold mb-8 tracking-tight">
-                        PROFESYONEL
-                        <span class="block text-slate-800">İŞ ORTAKLIĞI</span>
-                    </h1>
-                    <p class="text-xl mb-10 opacity-95 max-w-2xl mx-auto font-light">
-                        Garantor360'da hizmet verin, garantili iş hacmi ve güvenli ödeme sistemi ile 
-                        gelir elde edin. 6 farklı sektörde fırsatlar.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="/bayi" class="bg-slate-800 text-white px-10 py-4 sharp-corner font-bold text-lg hover:bg-slate-900 transition duration-200 shadow-xl">
-                            BAYI BAŞVURU
-                        </a>
-                        <button onclick="scrollToStats()" class="border-2 border-white text-white px-10 py-4 sharp-corner font-bold text-lg hover:bg-white hover:text-slate-800 transition duration-200">
-                            FIRSATLARI GÖR
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Customer View (Hidden by default) -->
-                <div class="text-center hidden" id="customer-hero">
+                <div class="text-center">
                     <h1 class="text-6xl font-bold mb-8 tracking-tight">
                         GÜVENLİ HİZMET
                         <span class="block text-slate-800">ALMAK BU KADAR KOLAY!</span>
@@ -2206,17 +2513,8 @@ app.get('/', (c) => {
         <!-- Live Statistics -->
         <section id="stats" class="py-20 bg-white">
             <div class="max-w-7xl mx-auto px-6">
-                <!-- Provider Stats Header -->
-                <div class="text-center mb-16" id="provider-stats-header">
-                    <div class="section-divider w-20 mx-auto mb-6"></div>
-                    <h2 class="text-4xl font-bold text-slate-800 mb-4 tracking-tight">
-                        CANLI İŞ FIRSATLARI
-                    </h2>
-                    <p class="text-slate-600 text-lg font-medium">Son 24 saatte gerçekleşen iş hacmi</p>
-                </div>
-
-                <!-- Customer Stats Header (Hidden) -->
-                <div class="text-center mb-16 hidden" id="customer-stats-header">
+                <!-- Customer Stats Header -->
+                <div class="text-center mb-16">
                     <div class="section-divider w-20 mx-auto mb-6"></div>
                     <h2 class="text-4xl font-bold text-slate-800 mb-4 tracking-tight">
                         GÜVEN İSTATİSTİKLERİ
@@ -2503,54 +2801,8 @@ app.get('/', (c) => {
         <!-- Benefits Section -->
         <section class="py-20 bg-slate-800 text-white">
             <div class="max-w-7xl mx-auto px-6">
-                <!-- Provider Benefits -->
-                <div id="provider-benefits">
-                    <div class="text-center mb-16">
-                        <h2 class="text-4xl font-bold mb-6 tracking-tight">BAYİ AVANTAJLARI</h2>
-                        <p class="text-xl opacity-95 font-light">Garantor360'da hizmet vermenin getirdikleri</p>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <div class="text-center">
-                            <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
-                            <h3 class="text-xl font-bold mb-4 tracking-tight">GARANTİLİ ÖDEME</h3>
-                            <p class="opacity-90 font-medium">İş tamamlandığında ödemeniz garantili. Platform güvencesi altında.</p>
-                        </div>
-
-                        <div class="text-center">
-                            <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
-                            <h3 class="text-xl font-bold mb-4 tracking-tight">SÜREKLİ İŞ AKIŞI</h3>
-                            <p class="opacity-90 font-medium">Platform üzerinden düzenli iş talepleri. İş bulmak artık kolay.</p>
-                        </div>
-
-                        <div class="text-center">
-                            <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
-                            <h3 class="text-xl font-bold mb-4 tracking-tight">PROFESYONEL İMAJ</h3>
-                            <p class="opacity-90 font-medium">Garantor360 kalite belgesi ile müşteri güveni kazanın.</p>
-                        </div>
-
-                        <div class="text-center">
-                            <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
-                            <h3 class="text-xl font-bold mb-4 tracking-tight">PAZARLAMA DESTEĞİ</h3>
-                            <p class="opacity-90 font-medium">Platform kendi pazarlamasını yapıyor. Siz sadece işe odaklanın.</p>
-                        </div>
-
-                        <div class="text-center">
-                            <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
-                            <h3 class="text-xl font-bold mb-4 tracking-tight">HUKUKİ KORUMA</h3>
-                            <p class="opacity-90 font-medium">Anlaşmazlıklarda hukuki destek. Garantor360 sizi korur.</p>
-                        </div>
-
-                        <div class="text-center">
-                            <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
-                            <h3 class="text-xl font-bold mb-4 tracking-tight">EĞİTİM & GELIŞIM</h3>
-                            <p class="opacity-90 font-medium">Sürekli eğitim programları ile kendinizi geliştirin.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Customer Benefits (Hidden) -->
-                <div class="hidden" id="customer-benefits">
+                <!-- Customer Benefits -->
+                <div>
                     <div class="text-center mb-16">
                         <h2 class="text-4xl font-bold mb-6 tracking-tight">MÜŞTERİ GÜVENCELERİ</h2>
                         <p class="text-xl opacity-95 font-light">Garantor360 ile hizmet almanın güvenceleri</p>
@@ -2597,28 +2849,28 @@ app.get('/', (c) => {
             </div>
         </section>
 
-        <!-- Call to Action -->
-        <section class="py-20 bg-white">
+        <!-- Call to Action - Customer Focused -->
+        <section class="py-20 bg-white" id="hizmet-al">
             <div class="max-w-4xl mx-auto text-center px-6">
                 <div class="section-divider w-32 mx-auto mb-8"></div>
                 <h2 class="text-5xl font-bold text-slate-800 mb-8 tracking-tight">
-                    PROFESYONEL ORTAKLIK
+                    GÜVENLİ HİZMET ALMAYA BAŞLA
                 </h2>
                 <p class="text-xl text-slate-600 mb-12 font-medium max-w-2xl mx-auto">
-                    5 dakikada başvuru yapın ve profesyonel iş ağımızın bir parçası olun. 
-                    Sıfır yatırım, garantili kazanç.
+                    Hemen ihtiyacınızı belirtin, doğrulanmış uzmanlardan teklif alın. 
+                    Ödeme güvenliği, işçilik garantisi dahil.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                    <a href="/bayi" class="bg-orange-600 text-white px-12 py-4 sharp-corner font-bold text-lg hover:bg-orange-700 transition duration-200 shadow-lg">
-                        BAŞVURU YAP
+                    <a href="#service-request" class="bg-slate-800 text-white px-12 py-4 sharp-corner font-bold text-lg hover:bg-slate-900 transition duration-200 shadow-lg">
+                        HİZMET TALEBİ
                     </a>
-                    <a href="tel:+905001234567" class="border-2 border-orange-600 text-orange-600 px-12 py-4 sharp-corner font-bold text-lg hover:bg-orange-600 hover:text-white transition duration-200">
-                        0 500 123 45 67
+                    <a href="tel:+905001234567" class="border-2 border-slate-800 text-slate-800 px-12 py-4 sharp-corner font-bold text-lg hover:bg-slate-800 hover:text-white transition duration-200">
+                        CANLI DESTEK
                     </a>
                 </div>
                 <p class="text-sm text-slate-600 font-semibold">
                     <span class="inline-block w-2 h-2 bg-orange-600 sharp-corner mr-2"></span>
-                    Başvuru ücretsiz • Ön ödeme yok • Anında değerlendirme
+                    Ücretsiz teklif • 6 ay garanti • 7/24 destek
                 </p>
             </div>
         </section>
@@ -2797,128 +3049,23 @@ app.get('/', (c) => {
         </footer>
 
         <script>
-        // View Switcher Functions
-        function showProviderView() {
-            // Update tabs
-            document.getElementById('provider-tab').className = 'px-4 py-2 text-sm font-medium transition duration-200 sharp-corner bg-orange-600 text-white';
-            document.getElementById('customer-tab').className = 'px-4 py-2 text-sm font-medium transition duration-200 sharp-corner text-orange-100 hover:text-white';
-            
-            // Update hero sections
-            document.getElementById('provider-hero').classList.remove('hidden');
-            document.getElementById('customer-hero').classList.add('hidden');
-            
-            // Update stats headers
-            document.getElementById('provider-stats-header').classList.remove('hidden');
-            document.getElementById('customer-stats-header').classList.add('hidden');
-            
-            // Update benefits sections
-            document.getElementById('provider-benefits').classList.remove('hidden');
-            document.getElementById('customer-benefits').classList.add('hidden');
-            
-            // Update action button
-            document.getElementById('action-button').innerHTML = 'BAYI GİRİŞİ';
-            document.getElementById('action-button').href = '/bayi';
-            document.getElementById('action-button').className = 'bg-slate-800 text-white px-6 py-2 sharp-corner font-semibold hover:bg-slate-900 transition duration-200';
-            
-            // Update service categories to provider view
-            updateServiceCategories('provider');
-            
-            // Update call-to-action section
-            updateCallToAction('provider');
-        }
-        
-        function showCustomerView() {
-            // Update tabs
-            document.getElementById('customer-tab').className = 'px-4 py-2 text-sm font-medium transition duration-200 sharp-corner bg-orange-600 text-white';
-            document.getElementById('provider-tab').className = 'px-4 py-2 text-sm font-medium transition duration-200 sharp-corner text-orange-100 hover:text-white';
-            
-            // Update hero sections
-            document.getElementById('customer-hero').classList.remove('hidden');
-            document.getElementById('provider-hero').classList.add('hidden');
-            
-            // Update stats headers
-            document.getElementById('customer-stats-header').classList.remove('hidden');
-            document.getElementById('provider-stats-header').classList.add('hidden');
-            
-            // Update benefits sections
-            document.getElementById('customer-benefits').classList.remove('hidden');
-            document.getElementById('provider-benefits').classList.add('hidden');
-            
-            // Update action button
-            document.getElementById('action-button').innerHTML = 'HİZMET AL';
-            document.getElementById('action-button').href = '#services';
-            document.getElementById('action-button').className = 'bg-orange-600 text-white px-6 py-2 sharp-corner font-semibold hover:bg-orange-700 transition duration-200';
-            
-            // Update service categories to customer view
-            updateServiceCategories('customer');
-            
-            // Update call-to-action section
-            updateCallToAction('customer');
-        }
-
-        // Additional scroll functions for customer view
+        // Customer page scroll functions
         function scrollToStats() {
             document.getElementById('stats').scrollIntoView({ behavior: 'smooth' });
         }
         
         function scrollToServices() {
-            const servicesSection = document.querySelector('[id*="service"], section:has(h2:contains("HİZMET"))');
+            const servicesSection = document.querySelector('section:has(h2:contains("HİZMET KATEGORİLERİ"))') || 
+                                  document.querySelector('[id*="service"]');
             if (servicesSection) {
                 servicesSection.scrollIntoView({ behavior: 'smooth' });
             }
         }
         
         function scrollToGuarantee() {
-            document.getElementById('customer-benefits').scrollIntoView({ behavior: 'smooth' });
-        }
-        
-        // Update service categories based on view
-        function updateServiceCategories(view) {
-            // This function will be called to update service categories display
-            // Currently the service categories are neutral and work for both views
-            console.log('Service categories updated for view:', view);
-        }
-        
-        // Update call-to-action section based on view
-        function updateCallToAction(view) {
-            // Find the call-to-action section by looking for the specific elements
-            const ctaSections = document.querySelectorAll('section');
-            let ctaSection = null;
-            
-            for (let section of ctaSections) {
-                const h2 = section.querySelector('h2');
-                if (h2 && (h2.textContent.includes('PROFESYONEL ORTAKLIK') || h2.textContent.includes('GÜVENLİ HİZMET'))) {
-                    ctaSection = section;
-                    break;
-                }
-            }
-            
-            if (!ctaSection) return;
-            
-            const titleElement = ctaSection.querySelector('h2');
-            const descElement = ctaSection.querySelector('p');
-            const primaryButton = ctaSection.querySelector('a[href="/bayi"]');
-            const secondaryButton = ctaSection.querySelector('a[href^="tel:"]');
-            const footerText = ctaSection.querySelector('p:last-child');
-            
-            if (view === 'provider') {
-                titleElement.textContent = 'PROFESYONEL ORTAKLIK';
-                descElement.textContent = '5 dakikada başvuru yapın ve profesyonel iş ağımızın bir parçası olun. Sıfır yatırım, garantili kazanç.';
-                primaryButton.textContent = 'BAŞVURU YAP';
-                primaryButton.href = '/bayi';
-                primaryButton.className = 'bg-orange-600 text-white px-12 py-4 sharp-corner font-bold text-lg hover:bg-orange-700 transition duration-200 shadow-lg';
-                secondaryButton.textContent = '0 500 123 45 67';
-                secondaryButton.className = 'border-2 border-orange-600 text-orange-600 px-12 py-4 sharp-corner font-bold text-lg hover:bg-orange-600 hover:text-white transition duration-200';
-                footerText.innerHTML = '<span class="inline-block w-2 h-2 bg-orange-600 sharp-corner mr-2"></span>Başvuru ücretsiz • Ön ödeme yok • Anında değerlendirme';
-            } else {
-                titleElement.textContent = 'GÜVENLİ HİZMET ALMAYA BAŞLA';
-                descElement.textContent = 'Hemen ihtiyacınızı belirtin, doğrulanmış uzmanlardan teklif alın. Ödeme güvenliği, işçilik garantisi dahil.';
-                primaryButton.textContent = 'HİZMET TALEBİ';
-                primaryButton.href = '#service-request';
-                primaryButton.className = 'bg-slate-800 text-white px-12 py-4 sharp-corner font-bold text-lg hover:bg-slate-900 transition duration-200 shadow-lg';
-                secondaryButton.textContent = 'CANLI DESTEK';
-                secondaryButton.className = 'border-2 border-slate-800 text-slate-800 px-12 py-4 sharp-corner font-bold text-lg hover:bg-slate-800 hover:text-white transition duration-200';
-                footerText.innerHTML = '<span class="inline-block w-2 h-2 bg-orange-600 sharp-corner mr-2"></span>Ücretsiz teklif • 6 ay garanti • 7/24 destek';
+            const guaranteeSection = document.querySelector('section:has(h2:contains("MÜŞTERİ GÜVENCELERİ"))');
+            if (guaranteeSection) {
+                guaranteeSection.scrollIntoView({ behavior: 'smooth' });
             }
         }
 
