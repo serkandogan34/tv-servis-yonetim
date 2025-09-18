@@ -1435,172 +1435,7 @@ app.post('/api/admin/cleanup', requireAdminAuth(), async (c) => {
 // Frontend Routes
 // =============================================================================
 
-// Ana sayfa - Dashboard
-app.get('/', (c) => {
-  return c.html(`
-    <!DOCTYPE html>
-    <html lang="tr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>TV Servis Yönetim Sistemi</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
-        <link href="/static/style.css" rel="stylesheet">
-    </head>
-    <body class="bg-gray-100 min-h-screen">
-        <!-- Navigation -->
-        <nav class="bg-blue-600 text-white p-4">
-            <div class="container mx-auto flex justify-between items-center">
-                <h1 class="text-2xl font-bold">
-                    <i class="fas fa-tv mr-2"></i>
-                    TV Servis Yönetim Sistemi
-                </h1>
-                <div class="space-x-4">
-                    <button onclick="showSection('dashboard')" class="nav-btn bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded">
-                        <i class="fas fa-dashboard mr-1"></i> Dashboard
-                    </button>
-                    <button onclick="showSection('jobs')" class="nav-btn bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded">
-                        <i class="fas fa-tasks mr-1"></i> İşler
-                    </button>
-                    <button onclick="showSection('dealers')" class="nav-btn bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded">
-                        <i class="fas fa-users mr-1"></i> Bayiler
-                    </button>
-                    <a href="/dashboard" class="nav-btn bg-purple-500 hover:bg-purple-700 px-4 py-2 rounded inline-block">
-                        <i class="fas fa-chart-line mr-1"></i> Sistem İzleme
-                    </a>
-                    <a href="/bayi/login" class="nav-btn bg-green-500 hover:bg-green-700 px-4 py-2 rounded inline-block">
-                        <i class="fas fa-user mr-1"></i> Bayi Girişi
-                    </a>
-                    <a href="/admin" class="nav-btn bg-red-500 hover:bg-red-700 px-4 py-2 rounded inline-block">
-                        <i class="fas fa-user-shield mr-1"></i> Admin
-                    </a>
-                </div>
-            </div>
-        </nav>
-
-        <div class="container mx-auto p-6">
-            <!-- Dashboard Section -->
-            <div id="dashboard-section" class="section">
-                <h2 class="text-3xl font-bold mb-6 text-gray-800">
-                    <i class="fas fa-chart-line mr-2"></i>
-                    Dashboard - Genel Durum
-                </h2>
-                
-                <!-- Stats Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8" id="stats-cards">
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-600">Toplam İş</p>
-                                <p class="text-3xl font-bold text-blue-600" id="total-jobs">-</p>
-                            </div>
-                            <i class="fas fa-briefcase text-blue-500 text-2xl"></i>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-600">Aktif İş</p>
-                                <p class="text-3xl font-bold text-orange-600" id="active-jobs">-</p>
-                            </div>
-                            <i class="fas fa-clock text-orange-500 text-2xl"></i>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-600">Tamamlanan</p>
-                                <p class="text-3xl font-bold text-green-600" id="completed-jobs">-</p>
-                            </div>
-                            <i class="fas fa-check-circle text-green-500 text-2xl"></i>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-600">Toplam Bayi</p>
-                                <p class="text-3xl font-bold text-purple-600" id="total-dealers">-</p>
-                            </div>
-                            <i class="fas fa-store text-purple-500 text-2xl"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Charts -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <h3 class="text-xl font-semibold mb-4">Son 7 Gün İş Grafiği</h3>
-                        <div id="recent-jobs-chart" class="h-64 flex items-center justify-center text-gray-500">
-                            Veriler yükleniyor...
-                        </div>
-                    </div>
-                    
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <h3 class="text-xl font-semibold mb-4">İl Bazında İş Dağılımı (Top 10)</h3>
-                        <div id="jobs-by-city" class="space-y-2">
-                            Veriler yükleniyor...
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Jobs Section -->
-            <div id="jobs-section" class="section hidden">
-                <h2 class="text-3xl font-bold mb-6 text-gray-800">
-                    <i class="fas fa-tasks mr-2"></i>
-                    Aktif İşler
-                </h2>
-                
-                <div class="bg-white rounded-lg shadow overflow-hidden">
-                    <div class="p-4 bg-gray-50 border-b">
-                        <div class="flex justify-between items-center">
-                            <h3 class="text-lg font-semibold">İş Listesi</h3>
-                            <button onclick="loadActiveJobs()" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded">
-                                <i class="fas fa-refresh mr-1"></i> Yenile
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div id="jobs-list" class="p-4">
-                        Veriler yükleniyor...
-                    </div>
-                </div>
-            </div>
-
-            <!-- Dealers Section -->
-            <div id="dealers-section" class="section hidden">
-                <h2 class="text-3xl font-bold mb-6 text-gray-800">
-                    <i class="fas fa-users mr-2"></i>
-                    Bayiler
-                </h2>
-                
-                <div class="bg-white rounded-lg shadow overflow-hidden">
-                    <div class="p-4 bg-gray-50 border-b">
-                        <div class="flex justify-between items-center">
-                            <h3 class="text-lg font-semibold">Bayi Listesi</h3>
-                            <select id="city-filter" onchange="loadDealers()" class="px-3 py-2 border rounded">
-                                <option value="">Tüm İller</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div id="dealers-list" class="p-4">
-                        Veriler yükleniyor...
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-        <script src="/static/app.js"></script>
-    </body>
-    </html>
-  `)
-})
+// Ana sayfa - Removed (Replaced by Dealer Vitrin at end of file)
 
 // Admin paneli
 app.get('/admin', (c) => {
@@ -1687,6 +1522,20 @@ app.get('/admin', (c) => {
                                 </button>
                             </li>
                             <li>
+                                <button onclick="showSection('system-monitoring')" 
+                                        class="nav-item w-full text-left px-4 py-3 text-white rounded-lg hover:bg-blue-700 flex items-center gap-3">
+                                    <i class="fas fa-chart-line"></i>
+                                    Sistem İzleme
+                                </button>
+                            </li>
+                            <li>
+                                <button onclick="showSection('dealers')" 
+                                        class="nav-item w-full text-left px-4 py-3 text-white rounded-lg hover:bg-blue-700 flex items-center gap-3">
+                                    <i class="fas fa-users"></i>
+                                    Bayiler
+                                </button>
+                            </li>
+                            <li>
                                 <button onclick="showSection('payments')" 
                                         class="nav-item w-full text-left px-4 py-3 text-white rounded-lg hover:bg-blue-700 flex items-center gap-3">
                                     <i class="fas fa-credit-card"></i>
@@ -1765,6 +1614,168 @@ app.get('/admin', (c) => {
                         </div>
                     </div>
 
+                    <!-- System Monitoring Section -->
+                    <div id="admin-system-monitoring-section" class="admin-section hidden">
+                        <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                            <i class="fas fa-chart-line mr-2"></i>
+                            Sistem İzleme
+                        </h2>
+                        
+                        <!-- System Health Cards -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-600">Sistem Durumu</p>
+                                        <p class="text-lg font-bold text-green-600">Çevrimiçi</p>
+                                    </div>
+                                    <div class="w-4 h-4 bg-green-500 rounded-full animate-pulse"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-600">Sunucu Yükü</p>
+                                        <p class="text-lg font-bold text-blue-600" id="server-load">%12</p>
+                                    </div>
+                                    <i class="fas fa-server text-blue-500 text-xl"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-600">Veritabanı</p>
+                                        <p class="text-lg font-bold text-green-600">Aktif</p>
+                                    </div>
+                                    <i class="fas fa-database text-green-500 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Real-time Metrics -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                            <div class="bg-white rounded-lg shadow p-6">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                                    <i class="fas fa-chart-area mr-2"></i>
+                                    Günlük İş Dağılımı
+                                </h3>
+                                <canvas id="daily-jobs-chart" width="400" height="200"></canvas>
+                            </div>
+                            
+                            <div class="bg-white rounded-lg shadow p-6">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                                    <i class="fas fa-money-bill-wave mr-2"></i>
+                                    Ödeme Durumu
+                                </h3>
+                                <canvas id="payment-status-chart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- System Logs -->
+                        <div class="bg-gray-900 rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-white mb-4">
+                                <i class="fas fa-terminal mr-2"></i>
+                                Sistem Logları (Canlı)
+                            </h3>
+                            <div id="system-logs" class="bg-black rounded p-4 h-64 overflow-y-auto text-green-400 font-mono text-sm">
+                                <!-- Logs will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dealers Management Section -->
+                    <div id="admin-dealers-section" class="admin-section hidden">
+                        <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                            <i class="fas fa-users mr-2"></i>
+                            Bayi Yönetimi
+                        </h2>
+                        
+                        <!-- Dealer Stats -->
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-600">Toplam Bayi</p>
+                                        <p class="text-3xl font-bold text-blue-600" id="total-dealers">-</p>
+                                    </div>
+                                    <i class="fas fa-users text-blue-500 text-2xl"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-600">Aktif Bayiler</p>
+                                        <p class="text-3xl font-bold text-green-600" id="active-dealers-count">-</p>
+                                    </div>
+                                    <i class="fas fa-user-check text-green-500 text-2xl"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-600">Bu Ay Yeni</p>
+                                        <p class="text-3xl font-bold text-purple-600" id="new-dealers">-</p>
+                                    </div>
+                                    <i class="fas fa-user-plus text-purple-500 text-2xl"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-600">En Performanslı</p>
+                                        <p class="text-lg font-bold text-orange-600" id="top-dealer">-</p>
+                                    </div>
+                                    <i class="fas fa-trophy text-orange-500 text-2xl"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dealer List -->
+                        <div class="bg-white rounded-lg shadow">
+                            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                                <h3 class="text-lg font-semibold text-gray-800">Bayi Listesi</h3>
+                                <div class="flex gap-2">
+                                    <input 
+                                        type="text" 
+                                        id="dealer-search" 
+                                        placeholder="Bayi ara..."
+                                        class="px-3 py-1 border border-gray-300 rounded text-sm"
+                                    >
+                                    <button 
+                                        onclick="refreshDealers()" 
+                                        class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
+                                    >
+                                        <i class="fas fa-refresh mr-1"></i>Yenile
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full table-auto">
+                                        <thead>
+                                            <tr class="bg-gray-50">
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Firma</th>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Email</th>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Şehir</th>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Durum</th>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Kredi</th>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">İşlemler</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dealers-table-body">
+                                            <!-- Dealers will be populated by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Payment History Section -->
                     <div id="admin-payments-section" class="admin-section hidden">
                         <h2 class="text-3xl font-bold mb-6 text-gray-800">
@@ -1794,72 +1805,9 @@ app.get('/admin', (c) => {
   `)
 })
 
-// Health Dashboard sayfası
+// Dashboard route - Redirect to admin panel system monitoring
 app.get('/dashboard', (c) => {
-  return c.html(`
-    <!DOCTYPE html>
-    <html lang="tr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>🖥️ Sistem Dashboard - TV Servis Yönetim</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <style>
-            .metric-card {
-                transition: all 0.3s ease;
-                border: 1px solid #374151;
-            }
-            .metric-card:hover {
-                border-color: #3B82F6;
-                transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
-            }
-            .alert-item {
-                animation: slideIn 0.3s ease-out;
-            }
-            @keyframes slideIn {
-                from {
-                    opacity: 0;
-                    transform: translateX(-20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateX(0);
-                }
-            }
-            .status-indicator {
-                animation: pulse 2s infinite;
-            }
-            @keyframes pulse {
-                0%, 100% { opacity: 1; }
-                50% { opacity: 0.8; }
-            }
-            
-            /* Dark scrollbar */
-            ::-webkit-scrollbar {
-                width: 8px;
-            }
-            ::-webkit-scrollbar-track {
-                background: #1F2937;
-            }
-            ::-webkit-scrollbar-thumb {
-                background: #4B5563;
-                border-radius: 4px;
-            }
-            ::-webkit-scrollbar-thumb:hover {
-                background: #6B7280;
-            }
-        </style>
-    </head>
-    <body class="bg-gray-900">
-        <!-- Dashboard content will be generated by JavaScript -->
-        
-        <script src="/static/health-dashboard.js"></script>
-    </body>
-    </html>
-  `)
+  return c.redirect('/admin#system-monitoring')
 })
 
 // Bayi login sayfası
@@ -2123,7 +2071,7 @@ app.get('/bayi/dashboard', (c) => {
   `)
 })
 
-// Default route - Ana sayfa
+// Default route - Dealer Recruitment Vitrin (Corporate Design)
 app.get('/', (c) => {
   return c.html(`
     <!DOCTYPE html>
@@ -2131,61 +2079,1046 @@ app.get('/', (c) => {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>TV Servis Yönetim Sistemi</title>
+        <title>Garantor360 - Tüm Hizmetlerde Güvence ve Garanti</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+        <style>
+            .corporate-gradient { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); }
+            .card-corporate { 
+              transition: all 0.2s ease; 
+              border: 2px solid transparent;
+            }
+            .card-corporate:hover { 
+              transform: translateY(-2px); 
+              box-shadow: 0 8px 25px rgba(30, 41, 59, 0.15);
+              border-color: #ea580c;
+            }
+            .pulse-dot { 
+              animation: pulseDot 1.5s ease-in-out infinite; 
+            }
+            @keyframes pulseDot {
+              0%, 100% { opacity: 0.8; transform: scale(1); }
+              50% { opacity: 1; transform: scale(1.05); }
+            }
+            .stats-counter { 
+              font-weight: 700; 
+              color: #1e293b;
+            }
+            .section-divider {
+              height: 2px;
+              background: linear-gradient(90deg, transparent, #ea580c, transparent);
+            }
+            .sharp-corner {
+              border-radius: 0;
+            }
+            .minimal-corner {
+              border-radius: 4px;
+            }
+        </style>
     </head>
-    <body class="bg-gray-100">
-        <div class="min-h-screen flex items-center justify-center">
-            <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-                <div class="text-center mb-8">
-                    <h1 class="text-3xl font-bold text-gray-800 mb-4">
-                        <i class="fas fa-tv mr-2 text-blue-600"></i>
-                        TV Servis Yönetim
-                    </h1>
-                    <p class="text-gray-600">Türkiye geneli TV ekran servisi yönetim sistemi</p>
-                </div>
-                
-                <div class="space-y-4">
-                    <a href="/bayi" class="block w-full bg-blue-600 text-white text-center py-3 rounded-lg hover:bg-blue-700 transition duration-300">
-                        <i class="fas fa-user-tie mr-2"></i>
-                        Bayi Girişi
-                    </a>
-                    
-                    <a href="/admin" class="block w-full bg-red-600 text-white text-center py-3 rounded-lg hover:bg-red-700 transition duration-300">
-                        <i class="fas fa-user-shield mr-2"></i>
-                        Admin Girişi
-                    </a>
-                    
-                    <a href="/dashboard" class="block w-full bg-green-600 text-white text-center py-3 rounded-lg hover:bg-green-700 transition duration-300">
-                        <i class="fas fa-chart-line mr-2"></i>
-                        Sistem Durumu
-                    </a>
-                    
-                    <div class="border-t pt-4 mt-6">
-                        <p class="text-sm font-semibold text-gray-700 mb-2">
-                            <i class="fas fa-book mr-2"></i>Kullanım Kılavuzları
-                        </p>
+    <body class="bg-slate-100">
+        <!-- Navigation -->
+        <nav class="bg-white shadow-sm sticky top-0 z-50 border-b border-slate-200">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center">
+                        <!-- Navigation Logo -->
+                        <div class="relative mr-3">
+                            <div class="w-8 h-8 bg-orange-600 sharp-corner flex items-center justify-center">
+                                <i class="fas fa-shield-alt text-white text-sm"></i>
+                            </div>
+                            <div class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-slate-800 sharp-corner flex items-center justify-center">
+                                <div class="w-1 h-1 bg-white sharp-corner"></div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col leading-tight">
+                            <span class="font-bold text-lg text-slate-800 tracking-tight">GARANTOR</span>
+                            <span class="text-orange-600 font-bold text-xs tracking-widest -mt-1">360</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <!-- View Switcher -->
+                        <div class="flex bg-slate-100 p-1 minimal-corner mr-4">
+                            <button onclick="showProviderView()" id="provider-tab" class="px-4 py-2 text-sm font-medium transition duration-200 sharp-corner bg-orange-600 text-white">
+                                HİZMET VEREN
+                            </button>
+                            <button onclick="showCustomerView()" id="customer-tab" class="px-4 py-2 text-sm font-medium transition duration-200 sharp-corner text-slate-600 hover:text-slate-800">
+                                MÜŞTERİ
+                            </button>
+                        </div>
                         
-                        <div class="space-y-2">
-                            <a href="/static/TV-Servis-Kullanici-Kilavuzu.pdf" target="_blank" class="block w-full bg-purple-600 text-white text-center py-2 rounded-lg hover:bg-purple-700 transition duration-300 text-sm">
-                                <i class="fas fa-file-pdf mr-2"></i>
-                                Kullanıcı Kılavuzu (PDF)
-                            </a>
-                            
-                            <a href="/static/TV-Servis-Teknik-Kilavuz.pdf" target="_blank" class="block w-full bg-orange-600 text-white text-center py-2 rounded-lg hover:bg-orange-700 transition duration-300 text-sm">
-                                <i class="fas fa-code mr-2"></i>
-                                Teknik Kılavuz (PDF)
-                            </a>
+                        <!-- Action Button -->
+                        <a href="/bayi" id="action-button" class="bg-orange-600 text-white px-6 py-2 sharp-corner font-semibold hover:bg-orange-700 transition duration-200">
+                            BAYI GİRİŞİ
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="corporate-gradient text-white py-24">
+            <div class="max-w-7xl mx-auto px-6">
+                <!-- Provider View (Default) -->
+                <div class="text-center" id="provider-hero">
+                    <h1 class="text-6xl font-bold mb-8 tracking-tight">
+                        PROFESYONEL
+                        <span class="block text-orange-400">İŞ ORTAKLIĞI</span>
+                    </h1>
+                    <p class="text-xl mb-10 opacity-95 max-w-2xl mx-auto font-light">
+                        Garantor360'da hizmet verin, garantili iş hacmi ve güvenli ödeme sistemi ile 
+                        gelir elde edin. 6 farklı sektörde fırsatlar.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="/bayi" class="bg-orange-600 text-white px-10 py-4 sharp-corner font-bold text-lg hover:bg-orange-700 transition duration-200 shadow-xl">
+                            BAYI BAŞVURU
+                        </a>
+                        <button onclick="scrollToStats()" class="border-2 border-white text-white px-10 py-4 sharp-corner font-bold text-lg hover:bg-white hover:text-slate-800 transition duration-200">
+                            FIRSATLARI GÖR
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Customer View (Hidden by default) -->
+                <div class="text-center hidden" id="customer-hero">
+                    <h1 class="text-6xl font-bold mb-8 tracking-tight">
+                        GÜVENLİ HİZMET
+                        <span class="block text-orange-400">ALMAK BU KADAR KOLAY!</span>
+                    </h1>
+                    <p class="text-xl mb-10 opacity-95 max-w-2xl mx-auto font-light">
+                        Garantor360 ile ödeme güvenliği, işçilik garantisi ve hukuki koruma altında 
+                        profesyonel hizmet alın. Artık endişe yok!
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button onclick="scrollToServices()" class="bg-orange-600 text-white px-10 py-4 sharp-corner font-bold text-lg hover:bg-orange-700 transition duration-200 shadow-xl">
+                            HİZMET AL
+                        </button>
+                        <button onclick="scrollToGuarantee()" class="border-2 border-white text-white px-10 py-4 sharp-corner font-bold text-lg hover:bg-white hover:text-slate-800 transition duration-200">
+                            GÜVENCE SİSTEMİ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Statistics -->
+        <section id="stats" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <!-- Provider Stats Header -->
+                <div class="text-center mb-16" id="provider-stats-header">
+                    <div class="section-divider w-20 mx-auto mb-6"></div>
+                    <h2 class="text-4xl font-bold text-slate-800 mb-4 tracking-tight">
+                        CANLI İŞ FIRSATLARI
+                    </h2>
+                    <p class="text-slate-600 text-lg font-medium">Son 24 saatte gerçekleşen iş hacmi</p>
+                </div>
+
+                <!-- Customer Stats Header (Hidden) -->
+                <div class="text-center mb-16 hidden" id="customer-stats-header">
+                    <div class="section-divider w-20 mx-auto mb-6"></div>
+                    <h2 class="text-4xl font-bold text-slate-800 mb-4 tracking-tight">
+                        GÜVEN İSTATİSTİKLERİ
+                    </h2>
+                    <p class="text-slate-600 text-lg font-medium">Platform güvenlik ve başarı verileri</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                    <div class="bg-slate-800 text-white p-8 minimal-corner card-corporate">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-slate-300 text-sm font-medium mb-2">BUGÜN AÇILAN İŞ</p>
+                                <p class="text-4xl font-bold stats-counter text-white" id="daily-jobs">127</p>
+                            </div>
+                            <div class="w-3 h-3 bg-orange-600 sharp-corner pulse-dot"></div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-700">
+                            <span class="text-orange-400 text-sm font-semibold">
+                                ↗ +23% önceki güne göre
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border-2 border-slate-200 p-8 minimal-corner card-corporate">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-slate-600 text-sm font-medium mb-2">TOPLAM KAZANÇ</p>
+                                <p class="text-4xl font-bold stats-counter text-slate-800">₺<span id="daily-earnings">34,520</span></p>
+                            </div>
+                            <div class="w-3 h-3 bg-orange-600 sharp-corner"></div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-200">
+                            <span class="text-slate-600 text-sm font-semibold">
+                                Bu ay ortalama
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border-2 border-slate-200 p-8 minimal-corner card-corporate">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-slate-600 text-sm font-medium mb-2">AKTİF BAYİLER</p>
+                                <p class="text-4xl font-bold stats-counter text-slate-800" id="active-dealers">412</p>
+                            </div>
+                            <div class="w-3 h-3 bg-orange-600 sharp-corner"></div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-200">
+                            <span class="text-slate-600 text-sm font-semibold">
+                                Son 1 saatte aktif
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="bg-orange-600 text-white p-8 minimal-corner card-corporate">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-orange-100 text-sm font-medium mb-2">ORTALAMA İŞ ÜCRETİ</p>
+                                <p class="text-4xl font-bold stats-counter text-white">₺<span id="avg-price">272</span></p>
+                            </div>
+                            <div class="w-3 h-3 bg-white sharp-corner pulse-dot"></div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-orange-700">
+                            <span class="text-orange-100 text-sm font-semibold">
+                                ↗ Artan trend
+                            </span>
                         </div>
                     </div>
                 </div>
-                
-                <div class="mt-8 text-center text-sm text-gray-500">
-                    <p>Güvenli ve hızlı servis yönetimi</p>
+
+                <!-- Enhanced Real-time Job Feed -->
+                <div class="bg-white border-2 border-slate-200 minimal-corner">
+                    <div class="bg-slate-100 px-8 py-4 border-b-2 border-slate-200">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-slate-800 text-xl font-bold tracking-tight flex items-center">
+                                <span class="inline-block w-3 h-3 bg-orange-600 sharp-corner pulse-dot mr-3"></span>
+                                CANLI İŞ AKIŞI
+                            </h3>
+                            <div class="flex items-center space-x-4 text-sm">
+                                <span class="text-slate-600 font-medium">Son 10 dakika:</span>
+                                <span class="bg-orange-600 text-white px-3 py-1 sharp-corner font-bold" id="recent-count">8 İş</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Job Feed Grid -->
+                    <div class="p-8">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <!-- Left: Live Job List -->
+                            <div>
+                                <h4 class="text-slate-800 font-bold mb-4 tracking-tight">YENİ İŞ TALEPLERİ</h4>
+                                <div id="job-feed" class="space-y-3 max-h-80 overflow-y-auto">
+                                    <!-- Jobs will be populated via JavaScript -->
+                                </div>
+                            </div>
+                            
+                            <!-- Right: Job Statistics -->
+                            <div>
+                                <h4 class="text-slate-800 font-bold mb-4 tracking-tight">CANLI İSTATİSTİKLER</h4>
+                                <div class="space-y-4">
+                                    <!-- Hourly Chart -->
+                                    <div class="bg-slate-50 p-4 minimal-corner">
+                                        <div class="flex justify-between items-center mb-3">
+                                            <span class="text-slate-700 font-medium text-sm">SON 6 SAAT</span>
+                                            <span class="text-orange-600 font-bold text-lg" id="hourly-total">47 İş</span>
+                                        </div>
+                                        <div class="flex items-end space-x-1 h-16">
+                                            <div class="bg-orange-600 w-full" style="height: 30%"></div>
+                                            <div class="bg-orange-600 w-full" style="height: 45%"></div>
+                                            <div class="bg-orange-600 w-full" style="height: 60%"></div>
+                                            <div class="bg-orange-600 w-full" style="height: 80%"></div>
+                                            <div class="bg-orange-600 w-full" style="height: 100%"></div>
+                                            <div class="bg-orange-600 w-full" style="height: 75%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Service Type Distribution -->
+                                    <div class="bg-slate-50 p-4 minimal-corner">
+                                        <h5 class="text-slate-700 font-bold text-sm mb-3">SERVİS DAĞILIMI</h5>
+                                        <div class="space-y-2">
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-slate-600 text-sm">LED/LCD Tamiri</span>
+                                                <div class="flex items-center">
+                                                    <div class="w-16 h-2 bg-slate-200 mr-2">
+                                                        <div class="w-3/4 h-full bg-orange-600"></div>
+                                                    </div>
+                                                    <span class="text-slate-800 font-bold text-sm">68%</span>
+                                                </div>
+                                            </div>
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-slate-600 text-sm">Anakart Tamiri</span>
+                                                <div class="flex items-center">
+                                                    <div class="w-16 h-2 bg-slate-200 mr-2">
+                                                        <div class="w-1/2 h-full bg-slate-600"></div>
+                                                    </div>
+                                                    <span class="text-slate-800 font-bold text-sm">52%</span>
+                                                </div>
+                                            </div>
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-slate-600 text-sm">Evde Servis</span>
+                                                <div class="flex items-center">
+                                                    <div class="w-16 h-2 bg-slate-200 mr-2">
+                                                        <div class="w-2/5 h-full bg-slate-600"></div>
+                                                    </div>
+                                                    <span class="text-slate-800 font-bold text-sm">45%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Top Cities -->
+                                    <div class="bg-slate-50 p-4 minimal-corner">
+                                        <h5 class="text-slate-700 font-bold text-sm mb-3">AKTİF ŞEHİRLER</h5>
+                                        <div class="grid grid-cols-2 gap-2 text-xs">
+                                            <div class="flex justify-between">
+                                                <span class="text-slate-600">İstanbul</span>
+                                                <span class="text-orange-600 font-bold">23</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="text-slate-600">Ankara</span>
+                                                <span class="text-slate-800 font-bold">12</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="text-slate-600">İzmir</span>
+                                                <span class="text-slate-800 font-bold">8</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="text-slate-600">Bursa</span>
+                                                <span class="text-slate-800 font-bold">5</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- City Opportunities -->
+        <section class="py-20 bg-slate-100">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <div class="section-divider w-20 mx-auto mb-6"></div>
+                    <h2 class="text-4xl font-bold text-slate-800 mb-4 tracking-tight">
+                        ŞEHİR BAZINDA FIRSATLAR
+                    </h2>
+                    <p class="text-slate-600 text-lg font-medium">81 ilde profesyonel iş imkanları</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="city-opportunities">
+                    <!-- Cities will be populated via JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Service Categories -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <div class="section-divider w-20 mx-auto mb-6"></div>
+                    <h2 class="text-4xl font-bold text-slate-800 mb-4 tracking-tight">
+                        HİZMET KATEGORİLERİ
+                    </h2>
+                    <p class="text-slate-600 text-lg font-medium">Garantor360 platformundaki tüm hizmet alanları</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Elektronik & Teknoloji -->
+                    <div class="bg-white border-2 border-slate-200 p-8 minimal-corner card-corporate">
+                        <h3 class="font-bold text-lg text-slate-800 mb-3 tracking-tight">
+                            ELEKTRONİK & TEKNOLOJİ
+                        </h3>
+                        <p class="text-slate-600 mb-6 font-medium">TV, bilgisayar, telefon tamiri ve kurulum hizmetleri</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-orange-600 font-bold text-lg">₺150-500</span>
+                            <span class="bg-slate-800 text-white px-3 py-1 sharp-corner text-sm font-bold">%68 TALEP</span>
+                        </div>
+                    </div>
+
+                    <!-- Ev Tadilat & Dekorasyon -->
+                    <div class="bg-slate-800 text-white p-8 minimal-corner card-corporate">
+                        <h3 class="font-bold text-lg mb-3 tracking-tight">
+                            EV TADİLAT & DEKORASYON
+                        </h3>
+                        <p class="text-slate-300 mb-6 font-medium">Boyama, döşeme, mutfak banyo yenileme, tadilat işleri</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-orange-400 font-bold text-lg">₺500-5K</span>
+                            <span class="bg-orange-600 text-white px-3 py-1 sharp-corner text-sm font-bold">%85 TALEP</span>
+                        </div>
+                    </div>
+
+                    <!-- Temizlik & Bakım -->
+                    <div class="bg-white border-2 border-slate-200 p-8 minimal-corner card-corporate">
+                        <h3 class="font-bold text-lg text-slate-800 mb-3 tracking-tight">
+                            TEMİZLİK & BAKIM
+                        </h3>
+                        <p class="text-slate-600 mb-6 font-medium">Ev temizliği, halı yıkama, cam silme, bahçe bakımı</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-orange-600 font-bold text-lg">₺200-800</span>
+                            <span class="bg-slate-800 text-white px-3 py-1 sharp-corner text-sm font-bold">%92 TALEP</span>
+                        </div>
+                    </div>
+
+                    <!-- Nakliye & Taşımacılık -->
+                    <div class="bg-white border-2 border-slate-200 p-8 minimal-corner card-corporate">
+                        <h3 class="font-bold text-lg text-slate-800 mb-3 tracking-tight">
+                            NAKLİYE & TAŞIMACILIK
+                        </h3>
+                        <p class="text-slate-600 mb-6 font-medium">Ev taşıma, eşya nakli, kargo ve kurye hizmetleri</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-orange-600 font-bold text-lg">₺300-2K</span>
+                            <span class="bg-slate-800 text-white px-3 py-1 sharp-corner text-sm font-bold">%78 TALEP</span>
+                        </div>
+                    </div>
+
+                    <!-- Kişisel Hizmetler -->
+                    <div class="bg-orange-600 text-white p-8 minimal-corner card-corporate">
+                        <h3 class="font-bold text-lg mb-3 tracking-tight">
+                            KİŞİSEL HİZMETLER
+                        </h3>
+                        <p class="text-orange-100 mb-6 font-medium">Özel ders, masaj, kuaför, güzellik ve sağlık hizmetleri</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-white font-bold text-lg">₺100-600</span>
+                            <span class="bg-slate-800 text-white px-3 py-1 sharp-corner text-sm font-bold">%65 TALEP</span>
+                        </div>
+                    </div>
+
+                    <!-- Otomotiv & Araç Bakım -->
+                    <div class="bg-white border-2 border-slate-200 p-8 minimal-corner card-corporate">
+                        <h3 class="font-bold text-lg text-slate-800 mb-3 tracking-tight">
+                            OTOMOTİV & ARAÇ BAKIM
+                        </h3>
+                        <p class="text-slate-600 mb-6 font-medium">Araç tamiri, bakım, yıkama ve detaylı temizlik</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-orange-600 font-bold text-lg">₺200-1.5K</span>
+                            <span class="bg-slate-800 text-white px-3 py-1 sharp-corner text-sm font-bold">%72 TALEP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="py-20 corporate-gradient text-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <!-- Provider Benefits -->
+                <div id="provider-benefits">
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl font-bold mb-6 tracking-tight">BAYİ AVANTAJLARI</h2>
+                        <p class="text-xl opacity-95 font-light">Garantor360'da hizmet vermenin getirdikleri</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="text-center">
+                            <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
+                            <h3 class="text-xl font-bold mb-4 tracking-tight">GARANTİLİ ÖDEME</h3>
+                            <p class="opacity-90 font-medium">İş tamamlandığında ödemeniz garantili. Platform güvencesi altında.</p>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
+                            <h3 class="text-xl font-bold mb-4 tracking-tight">SÜREKLİ İŞ AKIŞI</h3>
+                            <p class="opacity-90 font-medium">Platform üzerinden düzenli iş talepleri. İş bulmak artık kolay.</p>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
+                            <h3 class="text-xl font-bold mb-4 tracking-tight">PROFESYONEL İMAJ</h3>
+                            <p class="opacity-90 font-medium">Garantor360 kalite belgesi ile müşteri güveni kazanın.</p>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
+                            <h3 class="text-xl font-bold mb-4 tracking-tight">PAZARLAMA DESTEĞİ</h3>
+                            <p class="opacity-90 font-medium">Platform kendi pazarlamasını yapıyor. Siz sadece işe odaklanın.</p>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
+                            <h3 class="text-xl font-bold mb-4 tracking-tight">HUKUKİ KORUMA</h3>
+                            <p class="opacity-90 font-medium">Anlaşmazlıklarda hukuki destek. Garantor360 sizi korur.</p>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
+                            <h3 class="text-xl font-bold mb-4 tracking-tight">EĞİTİM & GELIŞIM</h3>
+                            <p class="opacity-90 font-medium">Sürekli eğitim programları ile kendinizi geliştirin.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customer Benefits (Hidden) -->
+                <div class="hidden" id="customer-benefits">
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl font-bold mb-6 tracking-tight">MÜŞTERİ GÜVENCELERİ</h2>
+                        <p class="text-xl opacity-95 font-light">Garantor360 ile hizmet almanın güvenceleri</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="text-center">
+                            <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
+                            <h3 class="text-xl font-bold mb-4 tracking-tight">ÖDEME GÜVENCESİ</h3>
+                            <p class="opacity-90 font-medium">İş tamamlanmadan ödeme yapılmıyor. Paranız güvende.</p>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
+                            <h3 class="text-xl font-bold mb-4 tracking-tight">İŞÇİLİK GARANTİSİ</h3>
+                            <p class="opacity-90 font-medium">6 ay işçilik garantisi. Sorun çıkarsa ücretsiz çözüm.</p>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
+                            <h3 class="text-xl font-bold mb-4 tracking-tight">DOĞRULANMIŞ USTALAR</h3>
+                            <p class="opacity-90 font-medium">Tüm hizmet verenler kimlik ve yetenek kontrolünden geçer.</p>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
+                            <h3 class="text-xl font-bold mb-4 tracking-tight">SİGORTA KORUMASI</h3>
+                            <p class="opacity-90 font-medium">Hasar durumunda sigorta kapsamında tazminat ödemesi.</p>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
+                            <h3 class="text-xl font-bold mb-4 tracking-tight">HUKUKİ DESTEK</h3>
+                            <p class="opacity-90 font-medium">Anlaşmazlık durumunda avukat desteği ve süreç yönetimi.</p>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="w-4 h-4 bg-orange-600 sharp-corner mx-auto mb-6"></div>
+                            <h3 class="text-xl font-bold mb-4 tracking-tight">7/24 DESTEK</h3>
+                            <p class="opacity-90 font-medium">Her zaman ulaşabileceğiniz müşteri hizmetleri.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="py-20 bg-white">
+            <div class="max-w-4xl mx-auto text-center px-6">
+                <div class="section-divider w-32 mx-auto mb-8"></div>
+                <h2 class="text-5xl font-bold text-slate-800 mb-8 tracking-tight">
+                    PROFESYONEL ORTAKLIK
+                </h2>
+                <p class="text-xl text-slate-600 mb-12 font-medium max-w-2xl mx-auto">
+                    5 dakikada başvuru yapın ve profesyonel iş ağımızın bir parçası olun. 
+                    Sıfır yatırım, garantili kazanç.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                    <a href="/bayi" class="bg-slate-800 text-white px-12 py-4 sharp-corner font-bold text-lg hover:bg-slate-900 transition duration-200 shadow-lg">
+                        BAŞVURU YAP
+                    </a>
+                    <a href="tel:+905001234567" class="border-2 border-slate-800 text-slate-800 px-12 py-4 sharp-corner font-bold text-lg hover:bg-slate-800 hover:text-white transition duration-200">
+                        0 500 123 45 67
+                    </a>
+                </div>
+                <p class="text-sm text-slate-600 font-semibold">
+                    <span class="inline-block w-2 h-2 bg-orange-600 sharp-corner mr-2"></span>
+                    Başvuru ücretsiz • Ön ödeme yok • Anında değerlendirme
+                </p>
+            </div>
+        </section>
+
+        <!-- Enhanced Footer -->
+        <footer class="bg-slate-800 text-white">
+            <!-- Main Footer Content -->
+            <div class="py-16">
+                <div class="max-w-7xl mx-auto px-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+                        <!-- Company Info -->
+                        <div class="lg:col-span-2">
+                            <div class="flex items-center mb-6">
+                                <div class="flex items-center">
+                                    <!-- Modern Logo Design -->
+                                    <div class="relative">
+                                        <div class="w-12 h-12 bg-orange-600 sharp-corner flex items-center justify-center mr-4">
+                                            <i class="fas fa-shield-alt text-white text-xl"></i>
+                                        </div>
+                                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-white sharp-corner flex items-center justify-center">
+                                            <div class="w-2 h-2 bg-slate-800 sharp-corner"></div>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <h3 class="font-bold text-xl tracking-tight leading-tight">GARANTOR</h3>
+                                        <span class="text-orange-600 font-bold text-sm tracking-widest">360</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-slate-300 font-medium mb-6 leading-relaxed">
+                                Türkiye'nin ilk tam güvenceli hizmet platformu. Tüm sektörlerde ödeme güvenliği, 
+                                işçilik garantisi ve hukuki koruma sağlayan dijital güvence sistemi.
+                            </p>
+                            
+                            <!-- Key Numbers -->
+                            <div class="grid grid-cols-3 gap-4 mb-6">
+                                <div class="text-center">
+                                    <div class="text-orange-600 font-bold text-2xl">500+</div>
+                                    <div class="text-slate-400 text-sm">Aktif Bayi</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-orange-600 font-bold text-2xl">50K+</div>
+                                    <div class="text-slate-400 text-sm">Tamamlanan İş</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-orange-600 font-bold text-2xl">81</div>
+                                    <div class="text-slate-400 text-sm">İl Kapsamı</div>
+                                </div>
+                            </div>
+
+                            <!-- Trust Badges -->
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-slate-700 px-3 py-2 sharp-corner">
+                                    <span class="text-xs font-bold text-orange-600">ISO 9001</span>
+                                </div>
+                                <div class="bg-slate-700 px-3 py-2 sharp-corner">
+                                    <span class="text-xs font-bold text-orange-600">6 AY GARANTİ</span>
+                                </div>
+                                <div class="bg-slate-700 px-3 py-2 sharp-corner">
+                                    <span class="text-xs font-bold text-orange-600">7/24 DESTEK</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Services -->
+                        <div>
+                            <h4 class="font-bold text-lg mb-6 tracking-tight">SERVİS ALANLARI</h4>
+                            <ul class="space-y-3">
+                                <li><a href="#" class="text-slate-300 hover:text-orange-600 font-medium transition duration-200">LED/LCD Ekran Tamiri</a></li>
+                                <li><a href="#" class="text-slate-300 hover:text-orange-600 font-medium transition duration-200">Anakart Tamiri</a></li>
+                                <li><a href="#" class="text-slate-300 hover:text-orange-600 font-medium transition duration-200">Güç Kaynağı</a></li>
+                                <li><a href="#" class="text-slate-300 hover:text-orange-600 font-medium transition duration-200">Smart TV Yazılım</a></li>
+                                <li><a href="#" class="text-slate-300 hover:text-orange-600 font-medium transition duration-200">Evde Teknik Servis</a></li>
+                                <li><a href="#" class="text-slate-300 hover:text-orange-600 font-medium transition duration-200">Ses Sistemi</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Quick Links -->
+                        <div>
+                            <h4 class="font-bold text-lg mb-6 tracking-tight">HIZLI ERİŞİM</h4>
+                            <ul class="space-y-3">
+                                <li><a href="/bayi" class="text-slate-300 hover:text-orange-600 font-medium transition duration-200">Bayi Başvuru Formu</a></li>
+                                <li><a href="#stats" class="text-slate-300 hover:text-orange-600 font-medium transition duration-200">Canlı İstatistikler</a></li>
+                                <li><a href="/admin" class="text-slate-300 hover:text-orange-600 font-medium transition duration-200">Admin Panel</a></li>
+                                <li><a href="#" class="text-slate-300 hover:text-orange-600 font-medium transition duration-200">Bayi Rehberi</a></li>
+                                <li><a href="#" class="text-slate-300 hover:text-orange-600 font-medium transition duration-200">Fiyat Listesi</a></li>
+                                <li><a href="#" class="text-slate-300 hover:text-orange-600 font-medium transition duration-200">SSS</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Contact & Support -->
+                        <div>
+                            <h4 class="font-bold text-lg mb-6 tracking-tight">İLETİŞİM & DESTEK</h4>
+                            
+                            <!-- Phone Numbers -->
+                            <div class="space-y-3 mb-6">
+                                <div class="flex items-center">
+                                    <i class="fas fa-phone text-orange-600 mr-3 w-4"></i>
+                                    <a href="tel:+905001234567" class="text-slate-300 hover:text-white font-medium">0 500 123 45 67</a>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-headset text-orange-600 mr-3 w-4"></i>
+                                    <a href="tel:+902123456789" class="text-slate-300 hover:text-white font-medium">0 212 345 67 89</a>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-envelope text-orange-600 mr-3 w-4"></i>
+                                    <a href="mailto:info@tvservis.com" class="text-slate-300 hover:text-white font-medium">info@tvservis.com</a>
+                                </div>
+                            </div>
+
+                            <!-- Office Hours -->
+                            <div class="bg-slate-700 p-4 minimal-corner mb-6">
+                                <h5 class="font-bold text-sm mb-2 text-orange-600">ÇALIŞMA SAATLERİ</h5>
+                                <div class="text-slate-300 text-sm space-y-1">
+                                    <div>Pazartesi - Cuma: 08:00 - 18:00</div>
+                                    <div>Cumartesi: 09:00 - 17:00</div>
+                                    <div class="text-orange-600 font-medium">Acil Destek: 7/24</div>
+                                </div>
+                            </div>
+
+                            <!-- Social Media -->
+                            <div>
+                                <h5 class="font-bold text-sm mb-3 text-orange-600">SOSYAL MEDYA</h5>
+                                <div class="flex space-x-3">
+                                    <a href="#" class="bg-slate-700 p-2 sharp-corner text-slate-400 hover:text-orange-600 hover:bg-slate-600 transition duration-200">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                    <a href="#" class="bg-slate-700 p-2 sharp-corner text-slate-400 hover:text-orange-600 hover:bg-slate-600 transition duration-200">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                    <a href="#" class="bg-slate-700 p-2 sharp-corner text-slate-400 hover:text-orange-600 hover:bg-slate-600 transition duration-200">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                    <a href="#" class="bg-slate-700 p-2 sharp-corner text-slate-400 hover:text-orange-600 hover:bg-slate-600 transition duration-200">
+                                        <i class="fab fa-linkedin"></i>
+                                    </a>
+                                    <a href="#" class="bg-slate-700 p-2 sharp-corner text-slate-400 hover:text-orange-600 hover:bg-slate-600 transition duration-200">
+                                        <i class="fab fa-youtube"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="bg-slate-900 py-6">
+                <div class="max-w-7xl mx-auto px-6">
+                    <div class="flex flex-col lg:flex-row justify-between items-center">
+                        <!-- Copyright -->
+                        <div class="text-slate-400 text-sm mb-4 lg:mb-0">
+                            &copy; 2024 TV Servis Network. Tüm hakları saklıdır.
+                        </div>
+
+                        <!-- Legal Links -->
+                        <div class="flex items-center space-x-6 text-sm">
+                            <a href="#" class="text-slate-400 hover:text-orange-600 transition duration-200">Gizlilik Politikası</a>
+                            <a href="#" class="text-slate-400 hover:text-orange-600 transition duration-200">Kullanım Şartları</a>
+                            <a href="#" class="text-slate-400 hover:text-orange-600 transition duration-200">KVKK</a>
+                            <a href="#" class="text-slate-400 hover:text-orange-600 transition duration-200">Çerez Politikası</a>
+                        </div>
+
+                        <!-- Certifications -->
+                        <div class="flex items-center space-x-3 mt-4 lg:mt-0">
+                            <span class="text-slate-500 text-xs">Güvenilir</span>
+                            <div class="flex space-x-2">
+                                <div class="bg-orange-600 text-white px-2 py-1 sharp-corner text-xs font-bold">SSL</div>
+                                <div class="bg-orange-600 text-white px-2 py-1 sharp-corner text-xs font-bold">HTTPS</div>
+                                <div class="bg-orange-600 text-white px-2 py-1 sharp-corner text-xs font-bold">256BIT</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+        // View Switcher Functions
+        function showProviderView() {
+            // Update tabs
+            document.getElementById('provider-tab').className = 'px-4 py-2 text-sm font-medium transition duration-200 sharp-corner bg-orange-600 text-white';
+            document.getElementById('customer-tab').className = 'px-4 py-2 text-sm font-medium transition duration-200 sharp-corner text-slate-600 hover:text-slate-800';
+            
+            // Update hero sections
+            document.getElementById('provider-hero').classList.remove('hidden');
+            document.getElementById('customer-hero').classList.add('hidden');
+            
+            // Update stats headers
+            document.getElementById('provider-stats-header').classList.remove('hidden');
+            document.getElementById('customer-stats-header').classList.add('hidden');
+            
+            // Update benefits sections
+            document.getElementById('provider-benefits').classList.remove('hidden');
+            document.getElementById('customer-benefits').classList.add('hidden');
+            
+            // Update action button
+            document.getElementById('action-button').innerHTML = 'BAYI GİRİŞİ';
+            document.getElementById('action-button').href = '/bayi';
+            
+            // Update service categories to provider view
+            updateServiceCategories('provider');
+            
+            // Update call-to-action section
+            updateCallToAction('provider');
+        }
+        
+        function showCustomerView() {
+            // Update tabs
+            document.getElementById('customer-tab').className = 'px-4 py-2 text-sm font-medium transition duration-200 sharp-corner bg-orange-600 text-white';
+            document.getElementById('provider-tab').className = 'px-4 py-2 text-sm font-medium transition duration-200 sharp-corner text-slate-600 hover:text-slate-800';
+            
+            // Update hero sections
+            document.getElementById('customer-hero').classList.remove('hidden');
+            document.getElementById('provider-hero').classList.add('hidden');
+            
+            // Update stats headers
+            document.getElementById('customer-stats-header').classList.remove('hidden');
+            document.getElementById('provider-stats-header').classList.add('hidden');
+            
+            // Update benefits sections
+            document.getElementById('customer-benefits').classList.remove('hidden');
+            document.getElementById('provider-benefits').classList.add('hidden');
+            
+            // Update action button
+            document.getElementById('action-button').innerHTML = 'HİZMET AL';
+            document.getElementById('action-button').href = '#services';
+            
+            // Update service categories to customer view
+            updateServiceCategories('customer');
+            
+            // Update call-to-action section
+            updateCallToAction('customer');
+        }
+
+        // Additional scroll functions for customer view
+        function scrollToStats() {
+            document.getElementById('stats').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function scrollToServices() {
+            const servicesSection = document.querySelector('[id*="service"], section:has(h2:contains("HİZMET"))');
+            if (servicesSection) {
+                servicesSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        function scrollToGuarantee() {
+            document.getElementById('customer-benefits').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Update service categories based on view
+        function updateServiceCategories(view) {
+            // This function will be called to update service categories display
+            // Currently the service categories are neutral and work for both views
+            console.log('Service categories updated for view:', view);
+        }
+        
+        // Update call-to-action section based on view
+        function updateCallToAction(view) {
+            // Find the call-to-action section by looking for the specific elements
+            const ctaSections = document.querySelectorAll('section');
+            let ctaSection = null;
+            
+            for (let section of ctaSections) {
+                const h2 = section.querySelector('h2');
+                if (h2 && (h2.textContent.includes('PROFESYONEL ORTAKLIK') || h2.textContent.includes('GÜVENLİ HİZMET'))) {
+                    ctaSection = section;
+                    break;
+                }
+            }
+            
+            if (!ctaSection) return;
+            
+            const titleElement = ctaSection.querySelector('h2');
+            const descElement = ctaSection.querySelector('p');
+            const primaryButton = ctaSection.querySelector('a[href="/bayi"]');
+            const secondaryButton = ctaSection.querySelector('a[href^="tel:"]');
+            const footerText = ctaSection.querySelector('p:last-child');
+            
+            if (view === 'provider') {
+                titleElement.textContent = 'PROFESYONEL ORTAKLIK';
+                descElement.textContent = '5 dakikada başvuru yapın ve profesyonel iş ağımızın bir parçası olun. Sıfır yatırım, garantili kazanç.';
+                primaryButton.textContent = 'BAŞVURU YAP';
+                primaryButton.href = '/bayi';
+                secondaryButton.textContent = '0 500 123 45 67';
+                footerText.innerHTML = '<span class="inline-block w-2 h-2 bg-orange-600 sharp-corner mr-2"></span>Başvuru ücretsiz • Ön ödeme yok • Anında değerlendirme';
+            } else {
+                titleElement.textContent = 'GÜVENLİ HİZMET ALMAYA BAŞLA';
+                descElement.textContent = 'Hemen ihtiyacınızı belirtin, doğrulanmış uzmanlardan teklif alın. Ödeme güvenliği, işçilik garantisi dahil.';
+                primaryButton.textContent = 'HİZMET TALEBİ';
+                primaryButton.href = '#service-request';
+                secondaryButton.textContent = 'CANLI DESTEK';
+                footerText.innerHTML = '<span class="inline-block w-2 h-2 bg-orange-600 sharp-corner mr-2"></span>Ücretsiz teklif • 6 ay garanti • 7/24 destek';
+            }
+        }
+
+        // Simulated real-time data updates
+        function updateStats() {
+            // Daily jobs counter
+            const dailyJobsEl = document.getElementById('daily-jobs');
+            if (dailyJobsEl) {
+                const current = parseInt(dailyJobsEl.textContent) || 127;
+                const newValue = current + Math.floor(Math.random() * 3);
+                dailyJobsEl.textContent = newValue;
+            }
+
+            // Daily earnings
+            const earningsEl = document.getElementById('daily-earnings');
+            if (earningsEl) {
+                const current = parseInt(earningsEl.textContent.replace(',', '')) || 34520;
+                const newValue = current + Math.floor(Math.random() * 500) + 100;
+                earningsEl.textContent = newValue.toLocaleString('tr-TR');
+            }
+
+            // Active dealers
+            const dealersEl = document.getElementById('active-dealers');
+            if (dealersEl) {
+                const current = parseInt(dealersEl.textContent) || 412;
+                const change = Math.random() > 0.7 ? (Math.random() > 0.5 ? 1 : -1) : 0;
+                dealersEl.textContent = current + change;
+            }
+
+            // Average price
+            const avgPriceEl = document.getElementById('avg-price');
+            if (avgPriceEl) {
+                const prices = [245, 267, 289, 234, 312, 198, 356, 276, 234, 287];
+                avgPriceEl.textContent = prices[Math.floor(Math.random() * prices.length)];
+            }
+        }
+
+        // Enhanced job feed simulation
+        function addJobToFeed() {
+            const feed = document.getElementById('job-feed');
+            if (!feed) return;
+
+            const cities = ['İstanbul', 'Ankara', 'İzmir', 'Bursa', 'Antalya', 'Adana', 'Gaziantep', 'Konya', 'Kayseri', 'Mersin'];
+            const districts = ['Kadıköy', 'Beşiktaş', 'Çankaya', 'Nilüfer', 'Muratpaşa', 'Seyhan', 'Şehitkamil', 'Selçuklu', 'Melikgazi', 'Yenişehir'];
+            const services = [
+                { name: 'LED Panel Değişimi', price: '₺350', priority: 'YÜKSEK', urgent: true },
+                { name: 'Anakart Tamiri', price: '₺220', priority: 'ORTA', urgent: false },
+                { name: 'Güç Kartı Arızası', price: '₺180', priority: 'ORTA', urgent: false },
+                { name: 'Evde Kurulum', price: '₺150', priority: 'DÜŞÜK', urgent: false },
+                { name: 'Smart TV Yazılım', price: '₺100', priority: 'DÜŞÜK', urgent: false },
+                { name: 'Ses Sistemi Tamiri', price: '₺120', priority: 'ORTA', urgent: false },
+                { name: 'Backlight Tamiri', price: '₺280', priority: 'YÜKSEK', urgent: true },
+                { name: 'HDMI Port Tamiri', price: '₺200', priority: 'ORTA', urgent: false }
+            ];
+
+            const brands = ['Samsung', 'LG', 'Sony', 'Philips', 'Vestel', 'Arçelik', 'TCL', 'Panasonic'];
+
+            const city = cities[Math.floor(Math.random() * cities.length)];
+            const district = districts[Math.floor(Math.random() * districts.length)];
+            const service = services[Math.floor(Math.random() * services.length)];
+            const brand = brands[Math.floor(Math.random() * brands.length)];
+            const time = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+            const jobId = 'J' + Math.floor(Math.random() * 9000 + 1000);
+
+            const priorityColor = service.priority === 'YÜKSEK' ? 'bg-orange-600' : 
+                                service.priority === 'ORTA' ? 'bg-slate-600' : 'bg-slate-400';
+
+            const jobElement = document.createElement('div');
+            jobElement.className = \`bg-white border border-slate-200 minimal-corner p-4 hover:border-orange-600 transition-all duration-200 \${service.urgent ? 'border-l-4 border-l-orange-600' : ''}\`;
+            jobElement.innerHTML = \`
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="flex flex-col">
+                            <div class="flex items-center space-x-2">
+                                <span class="\${priorityColor} text-white px-2 py-1 sharp-corner text-xs font-bold">\${service.priority}</span>
+                                <span class="text-slate-500 text-xs font-medium">#\${jobId}</span>
+                                \${service.urgent ? '<span class="text-orange-600 text-xs font-bold pulse-dot">ACİL</span>' : ''}
+                            </div>
+                            <div class="mt-1">
+                                <span class="text-slate-800 font-bold text-sm">\${service.name}</span>
+                                <span class="text-slate-600 text-sm ml-2">• \${brand}</span>
+                            </div>
+                            <div class="text-slate-500 text-xs mt-1">
+                                \${city} / \${district} • \${time}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-orange-600 font-bold text-lg">\${service.price}</div>
+                        <div class="text-slate-500 text-xs">Başlangıç fiyat</div>
+                    </div>
+                </div>
+            \`;
+
+            // Add slide-in animation
+            jobElement.style.opacity = '0';
+            jobElement.style.transform = 'translateX(-20px)';
+            
+            feed.insertBefore(jobElement, feed.firstChild);
+
+            // Animate in
+            setTimeout(() => {
+                jobElement.style.opacity = '1';
+                jobElement.style.transform = 'translateX(0)';
+                jobElement.style.transition = 'all 0.3s ease-out';
+            }, 50);
+
+            // Keep only last 12 jobs
+            while (feed.children.length > 12) {
+                feed.removeChild(feed.lastChild);
+            }
+
+            // Update recent count
+            const recentCountEl = document.getElementById('recent-count');
+            if (recentCountEl) {
+                const currentCount = parseInt(recentCountEl.textContent) || 8;
+                const newCount = Math.min(currentCount + 1, 15);
+                recentCountEl.textContent = newCount + ' İş';
+            }
+        }
+
+        // City opportunities
+        function populateCityOpportunities() {
+            const container = document.getElementById('city-opportunities');
+            if (!container) return;
+
+            const cities = [
+                { name: 'İstanbul', jobs: 45, earnings: '₺12,450', growth: '+18%' },
+                { name: 'Ankara', jobs: 28, earnings: '₺7,680', growth: '+12%' },
+                { name: 'İzmir', jobs: 22, earnings: '₺5,940', growth: '+15%' },
+                { name: 'Bursa', jobs: 18, earnings: '₺4,860', growth: '+22%' },
+                { name: 'Antalya', jobs: 15, earnings: '₺4,050', growth: '+25%' },
+                { name: 'Adana', jobs: 12, earnings: '₺3,240', growth: '+8%' }
+            ];
+
+            cities.forEach(city => {
+                const cityCard = document.createElement('div');
+                cityCard.className = 'bg-white border-2 border-slate-200 minimal-corner p-8 card-corporate';
+                cityCard.innerHTML = \`
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="font-bold text-xl text-slate-800 tracking-tight">\${city.name}</h3>
+                        <div class="w-3 h-3 bg-orange-600 sharp-corner"></div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-slate-600 font-medium">Günlük İş:</span>
+                            <span class="font-bold text-slate-800">\${city.jobs} ADET</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-600 font-medium">Günlük Kazanç:</span>
+                            <span class="font-bold text-orange-600">\${city.earnings}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-600 font-medium">Bu ay büyüme:</span>
+                            <span class="font-bold text-slate-800">\${city.growth}</span>
+                        </div>
+                    </div>
+                    <button onclick="window.location.href='/bayi'" class="w-full mt-6 bg-slate-800 text-white py-3 sharp-corner font-bold hover:bg-slate-900 transition duration-200">
+                        BAŞVUR
+                    </button>
+                \`;
+                container.appendChild(cityCard);
+            });
+        }
+
+        // Initialize job feed with sample data
+        function initializeJobFeed() {
+            // Add initial jobs with varying delays for realistic effect
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => addJobToFeed(), i * 800);
+            }
+        }
+
+        // Update live statistics
+        function updateLiveStats() {
+            // Update hourly total
+            const hourlyEl = document.getElementById('hourly-total');
+            if (hourlyEl) {
+                const current = parseInt(hourlyEl.textContent) || 47;
+                const change = Math.floor(Math.random() * 3);
+                hourlyEl.textContent = (current + change) + ' İş';
+            }
+
+            // Simulate chart updates (bars animation)
+            const bars = document.querySelectorAll('[style*="height"]');
+            bars.forEach(bar => {
+                const randomHeight = Math.floor(Math.random() * 70 + 30) + '%';
+                bar.style.height = randomHeight;
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            populateCityOpportunities();
+            initializeJobFeed();
+            
+            // Update stats every 10 seconds
+            setInterval(updateStats, 10000);
+            
+            // Update live stats every 15 seconds
+            setInterval(updateLiveStats, 15000);
+            
+            // Add new job every 8 seconds for more activity
+            setInterval(addJobToFeed, 8000);
+        });
+        </script>
     </body>
     </html>
   `);
