@@ -248,6 +248,30 @@ app.post('/api/webhook/form', async (c) => {
   }
 })
 
+// Test endpoint - Reset job for testing (geliştirme için)
+app.post('/api/test/reset-job/:id', async (c) => {
+  const { DB } = c.env
+  const jobId = c.req.param('id')
+  
+  try {
+    // İşi reset et
+    await DB.prepare(`
+      UPDATE is_talepleri 
+      SET satin_alan_bayi_id = NULL, 
+          satin_alma_tarihi = NULL, 
+          satin_alma_fiyati = NULL,
+          durum = 'yeni',
+          goruntuleme_durumu = 'kısıtlı'
+      WHERE id = ?
+    `).bind(jobId).run()
+    
+    return c.json({ success: true, message: `İş ${jobId} reset edildi` })
+  } catch (error) {
+    console.error('Reset job error:', error)
+    return c.json({ error: 'Reset başarısız' }, 500)
+  }
+})
+
 // =============================================================================
 // Bayi API Routes - Authentication ve İş Yönetimi
 // =============================================================================
@@ -637,7 +661,7 @@ app.post('/api/bayi/buy-job/:id', async (c) => {
     `).bind(
       jobId, 
       `Bayi tarafından satın alındı - ${job.is_fiyati} ₺`,
-      bayiAuth.firmaAdi,
+      bayiAuth.firma_adi,
       satinAlmaTarihi
     ).run()
     
