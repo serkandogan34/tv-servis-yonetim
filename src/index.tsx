@@ -5523,21 +5523,21 @@ app.get('/', (c) => {
                             </div>
 
                             <!-- Web App Access Buttons -->
-                            <div class="flex flex-col gap-4 justify-start items-start">
+                            <div class="flex flex-row gap-3 justify-start items-start">
                                 <!-- Web Uygulaması Butonu -->
-                                <a href="#hizmet-al" class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-3 rounded-lg font-bold text-base transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-3">
-                                    <i class="fas fa-globe text-lg"></i>
+                                <a href="#hizmet-al" class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-2 rounded-lg font-bold text-sm transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-2">
+                                    <i class="fas fa-globe text-sm"></i>
                                     <div>
-                                        <div class="text-base font-bold">WEB UYGULAMASI</div>
+                                        <div class="text-sm font-bold">WEB UYGULAMASI</div>
                                         <div class="text-xs opacity-90">Hemen Başla</div>
                                     </div>
                                 </a>
                                 
                                 <!-- PWA Kurulum Rehberi -->
-                                <button onclick="showPWAGuide()" class="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-6 py-3 rounded-lg font-bold text-base transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-3">
-                                    <i class="fas fa-mobile-alt text-lg"></i>
+                                <button onclick="showPWAGuide()" class="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-4 py-2 rounded-lg font-bold text-sm transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-2">
+                                    <i class="fas fa-mobile-alt text-sm"></i>
                                     <div>
-                                        <div class="text-base font-bold">ANA EKRANA EKLE</div>
+                                        <div class="text-sm font-bold">ANA EKRANA EKLE</div>
                                         <div class="text-xs opacity-90">Nasıl Yapılır?</div>
                                     </div>
                                 </button>
