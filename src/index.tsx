@@ -3815,19 +3815,19 @@ app.get('/', (c) => {
                         </p>
                         <div class="flex flex-row gap-4 justify-center items-center mt-12">
                             <!-- Web Uygulaması Butonu -->
-                            <a href="#hizmet-al" class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-3 rounded-lg font-bold text-base transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-2 w-48">
-                                <i class="fas fa-globe text-base"></i>
+                            <a href="#hizmet-al" class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-2 rounded-lg font-bold text-sm transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-2 w-48">
+                                <i class="fas fa-globe text-sm"></i>
                                 <div>
-                                    <div class="text-base font-bold">WEB UYGULAMASI</div>
+                                    <div class="text-sm font-bold">WEB UYGULAMASI</div>
                                     <div class="text-xs opacity-90">Hemen Kullan</div>
                                 </div>
                             </a>
                             
                             <!-- Tarayıcıdan Erişim Butonu -->
-                            <a href="#services" class="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-6 py-3 rounded-lg font-bold text-base transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-2 w-48">
-                                <i class="fas fa-browser text-base"></i>
+                            <a href="#services" class="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-4 py-2 rounded-lg font-bold text-sm transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-2 w-48">
+                                <i class="fas fa-browser text-sm"></i>
                                 <div>
-                                    <div class="text-base font-bold">TARAYICIDAN ERİŞ</div>
+                                    <div class="text-sm font-bold">TARAYICIDAN ERİŞ</div>
                                     <div class="text-xs opacity-90">Anında Erişin</div>
                                 </div>
                             </a>
