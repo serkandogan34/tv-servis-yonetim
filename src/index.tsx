@@ -3833,6 +3833,21 @@ app.get('/', (c) => {
                             </a>
                         </div>
 
+                        <!-- Emergency Help CTA -->
+                        <div class="mt-8 p-4 bg-red-600 rounded-lg border-2 border-red-500 shadow-lg">
+                            <div class="text-center">
+                                <div class="text-white font-bold text-lg mb-2">
+                                    🚨 BAŞKA YERDEN HİZMET ALDIN AMA SORUN YAŞIYORSUN?
+                                </div>
+                                <div class="text-red-100 text-sm mb-3">
+                                    Kandırıldın • Parasını alamıyorsun • İş yarım kaldı • Tehdit ediliyor
+                                </div>
+                                <a href="#acil-yardim" class="bg-white text-red-600 px-6 py-2 rounded-lg font-bold text-sm hover:bg-red-50 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                                    🛡️ ACİL BİLİRKİŞİ YARDIMI AL
+                                </a>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -9056,6 +9071,16 @@ app.get('/', (c) => {
             }, 2000);
         });
         </script>
+
+        <!-- Floating Emergency Help Button -->
+        <div class="fixed bottom-4 right-4 z-50">
+            <button onclick="window.location.href='#acil-yardim'" 
+                    class="bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-full font-bold text-sm transition-all duration-300 transform hover:scale-110 shadow-lg animate-pulse">
+                <i class="fas fa-life-ring mr-2"></i>
+                <span class="hidden sm:inline">ACİL YARDIM</span>
+                <span class="sm:hidden">🚨</span>
+            </button>
+        </div>
 
     </body>
     </html>
