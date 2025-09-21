@@ -3785,7 +3785,7 @@ app.get('/', (c) => {
                             <i class="fas fa-user-tie mr-2"></i>
                             Hizmet Veren misiniz?
                         </a>
-                        <a href="#hizmet-al" class="bg-amber-500 text-white px-8 py-3 sharp-corner font-bold hover:bg-amber-600 transition duration-200 shadow-lg hover:shadow-xl">
+                        <a href="#hizmet-al" class="bg-amber-500 text-white px-6 py-2 rounded-lg font-bold text-sm hover:bg-amber-600 transition duration-200 shadow-lg hover:shadow-xl">
                             HİZMET AL
                         </a>
                     </div>
@@ -3813,22 +3813,22 @@ app.get('/', (c) => {
                         <p class="text-2xl mb-10 opacity-90 max-w-2xl font-light leading-relaxed text-center mx-auto">
                             Güvenli hizmet almanın <span class="text-amber-400 font-semibold">en kolay yolu</span>
                         </p>
-                        <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mt-12">
+                        <div class="flex flex-row gap-4 justify-center items-center mt-12">
                             <!-- Web Uygulaması Butonu -->
-                            <a href="#hizmet-al" class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-3">
-                                <i class="fas fa-globe text-xl"></i>
+                            <a href="#hizmet-al" class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-3 rounded-lg font-bold text-base transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-2">
+                                <i class="fas fa-globe text-base"></i>
                                 <div>
-                                    <div class="text-lg font-bold">WEB UYGULAMASINI</div>
-                                    <div class="text-sm opacity-90">Hemen Kullan</div>
+                                    <div class="text-base font-bold">WEB UYGULAMASI</div>
+                                    <div class="text-xs opacity-90">Hemen Kullan</div>
                                 </div>
                             </a>
                             
                             <!-- Tarayıcıdan Erişim Butonu -->
-                            <a href="#services" class="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-3">
-                                <i class="fas fa-browser text-xl"></i>
+                            <a href="#services" class="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-6 py-3 rounded-lg font-bold text-base transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-2">
+                                <i class="fas fa-browser text-base"></i>
                                 <div>
-                                    <div class="text-lg font-bold">TARAYICIDAN</div>
-                                    <div class="text-sm opacity-90">Anında Erişin</div>
+                                    <div class="text-base font-bold">TARAYICIDAN ERİŞ</div>
+                                    <div class="text-xs opacity-90">Anında Erişin</div>
                                 </div>
                             </a>
                         </div>
