@@ -1,0 +1,131 @@
+/* Garantor360 Custom Styles */
+
+/* Floating Animation for Superhero */
+@keyframes floating {
+    0%, 100% {
+        transform: translateY(0px) rotate(-2deg);
+    }
+    50% {
+        transform: translateY(-15px) rotate(2deg);
+    }
+}
+
+.floating-animation {
+    animation: floating 4s ease-in-out infinite;
+}
+
+/* Pulse animation for dots */
+@keyframes pulse-dot {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.1);
+    }
+}
+
+.pulse-dot {
+    animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* Heartbeat animation */
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    25%, 75% {
+        transform: scale(1.05);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.heartbeat {
+    animation: heartbeat 2s ease-in-out infinite;
+}
+
+/* Glow effect */
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(251, 191, 36, 0.6);
+    }
+}
+
+.glow-effect {
+    animation: glow 3s ease-in-out infinite;
+}
+
+/* Minimal corners (slight rounding) */
+.minimal-corner {
+    border-radius: 4px;
+}
+
+.sharp-corner {
+    border-radius: 2px;
+}
+
+/* Card hover effects */
+.card-corporate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced transitions */
+.transition-all {
+    transition: all 0.3s ease;
+}
+
+/* Gradient text */
+.gradient-text {
+    background: linear-gradient(135deg, #1e3a8a 0%, #f59e0b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Modern scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+/* Custom button styles */
+.btn-primary {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+}
+
+.btn-amber {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    transition: all 0.3s ease;
+}
+
+.btn-amber:hover {
+    background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+}

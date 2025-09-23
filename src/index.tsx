@@ -3765,6 +3765,116 @@ app.get('/', (c) => {
             .hero-overlay {
               background: rgba(30, 58, 138, 0.4);
             }
+            .superhero-glow {
+              filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.3));
+              transition: all 0.4s ease;
+              animation: superheroFloat 3s ease-in-out infinite, superheroGlow 2s ease-in-out infinite alternate;
+            }
+            .superhero-glow:hover {
+              filter: drop-shadow(0 0 40px rgba(59, 130, 246, 0.8));
+              transform: scale(1.05) rotate(2deg);
+              animation-play-state: paused;
+            }
+            .superhero-glow img {
+              transition: all 0.3s ease;
+            }
+            .superhero-glow:hover img {
+              transform: translateY(-5px);
+            }
+            @keyframes superheroFloat {
+              0%, 100% { 
+                transform: translateY(0px) rotate(0deg); 
+              }
+              25% { 
+                transform: translateY(-10px) rotate(1deg); 
+              }
+              50% { 
+                transform: translateY(-5px) rotate(0deg); 
+              }
+              75% { 
+                transform: translateY(-15px) rotate(-1deg); 
+              }
+            }
+            @keyframes superheroGlow {
+              0% { 
+                filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.3)); 
+              }
+              100% { 
+                filter: drop-shadow(0 0 35px rgba(59, 130, 246, 0.6)); 
+              }
+            }
+            .superhero-title {
+              animation: titlePulse 4s ease-in-out infinite;
+            }
+            .superhero-subtitle {
+              animation: subtitleFade 3s ease-in-out infinite alternate;
+            }
+            @keyframes titlePulse {
+              0%, 100% { 
+                transform: scale(1); 
+                text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+              }
+              50% { 
+                transform: scale(1.02); 
+                text-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+              }
+            }
+            @keyframes subtitleFade {
+              0% { 
+                opacity: 0.8; 
+              }
+              100% { 
+                opacity: 1; 
+              }
+            }
+            .superhero-container:hover .superhero-title {
+              text-shadow: 0 0 25px rgba(251, 191, 36, 0.8);
+              transform: scale(1.05);
+            }
+            .superhero-container:hover .superhero-subtitle {
+              transform: translateY(-2px);
+              opacity: 1;
+            }
+            .home-services-glow {
+              filter: drop-shadow(0 0 20px rgba(230, 126, 34, 0.3));
+              transition: all 0.4s ease;
+              animation: heartbeat 2s ease-in-out infinite, servicesGlow 3s ease-in-out infinite alternate;
+            }
+            .home-services-glow:hover {
+              filter: drop-shadow(0 0 40px rgba(230, 126, 34, 0.6));
+              transform: scale(1.08);
+              animation: heartbeatFast 1s ease-in-out infinite, servicesGlow 1.5s ease-in-out infinite alternate;
+            }
+            @keyframes heartbeat {
+              0%, 50%, 100% { 
+                transform: scale(1); 
+              }
+              25% { 
+                transform: scale(1.05); 
+              }
+              37% { 
+                transform: scale(1.02); 
+              }
+            }
+            @keyframes heartbeatFast {
+              0%, 50%, 100% { 
+                transform: scale(1.08); 
+              }
+              25% { 
+                transform: scale(1.15); 
+              }
+              37% { 
+                transform: scale(1.12); 
+              }
+            }
+            @keyframes servicesGlow {
+              0% { 
+                filter: drop-shadow(0 0 20px rgba(230, 126, 34, 0.3)); 
+              }
+              100% { 
+                filter: drop-shadow(0 0 35px rgba(214, 137, 16, 0.5)); 
+              }
+            }
         </style>
     </head>
     <body class="bg-slate-50">
@@ -3803,12 +3913,20 @@ app.get('/', (c) => {
             <div class="max-w-7xl mx-auto px-6 relative z-10">
 
                 
-                <div class="text-center max-w-4xl mx-auto">
-                    <!-- Hero Content -->
-                    <div class="text-center">
-                        <h1 class="text-5xl lg:text-6xl font-bold mb-6 tracking-tight leading-tight">
-                            GÜVENLİ HİZMET ALMAK
-                            <span class="block text-amber-400">BU KADAR KOLAY!</span>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
+                    <!-- Left Superhero -->
+                    <div class="text-center superhero-container">
+                        <div class="superhero-glow mb-6">
+                            <img src="/static/images/garantor-superhero-v2.png" alt="Garantor360 Güvenlik Koruyucusu" class="w-full max-w-sm mx-auto superhero-image">
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-4 superhero-title">Güvenlik Koruyucusu</h3>
+                        <p class="text-blue-100 text-lg superhero-subtitle">Ödeme güvenliğiniz bizim sorumluluğumuz!</p>
+                    </div>
+
+                    <!-- Center Content -->
+                    <div class="text-center lg:text-center">
+                        <h1 class="text-4xl lg:text-5xl font-bold mb-6 tracking-tight leading-tight">
+                            GÜVENLİ HİZMET ALMAK <span class="text-amber-400">BU KADAR KOLAY!</span>
                         </h1>
                         <p class="text-2xl mb-10 opacity-90 max-w-2xl font-light leading-relaxed text-center mx-auto">
                             Güvenli hizmet almanın <span class="text-amber-400 font-semibold">en kolay yolu</span>
@@ -3833,21 +3951,17 @@ app.get('/', (c) => {
                             </a>
                         </div>
 
-                        <!-- Emergency Help CTA -->
-                        <div class="mt-8 p-4 bg-red-600 rounded-lg border-2 border-red-500 shadow-lg">
-                            <div class="text-center">
-                                <div class="text-white font-bold text-lg mb-2">
-                                    🚨 BAŞKA YERDEN HİZMET ALDIN AMA SORUN YAŞIYORSUN?
-                                </div>
-                                <div class="text-red-100 text-sm mb-3">
-                                    Kandırıldın • Parasını alamıyorsun • İş yarım kaldı • Tehdit ediliyor
-                                </div>
-                                <a href="#acil-yardim" class="bg-white text-red-600 px-6 py-2 rounded-lg font-bold text-sm hover:bg-red-50 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                                    🛡️ ACİL BİLİRKİŞİ YARDIMI AL
-                                </a>
-                            </div>
-                        </div>
 
+
+                    </div>
+
+                    <!-- Right Column - Original Circular Home Services Icon -->
+                    <div class="text-center hidden lg:block">
+                        <div class="home-services-glow mb-6">
+                            <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_75e4c704-65cb-4b63-91b3-99a36fc53af7" alt="Ev Hizmetleri" class="w-full max-w-sm mx-auto">
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Hizmet Koruyucusu</h3>
+                        <p class="text-blue-100 text-lg">Tüm ev hizmetlerinizde yanınızdayız!</p>
                     </div>
                 </div>
             </div>
@@ -3873,134 +3987,205 @@ app.get('/', (c) => {
                     </p>
                 </div>
 
-                <!-- Dolandırıcılık vs Güvenlik Karşılaştırması -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-                    <!-- Sol: Genel Piyasa Sorunları -->
-                    <div class="bg-gradient-to-br from-slate-50 to-gray-50 border-2 border-slate-200 p-6 minimal-corner">
-                        <div class="text-center mb-6">
-                            <div class="w-16 h-16 bg-slate-400 minimal-corner mx-auto mb-4 flex items-center justify-center">
-                                <i class="fas fa-question-circle text-white text-2xl"></i>
+                <!-- Elegant Problem vs Solution Comparison -->
+                <div class="relative mb-10 py-2 -mt-20">
+                    
+                    <div class="relative z-20 container mx-auto px-6">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start relative">
+                            
+                            <!-- Superhero Between Containers -->
+                            <div class="hidden lg:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
+                                <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_43faffb1-910b-46ee-baf7-a563689163e9" 
+                                     alt="Garantor360 Superhero" 
+                                     class="w-96 h-96 object-contain opacity-100 floating-animation">
                             </div>
-                            <h3 class="text-xl font-bold text-slate-800 mb-2">GENEL PİYASA SORUNLARI</h3>
-                            <p class="text-slate-600 text-sm font-medium">Bu endişeleri yaşıyor musunuz?</p>
+                            
+                            <!-- Left: Problems Container -->
+                            <div class="group transform scale-75">
+                                <div class="relative">
+                                    <!-- Oval Frame -->
+                                    <div class="absolute -inset-4 border-2 border-slate-300 rounded-3xl opacity-50"></div>
+                                    <div class="bg-white border border-slate-200 hover:border-slate-300 transition-all duration-300 rounded-2xl shadow-sm hover:shadow-md relative">
+                                        <!-- Simple Header -->
+                                        <div class="px-8 py-8 border-b border-slate-100">
+                                            <div class="text-center">
+                                                <div class="inline-flex items-center justify-center w-16 h-16 bg-slate-100 rounded-xl mb-4">
+                                                    <i class="fas fa-exclamation-circle text-slate-500 text-2xl"></i>
+                                                </div>
+                                                <h3 class="text-2xl font-bold text-slate-800 mb-2">GENEL PİYASA SORUNLARI</h3>
+                                                <p class="text-slate-500 text-base">Bu endişeleri yaşıyor musunuz?</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Problems List -->
+                                        <div class="p-8 space-y-4">
+                                            <div class="flex items-start p-4 hover:bg-slate-50 transition-colors duration-200 rounded-xl">
+                                                <div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                                    <i class="fas fa-search text-slate-500 text-lg"></i>
+                                                </div>
+                                            <div class="flex-1">
+                                                <div class="font-semibold text-slate-800 text-lg mb-2">Güvenilir Usta Bulamama</div>
+                                                <div class="text-slate-600 text-base">Hangi ustanın güvenilir olduğu belirsiz</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex items-start p-4 hover:bg-slate-50 transition-colors duration-200 rounded-xl">
+                                            <div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                                <i class="fas fa-question-circle text-slate-500 text-lg"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="font-semibold text-slate-800 text-lg mb-2">Fiyat Belirsizliği</div>
+                                                <div class="text-slate-600 text-base">Ne kadar ödeyeceğiniz önceden bilinmiyor</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex items-start p-4 hover:bg-slate-50 transition-colors duration-200 rounded-xl">
+                                            <div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                                <i class="fas fa-tools text-slate-500 text-lg"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="font-semibold text-slate-800 text-lg mb-2">İşçilik Garantisi Eksikliği</div>
+                                                <div class="text-slate-600 text-base">Yapılan işin garantisi belirsiz veya yok</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex items-start p-4 hover:bg-slate-50 transition-colors duration-200 rounded-xl">
+                                            <div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                                <i class="fas fa-lock-open text-slate-500 text-lg"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="font-semibold text-slate-800 text-lg mb-2">Ödeme Güvensizliği</div>
+                                                <div class="text-slate-600 text-base">Para iade garantisi ve güvenli ödeme yok</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex items-start p-4 hover:bg-slate-50 transition-colors duration-200 rounded-xl">
+                                            <div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                                <i class="fas fa-phone-slash text-slate-500 text-lg"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="font-semibold text-slate-800 text-lg mb-2">İletişim Sorunu</div>
+                                                <div class="text-slate-600 text-base">Sonradan ulaşamama ve destek alamama</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex items-start p-4 hover:bg-slate-50 transition-colors duration-200 rounded-xl">
+                                            <div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                                <i class="fas fa-shield-alt text-slate-500 text-lg"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="font-semibold text-slate-800 text-lg mb-2">Sigorta ve Koruma Eksikliği</div>
+                                                <div class="text-slate-600 text-base">Hasar durumunda koruma ve tazminat yok</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex items-start p-3 hover:bg-slate-50 transition-colors duration-200 border-t border-slate-100 mt-4 pt-4 rounded-xl">
+                                            <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                                <i class="fas fa-user-times text-amber-600 text-sm"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="font-semibold text-slate-800 text-lg mb-2">Dolandırıcılık Riski</div>
+                                                <div class="text-amber-600 text-xs font-medium">Güvensiz platformlarda dolandırılma ihtimali</div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right: Solutions Container -->
+                            <div class="group transform scale-75">
+                                <div class="relative">
+                                    <!-- Oval Frame -->
+                                    <div class="absolute -inset-4 border-2 border-amber-300 rounded-3xl opacity-50"></div>
+                                    <div class="bg-gradient-to-br from-blue-900 to-blue-800 border border-blue-300 hover:border-blue-200 transition-all duration-300 rounded-2xl shadow-sm hover:shadow-md relative">
+                                        <!-- Simple Header -->
+                                        <div class="px-8 py-8 border-b border-blue-700">
+                                            <div class="text-center">
+                                                <div class="inline-flex items-center justify-center w-16 h-16 bg-amber-400 rounded-xl mb-4">
+                                                    <i class="fas fa-shield-virus text-blue-900 text-2xl"></i>
+                                                </div>
+                                                <h3 class="text-2xl font-bold text-white mb-2">GARANTOR360 KORUMA</h3>
+                                                <p class="text-blue-200 text-base">Artık kimse sizi dolandıramaz!</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Solutions List -->
+                                        <div class="p-8 space-y-4 text-white">
+                                            <div class="flex items-start p-4 hover:bg-white/5 transition-colors duration-200 rounded-xl">
+                                                <div class="w-12 h-12 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                                <i class="fas fa-user-shield text-amber-400 text-lg"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="font-semibold text-white text-lg mb-2">Doğrulanmış Uzmanlar</div>
+                                                <div class="text-blue-200 text-base">Kimlik, adres, referans kontrollü</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex items-start p-4 hover:bg-white/5 transition-colors duration-200 rounded-xl">
+                                            <div class="w-12 h-12 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                                <i class="fas fa-search-plus text-amber-400 text-lg"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="font-semibold text-white text-lg mb-2">Sabıka Kaydı Sorgulama</div>
+                                                <div class="text-blue-200 text-base">Adli sicil kontrolü ve geçmiş sorgulaması</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex items-start p-4 hover:bg-white/5 transition-colors duration-200 rounded-xl">
+                                            <div class="w-12 h-12 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                                <i class="fas fa-money-check-alt text-amber-400 text-lg"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="font-semibold text-white text-lg mb-2">Para İade Garantisi</div>
+                                                <div class="text-blue-200 text-base">Memnun kalmazsan tüm paran geri</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex items-start p-4 hover:bg-white/5 transition-colors duration-200 rounded-xl">
+                                            <div class="w-12 h-12 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                                <i class="fas fa-umbrella text-amber-400 text-lg"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="font-semibold text-white text-lg mb-2">Sigorta Koruması</div>
+                                                <div class="text-blue-200 text-base">Hasar ve sorun durumunda sigorta tazminatı</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex items-start p-4 hover:bg-white/5 transition-colors duration-200 rounded-xl">
+                                            <div class="w-12 h-12 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                                <i class="fas fa-headset text-amber-400 text-lg"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="font-semibold text-white text-lg mb-2">7/24 İzleme Sistemi</div>
+                                                <div class="text-blue-200 text-base">Sürekli takip, anında müdahale</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex items-start p-4 hover:bg-white/5 transition-colors duration-200 rounded-xl">
+                                            <div class="w-12 h-12 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                                <i class="fas fa-comments text-amber-400 text-lg"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="font-semibold text-white text-lg mb-2">Danışmanlık Hizmeti</div>
+                                                <div class="text-blue-200 text-base">Uzman danışmanlardan ücretsiz rehberlik</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex items-start p-3 hover:bg-white/5 transition-colors duration-200 border-t border-blue-700 mt-4 pt-4 rounded-xl">
+                                            <div class="w-12 h-12 bg-amber-400/30 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                                <i class="fas fa-gavel text-amber-300 text-sm"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="font-medium text-amber-100 text-sm mb-1">Hukuki Koruma</div>
+                                                <div class="text-amber-200 text-xs font-medium">Sorun çıkarsa avukat devreye girer</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="space-y-3">
-                            <div class="flex items-start p-3 bg-white border-l-4 border-slate-400 minimal-corner shadow-sm">
-                                <i class="fas fa-search text-slate-500 text-lg mt-0.5 mr-3 flex-shrink-0"></i>
-                                <div>
-                                    <div class="font-semibold text-slate-800 text-sm">Güvenilir Usta Bulamama</div>
-                                    <div class="text-slate-600 text-xs mt-1">Hangi ustanın güvenilir olduğu belirsiz</div>
-                                </div>
-                            </div>
-                            <div class="flex items-start p-3 bg-white border-l-4 border-slate-400 minimal-corner shadow-sm">
-                                <i class="fas fa-question text-slate-500 text-lg mt-0.5 mr-3 flex-shrink-0"></i>
-                                <div>
-                                    <div class="font-semibold text-slate-800 text-sm">Fiyat Belirsizliği</div>
-                                    <div class="text-slate-600 text-xs mt-1">Ne kadar ödeyeceğiniz önceden bilinmiyor</div>
-                                </div>
-                            </div>
-                            <div class="flex items-start p-3 bg-white border-l-4 border-slate-400 minimal-corner shadow-sm">
-                                <i class="fas fa-tools text-slate-500 text-lg mt-0.5 mr-3 flex-shrink-0"></i>
-                                <div>
-                                    <div class="font-semibold text-slate-800 text-sm">İşçilik Garantisi Eksikliği</div>
-                                    <div class="text-slate-600 text-xs mt-1">Yapılan işin garantisi belirsiz veya yok</div>
-                                </div>
-                            </div>
-                            <div class="flex items-start p-3 bg-white border-l-4 border-slate-400 minimal-corner shadow-sm">
-                                <i class="fas fa-lock text-slate-500 text-lg mt-0.5 mr-3 flex-shrink-0"></i>
-                                <div>
-                                    <div class="font-semibold text-slate-800 text-sm">Ödeme Güvensizliği</div>
-                                    <div class="text-slate-600 text-xs mt-1">Para iade garantisi ve güvenli ödeme yok</div>
-                                </div>
-                            </div>
-                            <div class="flex items-start p-3 bg-white border-l-4 border-slate-400 minimal-corner shadow-sm">
-                                <i class="fas fa-phone-slash text-slate-500 text-lg mt-0.5 mr-3 flex-shrink-0"></i>
-                                <div>
-                                    <div class="font-semibold text-slate-800 text-sm">İletişim Sorunu</div>
-                                    <div class="text-slate-600 text-xs mt-1">Sonradan ulaşamama ve destek alamama</div>
-                                </div>
-                            </div>
-                            <div class="flex items-start p-3 bg-white border-l-4 border-slate-400 minimal-corner shadow-sm">
-                                <i class="fas fa-shield-alt text-slate-500 text-lg mt-0.5 mr-3 flex-shrink-0"></i>
-                                <div>
-                                    <div class="font-semibold text-slate-800 text-sm">Sigorta ve Koruma Eksikliği</div>
-                                    <div class="text-slate-600 text-xs mt-1">Hasar durumunda koruma ve tazminat yok</div>
-                                </div>
-                            </div>
-                            <div class="flex items-start p-3 bg-white border-l-4 border-amber-400 minimal-corner shadow-sm">
-                                <i class="fas fa-user-times text-amber-600 text-lg mt-0.5 mr-3 flex-shrink-0"></i>
-                                <div>
-                                    <div class="font-semibold text-amber-800 text-sm">Dolandırıcılık Riski</div>
-                                    <div class="text-amber-600 text-xs mt-1">Güvensiz platformlarda dolandırılma ihtimali</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- Sağ: Garantor360 Güvenlik -->
-                    <div class="bg-gradient-to-br from-blue-900 to-blue-800 text-white p-6 minimal-corner border-2 border-blue-300">
-                        <div class="text-center mb-6">
-                            <div class="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-500 minimal-corner mx-auto mb-4 flex items-center justify-center shadow-lg">
-                                <i class="fas fa-shield-virus text-blue-900 text-2xl"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-white mb-2">GARANTOR360 KORUMA</h3>
-                            <p class="text-blue-200 text-sm font-medium">Artık kimse sizi dolandıramaz!</p>
-                        </div>
-                        <div class="space-y-3">
-                            <div class="flex items-start p-3 bg-white/10 border-l-4 border-amber-400 minimal-corner backdrop-blur-sm">
-                                <i class="fas fa-user-shield text-amber-400 text-lg mt-0.5 mr-3 flex-shrink-0"></i>
-                                <div>
-                                    <div class="font-semibold text-white text-sm">Doğrulanmış Uzmanlar</div>
-                                    <div class="text-blue-200 text-xs mt-1">Kimlik, adres, referans kontrollü</div>
-                                </div>
-                            </div>
-                            <div class="flex items-start p-3 bg-white/10 border-l-4 border-amber-400 minimal-corner backdrop-blur-sm">
-                                <i class="fas fa-search text-amber-400 text-lg mt-0.5 mr-3 flex-shrink-0"></i>
-                                <div>
-                                    <div class="font-semibold text-white text-sm">Sabıka Kaydı Sorgulama</div>
-                                    <div class="text-blue-200 text-xs mt-1">Adli sicil kontrolü ve geçmiş sorgulaması</div>
-                                </div>
-                            </div>
-                            <div class="flex items-start p-3 bg-white/10 border-l-4 border-amber-400 minimal-corner backdrop-blur-sm">
-                                <i class="fas fa-lock text-amber-400 text-lg mt-0.5 mr-3 flex-shrink-0"></i>
-                                <div>
-                                    <div class="font-semibold text-white text-sm">Para İade Garantisi</div>
-                                    <div class="text-blue-200 text-xs mt-1">Memnun kalmazsan tüm paran geri</div>
-                                </div>
-                            </div>
-                            <div class="flex items-start p-3 bg-white/10 border-l-4 border-amber-400 minimal-corner backdrop-blur-sm">
-                                <i class="fas fa-umbrella text-amber-400 text-lg mt-0.5 mr-3 flex-shrink-0"></i>
-                                <div>
-                                    <div class="font-semibold text-white text-sm">Sigorta Koruması</div>
-                                    <div class="text-blue-200 text-xs mt-1">Hasar ve sorun durumunda sigorta tazminatı</div>
-                                </div>
-                            </div>
-                            <div class="flex items-start p-3 bg-white/10 border-l-4 border-amber-400 minimal-corner backdrop-blur-sm">
-                                <i class="fas fa-headset text-amber-400 text-lg mt-0.5 mr-3 flex-shrink-0"></i>
-                                <div>
-                                    <div class="font-semibold text-white text-sm">7/24 İzleme Sistemi</div>
-                                    <div class="text-blue-200 text-xs mt-1">Sürekli takip, anında müdahale</div>
-                                </div>
-                            </div>
-                            <div class="flex items-start p-3 bg-white/10 border-l-4 border-amber-400 minimal-corner backdrop-blur-sm">
-                                <i class="fas fa-comments text-amber-400 text-lg mt-0.5 mr-3 flex-shrink-0"></i>
-                                <div>
-                                    <div class="font-semibold text-white text-sm">Danışmanlık Hizmeti</div>
-                                    <div class="text-blue-200 text-xs mt-1">Uzman danışmanlardan ücretsiz rehberlik</div>
-                                </div>
-                            </div>
-                            <div class="flex items-start p-3 bg-white/10 border-l-4 border-amber-400 minimal-corner backdrop-blur-sm">
-                                <i class="fas fa-gavel text-amber-400 text-lg mt-0.5 mr-3 flex-shrink-0"></i>
-                                <div>
-                                    <div class="font-semibold text-white text-sm">Hukuki Koruma</div>
-                                    <div class="text-blue-200 text-xs mt-1">Sorun çıkarsa avukat devreye girer</div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
                     </div>
                 </div>
 
@@ -4026,7 +4211,7 @@ app.get('/', (c) => {
                                 <i class="fas fa-piggy-bank text-white text-2xl"></i>
                             </div>
                             <h4 class="font-bold text-blue-900 mb-3 text-sm">PARA KORUNMASI</h4>
-                            <p class="text-slate-600 text-xs leading-relaxed mb-3">İş bitmeden ödeme yapılmaz, dolandırıcılar para alamaz</p>
+                            <p class="text-slate-600 text-base leading-relaxed mb-3">İş bitmeden ödeme yapılmaz, dolandırıcılar para alamaz</p>
                             <div class="text-xs bg-green-100 text-green-700 px-2 py-1 minimal-corner font-semibold">
                                 Para İade Garantili
                             </div>
@@ -4038,7 +4223,7 @@ app.get('/', (c) => {
                                 <i class="fas fa-id-card text-white text-2xl"></i>
                             </div>
                             <h4 class="font-bold text-blue-900 mb-3 text-sm">KİMLİK DOĞRULAMA</h4>
-                            <p class="text-slate-600 text-xs leading-relaxed mb-3">Sahte ustalar engellenip, sadece gerçek uzmanlar kabul edilir</p>
+                            <p class="text-slate-600 text-base leading-relaxed mb-3">Sahte ustalar engellenip, sadece gerçek uzmanlar kabul edilir</p>
                             <div class="text-xs bg-blue-100 text-blue-700 px-2 py-1 minimal-corner font-semibold">
                                 %100 Doğrulanmış
                             </div>
@@ -4050,7 +4235,7 @@ app.get('/', (c) => {
                                 <i class="fas fa-eye text-white text-2xl"></i>
                             </div>
                             <h4 class="font-bold text-blue-900 mb-3 text-sm">SÜREKLI TAKİP</h4>
-                            <p class="text-slate-600 text-xs leading-relaxed mb-3">İş süresince 7/24 izleme, sorun anında müdahale</p>
+                            <p class="text-slate-600 text-base leading-relaxed mb-3">İş süresince 7/24 izleme, sorun anında müdahale</p>
                             <div class="text-xs bg-purple-100 text-purple-700 px-2 py-1 minimal-corner font-semibold">
                                 Canlı İzleme
                             </div>
@@ -4062,7 +4247,7 @@ app.get('/', (c) => {
                                 <i class="fas fa-balance-scale text-white text-2xl"></i>
                             </div>
                             <h4 class="font-bold text-blue-900 mb-3 text-sm">HUKUKİ KORUMA</h4>
-                            <p class="text-slate-600 text-xs leading-relaxed mb-3">Dolandırıcılık durumunda avukat devreye girer</p>
+                            <p class="text-slate-600 text-base leading-relaxed mb-3">Dolandırıcılık durumunda avukat devreye girer</p>
                             <div class="text-xs bg-amber-100 text-amber-700 px-2 py-1 minimal-corner font-semibold">
                                 Avukat Desteği
                             </div>
@@ -4074,42 +4259,127 @@ app.get('/', (c) => {
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
                             <div>
                                 <div class="text-2xl font-bold text-red-600 mb-1">0</div>
-                                <div class="text-slate-600 text-xs">Dolandırıcılık Vakası</div>
+                                <div class="text-slate-600 text-base">Dolandırıcılık Vakası</div>
                             </div>
                             <div>
                                 <div class="text-2xl font-bold text-green-600 mb-1">98.9%</div>
-                                <div class="text-slate-600 text-xs">Güvenlik Oranı</div>
+                                <div class="text-slate-600 text-base">Güvenlik Oranı</div>
                             </div>
                             <div>
                                 <div class="text-2xl font-bold text-blue-600 mb-1">24/7</div>
-                                <div class="text-slate-600 text-xs">Koruma Aktif</div>
+                                <div class="text-slate-600 text-base">Koruma Aktif</div>
                             </div>
                             <div>
                                 <div class="text-2xl font-bold text-purple-600 mb-1">15dk</div>
-                                <div class="text-slate-600 text-xs">Müdahale Süresi</div>
+                                <div class="text-slate-600 text-base">Müdahale Süresi</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Minimal Call to Action -->
-                <div class="text-center">
-                    <div class="bg-blue-900 text-white p-6 minimal-corner">
-                        <h3 class="text-2xl font-bold mb-4 text-white">
-                            Güvenli Hizmet Almaya Başlayın
-                        </h3>
-                        <p class="text-blue-200 mb-6">Tüm güvencelerimizle korumalı, risk-free hizmet deneyimi</p>
-                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                            <button onclick="scrollToServices()" class="bg-amber-500 text-blue-900 px-6 py-2 minimal-corner font-medium text-sm hover:bg-amber-400 transition duration-200">
-                                <i class="fas fa-arrow-right mr-2"></i>Hizmet Talep Et
-                                <span class="text-xs opacity-80 ml-2">| 0850 360 0360</span>
-                            </button>
+                <!-- Service & Emergency Section -->
+                <div class="bg-slate-100 text-gray-800 p-8 minimal-corner">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                        <!-- Left: Service Call to Action -->
+                        <div class="text-left">
+                            <!-- Premium Badge -->
+                            <div class="mb-6">
+                                <div class="inline-flex items-center bg-amber-500 text-blue-900 px-4 py-2 rounded-full mb-4">
+                                    <i class="fas fa-crown mr-2 text-sm"></i>
+                                    <span class="font-bold text-sm">PREMİUM GÜVENLİK</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <h3 class="text-3xl font-bold text-gray-800 mb-3 leading-tight">
+                                    Güvenli Hizmet Almaya 
+                                    <span class="text-amber-500">Başlayın</span>
+                                </h3>
+                                <p class="text-gray-600 text-lg leading-relaxed">Tüm güvencelerimizle korumalı, <span class="text-blue-600 font-semibold">risk-free</span> hizmet deneyimi</p>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <!-- Main Service Button -->
+                                <button onclick="scrollToServices()" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-blue-900 px-8 py-4 rounded-xl font-bold text-lg inline-flex items-center space-x-3 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 w-full justify-center">
+                                    <i class="fas fa-arrow-right text-blue-900 text-lg"></i>
+                                    <span>Hizmet Talep Et</span>
+                                </button>
+                                
+                                <!-- Phone Button -->
+                                <button onclick="window.location.href='tel:08503600360'" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold text-lg inline-flex items-center justify-center space-x-3 transition-all duration-300 w-full border-2 border-blue-600 hover:border-blue-700">
+                                    <i class="fas fa-phone text-white text-sm"></i>
+                                    <span>0850 360 0360</span>
+                                    <span class="text-sm opacity-80">Ücretsiz Arama</span>
+                                </button>
+                                
+                                <!-- Guarantee Notice -->
+                                <div class="text-center text-gray-600 text-sm mt-4">
+                                    <i class="fas fa-shield-check text-green-500 mr-1"></i>
+                                    Tüm güvenceler yasal olarak garanti edilir
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: Emergency Section -->
+                        <div class="bg-white border border-gray-200 p-6 minimal-corner shadow-sm">
+                            <!-- ACİL DURUM Badge -->
+                            <div class="mb-4">
+                                <div class="inline-flex items-center bg-amber-100 text-amber-800 px-3 py-1 rounded-full">
+                                    <i class="fas fa-headset mr-2 text-sm"></i>
+                                    <span class="font-medium text-sm">Destek Merkezi</span>
+                                </div>
+                            </div>
+                            
+                            <h4 class="text-lg font-bold text-gray-800 mb-2">Başka Yerden Aldığın Hizmette Sorun mu Yaşıyorsun?</h4>
+                            <p class="text-gray-600 text-sm mb-4">Kandırıldın, paranı alamıyorsun veya işin yarım kaldı? Hemen yardım al.</p>
+                            
+                            <!-- Problem Icons -->
+                            <div class="grid grid-cols-4 gap-2 mb-4">
+                                <div class="text-center">
+                                    <div class="bg-gray-50 border border-gray-200 p-3 minimal-corner mb-1">
+                                        <i class="fas fa-user-times text-blue-500 text-lg"></i>
+                                    </div>
+                                    <div class="text-gray-700 text-xs">Kandırıldın</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="bg-gray-50 border border-gray-200 p-3 minimal-corner mb-1">
+                                        <i class="fas fa-money-bill-wave text-blue-500 text-lg"></i>
+                                    </div>
+                                    <div class="text-gray-700 text-xs">Para İadesi</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="bg-gray-50 border border-gray-200 p-3 minimal-corner mb-1">
+                                        <i class="fas fa-tools text-blue-500 text-lg"></i>
+                                    </div>
+                                    <div class="text-gray-700 text-xs">Yarım İş</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="bg-gray-50 border border-gray-200 p-3 minimal-corner mb-1">
+                                        <i class="fas fa-shield-alt text-blue-500 text-lg"></i>
+                                    </div>
+                                    <div class="text-gray-700 text-xs">Tehdit</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Emergency Contact Button -->
+                            <a href="tel:08503600360" class="block bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold py-4 px-6 rounded-lg text-center transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105">
+                                <div class="flex items-center justify-center space-x-3">
+                                    <div class="bg-white/20 p-2 rounded-full">
+                                        <i class="fas fa-phone text-white text-sm"></i>
+                                    </div>
+                                    <div class="text-left">
+                                        <div class="text-xs uppercase tracking-wide opacity-90">Acil Destek Hattı</div>
+                                        <div class="text-lg font-bold">0850 360 0360</div>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <div class="text-center text-gray-500 text-xs mt-2">
+                                <i class="fas fa-clock mr-1"></i>
+                                24/7 • Ücretsiz Danışma • Hukuki Destek
+                            </div>
                         </div>
                     </div>
-                    <p class="text-slate-500 text-xs mt-4">
-                        <i class="fas fa-shield-alt mr-1"></i>
-                        Tüm güvenceler yasal olarak garanti edilir
-                    </p>
                 </div>
             </div>
         </section>
@@ -4136,7 +4406,7 @@ app.get('/', (c) => {
                             <div class="w-3 h-3 bg-amber-400 sharp-corner pulse-dot"></div>
                         </div>
                         <div class="mt-6 pt-4 border-t border-blue-700">
-                            <span class="text-amber-400 text-sm font-semibold">
+                            <span class="text-amber-400 text-lg font-semibold">
                                 <i class="fas fa-arrow-up mr-1"></i>+34% önceki güne göre
                             </span>
                         </div>
@@ -4319,7 +4589,7 @@ app.get('/', (c) => {
                         <i class="fas fa-map-marked-alt mr-2"></i>
                         TÜM 81 İLİ GÖR
                     </button>
-                    <p class="text-slate-500 text-sm mt-2">Türkiye genelinde hizmet veriyoruz</p>
+                    <p class="text-slate-500 text-lg mt-2">Türkiye genelinde hizmet veriyoruz</p>
                 </div>
             </div>
         </section>
@@ -6184,7 +6454,7 @@ app.get('/', (c) => {
                                 <span class="text-slate-800 font-bold text-sm">\${request.category}</span>
                                 <span class="text-slate-600 text-sm ml-2">• \${customerName}</span>
                             </div>
-                            <div class="text-slate-600 text-xs mt-1">
+                            <div class="text-slate-600 text-base mt-1">
                                 \${request.description}
                             </div>
                             <div class="text-slate-500 text-xs mt-1">
@@ -6297,7 +6567,7 @@ app.get('/', (c) => {
                         <div class="text-center">
                             <h4 class="font-bold text-slate-800 text-sm mb-2">\${city.name}</h4>
                             <div class="border-t border-slate-200 pt-2 mb-2">
-                                <div class="text-slate-600 text-xs font-medium mb-1">Popüler Hizmetler:</div>
+                                <div class="text-slate-600 text-base font-medium mb-1">Popüler Hizmetler:</div>
                                 <div class="text-slate-700 text-xs leading-tight font-medium">\${city.popular}</div>
                             </div>
                             <div class="flex justify-between text-xs mb-2">

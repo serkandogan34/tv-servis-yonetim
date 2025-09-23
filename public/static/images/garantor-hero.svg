@@ -1,0 +1,182 @@
+<svg width="400" height="500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradients for modern look -->
+    <linearGradient id="bodyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e3a8a;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="capeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+    
+    <radialGradient id="shieldGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:0.8" />
+      <stop offset="70%" style="stop-color:#f59e0b;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:0" />
+    </radialGradient>
+
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Particle animation path -->
+    <path id="particle-path" d="M 50,50 Q 100,100 200,50 T 350,100" stroke="none" fill="none"/>
+  </defs>
+
+  <!-- Background particles -->
+  <g opacity="0.3">
+    <circle cx="80" cy="100" r="2" fill="#fbbf24">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="320" cy="150" r="1.5" fill="#60a5fa">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="150" cy="80" r="1" fill="#fbbf24">
+      <animate attributeName="opacity" values="0.2;0.7;0.2" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="300" cy="300" r="2" fill="#60a5fa">
+      <animate attributeName="opacity" values="0.4;0.9;0.4" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Cape (behind hero) -->
+  <g transform="translate(200, 120)">
+    <path d="M -30,-20 Q -60,20 -70,80 Q -65,140 -50,200 Q -45,260 -40,320 Q -35,360 -30,400 L -10,390 Q -15,340 -20,290 Q -25,240 -30,190 Q -35,140 -40,90 Q -35,40 -25,0 Z" 
+          fill="url(#capeGradient)" opacity="0.9">
+      <animateTransform attributeName="transform" 
+                        attributeType="XML" 
+                        type="skewX" 
+                        values="0;3;0;-2;0" 
+                        dur="4s" 
+                        repeatCount="indefinite"/>
+    </path>
+    <path d="M 30,-20 Q 60,20 70,80 Q 65,140 50,200 Q 45,260 40,320 Q 35,360 30,400 L 10,390 Q 15,340 20,290 Q 25,240 30,190 Q 35,140 40,90 Q 35,40 25,0 Z" 
+          fill="url(#capeGradient)" opacity="0.9">
+      <animateTransform attributeName="transform" 
+                        attributeType="XML" 
+                        type="skewX" 
+                        values="0;-3;0;2;0" 
+                        dur="4s" 
+                        repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <!-- Hero Body -->
+  <g transform="translate(200, 150)">
+    <!-- Main body with floating animation -->
+    <g>
+      <animateTransform attributeName="transform" 
+                        attributeType="XML" 
+                        type="translate" 
+                        values="0,0; 0,-8; 0,0; 0,-5; 0,0" 
+                        dur="6s" 
+                        repeatCount="indefinite"/>
+      
+      <!-- Head -->
+      <circle cx="0" cy="-30" r="25" fill="#fbbf24"/>
+      
+      <!-- Eyes -->
+      <circle cx="-8" cy="-35" r="3" fill="#1e3a8a">
+        <animate attributeName="opacity" values="1;0;1" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="8" cy="-35" r="3" fill="#1e3a8a">
+        <animate attributeName="opacity" values="1;0;1" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      
+      <!-- Smile -->
+      <path d="M -8,-25 Q 0,-20 8,-25" stroke="#1e3a8a" stroke-width="2" fill="none"/>
+      
+      <!-- Body -->
+      <rect x="-20" y="-5" width="40" height="60" rx="8" fill="url(#bodyGradient)"/>
+      
+      <!-- Arms -->
+      <ellipse cx="-35" cy="15" rx="12" ry="25" fill="url(#bodyGradient)"/>
+      <ellipse cx="35" cy="15" rx="12" ry="25" fill="url(#bodyGradient)"/>
+      
+      <!-- Legs -->
+      <rect x="-18" y="55" width="12" height="40" rx="6" fill="url(#bodyGradient)"/>
+      <rect x="6" y="55" width="12" height="40" rx="6" fill="url(#bodyGradient)"/>
+      
+      <!-- Boots -->
+      <ellipse cx="-12" cy="100" rx="8" ry="6" fill="#1e3a8a"/>
+      <ellipse cx="12" cy="100" rx="8" ry="6" fill="#1e3a8a"/>
+    </g>
+  </g>
+
+  <!-- Shield with 360° logo (on chest) -->
+  <g transform="translate(200, 150)">
+    <!-- Shield glow effect -->
+    <circle cx="0" cy="20" r="25" fill="url(#shieldGlow)" filter="url(#glow)">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    
+    <!-- Shield base -->
+    <circle cx="0" cy="20" r="18" fill="#fbbf24" stroke="#f59e0b" stroke-width="2"/>
+    
+    <!-- 360° text -->
+    <text x="0" y="15" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#1e3a8a">360</text>
+    <text x="0" y="28" text-anchor="middle" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="#1e3a8a">GÜVEN</text>
+  </g>
+
+  <!-- Floating "G" particles around hero -->
+  <g opacity="0.6">
+    <text x="100" y="200" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#fbbf24" opacity="0.4">G
+      <animateTransform attributeName="transform" 
+                        type="translate" 
+                        values="0,0; 10,-20; 0,0" 
+                        dur="4s" 
+                        repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.4;0.8;0.4" dur="4s" repeatCount="indefinite"/>
+    </text>
+    
+    <text x="280" y="250" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#60a5fa" opacity="0.3">G
+      <animateTransform attributeName="transform" 
+                        type="translate" 
+                        values="0,0; -15,-15; 0,0" 
+                        dur="5s" 
+                        repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.7;0.3" dur="5s" repeatCount="indefinite"/>
+    </text>
+  </g>
+
+  <!-- Protection rays -->
+  <g transform="translate(200, 150)" opacity="0.3">
+    <line x1="-50" y1="20" x2="-30" y2="20" stroke="#fbbf24" stroke-width="2">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="1.5s" repeatCount="indefinite"/>
+    </line>
+    <line x1="50" y1="20" x2="30" y2="20" stroke="#fbbf24" stroke-width="2">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="1.8s" repeatCount="indefinite"/>
+    </line>
+    <line x1="0" y1="-10" x2="0" y2="10" stroke="#fbbf24" stroke-width="2">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite"/>
+    </line>
+    <line x1="0" y1="30" x2="0" y2="50" stroke="#fbbf24" stroke-width="2">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2.2s" repeatCount="indefinite"/>
+    </line>
+  </g>
+
+  <!-- Success indicators floating around -->
+  <g opacity="0.5">
+    <!-- Check marks -->
+    <path d="M 80,350 L 85,355 L 95,345" stroke="#10b981" stroke-width="3" fill="none">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="3s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="translate" values="0,0; 5,-10; 0,0" dur="3s" repeatCount="indefinite"/>
+    </path>
+    
+    <path d="M 320,380 L 325,385 L 335,375" stroke="#10b981" stroke-width="3" fill="none">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="4s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="translate" values="0,0; -5,-8; 0,0" dur="4s" repeatCount="indefinite"/>
+    </path>
+
+    <!-- Shield icons -->
+    <path d="M 120,120 Q 115,125 120,130 Q 125,125 120,120" fill="#3b82f6">
+      <animate attributeName="opacity" values="0.5;0.9;0.5" dur="2.5s" repeatCount="indefinite"/>
+    </path>
+  </g>
+</svg>

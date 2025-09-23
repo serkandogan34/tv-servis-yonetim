@@ -1,0 +1,45 @@
+<svg width="1920" height="1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.15" />
+      <stop offset="50%" style="stop-color:#2563eb;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:0.15" />
+    </linearGradient>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+    <pattern id="dots" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.06)"/>
+    </pattern>
+  </defs>
+  
+  <!-- Base gradient -->
+  <rect width="100%" height="100%" fill="url(#grad1)"/>
+  
+  <!-- Subtle grid pattern -->
+  <rect width="100%" height="100%" fill="url(#grid)"/>
+  
+  <!-- Dot pattern overlay -->
+  <rect width="100%" height="100%" fill="url(#dots)"/>
+  
+  <!-- Abstract geometric shapes -->
+  <g opacity="0.08">
+    <!-- Large circle -->
+    <circle cx="1600" cy="200" r="300" fill="rgba(255,255,255,0.12)"/>
+    
+    <!-- Triangular shapes -->
+    <polygon points="100,800 300,600 500,900" fill="rgba(59,130,246,0.15)"/>
+    <polygon points="1200,100 1400,300 1000,400" fill="rgba(251,191,36,0.12)"/>
+    
+    <!-- Subtle lines -->
+    <path d="M 0,400 Q 400,200 800,600 T 1920,400" stroke="rgba(255,255,255,0.04)" stroke-width="2" fill="none"/>
+    <path d="M 0,700 Q 600,500 1200,800 T 1920,600" stroke="rgba(59,130,246,0.04)" stroke-width="1" fill="none"/>
+  </g>
+  
+  <!-- Subtle tech-like elements -->
+  <g opacity="0.06">
+    <rect x="1400" y="700" width="2" height="300" fill="rgba(251,191,36,0.3)"/>
+    <rect x="1500" y="600" width="2" height="400" fill="rgba(59,130,246,0.25)"/>
+    <rect x="200" y="300" width="2" height="200" fill="rgba(255,255,255,0.25)"/>
+  </g>
+</svg>
