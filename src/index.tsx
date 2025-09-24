@@ -4859,10 +4859,7 @@ app.get('/', (c) => {
                 <!-- Security and Trust Section -->
                 <div class="text-center mb-16">
                     <div class="section-divider w-20 mx-auto mb-6"></div>
-                    <div class="inline-flex items-center bg-blue-100 text-blue-800 px-4 py-2 minimal-corner mb-4">
-                        <i class="fas fa-shield-check text-blue-600 mr-2"></i>
-                        <span class="font-medium text-sm">GUVENLIK VE GUVEN</span>
-                    </div>
+
                     <h2 class="text-4xl lg:text-5xl font-bold mb-6 tracking-tight leading-tight text-blue-900">
                         GUVENLI HIZMET ALMAK
                         <span class="block text-amber-600">ARTIK COK KOLAY</span>
