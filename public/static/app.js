@@ -954,6 +954,7 @@ function initializeSuccessStories() {
 document.addEventListener('DOMContentLoaded', function() {
     initializeSuccessStories();
     initializeLiveRequestFeed();
+    initializeLiveStats();
 });
 
 // ========================================
@@ -1075,8 +1076,160 @@ function getServiceIcon(type) {
     return icons[type] || 'tools';
 }
 
+// ========================================
+// LIVE STATISTICS SYSTEM (CANLI İSTATİSTİKLER)
+// ========================================
+
+let liveStatsSystem = {
+    isActive: false,
+    updateInterval: 8000, // 8 seconds
+    baseHourlyTotal: 47,
+    baseCityData: {
+        'İstanbul': 47,
+        'Ankara': 28,
+        'İzmir': 19,
+        'Bursa': 14
+    },
+    categoryData: [
+        { name: 'Televizyon Tamiri', percentage: 34 },
+        { name: 'Çamaşır Makinesi', percentage: 28 },
+        { name: 'Klima Servisi', percentage: 22 }
+    ]
+};
+
+// Initialize live statistics system
+function initializeLiveStats() {
+    try {
+        liveStatsSystem.isActive = true;
+        updateLiveStats();
+        
+        // Start auto-update timer
+        setInterval(() => {
+            if (liveStatsSystem.isActive) {
+                updateLiveStats();
+            }
+        }, liveStatsSystem.updateInterval);
+        
+    } catch (error) {
+        console.error('Error initializing live stats:', error);
+    }
+}
+
+// Update all live statistics
+function updateLiveStats() {
+    try {
+        updateHourlyTotal();
+        updateCityStats();
+        updateCategoryStats();
+        updateStatsChart();
+        
+    } catch (error) {
+        console.error('Error updating live stats:', error);
+    }
+}
+
+// Update hourly total requests
+function updateHourlyTotal() {
+    try {
+        const hourlyElement = document.getElementById('hourly-total');
+        if (!hourlyElement) return;
+        
+        // Vary the hourly total by ±5
+        const variation = Math.floor(Math.random() * 11) - 5; // -5 to +5
+        const newTotal = Math.max(30, liveStatsSystem.baseHourlyTotal + variation);
+        
+        hourlyElement.textContent = newTotal + ' Talep';
+        
+    } catch (error) {
+        console.error('Error updating hourly total:', error);
+    }
+}
+
+// Update city statistics
+function updateCityStats() {
+    try {
+        const cityElements = document.querySelectorAll('[data-city-stat]');
+        
+        Object.keys(liveStatsSystem.baseCityData).forEach(city => {
+            const element = document.querySelector(`[data-city="${city}"]`);
+            if (element) {
+                const baseValue = liveStatsSystem.baseCityData[city];
+                const variation = Math.floor(Math.random() * 7) - 3; // -3 to +3
+                const newValue = Math.max(1, baseValue + variation);
+                element.textContent = newValue;
+                
+                // Color coding based on activity
+                if (newValue > baseValue + 1) {
+                    element.className = 'text-orange-600 font-bold';
+                } else if (newValue < baseValue - 1) {
+                    element.className = 'text-slate-600 font-bold';
+                } else {
+                    element.className = 'text-slate-800 font-bold';
+                }
+            }
+        });
+        
+    } catch (error) {
+        console.error('Error updating city stats:', error);
+    }
+}
+
+// Update category statistics
+function updateCategoryStats() {
+    try {
+        liveStatsSystem.categoryData.forEach((category, index) => {
+            const percentElement = document.querySelector(`[data-category-percent="${index}"]`);
+            const barElement = document.querySelector(`[data-category-bar="${index}"]`);
+            
+            if (percentElement && barElement) {
+                // Vary percentage by ±3
+                const variation = Math.floor(Math.random() * 7) - 3; // -3 to +3
+                const newPercent = Math.max(5, Math.min(50, category.percentage + variation));
+                
+                percentElement.textContent = newPercent + '%';
+                
+                // Update progress bar width
+                const widthClass = getProgressBarWidth(newPercent);
+                barElement.className = `h-full bg-orange-600 ${widthClass}`;
+            }
+        });
+        
+    } catch (error) {
+        console.error('Error updating category stats:', error);
+    }
+}
+
+// Update statistics chart bars
+function updateStatsChart() {
+    try {
+        const chartBars = document.querySelectorAll('[data-chart-bar]');
+        
+        chartBars.forEach(bar => {
+            const currentHeight = parseInt(bar.style.height) || 30;
+            const variation = Math.floor(Math.random() * 21) - 10; // -10 to +10
+            const newHeight = Math.max(20, Math.min(100, currentHeight + variation));
+            
+            bar.style.height = newHeight + '%';
+        });
+        
+    } catch (error) {
+        console.error('Error updating stats chart:', error);
+    }
+}
+
+// Get progress bar width class based on percentage
+function getProgressBarWidth(percentage) {
+    if (percentage >= 40) return 'w-3/4';
+    if (percentage >= 30) return 'w-2/3';
+    if (percentage >= 20) return 'w-1/2';
+    if (percentage >= 15) return 'w-2/5';
+    if (percentage >= 10) return 'w-1/3';
+    return 'w-1/4';
+}
+
 // Export functions to window
 window.changeStorySlide = changeStorySlide;
 window.resetStoryTimer = resetStoryTimer;
 window.initializeSuccessStories = initializeSuccessStories;
 window.initializeLiveRequestFeed = initializeLiveRequestFeed;
+window.initializeLiveStats = initializeLiveStats;

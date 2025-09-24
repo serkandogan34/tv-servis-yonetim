@@ -4601,12 +4601,12 @@ app.get('/', (c) => {
                                             <span class="text-orange-600 font-bold text-lg" id="hourly-total">47 Talep</span>
                                         </div>
                                         <div class="flex items-end space-x-1 h-16">
-                                            <div class="bg-orange-600 w-full" style="height: 30%"></div>
-                                            <div class="bg-orange-600 w-full" style="height: 45%"></div>
-                                            <div class="bg-orange-600 w-full" style="height: 60%"></div>
-                                            <div class="bg-orange-600 w-full" style="height: 80%"></div>
-                                            <div class="bg-orange-600 w-full" style="height: 100%"></div>
-                                            <div class="bg-orange-600 w-full" style="height: 75%"></div>
+                                            <div class="bg-orange-600 w-full" data-chart-bar="0" style="height: 30%"></div>
+                                            <div class="bg-orange-600 w-full" data-chart-bar="1" style="height: 45%"></div>
+                                            <div class="bg-orange-600 w-full" data-chart-bar="2" style="height: 60%"></div>
+                                            <div class="bg-orange-600 w-full" data-chart-bar="3" style="height: 80%"></div>
+                                            <div class="bg-orange-600 w-full" data-chart-bar="4" style="height: 100%"></div>
+                                            <div class="bg-orange-600 w-full" data-chart-bar="5" style="height: 75%"></div>
                                         </div>
                                     </div>
                                     
@@ -4618,27 +4618,27 @@ app.get('/', (c) => {
                                                 <span class="text-slate-600 text-sm">Televizyon Tamiri</span>
                                                 <div class="flex items-center">
                                                     <div class="w-16 h-2 bg-slate-200 mr-2">
-                                                        <div class="w-3/4 h-full bg-orange-600"></div>
+                                                        <div class="w-3/4 h-full bg-orange-600" data-category-bar="0"></div>
                                                     </div>
-                                                    <span class="text-slate-800 font-bold text-sm">34%</span>
+                                                    <span class="text-slate-800 font-bold text-sm" data-category-percent="0">34%</span>
                                                 </div>
                                             </div>
                                             <div class="flex justify-between items-center">
                                                 <span class="text-slate-600 text-sm">Çamaşır Makinesi</span>
                                                 <div class="flex items-center">
                                                     <div class="w-16 h-2 bg-slate-200 mr-2">
-                                                        <div class="w-1/2 h-full bg-slate-600"></div>
+                                                        <div class="w-1/2 h-full bg-slate-600" data-category-bar="1"></div>
                                                     </div>
-                                                    <span class="text-slate-800 font-bold text-sm">28%</span>
+                                                    <span class="text-slate-800 font-bold text-sm" data-category-percent="1">28%</span>
                                                 </div>
                                             </div>
                                             <div class="flex justify-between items-center">
                                                 <span class="text-slate-600 text-sm">Klima Servisi</span>
                                                 <div class="flex items-center">
                                                     <div class="w-16 h-2 bg-slate-200 mr-2">
-                                                        <div class="w-2/5 h-full bg-slate-600"></div>
+                                                        <div class="w-2/5 h-full bg-slate-600" data-category-bar="2"></div>
                                                     </div>
-                                                    <span class="text-slate-800 font-bold text-sm">22%</span>
+                                                    <span class="text-slate-800 font-bold text-sm" data-category-percent="2">22%</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -4650,19 +4650,19 @@ app.get('/', (c) => {
                                         <div class="grid grid-cols-2 gap-2 text-xs">
                                             <div class="flex justify-between">
                                                 <span class="text-slate-600">İstanbul</span>
-                                                <span class="text-orange-600 font-bold">23</span>
+                                                <span class="text-orange-600 font-bold" data-city="İstanbul">47</span>
                                             </div>
                                             <div class="flex justify-between">
                                                 <span class="text-slate-600">Ankara</span>
-                                                <span class="text-slate-800 font-bold">12</span>
+                                                <span class="text-slate-800 font-bold" data-city="Ankara">28</span>
                                             </div>
                                             <div class="flex justify-between">
                                                 <span class="text-slate-600">İzmir</span>
-                                                <span class="text-slate-800 font-bold">8</span>
+                                                <span class="text-slate-800 font-bold" data-city="İzmir">19</span>
                                             </div>
                                             <div class="flex justify-between">
                                                 <span class="text-slate-600">Bursa</span>
-                                                <span class="text-slate-800 font-bold">5</span>
+                                                <span class="text-slate-800 font-bold" data-city="Bursa">14</span>
                                             </div>
                                         </div>
                                     </div>
