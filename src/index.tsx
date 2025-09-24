@@ -2091,8 +2091,7 @@ app.get('/bayi', (c) => {
                     <div class="flex items-center">
                         <!-- Garantor360 Logo -->
                         <div class="flex items-center">
-                            <span class="text-3xl font-bold text-blue-900">Garantor</span>
-                            <span class="text-3xl font-bold text-orange-500">360</span>
+                            <img src="https://page.gensparksite.com/v1/base64_upload/048c4b5ab3a7280d26f5b471c120123b" alt="Garantor360" class="h-10">
                         </div>
                     </div>
                     <div class="flex items-center space-x-4">
@@ -2645,8 +2644,7 @@ app.get('/bayi', (c) => {
                             <div class="mb-8">
                                 <div class="mb-4">
                                     <div class="flex items-center mb-2">
-                                        <span class="text-3xl font-bold text-white">Garantor</span>
-                                        <span class="text-3xl font-bold text-amber-400">360</span>
+                                        <img src="https://page.gensparksite.com/v1/base64_upload/048c4b5ab3a7280d26f5b471c120123b" alt="Garantor360" class="h-12">
                                     </div>
                                     <p class="text-amber-400 font-medium">Bayi Web Platformu</p>
                                 </div>
@@ -3049,8 +3047,7 @@ app.get('/bayi', (c) => {
                         <div class="lg:col-span-1">
                             <div class="mb-6">
                                 <div class="flex items-center">
-                                    <span class="text-4xl font-bold text-white">Garantor</span>
-                                    <span class="text-4xl font-bold text-orange-400">360</span>
+                                    <img src="https://page.gensparksite.com/v1/base64_upload/048c4b5ab3a7280d26f5b471c120123b" alt="Garantor360" class="h-14">
                                 </div>
                             </div>
                             <p class="text-blue-200 font-medium mb-6 leading-relaxed">
@@ -3899,8 +3896,7 @@ app.get('/', (c) => {
                     <div class="flex items-center">
                         <!-- Garantor360 Logo -->
                         <div class="flex items-center">
-                            <span class="text-4xl font-bold text-blue-900">Garantor</span>
-                            <span class="text-4xl font-bold text-amber-500">360</span>
+                            <img src="https://page.gensparksite.com/v1/base64_upload/048c4b5ab3a7280d26f5b471c120123b" alt="Garantor360" class="h-12">
                         </div>
                     </div>
                     
@@ -6665,8 +6661,7 @@ app.get('/', (c) => {
                         <div class="lg:col-span-2 p-8">
                             <div class="mb-6">
                                 <div class="flex items-center mb-1">
-                                    <span class="text-2xl font-bold text-blue-900">Garantor</span>
-                                    <span class="text-2xl font-bold text-amber-500">360</span>
+                                    <img src="https://page.gensparksite.com/v1/base64_upload/048c4b5ab3a7280d26f5b471c120123b" alt="Garantor360" class="h-8">
                                 </div>
                                 <p class="text-slate-600 font-medium">Musteri Mobil Uygulamasi</p>
                             </div>
@@ -6782,8 +6777,7 @@ app.get('/', (c) => {
                         <div class="lg:col-span-1">
                             <div class="mb-6">
                                 <div class="flex items-center">
-                                    <span class="text-4xl font-bold text-white">Garantor</span>
-                                    <span class="text-4xl font-bold text-amber-400">360</span>
+                                    <img src="https://page.gensparksite.com/v1/base64_upload/048c4b5ab3a7280d26f5b471c120123b" alt="Garantor360" class="h-14">
                                 </div>
                             </div>
                             <p class="text-blue-200 font-medium mb-6 leading-relaxed">
