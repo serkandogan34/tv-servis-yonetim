@@ -4657,10 +4657,6 @@ app.get('/', (c) => {
                                                 <span class="text-emerald-800 font-bold" data-city="Ankara">28</span>
                                             </div>
                                             <div class="flex justify-between">
-                                                <span class="text-emerald-700">İzmir</span>
-                                                <span class="text-emerald-800 font-bold" data-city="İzmir">19</span>
-                                            </div>
-                                            <div class="flex justify-between">
                                                 <span class="text-emerald-700">Bursa</span>
                                                 <span class="text-emerald-800 font-bold" data-city="Bursa">14</span>
                                             </div>

@@ -1100,7 +1100,6 @@ let liveStatsSystem = {
     baseCityData: {
         'İstanbul': 47,
         'Ankara': 28,
-        'İzmir': 19,
         'Bursa': 14
     },
     categoryData: [
