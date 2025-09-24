@@ -4887,7 +4887,7 @@ app.get('/', (c) => {
                             </div>
                             
                             <!-- Left: Problems Container -->
-                            <div class="group transform scale-75">
+                            <div class="group transform scale-90">
                                 <div class="relative">
                                     <!-- Oval Frame -->
                                     <div class="absolute -inset-4 border-2 border-slate-300 rounded-3xl opacity-50"></div>
@@ -4980,7 +4980,7 @@ app.get('/', (c) => {
                             </div>
 
                             <!-- Right: Solutions Container -->
-                            <div class="group transform scale-75">
+                            <div class="group transform scale-90">
                                 <div class="relative">
                                     <!-- Oval Frame -->
                                     <div class="absolute -inset-4 border-2 border-amber-300 rounded-3xl opacity-50"></div>
@@ -5063,8 +5063,8 @@ app.get('/', (c) => {
                                                 <i class="fas fa-gavel text-amber-300 text-sm"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-medium text-amber-100 text-sm mb-1">Hukuki Koruma</div>
-                                                <div class="text-amber-200 text-xs font-medium">Sorun cikarsa avukat devreye girer</div>
+                                                <div class="font-semibold text-white text-2xl mb-2">Hukuki Koruma</div>
+                                                <div class="text-blue-200 text-lg">Sorun cikarsa avukat devreye girer</div>
                                             </div>
                                         </div>
                                     </div>
