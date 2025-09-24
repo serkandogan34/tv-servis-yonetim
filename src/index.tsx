@@ -4005,15 +4005,15 @@ app.get('/', (c) => {
             <div class="max-w-6xl mx-auto px-6">
                 <div class="text-center mb-16">
                     <div class="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 px-6 py-3 rounded-full mb-6">
-                        <i class="fas fa-brain text-purple-300 text-xl mr-3"></i>
-                        <span class="text-white font-semibold">YAPAY ZEKA DESTEKLİ</span>
+                        <i class="fas fa-user-tie text-purple-300 text-xl mr-3"></i>
+                        <span class="text-white font-semibold">UZMAN DANIŞMAN</span>
                     </div>
                     <h2 class="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-300 to-blue-300 bg-clip-text text-transparent">
-                        Akıllı Hizmet Önerisi
+                        Size Özel Çözüm Önerisi
                     </h2>
                     <p class="text-xl text-purple-100 max-w-3xl mx-auto leading-relaxed">
-                        Probleminizi anlatın, yapay zeka 2 saniyede size en uygun hizmet kategorisini önersin!
-                        %95 doğruluk oranı ile hızlı çözüm.
+                        Probleminizi anlatın, deneyimli uzmanlarımız size en uygun çözümü hemen önersin!
+                        7/24 canlı destek ile anında yardım.
                     </p>
                 </div>
 
