@@ -4893,25 +4893,25 @@ app.get('/', (c) => {
                                     <div class="absolute -inset-4 border-2 border-slate-300 rounded-3xl opacity-50"></div>
                                     <div class="bg-white border border-slate-200 hover:border-slate-300 transition-all duration-300 rounded-2xl shadow-sm hover:shadow-md relative">
                                         <!-- Simple Header -->
-                                        <div class="px-8 py-8 border-b border-slate-100">
+                                        <div class="px-4 py-2 border-b border-slate-100">
                                             <div class="text-center">
-                                                <div class="inline-flex items-center justify-center w-16 h-16 bg-slate-100 rounded-xl mb-4">
+                                                <div class="inline-flex items-center justify-center w-12 h-12 bg-slate-100 rounded-xl mb-1">
                                                     <i class="fas fa-exclamation-circle text-slate-500 text-2xl"></i>
                                                 </div>
-                                                <h3 class="text-2xl font-bold text-slate-800 mb-2">GENEL PIYASA SORUNLARI</h3>
-                                                <p class="text-slate-500 text-base">Bu endiseleri yasiyor musunuz?</p>
+                                                <h3 class="text-4xl font-bold text-slate-800 mb-1">GENEL PIYASA SORUNLARI</h3>
+                                                <p class="text-slate-500 text-xl">Bu endiseleri yasiyor musunuz?</p>
                                             </div>
                                         </div>
 
                                         <!-- Problems List -->
-                                        <div class="p-8 space-y-4">
+                                        <div class="p-4 space-y-2">
                                             <div class="flex items-start p-4 hover:bg-slate-50 transition-colors duration-200 rounded-xl">
                                                 <div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                     <i class="fas fa-search text-slate-500 text-lg"></i>
                                                 </div>
                                             <div class="flex-1">
                                                 <div class="font-semibold text-slate-800 text-2xl mb-2">Guvenilir Usta Bulamama</div>
-                                                <div class="text-slate-600 text-base">Hangi ustanin guvenilir oldugu belirsiz</div>
+                                                <div class="text-slate-600 text-lg">Hangi ustanin guvenilir oldugu belirsiz</div>
                                             </div>
                                         </div>
 
@@ -4921,7 +4921,7 @@ app.get('/', (c) => {
                                             </div>
                                             <div class="flex-1">
                                                 <div class="font-semibold text-slate-800 text-2xl mb-2">Fiyat Belirsizligi</div>
-                                                <div class="text-slate-600 text-base">Ne kadar odeyeceginiz onceden bilinmiyor</div>
+                                                <div class="text-slate-600 text-lg">Ne kadar odeyeceginiz onceden bilinmiyor</div>
                                             </div>
                                         </div>
 
@@ -4931,7 +4931,7 @@ app.get('/', (c) => {
                                             </div>
                                             <div class="flex-1">
                                                 <div class="font-semibold text-slate-800 text-2xl mb-2">Iscilik Garantisi Eksikligi</div>
-                                                <div class="text-slate-600 text-base">Yapilan isin garantisi belirsiz veya yok</div>
+                                                <div class="text-slate-600 text-lg">Yapilan isin garantisi belirsiz veya yok</div>
                                             </div>
                                         </div>
 
@@ -4941,7 +4941,7 @@ app.get('/', (c) => {
                                             </div>
                                             <div class="flex-1">
                                                 <div class="font-semibold text-slate-800 text-2xl mb-2">Odeme Guvensizligi</div>
-                                                <div class="text-slate-600 text-base">Para iade garantisi ve guvenli odeme yok</div>
+                                                <div class="text-slate-600 text-lg">Para iade garantisi ve guvenli odeme yok</div>
                                             </div>
                                         </div>
 
@@ -4951,7 +4951,7 @@ app.get('/', (c) => {
                                             </div>
                                             <div class="flex-1">
                                                 <div class="font-semibold text-slate-800 text-2xl mb-2">Iletisim Sorunu</div>
-                                                <div class="text-slate-600 text-base">Sonradan ulasamama ve destek alamama</div>
+                                                <div class="text-slate-600 text-lg">Sonradan ulasamama ve destek alamama</div>
                                             </div>
                                         </div>
 
@@ -4961,7 +4961,7 @@ app.get('/', (c) => {
                                             </div>
                                             <div class="flex-1">
                                                 <div class="font-semibold text-slate-800 text-2xl mb-2">Sigorta ve Koruma Eksikligi</div>
-                                                <div class="text-slate-600 text-base">Hasar durumunda koruma ve tazminat yok</div>
+                                                <div class="text-slate-600 text-lg">Hasar durumunda koruma ve tazminat yok</div>
                                             </div>
                                         </div>
 
@@ -4986,9 +4986,9 @@ app.get('/', (c) => {
                                     <div class="absolute -inset-4 border-2 border-amber-300 rounded-3xl opacity-50"></div>
                                     <div class="bg-gradient-to-br from-blue-900 to-blue-800 border border-blue-300 hover:border-blue-200 transition-all duration-300 rounded-2xl shadow-sm hover:shadow-md relative">
                                         <!-- Simple Header -->
-                                        <div class="px-6 py-4 border-b border-blue-700">
+                                        <div class="px-4 py-2 border-b border-blue-700">
                                             <div class="text-center">
-                                                <div class="flex items-center justify-center mb-2">
+                                                <div class="flex items-center justify-center mb-1">
                                                     <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-28 w-auto mr-3">
                                                     <h3 class="text-4xl font-bold text-white">KORUMA</h3>
                                                 </div>
@@ -4997,7 +4997,7 @@ app.get('/', (c) => {
                                         </div>
 
                                         <!-- Solutions List -->
-                                        <div class="p-6 space-y-3 text-white">
+                                        <div class="p-4 space-y-2 text-white">
                                             <div class="flex items-start p-4 hover:bg-white/5 transition-colors duration-200 rounded-xl">
                                                 <div class="w-12 h-12 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                 <i class="fas fa-user-shield text-amber-400 text-lg"></i>
@@ -5097,7 +5097,7 @@ app.get('/', (c) => {
                                 <i class="fas fa-piggy-bank text-white text-2xl"></i>
                             </div>
                             <h4 class="font-bold text-blue-900 mb-3 text-sm">PARA KORUNMASI</h4>
-                            <p class="text-slate-600 text-base leading-relaxed mb-3">Is bitmeden odeme yapilmaz, dolandiricilar para alamaz</p>
+                            <p class="text-slate-600 text-lg leading-relaxed mb-3">Is bitmeden odeme yapilmaz, dolandiricilar para alamaz</p>
                             <div class="text-xs bg-green-100 text-green-700 px-2 py-1 minimal-corner font-semibold">
                                 Para Iade Garantili
                             </div>
@@ -5109,7 +5109,7 @@ app.get('/', (c) => {
                                 <i class="fas fa-id-card text-white text-2xl"></i>
                             </div>
                             <h4 class="font-bold text-blue-900 mb-3 text-sm">KIMLIK DOGRULAMA</h4>
-                            <p class="text-slate-600 text-base leading-relaxed mb-3">Sahte ustalar engellenip, sadece gercek uzmanlar kabul edilir</p>
+                            <p class="text-slate-600 text-lg leading-relaxed mb-3">Sahte ustalar engellenip, sadece gercek uzmanlar kabul edilir</p>
                             <div class="text-xs bg-blue-100 text-blue-700 px-2 py-1 minimal-corner font-semibold">
                                 %100 Dogrulanmis
                             </div>
@@ -5121,7 +5121,7 @@ app.get('/', (c) => {
                                 <i class="fas fa-eye text-white text-2xl"></i>
                             </div>
                             <h4 class="font-bold text-blue-900 mb-3 text-sm">SUREKLI TAKIP</h4>
-                            <p class="text-slate-600 text-base leading-relaxed mb-3">Is suresince 7/24 izleme, sorun aninda mudahale</p>
+                            <p class="text-slate-600 text-lg leading-relaxed mb-3">Is suresince 7/24 izleme, sorun aninda mudahale</p>
                             <div class="text-xs bg-purple-100 text-purple-700 px-2 py-1 minimal-corner font-semibold">
                                 Canli Izleme
                             </div>
@@ -5133,7 +5133,7 @@ app.get('/', (c) => {
                                 <i class="fas fa-balance-scale text-white text-2xl"></i>
                             </div>
                             <h4 class="font-bold text-blue-900 mb-3 text-sm">HUKUKI KORUMA</h4>
-                            <p class="text-slate-600 text-base leading-relaxed mb-3">Dolandiricilik durumunda avukat devreye girer</p>
+                            <p class="text-slate-600 text-lg leading-relaxed mb-3">Dolandiricilik durumunda avukat devreye girer</p>
                             <div class="text-xs bg-amber-100 text-amber-700 px-2 py-1 minimal-corner font-semibold">
                                 Avukat Destegi
                             </div>
@@ -5145,19 +5145,19 @@ app.get('/', (c) => {
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
                             <div>
                                 <div class="text-2xl font-bold text-red-600 mb-1">0</div>
-                                <div class="text-slate-600 text-base">Dolandiricilik Vakasi</div>
+                                <div class="text-slate-600 text-lg">Dolandiricilik Vakasi</div>
                             </div>
                             <div>
                                 <div class="text-2xl font-bold text-green-600 mb-1">98.9%</div>
-                                <div class="text-slate-600 text-base">Guvenlik Orani</div>
+                                <div class="text-slate-600 text-lg">Guvenlik Orani</div>
                             </div>
                             <div>
                                 <div class="text-2xl font-bold text-blue-600 mb-1">24/7</div>
-                                <div class="text-slate-600 text-base">Koruma Aktif</div>
+                                <div class="text-slate-600 text-lg">Koruma Aktif</div>
                             </div>
                             <div>
                                 <div class="text-2xl font-bold text-purple-600 mb-1">15dk</div>
-                                <div class="text-slate-600 text-base">Mudahale Suresi</div>
+                                <div class="text-slate-600 text-lg">Mudahale Suresi</div>
                             </div>
                         </div>
                     </div>
@@ -7341,7 +7341,7 @@ app.get('/', (c) => {
                                 <span class="text-slate-800 font-bold text-sm">\${request.category}</span>
                                 <span class="text-slate-600 text-sm ml-2">- \${customerName}</span>
                             </div>
-                            <div class="text-slate-600 text-base mt-1">
+                            <div class="text-slate-600 text-lg mt-1">
                                 \${request.description}
                             </div>
                             <div class="text-slate-500 text-xs mt-1">
@@ -7454,7 +7454,7 @@ app.get('/', (c) => {
                         <div class="text-center">
                             <h4 class="font-bold text-slate-800 text-sm mb-2">\${city.name}</h4>
                             <div class="border-t border-slate-200 pt-2 mb-2">
-                                <div class="text-slate-600 text-base font-medium mb-1">Populer Hizmetler:</div>
+                                <div class="text-slate-600 text-lg font-medium mb-1">Populer Hizmetler:</div>
                                 <div class="text-slate-700 text-xs leading-tight font-medium">\${city.popular}</div>
                             </div>
                             <div class="flex justify-between text-xs mb-2">
