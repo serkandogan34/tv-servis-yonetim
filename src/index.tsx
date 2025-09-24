@@ -4565,16 +4565,16 @@ app.get('/', (c) => {
                 </div>
 
                 <!-- Enhanced Real-time Job Feed -->
-                <div class="bg-white border-2 border-blue-200 minimal-corner shadow-lg">
-                    <div class="bg-gradient-to-r from-blue-50 to-blue-100 px-8 py-4 border-b-2 border-blue-200">
+                <div class="bg-white border-2 border-slate-200 minimal-corner shadow-lg">
+                    <div class="bg-gradient-to-r from-blue-50 to-indigo-100 px-8 py-4 border-b-2 border-slate-200">
                         <div class="flex items-center justify-between">
-                            <h3 class="text-blue-900 text-xl font-bold tracking-tight flex items-center">
-                                <span class="inline-block w-3 h-3 bg-blue-600 sharp-corner pulse-dot mr-3"></span>
+                            <h3 class="text-slate-800 text-xl font-bold tracking-tight flex items-center">
+                                <span class="inline-block w-3 h-3 bg-green-500 sharp-corner pulse-dot mr-3"></span>
                                 CANLI TALEP AKIŞI
                             </h3>
                             <div class="flex items-center space-x-4 text-sm">
-                                <span class="text-blue-700 font-medium">Son 10 dakika:</span>
-                                <span class="bg-blue-600 text-white px-3 py-1 sharp-corner font-bold" id="recent-count">8 Talep</span>
+                                <span class="text-slate-600 font-medium">Son 10 dakika:</span>
+                                <span class="bg-emerald-600 text-white px-3 py-1 sharp-corner font-bold" id="recent-count">8 Talep</span>
                             </div>
                         </div>
                     </div>
@@ -4584,7 +4584,7 @@ app.get('/', (c) => {
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <!-- Left: Live Customer Requests -->
                             <div>
-                                <h4 class="text-blue-900 font-bold mb-4 tracking-tight">CANLI TALEPLER</h4>
+                                <h4 class="text-slate-800 font-bold mb-4 tracking-tight">CANLI TALEPLER</h4>
                                 <div id="job-feed" class="space-y-3 max-h-80 overflow-y-auto">
                                     <!-- Customer requests will be populated via JavaScript -->
                                 </div>
@@ -4592,77 +4592,77 @@ app.get('/', (c) => {
                             
                             <!-- Right: Job Statistics -->
                             <div>
-                                <h4 class="text-blue-900 font-bold mb-4 tracking-tight">CANLI İSTATİSTİKLER</h4>
+                                <h4 class="text-slate-800 font-bold mb-4 tracking-tight">CANLI İSTATİSTİKLER</h4>
                                 <div class="space-y-4">
                                     <!-- Hourly Customer Requests -->
-                                    <div class="bg-blue-50 border border-blue-200 p-4 minimal-corner">
+                                    <div class="bg-amber-50 border border-amber-200 p-4 minimal-corner">
                                         <div class="flex justify-between items-center mb-3">
-                                            <span class="text-blue-700 font-medium text-sm">SON 6 SAAT</span>
-                                            <span class="text-blue-600 font-bold text-lg" id="hourly-total">47 Talep</span>
+                                            <span class="text-amber-700 font-medium text-sm">SON 6 SAAT</span>
+                                            <span class="text-amber-600 font-bold text-lg" id="hourly-total">47 Talep</span>
                                         </div>
                                         <div class="flex items-end space-x-1 h-16">
-                                            <div class="bg-blue-600 w-full" data-chart-bar="0" style="height: 30%"></div>
-                                            <div class="bg-blue-600 w-full" data-chart-bar="1" style="height: 45%"></div>
-                                            <div class="bg-blue-600 w-full" data-chart-bar="2" style="height: 60%"></div>
-                                            <div class="bg-blue-600 w-full" data-chart-bar="3" style="height: 80%"></div>
-                                            <div class="bg-blue-600 w-full" data-chart-bar="4" style="height: 100%"></div>
-                                            <div class="bg-blue-600 w-full" data-chart-bar="5" style="height: 75%"></div>
+                                            <div class="bg-amber-500 w-full" data-chart-bar="0" style="height: 30%"></div>
+                                            <div class="bg-amber-600 w-full" data-chart-bar="1" style="height: 45%"></div>
+                                            <div class="bg-orange-500 w-full" data-chart-bar="2" style="height: 60%"></div>
+                                            <div class="bg-orange-600 w-full" data-chart-bar="3" style="height: 80%"></div>
+                                            <div class="bg-red-500 w-full" data-chart-bar="4" style="height: 100%"></div>
+                                            <div class="bg-red-600 w-full" data-chart-bar="5" style="height: 75%"></div>
                                         </div>
                                     </div>
                                     
                                     <!-- Popular Service Categories -->
-                                    <div class="bg-blue-50 border border-blue-200 p-4 minimal-corner">
-                                        <h5 class="text-blue-700 font-bold text-sm mb-3">POPÜLER KATEGORİLER</h5>
+                                    <div class="bg-purple-50 border border-purple-200 p-4 minimal-corner">
+                                        <h5 class="text-purple-700 font-bold text-sm mb-3">POPÜLER KATEGORİLER</h5>
                                         <div class="space-y-2">
                                             <div class="flex justify-between items-center">
-                                                <span class="text-blue-700 text-sm">Televizyon Tamiri</span>
+                                                <span class="text-purple-700 text-sm">Televizyon Tamiri</span>
                                                 <div class="flex items-center">
-                                                    <div class="w-16 h-2 bg-blue-200 mr-2">
-                                                        <div class="w-3/4 h-full bg-blue-600" data-category-bar="0"></div>
+                                                    <div class="w-16 h-2 bg-purple-200 mr-2">
+                                                        <div class="w-3/4 h-full bg-purple-600" data-category-bar="0"></div>
                                                     </div>
-                                                    <span class="text-blue-900 font-bold text-sm" data-category-percent="0">34%</span>
+                                                    <span class="text-purple-900 font-bold text-sm" data-category-percent="0">34%</span>
                                                 </div>
                                             </div>
                                             <div class="flex justify-between items-center">
-                                                <span class="text-blue-700 text-sm">Çamaşır Makinesi</span>
+                                                <span class="text-teal-700 text-sm">Çamaşır Makinesi</span>
                                                 <div class="flex items-center">
-                                                    <div class="w-16 h-2 bg-blue-200 mr-2">
-                                                        <div class="w-1/2 h-full bg-blue-500" data-category-bar="1"></div>
+                                                    <div class="w-16 h-2 bg-teal-200 mr-2">
+                                                        <div class="w-1/2 h-full bg-teal-600" data-category-bar="1"></div>
                                                     </div>
-                                                    <span class="text-blue-900 font-bold text-sm" data-category-percent="1">28%</span>
+                                                    <span class="text-teal-900 font-bold text-sm" data-category-percent="1">28%</span>
                                                 </div>
                                             </div>
                                             <div class="flex justify-between items-center">
-                                                <span class="text-blue-700 text-sm">Klima Servisi</span>
+                                                <span class="text-cyan-700 text-sm">Klima Servisi</span>
                                                 <div class="flex items-center">
-                                                    <div class="w-16 h-2 bg-blue-200 mr-2">
-                                                        <div class="w-2/5 h-full bg-blue-500" data-category-bar="2"></div>
+                                                    <div class="w-16 h-2 bg-cyan-200 mr-2">
+                                                        <div class="w-2/5 h-full bg-cyan-600" data-category-bar="2"></div>
                                                     </div>
-                                                    <span class="text-blue-900 font-bold text-sm" data-category-percent="2">22%</span>
+                                                    <span class="text-cyan-900 font-bold text-sm" data-category-percent="2">22%</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     
                                     <!-- Top Cities -->
-                                    <div class="bg-blue-50 border border-blue-200 p-4 minimal-corner">
-                                        <h5 class="text-blue-700 font-bold text-sm mb-3">AKTİF ŞEHİRLER</h5>
+                                    <div class="bg-emerald-50 border border-emerald-200 p-4 minimal-corner">
+                                        <h5 class="text-emerald-700 font-bold text-sm mb-3">AKTİF ŞEHİRLER</h5>
                                         <div class="grid grid-cols-2 gap-2 text-xs">
                                             <div class="flex justify-between">
-                                                <span class="text-blue-700">İstanbul</span>
-                                                <span class="text-blue-600 font-bold" data-city="İstanbul">47</span>
+                                                <span class="text-emerald-700">İstanbul</span>
+                                                <span class="text-emerald-600 font-bold" data-city="İstanbul">47</span>
                                             </div>
                                             <div class="flex justify-between">
-                                                <span class="text-blue-700">Ankara</span>
-                                                <span class="text-blue-800 font-bold" data-city="Ankara">28</span>
+                                                <span class="text-emerald-700">Ankara</span>
+                                                <span class="text-emerald-800 font-bold" data-city="Ankara">28</span>
                                             </div>
                                             <div class="flex justify-between">
-                                                <span class="text-blue-700">İzmir</span>
-                                                <span class="text-blue-800 font-bold" data-city="İzmir">19</span>
+                                                <span class="text-emerald-700">İzmir</span>
+                                                <span class="text-emerald-800 font-bold" data-city="İzmir">19</span>
                                             </div>
                                             <div class="flex justify-between">
-                                                <span class="text-blue-700">Bursa</span>
-                                                <span class="text-blue-800 font-bold" data-city="Bursa">14</span>
+                                                <span class="text-emerald-700">Bursa</span>
+                                                <span class="text-emerald-800 font-bold" data-city="Bursa">14</span>
                                             </div>
                                         </div>
                                     </div>

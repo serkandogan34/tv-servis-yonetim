@@ -1021,22 +1021,35 @@ function updateLiveRequestFeed() {
         
         selectedRequests.forEach((request, index) => {
             const requestElement = document.createElement('div');
-            requestElement.className = 'flex items-center justify-between p-3 bg-blue-50 hover:bg-blue-100 transition-colors duration-200 minimal-corner border border-blue-200';
+            // Dynamic card colors based on service type
+            const cardColors = {
+                'TV': { bg: 'bg-indigo-50', hover: 'hover:bg-indigo-100', border: 'border-indigo-200', iconBg: 'bg-indigo-100', iconColor: 'text-indigo-600', service: 'text-indigo-600' },
+                'WM': { bg: 'bg-teal-50', hover: 'hover:bg-teal-100', border: 'border-teal-200', iconBg: 'bg-teal-100', iconColor: 'text-teal-600', service: 'text-teal-600' },
+                'AC': { bg: 'bg-cyan-50', hover: 'hover:bg-cyan-100', border: 'border-cyan-200', iconBg: 'bg-cyan-100', iconColor: 'text-cyan-600', service: 'text-cyan-600' },
+                'RF': { bg: 'bg-purple-50', hover: 'hover:bg-purple-100', border: 'border-purple-200', iconBg: 'bg-purple-100', iconColor: 'text-purple-600', service: 'text-purple-600' },
+                'SAT': { bg: 'bg-green-50', hover: 'hover:bg-green-100', border: 'border-green-200', iconBg: 'bg-green-100', iconColor: 'text-green-600', service: 'text-green-600' },
+                'VC': { bg: 'bg-pink-50', hover: 'hover:bg-pink-100', border: 'border-pink-200', iconBg: 'bg-pink-100', iconColor: 'text-pink-600', service: 'text-pink-600' },
+                'MW': { bg: 'bg-orange-50', hover: 'hover:bg-orange-100', border: 'border-orange-200', iconBg: 'bg-orange-100', iconColor: 'text-orange-600', service: 'text-orange-600' }
+            };
+            
+            const colors = cardColors[request.type] || cardColors['TV'];
+            
+            requestElement.className = `flex items-center justify-between p-3 ${colors.bg} ${colors.hover} transition-colors duration-200 minimal-corner border ${colors.border}`;
             
             requestElement.innerHTML = `
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                        <i class="fas fa-${getServiceIcon(request.type)} text-blue-600 text-sm"></i>
+                    <div class="w-10 h-10 ${colors.iconBg} rounded-full flex items-center justify-center">
+                        <i class="fas fa-${getServiceIcon(request.type)} ${colors.iconColor} text-sm"></i>
                     </div>
                     <div>
                         <div class="flex items-center space-x-2">
-                            <span class="font-bold text-blue-900 text-sm">${request.name}</span>
-                            <span class="text-blue-600 text-xs font-medium">${request.service}</span>
+                            <span class="font-bold text-slate-800 text-sm">${request.name}</span>
+                            <span class="${colors.service} text-xs font-medium">${request.service}</span>
                         </div>
-                        <div class="text-blue-700 text-xs">${request.location}</div>
+                        <div class="text-slate-600 text-xs">${request.location}</div>
                     </div>
                 </div>
-                <div class="text-blue-500 text-xs font-medium">${request.time}</div>
+                <div class="text-slate-500 text-xs font-medium">${request.time}</div>
             `;
             
             feedContainer.appendChild(requestElement);
@@ -1158,13 +1171,13 @@ function updateCityStats() {
                 const newValue = Math.max(1, baseValue + variation);
                 element.textContent = newValue;
                 
-                // Color coding based on activity
+                // Color coding based on activity with varied colors
                 if (newValue > baseValue + 1) {
-                    element.className = 'text-blue-600 font-bold';
+                    element.className = 'text-emerald-600 font-bold';
                 } else if (newValue < baseValue - 1) {
-                    element.className = 'text-blue-400 font-bold';
+                    element.className = 'text-emerald-400 font-bold';
                 } else {
-                    element.className = 'text-blue-800 font-bold';
+                    element.className = 'text-emerald-800 font-bold';
                 }
             }
         });
@@ -1188,9 +1201,10 @@ function updateCategoryStats() {
                 
                 percentElement.textContent = newPercent + '%';
                 
-                // Update progress bar width and color
+                // Update progress bar width and color with variety
                 const widthClass = getProgressBarWidth(newPercent);
-                const colorClass = index === 0 ? 'bg-blue-600' : 'bg-blue-500';
+                const colorClasses = ['bg-purple-600', 'bg-teal-600', 'bg-cyan-600'];
+                const colorClass = colorClasses[index] || 'bg-purple-500';
                 barElement.className = `h-full ${colorClass} ${widthClass}`;
             }
         });
