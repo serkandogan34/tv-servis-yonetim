@@ -2381,7 +2381,7 @@ app.get('/bayi', (c) => {
                     <div class="relative group cursor-pointer">
                         <div class="bg-white border-2 border-blue-200 p-6 minimal-corner hover:border-blue-500 transition-all duration-300 hover:shadow-lg">
                             <div class="text-center">
-                                <div class="w-12 h-12 bg-blue-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-blue-600 transition duration-300">
+                                <div class="w-8 h-8 bg-blue-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-blue-600 transition duration-300">
                                     <i class="fas fa-tools text-white text-lg"></i>
                                 </div>
                                 <h3 class="font-bold text-sm text-blue-900 mb-2">Teknik Onarim</h3>
@@ -2423,7 +2423,7 @@ app.get('/bayi', (c) => {
                     <div class="relative group cursor-pointer">
                         <div class="bg-white border-2 border-green-200 p-6 minimal-corner hover:border-green-500 transition-all duration-300 hover:shadow-lg">
                             <div class="text-center">
-                                <div class="w-12 h-12 bg-green-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-green-600 transition duration-300">
+                                <div class="w-8 h-8 bg-green-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-green-600 transition duration-300">
                                     <i class="fas fa-home text-white text-lg"></i>
                                 </div>
                                 <h3 class="font-bold text-sm text-green-900 mb-2">Ev Bakim</h3>
@@ -2465,7 +2465,7 @@ app.get('/bayi', (c) => {
                     <div class="relative group cursor-pointer">
                         <div class="bg-white border-2 border-purple-200 p-6 minimal-corner hover:border-purple-500 transition-all duration-300 hover:shadow-lg">
                             <div class="text-center">
-                                <div class="w-12 h-12 bg-purple-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-purple-600 transition duration-300">
+                                <div class="w-8 h-8 bg-purple-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-purple-600 transition duration-300">
                                     <i class="fas fa-broom text-white text-lg"></i>
                                 </div>
                                 <h3 class="font-bold text-sm text-purple-900 mb-2">Temizlik</h3>
@@ -2507,7 +2507,7 @@ app.get('/bayi', (c) => {
                     <div class="relative group cursor-pointer">
                         <div class="bg-white border-2 border-indigo-200 p-6 minimal-corner hover:border-indigo-500 transition-all duration-300 hover:shadow-lg">
                             <div class="text-center">
-                                <div class="w-12 h-12 bg-indigo-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-indigo-600 transition duration-300">
+                                <div class="w-8 h-8 bg-indigo-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-indigo-600 transition duration-300">
                                     <i class="fas fa-truck text-white text-lg"></i>
                                 </div>
                                 <h3 class="font-bold text-sm text-indigo-900 mb-2">Nakliye</h3>
@@ -2549,7 +2549,7 @@ app.get('/bayi', (c) => {
                     <div class="relative group cursor-pointer">
                         <div class="bg-white border-2 border-pink-200 p-6 minimal-corner hover:border-pink-500 transition-all duration-300 hover:shadow-lg">
                             <div class="text-center">
-                                <div class="w-12 h-12 bg-pink-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-pink-600 transition duration-300">
+                                <div class="w-8 h-8 bg-pink-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-pink-600 transition duration-300">
                                     <i class="fas fa-user-nurse text-white text-lg"></i>
                                 </div>
                                 <h3 class="font-bold text-sm text-pink-900 mb-2">Kisisel</h3>
@@ -2591,7 +2591,7 @@ app.get('/bayi', (c) => {
                     <div class="relative group cursor-pointer">
                         <div class="bg-white border-2 border-red-200 p-6 minimal-corner hover:border-red-500 transition-all duration-300 hover:shadow-lg">
                             <div class="text-center">
-                                <div class="w-12 h-12 bg-red-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-red-600 transition duration-300">
+                                <div class="w-8 h-8 bg-red-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-red-600 transition duration-300">
                                     <i class="fas fa-car text-white text-lg"></i>
                                 </div>
                                 <h3 class="font-bold text-sm text-red-900 mb-2">Otomotiv</h3>
@@ -4234,7 +4234,7 @@ app.get('/', (c) => {
                         <!-- WhatsApp Quick Option -->
                         <div class="border-2 border-green-200 rounded-xl p-6 hover:border-green-400 transition-all cursor-pointer" onclick="proceedWithWhatsApp('AI öneri sonrası hızlı teklif', document.getElementById('problemDescription').value)">
                             <div class="text-center">
-                                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                                     <i class="fab fa-whatsapp text-green-600 text-xl"></i>
                                 </div>
                                 <h5 class="font-bold text-gray-800 mb-2">Hızlı WhatsApp Teklifi</h5>
@@ -4250,7 +4250,7 @@ app.get('/', (c) => {
                         <!-- Detailed Form Option -->
                         <div class="border-2 border-blue-200 rounded-xl p-6 hover:border-blue-400 transition-all cursor-pointer" onclick="proceedWithDetailedForm()">
                             <div class="text-center">
-                                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                                     <i class="fas fa-file-alt text-blue-600 text-xl"></i>
                                 </div>
                                 <h5 class="font-bold text-gray-800 mb-2">Detaylı Form Doldur</h5>
@@ -4895,82 +4895,82 @@ app.get('/', (c) => {
                                         <!-- Simple Header -->
                                         <div class="px-3 py-1 border-b border-slate-100">
                                             <div class="text-center">
-                                                <div class="inline-flex items-center justify-center w-10 h-10 bg-slate-100 rounded-xl mb-1">
+                                                <div class="inline-flex items-center justify-center w-8 h-8 bg-slate-100 rounded-lg mb-1">
                                                     <i class="fas fa-exclamation-circle text-slate-500 text-2xl"></i>
                                                 </div>
-                                                <h3 class="text-4xl font-bold text-slate-800 mb-1">GENEL PIYASA SORUNLARI</h3>
-                                                <p class="text-slate-500 text-xl">Bu endiseleri yasiyor musunuz?</p>
+                                                <h3 class="text-2xl font-bold text-slate-800 mb-1">GENEL PIYASA SORUNLARI</h3>
+                                                <p class="text-slate-500 text-sm">Bu endiseleri yasiyor musunuz?</p>
                                             </div>
                                         </div>
 
                                         <!-- Problems List -->
-                                        <div class="p-3 space-y-1 min-h-64">
+                                        <div class="p-2 space-y-1">
                                             <div class="flex items-start p-2 hover:bg-slate-50 transition-colors duration-200 rounded-xl">
-                                                <div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                                <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                     <i class="fas fa-search text-slate-500 text-lg"></i>
                                                 </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-slate-800 text-2xl mb-2">Guvenilir Usta Bulamama</div>
-                                                <div class="text-slate-600 text-lg">Hangi ustanin guvenilir oldugu belirsiz</div>
+                                                <div class="font-semibold text-slate-800 text-base mb-1">Guvenilir Usta Bulamama</div>
+                                                <div class="text-slate-600 text-xs">Hangi ustanin guvenilir oldugu belirsiz</div>
                                             </div>
                                         </div>
 
                                         <div class="flex items-start p-4 hover:bg-slate-50 transition-colors duration-200 rounded-xl">
-                                            <div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                            <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                 <i class="fas fa-question-circle text-slate-500 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-slate-800 text-2xl mb-2">Fiyat Belirsizligi</div>
-                                                <div class="text-slate-600 text-lg">Ne kadar odeyeceginiz onceden bilinmiyor</div>
+                                                <div class="font-semibold text-slate-800 text-base mb-1">Fiyat Belirsizligi</div>
+                                                <div class="text-slate-600 text-xs">Ne kadar odeyeceginiz onceden bilinmiyor</div>
                                             </div>
                                         </div>
 
                                         <div class="flex items-start p-4 hover:bg-slate-50 transition-colors duration-200 rounded-xl">
-                                            <div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                            <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                 <i class="fas fa-tools text-slate-500 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-slate-800 text-2xl mb-2">Iscilik Garantisi Eksikligi</div>
-                                                <div class="text-slate-600 text-lg">Yapilan isin garantisi belirsiz veya yok</div>
+                                                <div class="font-semibold text-slate-800 text-base mb-1">Iscilik Garantisi Eksikligi</div>
+                                                <div class="text-slate-600 text-xs">Yapilan isin garantisi belirsiz veya yok</div>
                                             </div>
                                         </div>
 
                                         <div class="flex items-start p-4 hover:bg-slate-50 transition-colors duration-200 rounded-xl">
-                                            <div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                            <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                 <i class="fas fa-lock-open text-slate-500 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-slate-800 text-2xl mb-2">Odeme Guvensizligi</div>
-                                                <div class="text-slate-600 text-lg">Para iade garantisi ve guvenli odeme yok</div>
+                                                <div class="font-semibold text-slate-800 text-base mb-1">Odeme Guvensizligi</div>
+                                                <div class="text-slate-600 text-xs">Para iade garantisi ve guvenli odeme yok</div>
                                             </div>
                                         </div>
 
                                         <div class="flex items-start p-4 hover:bg-slate-50 transition-colors duration-200 rounded-xl">
-                                            <div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                            <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                 <i class="fas fa-phone-slash text-slate-500 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-slate-800 text-2xl mb-2">Iletisim Sorunu</div>
-                                                <div class="text-slate-600 text-lg">Sonradan ulasamama ve destek alamama</div>
+                                                <div class="font-semibold text-slate-800 text-base mb-1">Iletisim Sorunu</div>
+                                                <div class="text-slate-600 text-xs">Sonradan ulasamama ve destek alamama</div>
                                             </div>
                                         </div>
 
                                         <div class="flex items-start p-4 hover:bg-slate-50 transition-colors duration-200 rounded-xl">
-                                            <div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                            <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                 <i class="fas fa-shield-alt text-slate-500 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-slate-800 text-2xl mb-2">Sigorta ve Koruma Eksikligi</div>
-                                                <div class="text-slate-600 text-lg">Hasar durumunda koruma ve tazminat yok</div>
+                                                <div class="font-semibold text-slate-800 text-base mb-1">Sigorta ve Koruma Eksikligi</div>
+                                                <div class="text-slate-600 text-xs">Hasar durumunda koruma ve tazminat yok</div>
                                             </div>
                                         </div>
 
                                         <div class="flex items-start p-3 hover:bg-slate-50 transition-colors duration-200 border-t border-slate-100 mt-4 pt-4 rounded-xl">
-                                            <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                            <div class="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                 <i class="fas fa-user-times text-amber-600 text-sm"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-slate-800 text-2xl mb-2">Dolandiricilik Riski</div>
+                                                <div class="font-semibold text-slate-800 text-base mb-1">Dolandiricilik Riski</div>
                                                 <div class="text-amber-600 text-xs font-medium">Guvensiz platformlarda dolandirilma ihtimali</div>
                                             </div>
                                         </div>
@@ -4989,82 +4989,82 @@ app.get('/', (c) => {
                                         <div class="px-3 py-1 border-b border-blue-700">
                                             <div class="text-center">
                                                 <div class="flex items-center justify-center mb-1">
-                                                    <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-20 w-auto mr-2">
-                                                    <h3 class="text-4xl font-bold text-white">KORUMA</h3>
+                                                    <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-12 w-auto mr-2">
+                                                    <h3 class="text-2xl font-bold text-white">KORUMA</h3>
                                                 </div>
-                                                <p class="text-blue-200 text-xl">Artik kimse sizi dolandiramaz!</p>
+                                                <p class="text-blue-200 text-sm">Artik kimse sizi dolandiramaz!</p>
                                             </div>
                                         </div>
 
                                         <!-- Solutions List -->
-                                        <div class="p-3 space-y-1 text-white min-h-64">
+                                        <div class="p-2 space-y-1 text-white">
                                             <div class="flex items-start p-2 hover:bg-white/5 transition-colors duration-200 rounded-xl">
-                                                <div class="w-12 h-12 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                                <div class="w-8 h-8 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                 <i class="fas fa-user-shield text-amber-400 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-white text-2xl mb-2">Dogrulanmis Uzmanlar</div>
-                                                <div class="text-blue-200 text-lg">Kimlik, adres, referans kontrollu</div>
+                                                <div class="font-semibold text-white text-base mb-1">Dogrulanmis Uzmanlar</div>
+                                                <div class="text-blue-200 text-xs">Kimlik, adres, referans kontrollu</div>
                                             </div>
                                         </div>
 
                                         <div class="flex items-start p-4 hover:bg-white/5 transition-colors duration-200 rounded-xl">
-                                            <div class="w-12 h-12 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                            <div class="w-8 h-8 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                 <i class="fas fa-search-plus text-amber-400 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-white text-2xl mb-2">Sabika Kaydi Sorgulama</div>
-                                                <div class="text-blue-200 text-lg">Adli sicil kontrolu ve gecmis sorgulamasi</div>
+                                                <div class="font-semibold text-white text-base mb-1">Sabika Kaydi Sorgulama</div>
+                                                <div class="text-blue-200 text-xs">Adli sicil kontrolu ve gecmis sorgulamasi</div>
                                             </div>
                                         </div>
 
                                         <div class="flex items-start p-4 hover:bg-white/5 transition-colors duration-200 rounded-xl">
-                                            <div class="w-12 h-12 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                            <div class="w-8 h-8 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                 <i class="fas fa-money-check-alt text-amber-400 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-white text-2xl mb-2">Para Iade Garantisi</div>
-                                                <div class="text-blue-200 text-lg">Memnun kalmazsan tum paran geri</div>
+                                                <div class="font-semibold text-white text-base mb-1">Para Iade Garantisi</div>
+                                                <div class="text-blue-200 text-xs">Memnun kalmazsan tum paran geri</div>
                                             </div>
                                         </div>
 
                                         <div class="flex items-start p-4 hover:bg-white/5 transition-colors duration-200 rounded-xl">
-                                            <div class="w-12 h-12 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                            <div class="w-8 h-8 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                 <i class="fas fa-umbrella text-amber-400 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-white text-2xl mb-2">Sigorta Korumasi</div>
-                                                <div class="text-blue-200 text-lg">Hasar ve sorun durumunda sigorta tazminati</div>
+                                                <div class="font-semibold text-white text-base mb-1">Sigorta Korumasi</div>
+                                                <div class="text-blue-200 text-xs">Hasar ve sorun durumunda sigorta tazminati</div>
                                             </div>
                                         </div>
 
                                         <div class="flex items-start p-4 hover:bg-white/5 transition-colors duration-200 rounded-xl">
-                                            <div class="w-12 h-12 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                            <div class="w-8 h-8 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                 <i class="fas fa-headset text-amber-400 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-white text-2xl mb-2">7/24 Izleme Sistemi</div>
-                                                <div class="text-blue-200 text-lg">Surekli takip, aninda mudahale</div>
+                                                <div class="font-semibold text-white text-base mb-1">7/24 Izleme Sistemi</div>
+                                                <div class="text-blue-200 text-xs">Surekli takip, aninda mudahale</div>
                                             </div>
                                         </div>
 
                                         <div class="flex items-start p-4 hover:bg-white/5 transition-colors duration-200 rounded-xl">
-                                            <div class="w-12 h-12 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                            <div class="w-8 h-8 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                 <i class="fas fa-comments text-amber-400 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-white text-2xl mb-2">Danismanlik Hizmeti</div>
-                                                <div class="text-blue-200 text-lg">Uzman danismanlardan ucretsiz rehberlik</div>
+                                                <div class="font-semibold text-white text-base mb-1">Danismanlik Hizmeti</div>
+                                                <div class="text-blue-200 text-xs">Uzman danismanlardan ucretsiz rehberlik</div>
                                             </div>
                                         </div>
 
                                         <div class="flex items-start p-3 hover:bg-white/5 transition-colors duration-200 border-t border-blue-700 mt-4 pt-4 rounded-xl">
-                                            <div class="w-12 h-12 bg-amber-400/30 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                                            <div class="w-8 h-8 bg-amber-400/30 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                 <i class="fas fa-gavel text-amber-300 text-sm"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-white text-2xl mb-2">Hukuki Koruma</div>
-                                                <div class="text-blue-200 text-lg">Sorun cikarsa avukat devreye girer</div>
+                                                <div class="font-semibold text-white text-base mb-1">Hukuki Koruma</div>
+                                                <div class="text-blue-200 text-xs">Sorun cikarsa avukat devreye girer</div>
                                             </div>
                                         </div>
                                     </div>
@@ -5512,7 +5512,7 @@ app.get('/', (c) => {
                     <!-- Teknik Onarim -->
                     <div class="bg-white border-2 border-blue-200 p-4 minimal-corner group hover:border-orange-500 hover:shadow-lg transition-all duration-300 cursor-pointer relative overflow-hidden">
                         <div class="text-center relative z-10">
-                            <div class="w-12 h-12 bg-blue-900 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-orange-600 transition-colors duration-300">
+                            <div class="w-8 h-8 bg-blue-900 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-orange-600 transition-colors duration-300">
                                 <i class="fas fa-tv text-white text-lg"></i>
                             </div>
                             <h3 class="font-bold text-slate-800 mb-2 text-sm">TEKNIK ONARIM</h3>
@@ -5550,7 +5550,7 @@ app.get('/', (c) => {
                     <!-- Ev Bakim & Tadilat -->
                     <div class="bg-white border-2 border-green-200 p-4 minimal-corner group hover:border-green-500 hover:shadow-lg transition-all duration-300 cursor-pointer relative overflow-hidden">
                         <div class="text-center relative z-10">
-                            <div class="w-12 h-12 bg-green-700 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-green-600 transition-colors duration-300">
+                            <div class="w-8 h-8 bg-green-700 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-green-600 transition-colors duration-300">
                                 <i class="fas fa-home text-white text-lg"></i>
                             </div>
                             <h3 class="font-bold text-slate-800 mb-2 text-sm">EV BAKIM</h3>
@@ -5588,7 +5588,7 @@ app.get('/', (c) => {
                     <!-- Temizlik Hizmetleri -->
                     <div class="bg-white border-2 border-purple-200 p-4 minimal-corner group hover:border-purple-500 hover:shadow-lg transition-all duration-300 cursor-pointer relative overflow-hidden">
                         <div class="text-center relative z-10">
-                            <div class="w-12 h-12 bg-purple-700 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-purple-600 transition-colors duration-300">
+                            <div class="w-8 h-8 bg-purple-700 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-purple-600 transition-colors duration-300">
                                 <i class="fas fa-broom text-white text-lg"></i>
                             </div>
                             <h3 class="font-bold text-slate-800 mb-2 text-sm">TEMIZLIK</h3>
@@ -5626,7 +5626,7 @@ app.get('/', (c) => {
                     <!-- Nakliye & Tasimacilik -->
                     <div class="bg-white border-2 border-indigo-200 p-4 minimal-corner group hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer relative overflow-hidden">
                         <div class="text-center relative z-10">
-                            <div class="w-12 h-12 bg-indigo-700 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-indigo-600 transition-colors duration-300">
+                            <div class="w-8 h-8 bg-indigo-700 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-indigo-600 transition-colors duration-300">
                                 <i class="fas fa-truck text-white text-lg"></i>
                             </div>
                             <h3 class="font-bold text-slate-800 mb-2 text-sm">NAKLIYE</h3>
@@ -5664,7 +5664,7 @@ app.get('/', (c) => {
                     <!-- Kisisel Hizmetler -->
                     <div class="bg-white border-2 border-pink-200 p-4 minimal-corner group hover:border-pink-500 hover:shadow-lg transition-all duration-300 cursor-pointer relative overflow-hidden">
                         <div class="text-center relative z-10">
-                            <div class="w-12 h-12 bg-pink-700 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-pink-600 transition-colors duration-300">
+                            <div class="w-8 h-8 bg-pink-700 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-pink-600 transition-colors duration-300">
                                 <i class="fas fa-user text-white text-lg"></i>
                             </div>
                             <h3 class="font-bold text-slate-800 mb-2 text-sm">KISISEL</h3>
@@ -5702,7 +5702,7 @@ app.get('/', (c) => {
                     <!-- Otomotiv & Arac -->
                     <div class="bg-white border-2 border-red-200 p-4 minimal-corner group hover:border-red-500 hover:shadow-lg transition-all duration-300 cursor-pointer relative overflow-hidden">
                         <div class="text-center relative z-10">
-                            <div class="w-12 h-12 bg-red-700 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-red-600 transition-colors duration-300">
+                            <div class="w-8 h-8 bg-red-700 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-red-600 transition-colors duration-300">
                                 <i class="fas fa-car text-white text-lg"></i>
                             </div>
                             <h3 class="font-bold text-slate-800 mb-2 text-sm">OTOMOTIV</h3>
@@ -5970,7 +5970,7 @@ app.get('/', (c) => {
                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                         <!-- Odeme Guvencesi -->
                         <div class="bg-blue-50 p-4 minimal-corner text-center border border-blue-200 hover:border-amber-400 hover:bg-blue-100 transition-all duration-300 group">
-                            <div class="w-12 h-12 bg-amber-500 minimal-corner mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <div class="w-8 h-8 bg-amber-500 minimal-corner mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                                 <i class="fas fa-piggy-bank text-white text-lg"></i>
                             </div>
                             <h3 class="font-bold mb-2 text-sm text-amber-600">ODEME GUVENCESI</h3>
@@ -5979,7 +5979,7 @@ app.get('/', (c) => {
 
                         <!-- Iscilik Garantisi -->
                         <div class="bg-blue-50 p-4 minimal-corner text-center border border-blue-200 hover:border-amber-400 hover:bg-blue-100 transition-all duration-300 group">
-                            <div class="w-12 h-12 bg-green-500 minimal-corner mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <div class="w-8 h-8 bg-green-500 minimal-corner mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                                 <i class="fas fa-tools text-white text-lg"></i>
                             </div>
                             <h3 class="font-bold mb-2 text-sm text-green-600">ISCILIK GARANTISI</h3>
@@ -5988,7 +5988,7 @@ app.get('/', (c) => {
 
                         <!-- Dogrulanmis Ustalar -->
                         <div class="bg-blue-50 p-4 minimal-corner text-center border border-blue-200 hover:border-amber-400 hover:bg-blue-100 transition-all duration-300 group">
-                            <div class="w-12 h-12 bg-blue-500 minimal-corner mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <div class="w-8 h-8 bg-blue-500 minimal-corner mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                                 <i class="fas fa-user-shield text-white text-lg"></i>
                             </div>
                             <h3 class="font-bold mb-2 text-sm text-blue-600">DOGRULANMIS USTALAR</h3>
@@ -5997,7 +5997,7 @@ app.get('/', (c) => {
 
                         <!-- Sigorta Korumasi -->
                         <div class="bg-blue-50 p-4 minimal-corner text-center border border-blue-200 hover:border-amber-400 hover:bg-blue-100 transition-all duration-300 group">
-                            <div class="w-12 h-12 bg-purple-500 minimal-corner mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <div class="w-8 h-8 bg-purple-500 minimal-corner mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                                 <i class="fas fa-umbrella text-white text-lg"></i>
                             </div>
                             <h3 class="font-bold mb-2 text-sm text-purple-600">SIGORTA KORUMASI</h3>
@@ -6006,7 +6006,7 @@ app.get('/', (c) => {
 
                         <!-- Hukuki Destek -->
                         <div class="bg-blue-50 p-4 minimal-corner text-center border border-blue-200 hover:border-amber-400 hover:bg-blue-100 transition-all duration-300 group">
-                            <div class="w-12 h-12 bg-orange-500 minimal-corner mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <div class="w-8 h-8 bg-orange-500 minimal-corner mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                                 <i class="fas fa-gavel text-white text-lg"></i>
                             </div>
                             <h3 class="font-bold mb-2 text-sm text-orange-600">HUKUKI DESTEK</h3>
@@ -6015,7 +6015,7 @@ app.get('/', (c) => {
 
                         <!-- 7/24 Destek -->
                         <div class="bg-blue-50 p-4 minimal-corner text-center border border-blue-200 hover:border-amber-400 hover:bg-blue-100 transition-all duration-300 group">
-                            <div class="w-12 h-12 bg-pink-500 minimal-corner mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <div class="w-8 h-8 bg-pink-500 minimal-corner mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                                 <i class="fas fa-headset text-white text-lg"></i>
                             </div>
                             <h3 class="font-bold mb-2 text-sm text-pink-600">7/24 DESTEK</h3>
@@ -6041,7 +6041,7 @@ app.get('/', (c) => {
                     <!-- Istanbul -->
                     <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
                         <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mr-4">
+                            <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center mr-4">
                                 <i class="fas fa-city text-white text-xl"></i>
                             </div>
                             <div>
@@ -6073,7 +6073,7 @@ app.get('/', (c) => {
                     <!-- Ankara -->
                     <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
                         <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center mr-4">
+                            <div class="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center mr-4">
                                 <i class="fas fa-landmark text-white text-xl"></i>
                             </div>
                             <div>
@@ -6105,7 +6105,7 @@ app.get('/', (c) => {
                     <!-- Izmir -->
                     <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
                         <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-teal-500 rounded-lg flex items-center justify-center mr-4">
+                            <div class="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center mr-4">
                                 <i class="fas fa-anchor text-white text-xl"></i>
                             </div>
                             <div>
@@ -6137,7 +6137,7 @@ app.get('/', (c) => {
                     <!-- Bursa -->
                     <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
                         <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mr-4">
+                            <div class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center mr-4">
                                 <i class="fas fa-mountain text-white text-xl"></i>
                             </div>
                             <div>
@@ -6169,7 +6169,7 @@ app.get('/', (c) => {
                     <!-- Antalya -->
                     <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
                         <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mr-4">
+                            <div class="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center mr-4">
                                 <i class="fas fa-sun text-white text-xl"></i>
                             </div>
                             <div>
@@ -6201,7 +6201,7 @@ app.get('/', (c) => {
                     <!-- Adana -->
                     <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
                         <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mr-4">
+                            <div class="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center mr-4">
                                 <i class="fas fa-seedling text-white text-xl"></i>
                             </div>
                             <div>
@@ -6512,7 +6512,7 @@ app.get('/', (c) => {
                         <!-- Clean Security Guarantee -->
                         <div class="bg-white border-2 border-blue-200 p-6 minimal-corner">
                             <div class="text-center mb-4">
-                                <div class="w-12 h-12 bg-blue-100 minimal-corner mx-auto mb-3 flex items-center justify-center">
+                                <div class="w-8 h-8 bg-blue-100 minimal-corner mx-auto mb-3 flex items-center justify-center">
                                     <i class="fas fa-shield-alt text-blue-600 text-lg"></i>
                                 </div>
                                 <h4 class="text-lg font-bold text-blue-900 mb-2">
@@ -6732,7 +6732,7 @@ app.get('/', (c) => {
                                         <!-- App Content -->
                                         <div class="p-3">
                                             <div class="text-center mb-3">
-                                                <div class="w-12 h-12 bg-amber-400 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                                                <div class="w-8 h-8 bg-amber-400 rounded-lg mx-auto mb-2 flex items-center justify-center">
                                                     <i class="fas fa-tools text-white"></i>
                                                 </div>
                                                 <h6 class="font-bold text-gray-900 text-sm">TV Tamiri</h6>
@@ -7911,7 +7911,7 @@ app.get('/', (c) => {
 
                 recommendedCategory.innerHTML = \`
                     <div class="flex items-center mb-3">
-                        <div class="w-12 h-12 bg-\${category.color}-500 minimal-corner flex items-center justify-center mr-4">
+                        <div class="w-8 h-8 bg-\${category.color}-500 minimal-corner flex items-center justify-center mr-4">
                             <i class="\${category.icon} text-white text-xl"></i>
                         </div>
                         <div>
@@ -9111,7 +9111,7 @@ app.get('/', (c) => {
                 expertCard.innerHTML = 
                     '<div class="flex items-start justify-between">' +
                         '<div class="flex items-center">' +
-                            '<div class="w-12 h-12 bg-gradient-to-br from-emerald-400 to-green-500 minimal-corner flex items-center justify-center mr-4">' +
+                            '<div class="w-8 h-8 bg-gradient-to-br from-emerald-400 to-green-500 minimal-corner flex items-center justify-center mr-4">' +
                                 '<i class="fas fa-user text-white text-lg"></i>' +
                         '</div><div>' +
                         '<h4 class="font-bold text-gray-800 text-lg">' + expert.name + '</h4>' +
