@@ -2091,7 +2091,7 @@ app.get('/bayi', (c) => {
                     <div class="flex items-center">
                         <!-- Garantor360 Logo -->
                         <div class="flex items-center">
-                            <img src="https://page.gensparksite.com/v1/base64_upload/56c8b3a8afa175342843b0e8d4d4c600" alt="Garantor360" class="h-10">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/56c8b3a8afa175342843b0e8d4d4c600" alt="Garantor360" class="h-14">
                         </div>
                     </div>
                     <div class="flex items-center space-x-4">
@@ -2644,7 +2644,7 @@ app.get('/bayi', (c) => {
                             <div class="mb-8">
                                 <div class="mb-4">
                                     <div class="flex items-center mb-2">
-                                        <img src="https://page.gensparksite.com/v1/base64_upload/56c8b3a8afa175342843b0e8d4d4c600" alt="Garantor360" class="h-12">
+                                        <img src="https://page.gensparksite.com/v1/base64_upload/56c8b3a8afa175342843b0e8d4d4c600" alt="Garantor360" class="h-16">
                                     </div>
                                     <p class="text-amber-400 font-medium">Bayi Web Platformu</p>
                                 </div>
@@ -3047,7 +3047,7 @@ app.get('/bayi', (c) => {
                         <div class="lg:col-span-1">
                             <div class="mb-6">
                                 <div class="flex items-center">
-                                    <img src="https://page.gensparksite.com/v1/base64_upload/56c8b3a8afa175342843b0e8d4d4c600" alt="Garantor360" class="h-14">
+                                    <img src="https://page.gensparksite.com/v1/base64_upload/56c8b3a8afa175342843b0e8d4d4c600" alt="Garantor360" class="h-18">
                                 </div>
                             </div>
                             <p class="text-blue-200 font-medium mb-6 leading-relaxed">
@@ -3896,7 +3896,7 @@ app.get('/', (c) => {
                     <div class="flex items-center">
                         <!-- Garantor360 Logo -->
                         <div class="flex items-center">
-                            <img src="https://page.gensparksite.com/v1/base64_upload/56c8b3a8afa175342843b0e8d4d4c600" alt="Garantor360" class="h-12">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/56c8b3a8afa175342843b0e8d4d4c600" alt="Garantor360" class="h-16">
                         </div>
                     </div>
                     
@@ -4989,7 +4989,7 @@ app.get('/', (c) => {
                                         <div class="px-8 py-8 border-b border-blue-700">
                                             <div class="text-center">
                                                 <div class="inline-flex items-center justify-center w-16 h-16 bg-amber-400 rounded-xl mb-4">
-                                                    <img src="https://page.gensparksite.com/v1/base64_upload/56c8b3a8afa175342843b0e8d4d4c600" alt="Garantor360" class="h-8 w-auto">
+                                                    <img src="https://page.gensparksite.com/v1/base64_upload/56c8b3a8afa175342843b0e8d4d4c600" alt="Garantor360" class="h-10 w-auto">
                                                 </div>
                                                 <h3 class="text-2xl font-bold text-white mb-2">GARANTOR360 KORUMA</h3>
                                                 <p class="text-blue-200 text-base">Artik kimse sizi dolandiramaz!</p>
@@ -6661,7 +6661,7 @@ app.get('/', (c) => {
                         <div class="lg:col-span-2 p-8">
                             <div class="mb-6">
                                 <div class="flex items-center mb-1">
-                                    <img src="https://page.gensparksite.com/v1/base64_upload/56c8b3a8afa175342843b0e8d4d4c600" alt="Garantor360" class="h-8">
+                                    <img src="https://page.gensparksite.com/v1/base64_upload/56c8b3a8afa175342843b0e8d4d4c600" alt="Garantor360" class="h-12">
                                 </div>
                                 <p class="text-slate-600 font-medium">Musteri Mobil Uygulamasi</p>
                             </div>
@@ -6777,7 +6777,7 @@ app.get('/', (c) => {
                         <div class="lg:col-span-1">
                             <div class="mb-6">
                                 <div class="flex items-center">
-                                    <img src="https://page.gensparksite.com/v1/base64_upload/56c8b3a8afa175342843b0e8d4d4c600" alt="Garantor360" class="h-14">
+                                    <img src="https://page.gensparksite.com/v1/base64_upload/56c8b3a8afa175342843b0e8d4d4c600" alt="Garantor360" class="h-18">
                                 </div>
                             </div>
                             <p class="text-blue-200 font-medium mb-6 leading-relaxed">
