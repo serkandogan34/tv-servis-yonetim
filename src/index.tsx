@@ -4021,7 +4021,7 @@ app.get('/', (c) => {
                     <!-- AI Problem Analysis Form -->
                     <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8">
                         <h3 class="text-2xl font-bold text-white mb-6 flex items-center">
-                            <i class="fas fa-robot text-purple-300 mr-3"></i>
+                            <i class="fas fa-tools text-purple-300 mr-3"></i>
                             AI Analiz Merkezi
                         </h3>
                         
@@ -4066,7 +4066,7 @@ app.get('/', (c) => {
                             </div>
 
                             <button onclick="analyzeWithAI()" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
-                                <i class="fas fa-brain mr-3"></i>
+                                <i class="fas fa-search mr-3"></i>
                                 AI ile Analiz Et
                             </button>
                         </div>
@@ -4079,7 +4079,7 @@ app.get('/', (c) => {
                                     <i class="fas fa-lightbulb text-purple-300 text-2xl"></i>
                                 </div>
                                 <p class="text-purple-200">
-                                    Probleminizi yazın ve AI analizine başlayalım!
+                                    Probleminizi yazın ve hemen analiz başlayalım!
                                 </p>
                             </div>
 
@@ -4129,7 +4129,7 @@ app.get('/', (c) => {
                     <div class="space-y-8">
                         <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6">
                             <h4 class="text-xl font-bold text-white mb-4 flex items-center">
-                                <i class="fas fa-magic text-yellow-300 mr-3"></i>
+                                <i class="fas fa-star text-yellow-300 mr-3"></i>
                                 AI Yetenekleri
                             </h4>
                             <div class="space-y-4">
@@ -4147,7 +4147,7 @@ app.get('/', (c) => {
                                         <i class="fas fa-clock text-blue-300 text-sm"></i>
                                     </div>
                                     <div>
-                                        <div class="font-semibold text-white">2 Saniye Analiz</div>
+                                        <div class="font-semibold text-white">Hızlı Analiz</div>
                                         <div class="text-purple-200 text-sm">Anında kategori önerisi ve fiyat tahmini</div>
                                     </div>
                                 </div>
@@ -4156,7 +4156,7 @@ app.get('/', (c) => {
                                         <i class="fas fa-brain text-purple-300 text-sm"></i>
                                     </div>
                                     <div>
-                                        <div class="font-semibold text-white">Akıllı Öneriler</div>
+                                        <div class="font-semibold text-white">Çoklu Öneriler</div>
                                         <div class="text-purple-200 text-sm">Ana öneri + 2 alternatif kategori</div>
                                     </div>
                                 </div>
