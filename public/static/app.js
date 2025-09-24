@@ -1021,22 +1021,22 @@ function updateLiveRequestFeed() {
         
         selectedRequests.forEach((request, index) => {
             const requestElement = document.createElement('div');
-            requestElement.className = 'flex items-center justify-between p-3 bg-slate-50 hover:bg-slate-100 transition-colors duration-200 minimal-corner';
+            requestElement.className = 'flex items-center justify-between p-3 bg-blue-50 hover:bg-blue-100 transition-colors duration-200 minimal-corner border border-blue-200';
             
             requestElement.innerHTML = `
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
-                        <i class="fas fa-${getServiceIcon(request.type)} text-orange-600 text-sm"></i>
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-${getServiceIcon(request.type)} text-blue-600 text-sm"></i>
                     </div>
                     <div>
                         <div class="flex items-center space-x-2">
-                            <span class="font-bold text-slate-800 text-sm">${request.name}</span>
-                            <span class="text-orange-600 text-xs font-medium">${request.service}</span>
+                            <span class="font-bold text-blue-900 text-sm">${request.name}</span>
+                            <span class="text-blue-600 text-xs font-medium">${request.service}</span>
                         </div>
-                        <div class="text-slate-600 text-xs">${request.location}</div>
+                        <div class="text-blue-700 text-xs">${request.location}</div>
                     </div>
                 </div>
-                <div class="text-slate-500 text-xs font-medium">${request.time}</div>
+                <div class="text-blue-500 text-xs font-medium">${request.time}</div>
             `;
             
             feedContainer.appendChild(requestElement);
@@ -1160,11 +1160,11 @@ function updateCityStats() {
                 
                 // Color coding based on activity
                 if (newValue > baseValue + 1) {
-                    element.className = 'text-orange-600 font-bold';
+                    element.className = 'text-blue-600 font-bold';
                 } else if (newValue < baseValue - 1) {
-                    element.className = 'text-slate-600 font-bold';
+                    element.className = 'text-blue-400 font-bold';
                 } else {
-                    element.className = 'text-slate-800 font-bold';
+                    element.className = 'text-blue-800 font-bold';
                 }
             }
         });
@@ -1188,9 +1188,10 @@ function updateCategoryStats() {
                 
                 percentElement.textContent = newPercent + '%';
                 
-                // Update progress bar width
+                // Update progress bar width and color
                 const widthClass = getProgressBarWidth(newPercent);
-                barElement.className = `h-full bg-orange-600 ${widthClass}`;
+                const colorClass = index === 0 ? 'bg-blue-600' : 'bg-blue-500';
+                barElement.className = `h-full ${colorClass} ${widthClass}`;
             }
         });
         
