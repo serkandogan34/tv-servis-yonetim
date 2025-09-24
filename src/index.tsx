@@ -4989,7 +4989,7 @@ app.get('/', (c) => {
                                         <div class="px-8 py-8 border-b border-blue-700">
                                             <div class="text-center">
                                                 <div class="inline-flex items-center justify-center w-16 h-16 bg-amber-400 rounded-xl mb-4">
-                                                    <i class="fas fa-shield-virus text-blue-900 text-2xl"></i>
+                                                    <img src="https://page.gensparksite.com/v1/base64_upload/048c4b5ab3a7280d26f5b471c120123b" alt="Garantor360" class="h-8 w-auto">
                                                 </div>
                                                 <h3 class="text-2xl font-bold text-white mb-2">GARANTOR360 KORUMA</h3>
                                                 <p class="text-blue-200 text-base">Artik kimse sizi dolandiramaz!</p>
