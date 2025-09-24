@@ -4910,7 +4910,7 @@ app.get('/', (c) => {
                                                     <i class="fas fa-search text-slate-500 text-lg"></i>
                                                 </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-slate-800 text-lg mb-2">Guvenilir Usta Bulamama</div>
+                                                <div class="font-semibold text-slate-800 text-2xl mb-2">Guvenilir Usta Bulamama</div>
                                                 <div class="text-slate-600 text-base">Hangi ustanin guvenilir oldugu belirsiz</div>
                                             </div>
                                         </div>
@@ -4920,7 +4920,7 @@ app.get('/', (c) => {
                                                 <i class="fas fa-question-circle text-slate-500 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-slate-800 text-lg mb-2">Fiyat Belirsizligi</div>
+                                                <div class="font-semibold text-slate-800 text-2xl mb-2">Fiyat Belirsizligi</div>
                                                 <div class="text-slate-600 text-base">Ne kadar odeyeceginiz onceden bilinmiyor</div>
                                             </div>
                                         </div>
@@ -4930,7 +4930,7 @@ app.get('/', (c) => {
                                                 <i class="fas fa-tools text-slate-500 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-slate-800 text-lg mb-2">Iscilik Garantisi Eksikligi</div>
+                                                <div class="font-semibold text-slate-800 text-2xl mb-2">Iscilik Garantisi Eksikligi</div>
                                                 <div class="text-slate-600 text-base">Yapilan isin garantisi belirsiz veya yok</div>
                                             </div>
                                         </div>
@@ -4940,7 +4940,7 @@ app.get('/', (c) => {
                                                 <i class="fas fa-lock-open text-slate-500 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-slate-800 text-lg mb-2">Odeme Guvensizligi</div>
+                                                <div class="font-semibold text-slate-800 text-2xl mb-2">Odeme Guvensizligi</div>
                                                 <div class="text-slate-600 text-base">Para iade garantisi ve guvenli odeme yok</div>
                                             </div>
                                         </div>
@@ -4950,7 +4950,7 @@ app.get('/', (c) => {
                                                 <i class="fas fa-phone-slash text-slate-500 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-slate-800 text-lg mb-2">Iletisim Sorunu</div>
+                                                <div class="font-semibold text-slate-800 text-2xl mb-2">Iletisim Sorunu</div>
                                                 <div class="text-slate-600 text-base">Sonradan ulasamama ve destek alamama</div>
                                             </div>
                                         </div>
@@ -4960,7 +4960,7 @@ app.get('/', (c) => {
                                                 <i class="fas fa-shield-alt text-slate-500 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-slate-800 text-lg mb-2">Sigorta ve Koruma Eksikligi</div>
+                                                <div class="font-semibold text-slate-800 text-2xl mb-2">Sigorta ve Koruma Eksikligi</div>
                                                 <div class="text-slate-600 text-base">Hasar durumunda koruma ve tazminat yok</div>
                                             </div>
                                         </div>
@@ -4970,7 +4970,7 @@ app.get('/', (c) => {
                                                 <i class="fas fa-user-times text-amber-600 text-sm"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-slate-800 text-lg mb-2">Dolandiricilik Riski</div>
+                                                <div class="font-semibold text-slate-800 text-2xl mb-2">Dolandiricilik Riski</div>
                                                 <div class="text-amber-600 text-xs font-medium">Guvensiz platformlarda dolandirilma ihtimali</div>
                                             </div>
                                         </div>
@@ -4986,25 +4986,25 @@ app.get('/', (c) => {
                                     <div class="absolute -inset-4 border-2 border-amber-300 rounded-3xl opacity-50"></div>
                                     <div class="bg-gradient-to-br from-blue-900 to-blue-800 border border-blue-300 hover:border-blue-200 transition-all duration-300 rounded-2xl shadow-sm hover:shadow-md relative">
                                         <!-- Simple Header -->
-                                        <div class="px-8 py-8 border-b border-blue-700">
+                                        <div class="px-6 py-4 border-b border-blue-700">
                                             <div class="text-center">
-                                                <div class="flex items-center justify-center mb-4">
+                                                <div class="flex items-center justify-center mb-2">
                                                     <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-28 w-auto mr-3">
-                                                    <h3 class="text-2xl font-bold text-white">KORUMA</h3>
+                                                    <h3 class="text-4xl font-bold text-white">KORUMA</h3>
                                                 </div>
-                                                <p class="text-blue-200 text-base">Artik kimse sizi dolandiramaz!</p>
+                                                <p class="text-blue-200 text-xl">Artik kimse sizi dolandiramaz!</p>
                                             </div>
                                         </div>
 
                                         <!-- Solutions List -->
-                                        <div class="p-8 space-y-4 text-white">
+                                        <div class="p-6 space-y-3 text-white">
                                             <div class="flex items-start p-4 hover:bg-white/5 transition-colors duration-200 rounded-xl">
                                                 <div class="w-12 h-12 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                 <i class="fas fa-user-shield text-amber-400 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-white text-lg mb-2">Dogrulanmis Uzmanlar</div>
-                                                <div class="text-blue-200 text-base">Kimlik, adres, referans kontrollu</div>
+                                                <div class="font-semibold text-white text-2xl mb-2">Dogrulanmis Uzmanlar</div>
+                                                <div class="text-blue-200 text-lg">Kimlik, adres, referans kontrollu</div>
                                             </div>
                                         </div>
 
@@ -5013,8 +5013,8 @@ app.get('/', (c) => {
                                                 <i class="fas fa-search-plus text-amber-400 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-white text-lg mb-2">Sabika Kaydi Sorgulama</div>
-                                                <div class="text-blue-200 text-base">Adli sicil kontrolu ve gecmis sorgulamasi</div>
+                                                <div class="font-semibold text-white text-2xl mb-2">Sabika Kaydi Sorgulama</div>
+                                                <div class="text-blue-200 text-lg">Adli sicil kontrolu ve gecmis sorgulamasi</div>
                                             </div>
                                         </div>
 
@@ -5023,8 +5023,8 @@ app.get('/', (c) => {
                                                 <i class="fas fa-money-check-alt text-amber-400 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-white text-lg mb-2">Para Iade Garantisi</div>
-                                                <div class="text-blue-200 text-base">Memnun kalmazsan tum paran geri</div>
+                                                <div class="font-semibold text-white text-2xl mb-2">Para Iade Garantisi</div>
+                                                <div class="text-blue-200 text-lg">Memnun kalmazsan tum paran geri</div>
                                             </div>
                                         </div>
 
@@ -5033,8 +5033,8 @@ app.get('/', (c) => {
                                                 <i class="fas fa-umbrella text-amber-400 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-white text-lg mb-2">Sigorta Korumasi</div>
-                                                <div class="text-blue-200 text-base">Hasar ve sorun durumunda sigorta tazminati</div>
+                                                <div class="font-semibold text-white text-2xl mb-2">Sigorta Korumasi</div>
+                                                <div class="text-blue-200 text-lg">Hasar ve sorun durumunda sigorta tazminati</div>
                                             </div>
                                         </div>
 
@@ -5043,8 +5043,8 @@ app.get('/', (c) => {
                                                 <i class="fas fa-headset text-amber-400 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-white text-lg mb-2">7/24 Izleme Sistemi</div>
-                                                <div class="text-blue-200 text-base">Surekli takip, aninda mudahale</div>
+                                                <div class="font-semibold text-white text-2xl mb-2">7/24 Izleme Sistemi</div>
+                                                <div class="text-blue-200 text-lg">Surekli takip, aninda mudahale</div>
                                             </div>
                                         </div>
 
@@ -5053,8 +5053,8 @@ app.get('/', (c) => {
                                                 <i class="fas fa-comments text-amber-400 text-lg"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-semibold text-white text-lg mb-2">Danismanlik Hizmeti</div>
-                                                <div class="text-blue-200 text-base">Uzman danismanlardan ucretsiz rehberlik</div>
+                                                <div class="font-semibold text-white text-2xl mb-2">Danismanlik Hizmeti</div>
+                                                <div class="text-blue-200 text-lg">Uzman danismanlardan ucretsiz rehberlik</div>
                                             </div>
                                         </div>
 
@@ -7941,7 +7941,7 @@ app.get('/', (c) => {
                 recommendedCategory.innerHTML = \`
                     <div class="text-center">
                         <i class="fas fa-question-circle text-white text-3xl mb-3"></i>
-                        <h4 class="font-bold text-white text-lg mb-2">Kategori Belirlenemedi</h4>
+                        <h4 class="font-bold text-white text-2xl mb-2">Kategori Belirlenemedi</h4>
                         <p class="text-white text-sm">
                             Probleminizi daha detayli anlatirsaniz size daha iyi yardimci olabilirim.
                             Ornegin hangi cihaz, nerede, nasil bir sorun yasiyorsunuz?
