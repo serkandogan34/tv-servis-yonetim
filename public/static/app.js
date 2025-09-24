@@ -871,3 +871,91 @@ window.initializeFloatingNotifications = initializeFloatingNotifications;
 window.closeFloatingNotification = closeFloatingNotification;
 window.stopFloatingNotifications = stopFloatingNotifications;
 window.handleSmartSubmit = handleSmartSubmit;
+
+// ========================================
+// SUCCESS STORIES CAROUSEL SYSTEM
+// ========================================
+
+let currentStorySlide = 0;
+let storySlideTimer = null;
+let storyProgressTimer = null;
+let storyTimeLeft = 4;
+
+// Change success stories slide
+function changeStorySlide(slideIndex) {
+    const carousel = document.getElementById('successStoriesCarousel');
+    if (carousel) {
+        carousel.style.transform = 'translateX(-' + slideIndex * 100 + '%)';
+        
+        // Update dots
+        document.querySelectorAll('.story-dot').forEach((dot, index) => {
+            if (index === slideIndex) {
+                dot.classList.remove('bg-blue-300/50');
+                dot.classList.add('bg-blue-300');
+            } else {
+                dot.classList.remove('bg-blue-300');
+                dot.classList.add('bg-blue-300/50');
+            }
+        });
+        
+        currentStorySlide = slideIndex;
+        resetStoryTimer();
+    }
+}
+
+// Reset story timer and progress
+function resetStoryTimer() {
+    // Clear existing timers
+    if (storySlideTimer) clearInterval(storySlideTimer);
+    if (storyProgressTimer) clearInterval(storyProgressTimer);
+    
+    storyTimeLeft = 4;
+    
+    // Update timer display and progress
+    const timerDisplay = document.getElementById('storyTimer');
+    const progressBar = document.getElementById('storyProgress');
+    
+    if (timerDisplay) timerDisplay.textContent = storyTimeLeft;
+    if (progressBar) progressBar.style.width = '0%';
+    
+    // Start countdown timer
+    storySlideTimer = setInterval(() => {
+        storyTimeLeft--;
+        if (timerDisplay) timerDisplay.textContent = storyTimeLeft;
+        
+        if (storyTimeLeft <= 0) {
+            currentStorySlide = (currentStorySlide + 1) % 3;
+            changeStorySlide(currentStorySlide);
+        }
+    }, 1000);
+    
+    // Start progress bar animation
+    let progress = 0;
+    storyProgressTimer = setInterval(() => {
+        progress += (100 / (4 * 40)); // 4 seconds * 40 steps per second
+        if (progressBar) progressBar.style.width = Math.min(progress, 100) + '%';
+        
+        if (progress >= 100) {
+            clearInterval(storyProgressTimer);
+            progress = 0;
+        }
+    }, 25); // Update every 25ms for smooth animation
+}
+
+// Initialize success stories carousel
+function initializeSuccessStories() {
+    // Start the carousel after page loads
+    setTimeout(() => {
+        resetStoryTimer();
+    }, 2000);
+}
+
+// Add event listeners when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    initializeSuccessStories();
+});
+
+// Export functions to window
+window.changeStorySlide = changeStorySlide;
+window.resetStoryTimer = resetStoryTimer;
+window.initializeSuccessStories = initializeSuccessStories;
