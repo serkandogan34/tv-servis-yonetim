@@ -6262,11 +6262,11 @@ app.get('/', (c) => {
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-bold text-blue-900 mb-2">
-                                        <i class="fas fa-tools mr-2"></i>Hizmet Kategorisi *
+                                    <label class="block text-base font-bold text-blue-900 mb-3">
+                                        <i class="fas fa-tools mr-2 text-lg"></i>Hizmet Kategorisi *
                                     </label>
                                     <select id="serviceCategory" required 
-                                            class="w-full p-4 border-2 border-blue-200 sharp-corner focus:border-amber-400 focus:outline-none transition duration-200"
+                                            class="w-full p-6 text-lg border-2 border-blue-200 sharp-corner focus:border-amber-400 focus:outline-none transition duration-200"
                                             onchange="updateFormProgress(); validateStep(2); showEstimatedPrice();">
                                         <option value="">Kategori Secin</option>
                                     
