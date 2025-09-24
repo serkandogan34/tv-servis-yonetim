@@ -2091,7 +2091,7 @@ app.get('/bayi', (c) => {
                     <div class="flex items-center">
                         <!-- Garantor360 Logo -->
                         <div class="flex items-center">
-                            <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_a592278a-b85c-4292-adc2-ddfd0a7dd6db" alt="Garantor360" class="h-3">
+                            <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_a592278a-b85c-4292-adc2-ddfd0a7dd6db" alt="Garantor360" class="h-10">
                         </div>
                     </div>
                     <div class="flex items-center space-x-4">
@@ -3896,7 +3896,7 @@ app.get('/', (c) => {
                     <div class="flex items-center">
                         <!-- Garantor360 Logo -->
                         <div class="flex items-center">
-                            <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_a592278a-b85c-4292-adc2-ddfd0a7dd6db" alt="Garantor360" class="h-4">
+                            <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_a592278a-b85c-4292-adc2-ddfd0a7dd6db" alt="Garantor360" class="h-12">
                         </div>
                     </div>
                     
