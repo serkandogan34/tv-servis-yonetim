@@ -4988,10 +4988,10 @@ app.get('/', (c) => {
                                         <!-- Simple Header -->
                                         <div class="px-8 py-8 border-b border-blue-700">
                                             <div class="text-center">
-                                                <div class="inline-flex items-center justify-center w-16 h-16 bg-amber-400 rounded-xl mb-4">
-                                                    <img src="https://page.gensparksite.com/v1/base64_upload/56c8b3a8afa175342843b0e8d4d4c600" alt="Garantor360" class="h-10 w-auto">
+                                                <div class="flex items-center justify-center mb-4">
+                                                    <img src="https://page.gensparksite.com/v1/base64_upload/56c8b3a8afa175342843b0e8d4d4c600" alt="Garantor360" class="h-12 w-auto mr-3">
+                                                    <h3 class="text-2xl font-bold text-white">KORUMA</h3>
                                                 </div>
-                                                <h3 class="text-2xl font-bold text-white mb-2">GARANTOR360 KORUMA</h3>
                                                 <p class="text-blue-200 text-base">Artik kimse sizi dolandiramaz!</p>
                                             </div>
                                         </div>
