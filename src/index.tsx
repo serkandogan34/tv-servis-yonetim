@@ -4904,7 +4904,7 @@ app.get('/', (c) => {
                                         </div>
 
                                         <!-- Problems List -->
-                                        <div class="p-4 space-y-2">
+                                        <div class="p-4 space-y-2 min-h-96">
                                             <div class="flex items-start p-4 hover:bg-slate-50 transition-colors duration-200 rounded-xl">
                                                 <div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                     <i class="fas fa-search text-slate-500 text-lg"></i>
@@ -4997,7 +4997,7 @@ app.get('/', (c) => {
                                         </div>
 
                                         <!-- Solutions List -->
-                                        <div class="p-4 space-y-2 text-white">
+                                        <div class="p-4 space-y-2 text-white min-h-96">
                                             <div class="flex items-start p-4 hover:bg-white/5 transition-colors duration-200 rounded-xl">
                                                 <div class="w-12 h-12 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                 <i class="fas fa-user-shield text-amber-400 text-lg"></i>
