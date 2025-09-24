@@ -4893,9 +4893,9 @@ app.get('/', (c) => {
                                     <div class="absolute -inset-4 border-2 border-slate-300 rounded-3xl opacity-50"></div>
                                     <div class="bg-white border border-slate-200 hover:border-slate-300 transition-all duration-300 rounded-2xl shadow-sm hover:shadow-md relative">
                                         <!-- Simple Header -->
-                                        <div class="px-4 py-2 border-b border-slate-100">
+                                        <div class="px-3 py-1 border-b border-slate-100">
                                             <div class="text-center">
-                                                <div class="inline-flex items-center justify-center w-12 h-12 bg-slate-100 rounded-xl mb-1">
+                                                <div class="inline-flex items-center justify-center w-10 h-10 bg-slate-100 rounded-xl mb-1">
                                                     <i class="fas fa-exclamation-circle text-slate-500 text-2xl"></i>
                                                 </div>
                                                 <h3 class="text-4xl font-bold text-slate-800 mb-1">GENEL PIYASA SORUNLARI</h3>
@@ -4904,8 +4904,8 @@ app.get('/', (c) => {
                                         </div>
 
                                         <!-- Problems List -->
-                                        <div class="p-4 space-y-2 min-h-96">
-                                            <div class="flex items-start p-4 hover:bg-slate-50 transition-colors duration-200 rounded-xl">
+                                        <div class="p-3 space-y-1 min-h-64">
+                                            <div class="flex items-start p-2 hover:bg-slate-50 transition-colors duration-200 rounded-xl">
                                                 <div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                     <i class="fas fa-search text-slate-500 text-lg"></i>
                                                 </div>
@@ -4986,10 +4986,10 @@ app.get('/', (c) => {
                                     <div class="absolute -inset-4 border-2 border-amber-300 rounded-3xl opacity-50"></div>
                                     <div class="bg-gradient-to-br from-blue-900 to-blue-800 border border-blue-300 hover:border-blue-200 transition-all duration-300 rounded-2xl shadow-sm hover:shadow-md relative">
                                         <!-- Simple Header -->
-                                        <div class="px-4 py-2 border-b border-blue-700">
+                                        <div class="px-3 py-1 border-b border-blue-700">
                                             <div class="text-center">
                                                 <div class="flex items-center justify-center mb-1">
-                                                    <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-28 w-auto mr-3">
+                                                    <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-20 w-auto mr-2">
                                                     <h3 class="text-4xl font-bold text-white">KORUMA</h3>
                                                 </div>
                                                 <p class="text-blue-200 text-xl">Artik kimse sizi dolandiramaz!</p>
@@ -4997,8 +4997,8 @@ app.get('/', (c) => {
                                         </div>
 
                                         <!-- Solutions List -->
-                                        <div class="p-4 space-y-2 text-white min-h-96">
-                                            <div class="flex items-start p-4 hover:bg-white/5 transition-colors duration-200 rounded-xl">
+                                        <div class="p-3 space-y-1 text-white min-h-64">
+                                            <div class="flex items-start p-2 hover:bg-white/5 transition-colors duration-200 rounded-xl">
                                                 <div class="w-12 h-12 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                 <i class="fas fa-user-shield text-amber-400 text-lg"></i>
                                             </div>
