@@ -3949,8 +3949,16 @@ app.get('/', (c) => {
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
                     <!-- Left Superhero -->
                     <div class="text-center superhero-container">
-                        <div class="superhero-glow mb-6">
-                            <img src="/static/images/garantor-superhero-v2.png" alt="Garantor360 Guvenlik Koruyucusu" class="w-full max-w-sm mx-auto superhero-image">
+                        <div class="relative">
+                            <!-- 360 Logo Overlay -->
+                            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 z-20">
+                                <div class="bg-amber-400 rounded-full w-16 h-16 flex items-center justify-center shadow-lg border-4 border-white">
+                                    <span class="text-blue-900 font-black text-xl">360°</span>
+                                </div>
+                            </div>
+                            <div class="superhero-glow mb-6">
+                                <img src="/static/images/garantor-superhero-v2.png" alt="Garantor360 Guvenlik Koruyucusu" class="w-full max-w-sm mx-auto superhero-image">
+                            </div>
                         </div>
                         <h3 class="text-2xl font-bold text-white mb-4 superhero-title">Guvenlik Koruyucusu</h3>
                         <p class="text-blue-100 text-lg superhero-subtitle">Odeme guvenliginiz bizim sorumlulugumuz!</p>
