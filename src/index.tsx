@@ -4989,7 +4989,7 @@ app.get('/', (c) => {
                                         <div class="px-3 py-1 border-b border-blue-700">
                                             <div class="text-center">
                                                 <div class="flex items-center justify-center mb-1">
-                                                    <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-16 w-auto mr-2">
+                                                    <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-20 w-auto mr-2">
                                                     <h3 class="text-2xl font-bold text-white">KORUMA</h3>
                                                 </div>
                                                 <p class="text-blue-200 text-sm">Artik kimse sizi dolandiramaz!</p>
