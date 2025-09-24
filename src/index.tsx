@@ -2091,7 +2091,7 @@ app.get('/bayi', (c) => {
                     <div class="flex items-center">
                         <!-- Garantor360 Logo -->
                         <div class="flex items-center">
-                            <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-12">
+                            <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_a592278a-b85c-4292-adc2-ddfd0a7dd6db" alt="Garantor360" class="h-12">
                         </div>
                     </div>
                     <div class="flex items-center space-x-4">
@@ -3896,7 +3896,7 @@ app.get('/', (c) => {
                     <div class="flex items-center">
                         <!-- Garantor360 Logo -->
                         <div class="flex items-center">
-                            <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-14">
+                            <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_a592278a-b85c-4292-adc2-ddfd0a7dd6db" alt="Garantor360" class="h-14">
                         </div>
                     </div>
                     
@@ -4989,7 +4989,7 @@ app.get('/', (c) => {
                                         <div class="px-8 py-8 border-b border-blue-700">
                                             <div class="text-center">
                                                 <div class="flex items-center justify-center mb-4">
-                                                    <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-20 w-auto mr-3">
+                                                    <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-24 w-auto mr-3">
                                                     <h3 class="text-2xl font-bold text-white">KORUMA</h3>
                                                 </div>
                                                 <p class="text-blue-200 text-base">Artik kimse sizi dolandiramaz!</p>
