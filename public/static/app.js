@@ -953,9 +953,130 @@ function initializeSuccessStories() {
 // Add event listeners when page loads
 document.addEventListener('DOMContentLoaded', function() {
     initializeSuccessStories();
+    initializeLiveRequestFeed();
 });
+
+// ========================================
+// LIVE REQUEST FEED SYSTEM (CANLI TALEP AKIŞI)
+// ========================================
+
+let liveRequestSystem = {
+    isActive: false,
+    updateInterval: 5000, // 5 seconds
+    requestCounter: 8,
+    maxRequests: 15
+};
+
+// Sample live request data
+const liveRequestsData = [
+    { name: "Ahmet K.", service: "Televizyon Tamiri", location: "Kadıköy, İstanbul", time: "2 dk önce", type: "TV" },
+    { name: "Ayşe M.", service: "Çamaşır Makinesi", location: "Çankaya, Ankara", time: "4 dk önce", type: "WM" },
+    { name: "Mehmet S.", service: "Klima Servisi", location: "Karşıyaka, İzmir", time: "6 dk önce", type: "AC" },
+    { name: "Fatma D.", service: "Buzdolabı Tamiri", location: "Osmangazi, Bursa", time: "8 dk önce", type: "RF" },
+    { name: "Ali V.", service: "Uydu Sistemi", location: "Muratpaşa, Antalya", time: "1 dk önce", type: "SAT" },
+    { name: "Zeynep A.", service: "Elektrikli Süpürge", location: "Seyhan, Adana", time: "3 dk önce", type: "VC" },
+    { name: "Mustafa E.", service: "Mikrodalga Fırın", location: "Selçuklu, Konya", time: "7 dk önce", type: "MW" },
+    { name: "Elif T.", service: "Televizyon Tamiri", location: "Şehitkamil, Gaziantep", time: "9 dk önce", type: "TV" }
+];
+
+// Initialize live request feed
+function initializeLiveRequestFeed() {
+    try {
+        const feedContainer = document.getElementById('job-feed');
+        if (!feedContainer) {
+            console.log('Live request feed container not found');
+            return;
+        }
+
+        // Start the feed system
+        liveRequestSystem.isActive = true;
+        updateLiveRequestFeed();
+        
+        // Start auto-update timer
+        setInterval(() => {
+            if (liveRequestSystem.isActive) {
+                updateLiveRequestFeed();
+                updateRecentRequestCount();
+            }
+        }, liveRequestSystem.updateInterval);
+        
+    } catch (error) {
+        console.error('Error initializing live request feed:', error);
+    }
+}
+
+// Update live request feed display
+function updateLiveRequestFeed() {
+    try {
+        const feedContainer = document.getElementById('job-feed');
+        if (!feedContainer) return;
+
+        // Clear existing content
+        feedContainer.innerHTML = '';
+        
+        // Show random 5-6 requests
+        const shuffled = [...liveRequestsData].sort(() => 0.5 - Math.random());
+        const selectedRequests = shuffled.slice(0, Math.floor(Math.random() * 2) + 5);
+        
+        selectedRequests.forEach((request, index) => {
+            const requestElement = document.createElement('div');
+            requestElement.className = 'flex items-center justify-between p-3 bg-slate-50 hover:bg-slate-100 transition-colors duration-200 minimal-corner';
+            
+            requestElement.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-${getServiceIcon(request.type)} text-orange-600 text-sm"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="font-bold text-slate-800 text-sm">${request.name}</span>
+                            <span class="text-orange-600 text-xs font-medium">${request.service}</span>
+                        </div>
+                        <div class="text-slate-600 text-xs">${request.location}</div>
+                    </div>
+                </div>
+                <div class="text-slate-500 text-xs font-medium">${request.time}</div>
+            `;
+            
+            feedContainer.appendChild(requestElement);
+        });
+        
+    } catch (error) {
+        console.error('Error updating live request feed:', error);
+    }
+}
+
+// Update recent request count
+function updateRecentRequestCount() {
+    try {
+        const countElement = document.getElementById('recent-count');
+        if (!countElement) return;
+        
+        // Vary the count between 6-12
+        liveRequestSystem.requestCounter = Math.floor(Math.random() * 7) + 6;
+        countElement.textContent = liveRequestSystem.requestCounter + ' Talep';
+        
+    } catch (error) {
+        console.error('Error updating recent request count:', error);
+    }
+}
+
+// Get service icon for request type
+function getServiceIcon(type) {
+    const icons = {
+        'TV': 'tv',
+        'WM': 'tint',
+        'AC': 'snowflake',
+        'RF': 'cube',
+        'SAT': 'satellite-dish',
+        'VC': 'broom',
+        'MW': 'fire'
+    };
+    return icons[type] || 'tools';
+}
 
 // Export functions to window
 window.changeStorySlide = changeStorySlide;
 window.resetStoryTimer = resetStoryTimer;
 window.initializeSuccessStories = initializeSuccessStories;
+window.initializeLiveRequestFeed = initializeLiveRequestFeed;

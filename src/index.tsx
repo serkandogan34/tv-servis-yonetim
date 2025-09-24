@@ -5353,11 +5353,321 @@ app.get('/', (c) => {
                     <p class="text-gray-600 text-lg leading-relaxed">81 ilde guvenli hizmet alin, profesyonel cozumler</p>
                 </div>
 
-                <!-- City Grid -->
-                <div class="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-8">
-                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4" id="city-opportunities">
-                        <!-- Cities will be populated via JavaScript -->
+                <!-- Live City Statistics Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 mb-8">
+                    <!-- İstanbul -->
+                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-gray-800 text-sm">İSTANBUL</h3>
+                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        </div>
+                        <div class="space-y-1 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-orange-600">Yeni Talep:</span>
+                                <span class="font-bold text-orange-600">47</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-blue-600">Aktif Usta:</span>
+                                <span class="font-bold text-blue-600">147</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-green-600">Tamamlanan:</span>
+                                <span class="font-bold text-green-600">89</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-purple-600">İşlemde:</span>
+                                <span class="font-bold text-purple-600">34</span>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- Ankara -->
+                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-gray-800 text-sm">ANKARA</h3>
+                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        </div>
+                        <div class="space-y-1 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-orange-600">Yeni Talep:</span>
+                                <span class="font-bold text-orange-600">28</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-blue-600">Aktif Usta:</span>
+                                <span class="font-bold text-blue-600">85</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-green-600">Tamamlanan:</span>
+                                <span class="font-bold text-green-600">67</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-purple-600">İşlemde:</span>
+                                <span class="font-bold text-purple-600">19</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- İzmir -->
+                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-gray-800 text-sm">İZMİR</h3>
+                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        </div>
+                        <div class="space-y-1 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-orange-600">Yeni Talep:</span>
+                                <span class="font-bold text-orange-600">19</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-blue-600">Aktif Usta:</span>
+                                <span class="font-bold text-blue-600">62</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-green-600">Tamamlanan:</span>
+                                <span class="font-bold text-green-600">45</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-purple-600">İşlemde:</span>
+                                <span class="font-bold text-purple-600">13</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bursa -->
+                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-gray-800 text-sm">BURSA</h3>
+                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        </div>
+                        <div class="space-y-1 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-orange-600">Yeni Talep:</span>
+                                <span class="font-bold text-orange-600">14</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-blue-600">Aktif Usta:</span>
+                                <span class="font-bold text-blue-600">38</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-green-600">Tamamlanan:</span>
+                                <span class="font-bold text-green-600">29</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-purple-600">İşlemde:</span>
+                                <span class="font-bold text-purple-600">9</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Antalya -->
+                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-gray-800 text-sm">ANTALYA</h3>
+                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        </div>
+                        <div class="space-y-1 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-orange-600">Yeni Talep:</span>
+                                <span class="font-bold text-orange-600">16</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-blue-600">Aktif Usta:</span>
+                                <span class="font-bold text-blue-600">41</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-green-600">Tamamlanan:</span>
+                                <span class="font-bold text-green-600">32</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-purple-600">İşlemde:</span>
+                                <span class="font-bold text-purple-600">11</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Adana -->
+                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-gray-800 text-sm">ADANA</h3>
+                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        </div>
+                        <div class="space-y-1 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-orange-600">Yeni Talep:</span>
+                                <span class="font-bold text-orange-600">11</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-blue-600">Aktif Usta:</span>
+                                <span class="font-bold text-blue-600">28</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-green-600">Tamamlanan:</span>
+                                <span class="font-bold text-green-600">21</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-purple-600">İşlemde:</span>
+                                <span class="font-bold text-purple-600">7</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Konya -->
+                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-gray-800 text-sm">KONYA</h3>
+                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        </div>
+                        <div class="space-y-1 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-orange-600">Yeni Talep:</span>
+                                <span class="font-bold text-orange-600">9</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-blue-600">Aktif Usta:</span>
+                                <span class="font-bold text-blue-600">24</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-green-600">Tamamlanan:</span>
+                                <span class="font-bold text-green-600">18</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-purple-600">İşlemde:</span>
+                                <span class="font-bold text-purple-600">5</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gaziantep -->
+                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-gray-800 text-sm">GAZİANTEP</h3>
+                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        </div>
+                        <div class="space-y-1 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-orange-600">Yeni Talep:</span>
+                                <span class="font-bold text-orange-600">7</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-blue-600">Aktif Usta:</span>
+                                <span class="font-bold text-blue-600">19</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-green-600">Tamamlanan:</span>
+                                <span class="font-bold text-green-600">14</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-purple-600">İşlemde:</span>
+                                <span class="font-bold text-purple-600">4</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kayseri -->
+                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-gray-800 text-sm">KAYSERİ</h3>
+                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        </div>
+                        <div class="space-y-1 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-orange-600">Yeni Talep:</span>
+                                <span class="font-bold text-orange-600">8</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-blue-600">Aktif Usta:</span>
+                                <span class="font-bold text-blue-600">16</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-green-600">Tamamlanan:</span>
+                                <span class="font-bold text-green-600">12</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-purple-600">İşlemde:</span>
+                                <span class="font-bold text-purple-600">3</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Eskişehir -->
+                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-gray-800 text-sm">ESKİŞEHİR</h3>
+                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        </div>
+                        <div class="space-y-1 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-orange-600">Yeni Talep:</span>
+                                <span class="font-bold text-orange-600">6</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-blue-600">Aktif Usta:</span>
+                                <span class="font-bold text-blue-600">13</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-green-600">Tamamlanan:</span>
+                                <span class="font-bold text-green-600">9</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-purple-600">İşlemde:</span>
+                                <span class="font-bold text-purple-600">2</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Samsun -->
+                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-gray-800 text-sm">SAMSUN</h3>
+                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        </div>
+                        <div class="space-y-1 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-orange-600">Yeni Talep:</span>
+                                <span class="font-bold text-orange-600">12</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-blue-600">Aktif Usta:</span>
+                                <span class="font-bold text-blue-600">21</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-green-600">Tamamlanan:</span>
+                                <span class="font-bold text-green-600">16</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-purple-600">İşlemde:</span>
+                                <span class="font-bold text-purple-600">6</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Denizli -->
+                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-gray-800 text-sm">DENİZLİ</h3>
+                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        </div>
+                        <div class="space-y-1 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-orange-600">Yeni Talep:</span>
+                                <span class="font-bold text-orange-600">5</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-blue-600">Aktif Usta:</span>
+                                <span class="font-bold text-blue-600">15</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-green-600">Tamamlanan:</span>
+                                <span class="font-bold text-green-600">11</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-purple-600">İşlemde:</span>
+                                <span class="font-bold text-purple-600">3</span>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
 
 
