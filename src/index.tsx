@@ -4602,70 +4602,70 @@ app.get('/', (c) => {
                                 <h4 class="text-gray-800 font-semibold text-lg mb-6">İstatistikler</h4>
                                 
                                 <!-- Activity Chart -->
-                                <div class="bg-gray-50 rounded-lg p-5">
+                                <div class="bg-blue-50 rounded-lg p-5 border border-blue-100">
                                     <div class="flex justify-between items-center mb-4">
-                                        <span class="text-gray-600 text-sm font-medium">Son 6 Saat</span>
-                                        <span class="text-gray-800 font-bold text-xl" id="hourly-total">47</span>
+                                        <span class="text-gray-800 text-sm font-medium">Son 6 Saat</span>
+                                        <span class="text-gray-900 font-bold text-xl" id="hourly-total">47</span>
                                     </div>
                                     <div class="flex items-end justify-between h-12 space-x-1">
-                                        <div class="bg-gray-300 rounded-sm flex-1" data-chart-bar="0" style="height: 30%"></div>
-                                        <div class="bg-gray-400 rounded-sm flex-1" data-chart-bar="1" style="height: 45%"></div>
-                                        <div class="bg-gray-500 rounded-sm flex-1" data-chart-bar="2" style="height: 60%"></div>
-                                        <div class="bg-gray-600 rounded-sm flex-1" data-chart-bar="3" style="height: 80%"></div>
-                                        <div class="bg-gray-700 rounded-sm flex-1" data-chart-bar="4" style="height: 100%"></div>
-                                        <div class="bg-gray-800 rounded-sm flex-1" data-chart-bar="5" style="height: 75%"></div>
+                                        <div class="bg-blue-300 rounded-sm flex-1" data-chart-bar="0" style="height: 30%"></div>
+                                        <div class="bg-blue-400 rounded-sm flex-1" data-chart-bar="1" style="height: 45%"></div>
+                                        <div class="bg-blue-500 rounded-sm flex-1" data-chart-bar="2" style="height: 60%"></div>
+                                        <div class="bg-blue-600 rounded-sm flex-1" data-chart-bar="3" style="height: 80%"></div>
+                                        <div class="bg-blue-700 rounded-sm flex-1" data-chart-bar="4" style="height: 100%"></div>
+                                        <div class="bg-blue-800 rounded-sm flex-1" data-chart-bar="5" style="height: 75%"></div>
                                     </div>
                                 </div>
                                     
                                 <!-- Top Categories -->
-                                <div class="bg-gray-50 rounded-lg p-5">
-                                    <h5 class="text-gray-600 font-medium text-sm mb-4">Popüler Kategoriler</h5>
+                                <div class="bg-orange-50 rounded-lg p-5 border border-orange-100">
+                                    <h5 class="text-gray-800 font-medium text-sm mb-4">Popüler Kategoriler</h5>
                                     <div class="space-y-3">
                                         <div class="flex justify-between items-center">
-                                            <span class="text-gray-700 text-sm">Televizyon</span>
+                                            <span class="text-gray-800 text-sm">Televizyon</span>
                                             <div class="flex items-center space-x-2">
-                                                <div class="w-12 h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                                                    <div class="h-full bg-gray-600 rounded-full transition-all duration-300" data-category-bar="0" style="width: 75%"></div>
+                                                <div class="w-12 h-1.5 bg-orange-200 rounded-full overflow-hidden">
+                                                    <div class="h-full bg-orange-600 rounded-full transition-all duration-300" data-category-bar="0" style="width: 75%"></div>
                                                 </div>
-                                                <span class="text-gray-800 font-medium text-sm w-8" data-category-percent="0">34%</span>
+                                                <span class="text-gray-900 font-medium text-sm w-8" data-category-percent="0">34%</span>
                                             </div>
                                         </div>
                                         <div class="flex justify-between items-center">
-                                            <span class="text-gray-700 text-sm">Beyaz Eşya</span>
+                                            <span class="text-gray-800 text-sm">Beyaz Eşya</span>
                                             <div class="flex items-center space-x-2">
-                                                <div class="w-12 h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                                                    <div class="h-full bg-gray-500 rounded-full transition-all duration-300" data-category-bar="1" style="width: 50%"></div>
+                                                <div class="w-12 h-1.5 bg-orange-200 rounded-full overflow-hidden">
+                                                    <div class="h-full bg-orange-500 rounded-full transition-all duration-300" data-category-bar="1" style="width: 50%"></div>
                                                 </div>
-                                                <span class="text-gray-800 font-medium text-sm w-8" data-category-percent="1">28%</span>
+                                                <span class="text-gray-900 font-medium text-sm w-8" data-category-percent="1">28%</span>
                                             </div>
                                         </div>
                                         <div class="flex justify-between items-center">
-                                            <span class="text-gray-700 text-sm">Klima</span>
+                                            <span class="text-gray-800 text-sm">Klima</span>
                                             <div class="flex items-center space-x-2">
-                                                <div class="w-12 h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                                                    <div class="h-full bg-gray-400 rounded-full transition-all duration-300" data-category-bar="2" style="width: 40%"></div>
+                                                <div class="w-12 h-1.5 bg-orange-200 rounded-full overflow-hidden">
+                                                    <div class="h-full bg-orange-400 rounded-full transition-all duration-300" data-category-bar="2" style="width: 40%"></div>
                                                 </div>
-                                                <span class="text-gray-800 font-medium text-sm w-8" data-category-percent="2">22%</span>
+                                                <span class="text-gray-900 font-medium text-sm w-8" data-category-percent="2">22%</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                     
                                 <!-- Top Cities -->
-                                <div class="bg-gray-50 rounded-lg p-5">
-                                    <h5 class="text-gray-600 font-medium text-sm mb-4">Aktif Şehirler</h5>
+                                <div class="bg-green-50 rounded-lg p-5 border border-green-100">
+                                    <h5 class="text-gray-800 font-medium text-sm mb-4">Aktif Şehirler</h5>
                                     <div class="space-y-3">
                                         <div class="flex justify-between items-center">
-                                            <span class="text-gray-700 text-sm">İstanbul</span>
-                                            <span class="text-gray-800 font-semibold" data-city="İstanbul">47</span>
+                                            <span class="text-gray-800 text-sm">İstanbul</span>
+                                            <span class="text-gray-900 font-semibold" data-city="İstanbul">47</span>
                                         </div>
                                         <div class="flex justify-between items-center">
-                                            <span class="text-gray-700 text-sm">Ankara</span>
-                                            <span class="text-gray-800 font-semibold" data-city="Ankara">28</span>
+                                            <span class="text-gray-800 text-sm">Ankara</span>
+                                            <span class="text-gray-900 font-semibold" data-city="Ankara">28</span>
                                         </div>
                                         <div class="flex justify-between items-center">
-                                            <span class="text-gray-700 text-sm">Bursa</span>
-                                            <span class="text-gray-800 font-semibold" data-city="Bursa">14</span>
+                                            <span class="text-gray-800 text-sm">Bursa</span>
+                                            <span class="text-gray-900 font-semibold" data-city="Bursa">14</span>
                                         </div>
                                     </div>
                                 </div>

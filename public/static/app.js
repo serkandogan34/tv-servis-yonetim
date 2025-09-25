@@ -1161,13 +1161,13 @@ function updateCityStats() {
                 const newValue = Math.max(1, baseValue + variation);
                 element.textContent = newValue;
                 
-                // Minimal color coding for activity
+                // Keep text black, maintain activity logic
                 if (newValue > baseValue + 1) {
-                    element.className = 'text-gray-800 font-semibold';
+                    element.className = 'text-gray-900 font-semibold';
                 } else if (newValue < baseValue - 1) {
-                    element.className = 'text-gray-500 font-semibold';
-                } else {
                     element.className = 'text-gray-700 font-semibold';
+                } else {
+                    element.className = 'text-gray-900 font-semibold';
                 }
             }
         });
@@ -1191,10 +1191,10 @@ function updateCategoryStats() {
                 
                 percentElement.textContent = newPercent + '%';
                 
-                // Modern minimal progress bars
+                // Colorful progress bars
                 const widthPercent = Math.max(5, Math.min(95, newPercent));
-                const grayShades = ['bg-gray-600', 'bg-gray-500', 'bg-gray-400'];
-                const colorClass = grayShades[index] || 'bg-gray-500';
+                const orangeShades = ['bg-orange-600', 'bg-orange-500', 'bg-orange-400'];
+                const colorClass = orangeShades[index] || 'bg-orange-500';
                 
                 barElement.style.width = widthPercent + '%';
                 barElement.className = `h-full ${colorClass} rounded-full transition-all duration-300`;
