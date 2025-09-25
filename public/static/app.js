@@ -1039,7 +1039,7 @@ function updateLiveRequestFeed() {
                             <div class="text-gray-500 text-xs">${request.location}</div>
                         </div>
                     </div>
-                    <div class="w-2 h-2 bg-blue-400 rounded-full opacity-60 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="w-2 h-2 bg-green-400 rounded-full opacity-60 group-hover:opacity-100 transition-opacity"></div>
                 </div>
             `;
             
