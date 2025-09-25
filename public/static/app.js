@@ -1015,9 +1015,9 @@ function updateLiveRequestFeed() {
         // Clear existing content
         feedContainer.innerHTML = '';
         
-        // Show random 5-6 requests
+        // Show exactly 4 requests
         const shuffled = [...liveRequestsData].sort(() => 0.5 - Math.random());
-        const selectedRequests = shuffled.slice(0, Math.floor(Math.random() * 2) + 5);
+        const selectedRequests = shuffled.slice(0, 4);
         
         selectedRequests.forEach((request, index) => {
             const requestElement = document.createElement('div');
