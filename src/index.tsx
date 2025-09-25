@@ -4564,104 +4564,111 @@ app.get('/', (c) => {
                     </div>
                 </div>
 
-                <!-- Enhanced Real-time Job Feed -->
-                <div class="bg-white border-2 border-slate-200 minimal-corner shadow-lg">
-                    <div class="bg-gradient-to-r from-blue-50 to-indigo-100 px-8 py-4 border-b-2 border-slate-200">
+                <!-- Modern Live Feed Dashboard -->
+                <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                    <div class="bg-gradient-to-r from-gray-50 to-gray-100 px-8 py-6 border-b border-gray-200">
                         <div class="flex items-center justify-between">
-                            <h3 class="text-slate-800 text-xl font-bold tracking-tight flex items-center">
-                                <span class="inline-block w-3 h-3 bg-green-500 sharp-corner pulse-dot mr-3"></span>
-                                CANLI TALEP AKIŞI
-                            </h3>
-                            <div class="flex items-center space-x-4 text-sm">
-                                <span class="text-slate-600 font-medium">Son 10 dakika:</span>
-                                <span class="bg-emerald-600 text-white px-3 py-1 sharp-corner font-bold" id="recent-count">8 Talep</span>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                                <h3 class="text-gray-800 text-2xl font-semibold tracking-tight">Canlı Talep Akışı</h3>
+                                <div class="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">CANLI</div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-gray-500 text-sm">Son 10dk:</span>
+                                <div class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm font-semibold" id="recent-count">8</div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Job Feed Grid -->
+                    <!-- Modern Dashboard Layout -->
                     <div class="p-8">
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <!-- Left: Live Customer Requests -->
-                            <div>
-                                <h4 class="text-slate-800 font-bold mb-4 tracking-tight">CANLI TALEPLER</h4>
-                                <div id="job-feed" class="space-y-3 max-h-80 overflow-y-auto">
-                                    <!-- Customer requests will be populated via JavaScript -->
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <!-- Live Requests Stream -->
+                            <div class="lg:col-span-2">
+                                <div class="flex items-center justify-between mb-6">
+                                    <h4 class="text-gray-800 font-semibold text-lg">Anlık Talepler</h4>
+                                    <div class="flex items-center space-x-2 text-sm text-gray-500">
+                                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                                        <span>Gerçek zamanlı</span>
+                                    </div>
+                                </div>
+                                <div id="job-feed" class="space-y-4 max-h-96 overflow-y-auto pr-2">
+                                    <!-- Modern request cards will be populated via JavaScript -->
                                 </div>
                             </div>
                             
-                            <!-- Right: Job Statistics -->
-                            <div>
-                                <h4 class="text-slate-800 font-bold mb-4 tracking-tight">CANLI İSTATİSTİKLER</h4>
-                                <div class="space-y-4">
-                                    <!-- Hourly Customer Requests -->
-                                    <div class="bg-amber-50 border border-amber-200 p-4 minimal-corner">
-                                        <div class="flex justify-between items-center mb-3">
-                                            <span class="text-amber-700 font-medium text-sm">SON 6 SAAT</span>
-                                            <span class="text-amber-600 font-bold text-lg" id="hourly-total">47 Talep</span>
-                                        </div>
-                                        <div class="flex items-end space-x-1 h-16">
-                                            <div class="bg-amber-500 w-full" data-chart-bar="0" style="height: 30%"></div>
-                                            <div class="bg-amber-600 w-full" data-chart-bar="1" style="height: 45%"></div>
-                                            <div class="bg-orange-500 w-full" data-chart-bar="2" style="height: 60%"></div>
-                                            <div class="bg-orange-600 w-full" data-chart-bar="3" style="height: 80%"></div>
-                                            <div class="bg-red-500 w-full" data-chart-bar="4" style="height: 100%"></div>
-                                            <div class="bg-red-600 w-full" data-chart-bar="5" style="height: 75%"></div>
-                                        </div>
+                            <!-- Stats Panel -->
+                            <div class="space-y-6">
+                                <h4 class="text-gray-800 font-semibold text-lg mb-6">İstatistikler</h4>
+                                
+                                <!-- Activity Chart -->
+                                <div class="bg-gray-50 rounded-lg p-5">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <span class="text-gray-600 text-sm font-medium">Son 6 Saat</span>
+                                        <span class="text-gray-800 font-bold text-xl" id="hourly-total">47</span>
                                     </div>
+                                    <div class="flex items-end justify-between h-12 space-x-1">
+                                        <div class="bg-gray-300 rounded-sm flex-1" data-chart-bar="0" style="height: 30%"></div>
+                                        <div class="bg-gray-400 rounded-sm flex-1" data-chart-bar="1" style="height: 45%"></div>
+                                        <div class="bg-gray-500 rounded-sm flex-1" data-chart-bar="2" style="height: 60%"></div>
+                                        <div class="bg-gray-600 rounded-sm flex-1" data-chart-bar="3" style="height: 80%"></div>
+                                        <div class="bg-gray-700 rounded-sm flex-1" data-chart-bar="4" style="height: 100%"></div>
+                                        <div class="bg-gray-800 rounded-sm flex-1" data-chart-bar="5" style="height: 75%"></div>
+                                    </div>
+                                </div>
                                     
-                                    <!-- Popular Service Categories -->
-                                    <div class="bg-purple-50 border border-purple-200 p-4 minimal-corner">
-                                        <h5 class="text-purple-700 font-bold text-sm mb-3">POPÜLER KATEGORİLER</h5>
-                                        <div class="space-y-2">
-                                            <div class="flex justify-between items-center">
-                                                <span class="text-purple-700 text-sm">Televizyon Tamiri</span>
-                                                <div class="flex items-center">
-                                                    <div class="w-16 h-2 bg-purple-200 mr-2">
-                                                        <div class="w-3/4 h-full bg-purple-600" data-category-bar="0"></div>
-                                                    </div>
-                                                    <span class="text-purple-900 font-bold text-sm" data-category-percent="0">34%</span>
+                                <!-- Top Categories -->
+                                <div class="bg-gray-50 rounded-lg p-5">
+                                    <h5 class="text-gray-600 font-medium text-sm mb-4">Popüler Kategoriler</h5>
+                                    <div class="space-y-3">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-gray-700 text-sm">Televizyon</span>
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-12 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                                    <div class="h-full bg-gray-600 rounded-full transition-all duration-300" data-category-bar="0" style="width: 75%"></div>
                                                 </div>
+                                                <span class="text-gray-800 font-medium text-sm w-8" data-category-percent="0">34%</span>
                                             </div>
-                                            <div class="flex justify-between items-center">
-                                                <span class="text-teal-700 text-sm">Çamaşır Makinesi</span>
-                                                <div class="flex items-center">
-                                                    <div class="w-16 h-2 bg-teal-200 mr-2">
-                                                        <div class="w-1/2 h-full bg-teal-600" data-category-bar="1"></div>
-                                                    </div>
-                                                    <span class="text-teal-900 font-bold text-sm" data-category-percent="1">28%</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-gray-700 text-sm">Beyaz Eşya</span>
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-12 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                                    <div class="h-full bg-gray-500 rounded-full transition-all duration-300" data-category-bar="1" style="width: 50%"></div>
                                                 </div>
+                                                <span class="text-gray-800 font-medium text-sm w-8" data-category-percent="1">28%</span>
                                             </div>
-                                            <div class="flex justify-between items-center">
-                                                <span class="text-cyan-700 text-sm">Klima Servisi</span>
-                                                <div class="flex items-center">
-                                                    <div class="w-16 h-2 bg-cyan-200 mr-2">
-                                                        <div class="w-2/5 h-full bg-cyan-600" data-category-bar="2"></div>
-                                                    </div>
-                                                    <span class="text-cyan-900 font-bold text-sm" data-category-percent="2">22%</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-gray-700 text-sm">Klima</span>
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-12 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                                    <div class="h-full bg-gray-400 rounded-full transition-all duration-300" data-category-bar="2" style="width: 40%"></div>
                                                 </div>
+                                                <span class="text-gray-800 font-medium text-sm w-8" data-category-percent="2">22%</span>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                                     
-                                    <!-- Top Cities -->
-                                    <div class="bg-emerald-50 border border-emerald-200 p-4 minimal-corner">
-                                        <h5 class="text-emerald-700 font-bold text-sm mb-3">AKTİF ŞEHİRLER</h5>
-                                        <div class="grid grid-cols-2 gap-2 text-xs">
-                                            <div class="flex justify-between">
-                                                <span class="text-emerald-700">İstanbul</span>
-                                                <span class="text-emerald-600 font-bold" data-city="İstanbul">47</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-emerald-700">Ankara</span>
-                                                <span class="text-emerald-800 font-bold" data-city="Ankara">28</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-emerald-700">Bursa</span>
-                                                <span class="text-emerald-800 font-bold" data-city="Bursa">14</span>
-                                            </div>
+                                <!-- Top Cities -->
+                                <div class="bg-gray-50 rounded-lg p-5">
+                                    <h5 class="text-gray-600 font-medium text-sm mb-4">Aktif Şehirler</h5>
+                                    <div class="space-y-3">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-gray-700 text-sm">İstanbul</span>
+                                            <span class="text-gray-800 font-semibold" data-city="İstanbul">47</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-gray-700 text-sm">Ankara</span>
+                                            <span class="text-gray-800 font-semibold" data-city="Ankara">28</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-gray-700 text-sm">Bursa</span>
+                                            <span class="text-gray-800 font-semibold" data-city="Bursa">14</span>
                                         </div>
                                     </div>
+                                </div>
                                 </div>
                             </div>
                         </div>

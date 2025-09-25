@@ -1021,35 +1021,26 @@ function updateLiveRequestFeed() {
         
         selectedRequests.forEach((request, index) => {
             const requestElement = document.createElement('div');
-            // Dynamic card colors based on service type
-            const cardColors = {
-                'TV': { bg: 'bg-indigo-50', hover: 'hover:bg-indigo-100', border: 'border-indigo-200', iconBg: 'bg-indigo-100', iconColor: 'text-indigo-600', service: 'text-indigo-600' },
-                'WM': { bg: 'bg-teal-50', hover: 'hover:bg-teal-100', border: 'border-teal-200', iconBg: 'bg-teal-100', iconColor: 'text-teal-600', service: 'text-teal-600' },
-                'AC': { bg: 'bg-cyan-50', hover: 'hover:bg-cyan-100', border: 'border-cyan-200', iconBg: 'bg-cyan-100', iconColor: 'text-cyan-600', service: 'text-cyan-600' },
-                'RF': { bg: 'bg-purple-50', hover: 'hover:bg-purple-100', border: 'border-purple-200', iconBg: 'bg-purple-100', iconColor: 'text-purple-600', service: 'text-purple-600' },
-                'SAT': { bg: 'bg-green-50', hover: 'hover:bg-green-100', border: 'border-green-200', iconBg: 'bg-green-100', iconColor: 'text-green-600', service: 'text-green-600' },
-                'VC': { bg: 'bg-pink-50', hover: 'hover:bg-pink-100', border: 'border-pink-200', iconBg: 'bg-pink-100', iconColor: 'text-pink-600', service: 'text-pink-600' },
-                'MW': { bg: 'bg-orange-50', hover: 'hover:bg-orange-100', border: 'border-orange-200', iconBg: 'bg-orange-100', iconColor: 'text-orange-600', service: 'text-orange-600' }
-            };
-            
-            const colors = cardColors[request.type] || cardColors['TV'];
-            
-            requestElement.className = `flex items-center justify-between p-3 ${colors.bg} ${colors.hover} transition-colors duration-200 minimal-corner border ${colors.border}`;
+            // Modern minimal card design
+            requestElement.className = 'group bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-all duration-200 hover:border-gray-300';
             
             requestElement.innerHTML = `
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 ${colors.iconBg} rounded-full flex items-center justify-center">
-                        <i class="fas fa-${getServiceIcon(request.type)} ${colors.iconColor} text-sm"></i>
-                    </div>
-                    <div>
-                        <div class="flex items-center space-x-2">
-                            <span class="font-bold text-slate-800 text-sm">${request.name}</span>
-                            <span class="${colors.service} text-xs font-medium">${request.service}</span>
+                <div class="flex items-start justify-between">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center group-hover:bg-gray-200 transition-colors">
+                            <i class="fas fa-${getServiceIcon(request.type)} text-gray-600 text-xs"></i>
                         </div>
-                        <div class="text-slate-600 text-xs">${request.location}</div>
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-2 mb-1">
+                                <span class="font-medium text-gray-900 text-sm">${request.name}</span>
+                                <span class="text-gray-500 text-xs">${request.time}</span>
+                            </div>
+                            <div class="text-gray-700 text-sm font-medium mb-1">${request.service}</div>
+                            <div class="text-gray-500 text-xs">${request.location}</div>
+                        </div>
                     </div>
+                    <div class="w-2 h-2 bg-blue-400 rounded-full opacity-60 group-hover:opacity-100 transition-opacity"></div>
                 </div>
-                <div class="text-slate-500 text-xs font-medium">${request.time}</div>
             `;
             
             feedContainer.appendChild(requestElement);
@@ -1170,13 +1161,13 @@ function updateCityStats() {
                 const newValue = Math.max(1, baseValue + variation);
                 element.textContent = newValue;
                 
-                // Color coding based on activity with varied colors
+                // Minimal color coding for activity
                 if (newValue > baseValue + 1) {
-                    element.className = 'text-emerald-600 font-bold';
+                    element.className = 'text-gray-800 font-semibold';
                 } else if (newValue < baseValue - 1) {
-                    element.className = 'text-emerald-400 font-bold';
+                    element.className = 'text-gray-500 font-semibold';
                 } else {
-                    element.className = 'text-emerald-800 font-bold';
+                    element.className = 'text-gray-700 font-semibold';
                 }
             }
         });
@@ -1200,11 +1191,13 @@ function updateCategoryStats() {
                 
                 percentElement.textContent = newPercent + '%';
                 
-                // Update progress bar width and color with variety
-                const widthClass = getProgressBarWidth(newPercent);
-                const colorClasses = ['bg-purple-600', 'bg-teal-600', 'bg-cyan-600'];
-                const colorClass = colorClasses[index] || 'bg-purple-500';
-                barElement.className = `h-full ${colorClass} ${widthClass}`;
+                // Modern minimal progress bars
+                const widthPercent = Math.max(5, Math.min(95, newPercent));
+                const grayShades = ['bg-gray-600', 'bg-gray-500', 'bg-gray-400'];
+                const colorClass = grayShades[index] || 'bg-gray-500';
+                
+                barElement.style.width = widthPercent + '%';
+                barElement.className = `h-full ${colorClass} rounded-full transition-all duration-300`;
             }
         });
         
