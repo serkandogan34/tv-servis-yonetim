@@ -4592,7 +4592,7 @@ app.get('/', (c) => {
                                         <span>Gerçek zamanlı</span>
                                     </div>
                                 </div>
-                                <div id="job-feed" class="space-y-4 max-h-96 overflow-y-auto pr-2">
+                                <div id="job-feed" class="space-y-4 max-h-[28rem] overflow-y-auto pr-2">
                                     <!-- Modern request cards will be populated via JavaScript -->
                                 </div>
                             </div>
