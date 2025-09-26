@@ -12,6 +12,17 @@
 - **AI Smart Recommendation**: https://3000-i9quaqabu83e1ygd769z4-6532622b.e2b.dev#ai-oneri
 - **Sistem Sağlığı**: https://3000-i9quaqabu83e1ygd769z4-6532622b.e2b.dev/health
 
+## ✅ **SON GÜNCELLEMELER (26.09.2025)**
+
+### 🏷️ **Logo Boyutlandırma Optimizasyonu**
+- **Problem**: Bayi sayfasındaki tüm logolar çok büyüktü (h-13, h-22, h-24)
+- **Çözüm**: Tüm logoları uygun boyutlara getirildi
+  - **Navigasyon logosu**: h-13 → h-8 (50% küçültme)
+  - **Uygulama indirme logosu**: h-22 → h-10 (55% küçültme)  
+  - **Başvuru formu logosu**: h-24 → h-12 (50% küçültme)
+  - **Footer logoları**: h-20/h-16 → h-10 (37-50% küçültme)
+- **Sonuç**: Görsel denge ve profesyonel görünüm iyileştirildi
+
 ## 🧠 **YENİ: AI-POWERED SMART RECOMMENDATION ENGINE**
 
 ### ✨ **Ana Özellikler:**
