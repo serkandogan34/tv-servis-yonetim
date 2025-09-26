@@ -8,10 +8,10 @@ window.appReady = true;
 console.log('FORCING NOTIFICATION START NOW!');
 
 window.addJobToFeed = function() {
-    console.log('Starting job feed...');
+    // console.log('Starting job feed...');
     const feedContainer = document.getElementById('job-feed');
     if (!feedContainer) {
-        console.error('❌ job-feed container NOT FOUND!');
+        // console.log('job-feed container not found on this page, skipping...');
         return;
     }
     console.log('Found job-feed container, starting...');
@@ -53,21 +53,21 @@ window.addJobToFeed = function() {
     const urgencyClass = job.urgency === 'Acil' ? 'bg-red-500' : job.urgency === 'Bugün' ? 'bg-orange-500' : 'bg-green-500';
     
     const jobElement = document.createElement('div');
-    jobElement.className = 'bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-3 mb-2 opacity-0 transform translate-y-2 transition-all duration-300';
+    jobElement.className = 'bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-2 mb-1 opacity-0 transform translate-y-2 transition-all duration-300';
     
     jobElement.innerHTML = 
         '<div class="flex items-center justify-between">' +
-            '<div class="flex items-center space-x-3">' +
-                '<div class="w-8 h-8 bg-' + job.color + '-500 rounded-lg flex items-center justify-center">' +
+            '<div class="flex items-center space-x-2">' +
+                '<div class="w-6 h-6 bg-' + job.color + '-500 rounded-md flex items-center justify-center">' +
                     '<i class="' + job.icon + ' text-white text-xs"></i>' +
                 '</div>' +
                 '<div class="flex-1">' +
-                    '<div class="text-white text-sm font-medium">' + job.category + '</div>' +
+                    '<div class="text-white text-xs font-medium">' + job.category + '</div>' +
                     '<div class="text-gray-300 text-xs">' + job.customer + ' • ' + job.location + '</div>' +
                 '</div>' +
             '</div>' +
             '<div class="text-right">' +
-                '<div class="' + urgencyClass + ' text-white px-2 py-1 rounded text-xs font-medium mb-1">' + job.urgency + '</div>' +
+                '<div class="' + urgencyClass + ' text-white px-1 py-0.5 rounded text-xs font-medium mb-0.5">' + job.urgency + '</div>' +
                 '<div class="text-gray-300 text-xs">' + job.price + '</div>' +
                 '<div class="text-gray-400 text-xs">' + job.time + '</div>' +
             '</div>' +
