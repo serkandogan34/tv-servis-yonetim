@@ -5296,6 +5296,30 @@ app.get('/', (c) => {
             </div>
         </section>
 
+        <!-- 360° Logo Background Section -->
+        <section class="relative py-8 bg-slate-50 overflow-hidden">
+            <div class="absolute inset-0 flex items-center justify-center opacity-5">
+                <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_da4a2c84-aaac-47c9-a813-6b04eedeba63" 
+                     alt="360° Güvenlik" 
+                     class="w-96 h-96 object-contain animate-pulse" 
+                     style="filter: saturate(0.8);">
+            </div>
+            <div class="max-w-7xl mx-auto px-6 relative z-10">
+                <div class="text-center">
+                    <div class="inline-flex items-center space-x-3 bg-white/90 backdrop-blur-sm rounded-full px-6 py-3 shadow-lg border border-orange-200">
+                        <div class="w-8 h-8 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">360°</span>
+                        </div>
+                        <span class="text-slate-800 font-bold text-lg">KAPSAMLI KORUMA GARANTİSİ</span>
+                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    </div>
+                    <p class="text-slate-600 text-sm mt-3 font-medium">
+                        Her açıdan güvenli hizmet deneyimi için 360° koruma sistemi
+                    </p>
+                </div>
+            </div>
+        </section>
+
         <!-- Service Options Modal (for AI recommendations) -->
         <div id="serviceOptionsModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden p-4">
             <div class="bg-white max-w-2xl w-full rounded-2xl shadow-2xl">
