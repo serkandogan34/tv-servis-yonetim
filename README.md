@@ -87,6 +87,17 @@
   - ✅ **Scale Azaltma**: 1.2x → 0.8x (kartlarla çakışma önleme)
   - ✅ **Color Neutral**: Turuncu arka plan kaldırıldı, şeffaf yapıldı
 
+### 👁️ **Logo Görünürlük Dengeleme - Final Ayar**
+- **Problem**: Logo çok şeffaf olmuş, hiç gözükmüyordu (%6 opacity)
+- **Çözüm**: Görünür ama engellemez seviyede ayarlandı
+- **Final Ayarlar**:
+  - ✅ **Ana Logo Opacity**: %6 → %15 (net görünür seviye)
+  - ✅ **Fallback Logo**: %4 → %12 opacity + orange-400/60 renk
+  - ✅ **Size**: text-8xl → text-9xl (büyük ama dengeli)
+  - ✅ **Filter**: grayscale kaldırıldı, saturate(0.7) natural renk
+  - ✅ **Scale**: 0.8x → 0.9x (optimal boyut)
+  - ✅ **Z-Index**: -z-10 korundu (arka planda güvenli)
+
 ## 🧠 **YENİ: AI-POWERED SMART RECOMMENDATION ENGINE**
 
 ### ✨ **Ana Özellikler:**
