@@ -6037,8 +6037,8 @@ app.get('/', (c) => {
                             
                             <!-- Superhero Between Containers -->
                             <div class="hidden lg:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
-                                <img src="/static/garantor360-superhero-transparent.png" 
-                                     alt="Garantor360 Superhero" 
+                                <img src="/static/garantor360-flying-superhero.png" 
+                                     alt="Garantor360 Flying Superhero" 
                                      class="w-96 h-96 object-contain opacity-100 floating-animation">
                             </div>
                             
