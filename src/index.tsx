@@ -4856,17 +4856,17 @@ app.get('/', (c) => {
                 <div class="bg-gradient-to-r from-slate-50 to-blue-50 rounded-xl p-5 border border-blue-200 shadow-lg relative overflow-hidden">
                     
                     <!-- 360° Background Logo - Behind Content -->
-                    <div class="absolute inset-0 flex items-center justify-center opacity-15 -z-10">
+                    <div class="absolute inset-0 flex items-center justify-center opacity-30 -z-10">
                         <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_da4a2c84-aaac-47c9-a813-6b04eedeba63" 
                              alt="360° Güvenlik Arka Plan" 
                              class="w-full h-full object-contain" 
-                             style="filter: saturate(0.7) brightness(1.3); transform: scale(0.9);">
+                             style="filter: saturate(1.0) brightness(1.2); transform: scale(1.0);">
                     </div>
                     
                     <!-- Fallback 360° Logo - Behind Content -->
-                    <div class="absolute inset-0 flex items-center justify-center opacity-12 -z-10">
-                        <div class="w-96 h-96 flex items-center justify-center">
-                            <span class="text-orange-400/60 text-9xl font-bold transform rotate-12 select-none">360°</span>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-25 -z-10">
+                        <div class="w-full h-full flex items-center justify-center">
+                            <span class="text-orange-500 text-[12rem] font-bold transform rotate-12 select-none" style="text-shadow: 0 0 20px rgba(255, 165, 0, 0.3);">360°</span>
                         </div>
                     </div>
                     
