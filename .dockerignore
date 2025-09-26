@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log
+.git
+.gitignore
+README.md
+.env
+.dev.vars
+.wrangler
+dist/_worker.js.map
+.DS_Store
+*.log

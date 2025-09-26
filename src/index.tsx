@@ -423,9 +423,9 @@ app.post('/api/jobs/:id/assign', async (c) => {
     await DB.prepare(`
       INSERT INTO is_gecmisi (is_talep_id, eski_durum, yeni_durum, aciklama, degistiren)
       VALUES (?, 'yeni', 'atandi', ?, 'sistem')
-    `).bind(jobId, `Bayi ID ${bayiId} atandi`).run()
+    `).bind(jobId, `Bayi ID ${bayiId} atand&#305;`).run()
     
-    return c.json({ success: true, message: 'Is basariyla atandi' })
+    return c.json({ success: true, message: '&#304;&#351; ba&#351;ar&#305;yla atand&#305;' })
   } catch (error) {
     console.error('Job assignment error:', error)
     return c.json({ error: 'Is atanamadi' }, 500)
@@ -499,7 +499,7 @@ app.post('/api/test/reset-job/:id', async (c) => {
       WHERE id = ?
     `).bind(jobId).run()
     
-    return c.json({ success: true, message: `Is ${jobId} reset edildi` })
+    return c.json({ success: true, message: `&#304;&#351; ${jobId} reset edildi` })
   } catch (error) {
     console.error('Reset job error:', error)
     return c.json({ error: 'Reset basarisiz' }, 500)
@@ -800,7 +800,7 @@ app.post('/api/bayi/buy-job/:id', async (c) => {
     }
     
     // Transaction baslat (SQLite'da manuel transaction yonetimi)
-    console.log(`Bayi ${bayiAuth.bayiId} isi ${jobId} satin almaya calisiyor...`)
+    console.log(`Bayi ${bayiAuth.bayiId} i&#351;i ${jobId} sat&#305;n almaya &#231;al&#305;&#351;&#305;yor...`)
     
     // 1. Is mevcut mu ve satin alinmis mi kontrol et
     const job = await DB.prepare(`
@@ -899,7 +899,7 @@ app.post('/api/bayi/buy-job/:id', async (c) => {
       satinAlmaTarihi
     ).run()
     
-    console.log(`✅ Is ${jobId} basariyla satin alindi - Bayi: ${bayiAuth.bayiId}, Tutar: ${job.is_fiyati} TL`)
+    console.log(`✅ &#304;&#351; ${jobId} ba&#351;ar&#305;yla sat&#305;n al&#305;nd&#305; - Bayi: ${bayiAuth.bayiId}, Tutar: ${job.is_fiyati} TL`)
     
     return c.json({
       success: true,
@@ -918,7 +918,7 @@ app.post('/api/bayi/buy-job/:id', async (c) => {
     })
     
   } catch (error) {
-    console.error('Is satin alma hatasi:', error)
+    console.error('&#304;&#351; sat&#305;n alma hatas&#305;:', error)
     return c.json({ 
       error: 'Is satin alma islemi basarisiz', 
       details: error.message 
@@ -988,7 +988,7 @@ app.post('/api/payment/paytr/init', async (c) => {
       ) VALUES (?, 'kredi_karti', ?, 'beklemede', ?, datetime('now'))
     `).bind(bayi.id, amount, paymentRequest.merchant_oid).run()
     
-    console.log(`PayTR odeme baslatildi - Bayi: ${bayi.id}, Tutar: ${amount} TL, OID: ${paymentRequest.merchant_oid}`)
+    console.log(`PayTR &#246;deme ba&#351;lat&#305;ld&#305; - Bayi: ${bayi.id}, Tutar: ${amount} TL, OID: ${paymentRequest.merchant_oid}`)
     
     return c.json({
       success: true,
@@ -1091,7 +1091,7 @@ app.post('/api/payment/paytr/callback', async (c) => {
         odeme.id
       ).run()
       
-      console.log(`✅ PayTR odeme basarili - Bayi: ${odeme.bayi_id}, Tutar: ${odeme.tutar} TL`)
+      console.log(`✅ PayTR &#246;deme ba&#351;ar&#305;l&#305; - Bayi: ${odeme.bayi_id}, Tutar: ${odeme.tutar} TL`)
       
       return c.text('OK')
     } else {
@@ -1103,7 +1103,7 @@ app.post('/api/payment/paytr/callback', async (c) => {
         WHERE id = ?
       `).bind(odeme.id).run()
       
-      console.log(`❌ PayTR odeme basarisiz - Bayi: ${odeme.bayi_id}, OID: ${params.merchant_oid}`)
+      console.log(`❌ PayTR &#246;deme ba&#351;ar&#305;s&#305;z - Bayi: ${odeme.bayi_id}, OID: ${params.merchant_oid}`)
       
       return c.text('OK')
     }
@@ -1252,7 +1252,7 @@ app.post('/api/payment/transfer/notify', async (c) => {
       new Date().toISOString()
     ).run()
     
-    console.log(`Havale bildirimi alindi - Bayi: ${bayiAuth.bayiId}, Tutar: ${amount} TL, Ref: ${reference}`)
+    console.log(`Havale bildirimi al&#305;nd&#305; - Bayi: ${bayiAuth.bayiId}, Tutar: ${amount} TL, Ref: ${reference}`)
     
     return c.json({
       success: true,
@@ -6700,7 +6700,7 @@ app.get('/', (c) => {
                                         <label class="block text-xs font-bold text-purple-200 mb-0.5">
                                             <i class="fas fa-map-marker-alt mr-1"></i>Sehir *
                                         </label>
-                                        <select id="customerCity" required 
+                                        <select id="customerCity" name="customerCity" required 
                                                 class="w-full p-1.5 bg-white/20 border border-white/30 rounded-lg text-white focus:border-purple-300 focus:outline-none transition duration-200 text-sm city-select"
                                                 onchange="updateFormProgress(); validateStep(1); showNearbyExperts(); handleCityChange();">
                                             <option value="" class="bg-white text-gray-800">Şehir Seçin</option>
@@ -6748,7 +6748,7 @@ app.get('/', (c) => {
                                         <label class="block text-xs font-bold text-purple-200 mb-0.5">
                                             <i class="fas fa-building mr-1"></i>Ilce
                                         </label>
-                                        <input type="text" id="customerDistrict" 
+                                        <input type="text" id="customerDistrict" name="customerDistrict" 
                                                class="w-full p-2 bg-white/20 border border-white/30 rounded-lg text-white placeholder-purple-200 focus:border-purple-300 focus:outline-none transition duration-200 text-sm"
                                                placeholder="Orn: Kadikoy"
                                                onchange="updateFormProgress();">
@@ -6770,7 +6770,7 @@ app.get('/', (c) => {
                                         <label class="block text-xs font-bold text-purple-200 mb-0.5">
                                             <i class="fas fa-tools mr-1"></i>Hizmet Kategorisi *
                                         </label>
-                                        <select id="serviceCategory" required 
+                                        <select id="serviceCategory" name="serviceCategory" required 
                                                 class="w-full p-1.5 text-sm bg-white/20 border border-white/30 rounded-lg text-white focus:border-purple-300 focus:outline-none transition duration-200 service-category-select"
                                                 onchange="updateFormProgress(); validateStep(2); showEstimatedPrice();">
                                             <option value="" class="bg-white text-gray-800">Kategori Secin</option>
@@ -6827,7 +6827,7 @@ app.get('/', (c) => {
                                         <label class="block text-xs font-bold text-purple-200 mb-0.5">
                                             <i class="fas fa-user mr-1"></i>Isim Soyisim *
                                         </label>
-                                        <input type="text" id="customerName" required 
+                                        <input type="text" id="customerName" name="customerName" required 
                                                class="w-full p-2 bg-white/20 border border-white/30 rounded-lg text-white placeholder-purple-200 focus:border-purple-300 focus:outline-none transition duration-200 text-sm"
                                                placeholder="Orn: Ahmet Yilmaz"
                                                onchange="updateFormProgress();">
@@ -6838,7 +6838,7 @@ app.get('/', (c) => {
                                         <label class="block text-xs font-bold text-purple-200 mb-0.5">
                                             <i class="fas fa-phone mr-1"></i>Telefon *
                                         </label>
-                                        <input type="tel" id="customerPhone" required 
+                                        <input type="tel" id="customerPhone" name="customerPhone" required 
                                                class="w-full p-2 bg-white/20 border border-white/30 rounded-lg text-white placeholder-purple-200 focus:border-purple-300 focus:outline-none transition duration-200 text-sm"
                                                placeholder="Orn: 0532 123 45 67"
                                                onchange="updateFormProgress();">
@@ -6858,7 +6858,7 @@ app.get('/', (c) => {
                                     <label class="block text-xs font-bold text-purple-200 mb-0.5">
                                         <i class="fas fa-edit mr-1"></i>Sorun Detayi *
                                     </label>
-                                    <textarea id="problemDescription" required rows="3" 
+                                    <textarea id="problemDescription" name="problemDescription" required rows="3" 
                                               class="w-full p-1.5 text-sm bg-white/20 border border-white/30 rounded-lg text-white placeholder-purple-200 focus:border-purple-300 focus:outline-none transition duration-200"
                                               placeholder="Sorununuzu detayli sekilde aciklayin. Orn: Camasir makinesi calisiyor ama su almiyor, sesli calisiyor..."
                                               onchange="updateFormProgress(); validateStep(3); analyzeDescription();"></textarea>
@@ -7631,7 +7631,7 @@ app.get('/', (c) => {
             
             // Show loading state
             const originalText = submitButton.innerHTML;
-            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>GONDERILIYOR...';
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>G&#214;NDER&#304;L&#304;YOR...';
             submitButton.disabled = true;
             
             try {
@@ -7657,13 +7657,13 @@ app.get('/', (c) => {
                 
                 // Client-side validation
                 if (!formData.customerName || !formData.customerPhone || !formData.customerCity || !formData.serviceCategory || !formData.problemDescription) {
-                    throw new Error('Lutfen gerekli alanlari doldurun');
+                    throw new Error('L&#252;tfen gerekli alanlar&#305; doldurun');
                 }
                 
                 // Phone validation (basic)
                 const phoneRegex = /^[0-9\s\+\(\)\-]{10,}$/;
                 if (!phoneRegex.test(formData.customerPhone)) {
-                    throw new Error('Lutfen gecerli bir telefon numarasi girin');
+                    throw new Error('L&#252;tfen ge&#231;erli bir telefon numaras&#305; girin');
                 }
                 
                 // Send to API
@@ -7695,7 +7695,7 @@ app.get('/', (c) => {
                     }, 500);
                     
                 } else {
-                    throw new Error(result.error || 'Talep gonderilirken hata olustu');
+                    throw new Error(result.error || 'Talep g&#246;nderilirken hata olu&#351;tu');
                 }
                 
             } catch (error) {
@@ -7863,9 +7863,10 @@ app.get('/', (c) => {
             }, 100);
         }
             
-            const form = document.getElementById('serviceRequestForm');
-            if (form) {
-                form.addEventListener('submit', handleServiceRequest);
+            // Form handler now in separate file
+            // const form = document.getElementById('serviceRequestForm');
+            // if (form) {
+            //     form.addEventListener('submit', handleServiceRequest);
                 
                 // Phone number formatting
                 const phoneInput = document.getElementById('customerPhone');
@@ -8463,7 +8464,7 @@ app.get('/', (c) => {
                 if (data.success) {
                     return data.response;
                 } else {
-                    throw new Error(data.error || 'API hatasi');
+                    throw new Error(data.error || 'API hatas&#305;');
                 }
                 
             } catch (error) {
@@ -10004,7 +10005,7 @@ app.get('/', (c) => {
             // Show confirmation
             const shareButton = event.target;
             const originalText = shareButton.innerHTML;
-            shareButton.innerHTML = '<i class="fas fa-check mr-2"></i>PAYLASILDI!';
+            shareButton.innerHTML = '<i class="fas fa-check mr-2"></i>PAYLA&#350;ILDI!';
             shareButton.classList.add('bg-green-700');
             
             setTimeout(() => {
@@ -11107,6 +11108,7 @@ app.get('/', (c) => {
         }
 
         </script>
+        <script src="/static/form-handler.js"></script>
     </body>
     </html>`
   )
