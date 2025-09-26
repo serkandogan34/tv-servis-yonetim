@@ -2123,7 +2123,7 @@ app.get('/bayi', (c) => {
                     <div class="flex items-center">
                         <!-- Garantor360 Logo -->
                         <div class="flex items-center">
-                            <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_a592278a-b85c-4292-adc2-ddfd0a7dd6db" alt="Garantor360" class="h-8">
+                            <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_a592278a-b85c-4292-adc2-ddfd0a7dd6db" alt="Garantor360" class="h-16">
                         </div>
                     </div>
                     <div class="flex items-center space-x-4">
@@ -2680,7 +2680,7 @@ app.get('/bayi', (c) => {
                             <div class="mb-8">
                                 <div class="mb-4">
                                     <div class="flex items-center mb-2">
-                                        <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-10">
+                                        <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-20">
                                     </div>
                                     <p class="text-amber-400 font-medium">Bayi Web Platformu</p>
                                 </div>
@@ -3083,7 +3083,7 @@ app.get('/bayi', (c) => {
                         <div class="lg:col-span-1">
                             <div class="mb-6">
                                 <div class="flex items-center">
-                                    <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-10">
+                                    <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-20">
                                 </div>
                             </div>
                             <p class="text-blue-200 font-medium mb-6 leading-relaxed">
@@ -4441,7 +4441,7 @@ app.get('/', (c) => {
                     <div class="flex items-center">
                         <!-- Garantor360 Logo -->
                         <div class="flex items-center">
-                            <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_a592278a-b85c-4292-adc2-ddfd0a7dd6db" alt="Garantor360" class="h-8">
+                            <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_a592278a-b85c-4292-adc2-ddfd0a7dd6db" alt="Garantor360" class="h-16">
                         </div>
                     </div>
                     
@@ -7072,7 +7072,7 @@ app.get('/', (c) => {
                         <div class="lg:col-span-2 p-8">
                             <div class="mb-6">
                                 <div class="flex items-center mb-1">
-                                    <img src="https://page.gensparksite.com/v1/base64_upload/048c4b5ab3a7280d26f5b471c120123b" alt="Garantor360" class="h-8">
+                                    <img src="https://page.gensparksite.com/v1/base64_upload/048c4b5ab3a7280d26f5b471c120123b" alt="Garantor360" class="h-16">
                                 </div>
                                 <p class="text-slate-600 font-medium">Musteri Mobil Uygulamasi</p>
                             </div>
@@ -7188,7 +7188,7 @@ app.get('/', (c) => {
                         <div class="lg:col-span-1">
                             <div class="mb-6">
                                 <div class="flex items-center">
-                                    <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-10">
+                                    <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-20">
                                 </div>
                             </div>
                             <p class="text-blue-200 font-medium mb-6 leading-relaxed">
