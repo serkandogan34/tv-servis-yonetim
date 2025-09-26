@@ -4855,18 +4855,21 @@ app.get('/', (c) => {
                 <!-- Unified Process + Security Cards -->
                 <div class="bg-gradient-to-r from-slate-50 to-blue-50 rounded-xl p-5 border border-blue-200 shadow-lg relative overflow-hidden">
                     
-                    <!-- 360° Background Logo -->
-                    <div class="absolute inset-0 flex items-center justify-center opacity-8">
+                    <!-- 360° Large Background Logo -->
+                    <div class="absolute inset-0 flex items-center justify-center opacity-12">
                         <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_da4a2c84-aaac-47c9-a813-6b04eedeba63" 
                              alt="360° Güvenlik Arka Plan" 
-                             class="w-80 h-80 object-contain" 
-                             style="filter: saturate(0.6) brightness(1.3);">
+                             class="w-full h-full object-contain" 
+                             style="filter: saturate(0.8) brightness(1.2); transform: scale(1.2);">
                     </div>
                     
-                    <!-- Fallback 360° Logo -->
-                    <div class="absolute top-4 right-4 opacity-10">
-                        <div class="w-32 h-32 bg-gradient-to-br from-orange-400/30 to-orange-600/30 rounded-full flex items-center justify-center">
-                            <span class="text-orange-600 text-4xl font-bold">360°</span>
+                    <!-- Fallback Large 360° Logo -->
+                    <div class="absolute inset-0 flex items-center justify-center opacity-10">
+                        <div class="w-96 h-96 bg-gradient-to-br from-orange-400/20 to-orange-600/20 rounded-full flex items-center justify-center">
+                            <span class="text-orange-500/40 text-9xl font-bold transform rotate-12">360°</span>
+                            <div class="absolute bottom-16 right-16 text-orange-400/30 text-4xl transform rotate-45">
+                                <i class="fas fa-smile"></i>
+                            </div>
                         </div>
                     </div>
                     
