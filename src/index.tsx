@@ -2123,7 +2123,7 @@ app.get('/bayi', (c) => {
                     <div class="flex items-center">
                         <!-- Garantor360 Logo -->
                         <div class="flex items-center">
-                            <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_a592278a-b85c-4292-adc2-ddfd0a7dd6db" alt="Garantor360" class="h-13">
+                            <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_a592278a-b85c-4292-adc2-ddfd0a7dd6db" alt="Garantor360" class="h-8">
                         </div>
                     </div>
                     <div class="flex items-center space-x-4">
@@ -2399,49 +2399,53 @@ app.get('/bayi', (c) => {
                         </div>
                         <div class="flex items-center space-x-2">
                             <span class="w-3 h-3 bg-green-500 rounded-full"></span>
-                            <span class="text-green-700 font-medium">150+ Farkli Hizmet</span>
+                            <span class="text-green-700 font-medium">50+ Alt Hizmet</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3 h-3 bg-amber-500 rounded-full"></span>
+                            <span class="text-amber-700 font-medium">%98.7 Başarı Oranı</span>
                         </div>
                         <div class="flex items-center space-x-2">
                             <span class="w-3 h-3 bg-purple-500 rounded-full"></span>
-                            <span class="text-purple-700 font-medium">7/24 Hizmet Talep Edin</span>
+                            <span class="text-purple-700 font-medium">Güvenli Hizmet Alın</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                    <!-- Teknik Onarim -->
+                    <!-- Televizyon Tamiri -->
                     <div class="relative group cursor-pointer">
                         <div class="bg-white border-2 border-blue-200 p-6 minimal-corner hover:border-blue-500 transition-all duration-300 hover:shadow-lg">
                             <div class="text-center">
                                 <div class="w-8 h-8 bg-blue-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-blue-600 transition duration-300">
-                                    <i class="fas fa-tools text-white text-lg"></i>
+                                    <i class="fas fa-tv text-white text-lg"></i>
                                 </div>
-                                <h3 class="font-bold text-sm text-blue-900 mb-2">Teknik Onarim</h3>
-                                <p class="text-xs text-blue-600 mb-3">Elektronik & Beyaz Esya</p>
-                                <div class="text-xs text-green-600 font-bold">TL200-3.000</div>
+                                <h3 class="font-bold text-sm text-blue-900 mb-2">Televizyon Tamiri</h3>
+                                <p class="text-xs text-blue-600 mb-3">LED/LCD/OLED/Smart TV</p>
+                                <div class="text-xs text-green-600 font-bold">₺300-2.500</div>
                             </div>
                         </div>
                         
                         <!-- Hover Overlay -->
                         <div class="absolute inset-0 bg-blue-900 bg-opacity-95 minimal-corner opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-white z-10">
                             <div class="h-full flex flex-col">
-                                <h4 class="font-bold text-sm mb-3 text-center">Teknik Onarim Hizmetleri</h4>
+                                <h4 class="font-bold text-sm mb-3 text-center">Televizyon Servisi</h4>
                                 <div class="space-y-2 text-xs flex-grow">
                                     <div class="flex justify-between">
-                                        <span>Beyaz Esya</span>
-                                        <span class="text-yellow-300">TL800-2K</span>
+                                        <span>LED/LCD Tamiri</span>
+                                        <span class="text-yellow-300">₺400-1.8K</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>TV/Elektronik</span>
-                                        <span class="text-yellow-300">TL400-1.5K</span>
+                                        <span>OLED Servisi</span>
+                                        <span class="text-yellow-300">₺800-2.5K</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>Klima Servisi</span>
-                                        <span class="text-yellow-300">TL600-2.5K</span>
+                                        <span>Smart TV Yazılım</span>
+                                        <span class="text-yellow-300">₺300-800</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>Kombi Bakimi</span>
-                                        <span class="text-yellow-300">TL800-3K</span>
+                                        <span>Panel Değişimi</span>
+                                        <span class="text-yellow-300">₺1.2K-2.5K</span>
                                     </div>
                                 </div>
                                 <button class="w-full bg-yellow-500 text-blue-900 py-2 mt-3 sharp-corner text-xs font-bold hover:bg-yellow-400 transition">
@@ -2451,39 +2455,39 @@ app.get('/bayi', (c) => {
                         </div>
                     </div>
 
-                    <!-- Ev Bakim -->
+                    <!-- Bilgisayar Servisi -->
                     <div class="relative group cursor-pointer">
                         <div class="bg-white border-2 border-green-200 p-6 minimal-corner hover:border-green-500 transition-all duration-300 hover:shadow-lg">
                             <div class="text-center">
                                 <div class="w-8 h-8 bg-green-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-green-600 transition duration-300">
-                                    <i class="fas fa-home text-white text-lg"></i>
+                                    <i class="fas fa-laptop text-white text-lg"></i>
                                 </div>
-                                <h3 class="font-bold text-sm text-green-900 mb-2">Ev Bakim</h3>
-                                <p class="text-xs text-green-600 mb-3">Tadilat & Onarim</p>
-                                <div class="text-xs text-green-600 font-bold">TL500-8.000</div>
+                                <h3 class="font-bold text-sm text-green-900 mb-2">Bilgisayar Servisi</h3>
+                                <p class="text-xs text-green-600 mb-3">PC/Laptop/Gaming</p>
+                                <div class="text-xs text-green-600 font-bold">₺200-2.000</div>
                             </div>
                         </div>
                         
                         <!-- Hover Overlay -->
                         <div class="absolute inset-0 bg-green-900 bg-opacity-95 minimal-corner opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-white z-10">
                             <div class="h-full flex flex-col">
-                                <h4 class="font-bold text-sm mb-3 text-center">Ev Bakim Hizmetleri</h4>
+                                <h4 class="font-bold text-sm mb-3 text-center">Bilgisayar Hizmetleri</h4>
                                 <div class="space-y-2 text-xs flex-grow">
                                     <div class="flex justify-between">
-                                        <span>Boyama/Badana</span>
-                                        <span class="text-yellow-300">TL2K-8K</span>
+                                        <span>Laptop Tamiri</span>
+                                        <span class="text-yellow-300">₺300-1.5K</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>Elektrik Isleri</span>
-                                        <span class="text-yellow-300">TL500-3K</span>
+                                        <span>PC Toplama</span>
+                                        <span class="text-yellow-300">₺200-800</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>Su Tesisati</span>
-                                        <span class="text-yellow-300">TL800-4K</span>
+                                        <span>Veri Kurtarma</span>
+                                        <span class="text-yellow-300">₺400-2K</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>Kapi/Pencere</span>
-                                        <span class="text-yellow-300">TL1K-6K</span>
+                                        <span>Gaming Setup</span>
+                                        <span class="text-yellow-300">₺500-1.2K</span>
                                     </div>
                                 </div>
                                 <button class="w-full bg-yellow-500 text-green-900 py-2 mt-3 sharp-corner text-xs font-bold hover:bg-yellow-400 transition">
@@ -2493,39 +2497,39 @@ app.get('/bayi', (c) => {
                         </div>
                     </div>
 
-                    <!-- Temizlik -->
+                    <!-- Beyaz Eşya Tamiri -->
                     <div class="relative group cursor-pointer">
                         <div class="bg-white border-2 border-purple-200 p-6 minimal-corner hover:border-purple-500 transition-all duration-300 hover:shadow-lg">
                             <div class="text-center">
                                 <div class="w-8 h-8 bg-purple-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-purple-600 transition duration-300">
-                                    <i class="fas fa-broom text-white text-lg"></i>
+                                    <i class="fas fa-washing-machine text-white text-lg"></i>
                                 </div>
-                                <h3 class="font-bold text-sm text-purple-900 mb-2">Temizlik</h3>
-                                <p class="text-xs text-purple-600 mb-3">Ev & Ofis Temizlik</p>
-                                <div class="text-xs text-green-600 font-bold">TL300-2.000</div>
+                                <h3 class="font-bold text-sm text-purple-900 mb-2">Beyaz Eşya Tamiri</h3>
+                                <p class="text-xs text-purple-600 mb-3">Çamaşır/Bulaşık/Buzdolabı</p>
+                                <div class="text-xs text-green-600 font-bold">₺400-3.000</div>
                             </div>
                         </div>
                         
                         <!-- Hover Overlay -->
                         <div class="absolute inset-0 bg-purple-900 bg-opacity-95 minimal-corner opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-white z-10">
                             <div class="h-full flex flex-col">
-                                <h4 class="font-bold text-sm mb-3 text-center">Temizlik Hizmetleri</h4>
+                                <h4 class="font-bold text-sm mb-3 text-center">Beyaz Eşya Servisi</h4>
                                 <div class="space-y-2 text-xs flex-grow">
                                     <div class="flex justify-between">
-                                        <span>Ev Temizligi</span>
-                                        <span class="text-yellow-300">TL300-800</span>
+                                        <span>Çamaşır Makinesi</span>
+                                        <span class="text-yellow-300">₺500-2.5K</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>Hali Yikama</span>
-                                        <span class="text-yellow-300">TL200-600</span>
+                                        <span>Buzdolabı Tamiri</span>
+                                        <span class="text-yellow-300">₺600-3K</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>Cam Temizligi</span>
-                                        <span class="text-yellow-300">TL400-1K</span>
+                                        <span>Bulaşık Makinesi</span>
+                                        <span class="text-yellow-300">₺400-2K</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>Dezenfeksiyon</span>
-                                        <span class="text-yellow-300">TL600-2K</span>
+                                        <span>Fırın & Ocak</span>
+                                        <span class="text-yellow-300">₺300-1.5K</span>
                                     </div>
                                 </div>
                                 <button class="w-full bg-yellow-500 text-purple-900 py-2 mt-3 sharp-corner text-xs font-bold hover:bg-yellow-400 transition">
@@ -2535,39 +2539,39 @@ app.get('/bayi', (c) => {
                         </div>
                     </div>
 
-                    <!-- Nakliye -->
+                    <!-- Klima Servisi -->
                     <div class="relative group cursor-pointer">
                         <div class="bg-white border-2 border-indigo-200 p-6 minimal-corner hover:border-indigo-500 transition-all duration-300 hover:shadow-lg">
                             <div class="text-center">
                                 <div class="w-8 h-8 bg-indigo-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-indigo-600 transition duration-300">
-                                    <i class="fas fa-truck text-white text-lg"></i>
+                                    <i class="fas fa-snowflake text-white text-lg"></i>
                                 </div>
-                                <h3 class="font-bold text-sm text-indigo-900 mb-2">Nakliye</h3>
-                                <p class="text-xs text-indigo-600 mb-3">Tasima & Kargo</p>
-                                <div class="text-xs text-green-600 font-bold">TL400-5.000</div>
+                                <h3 class="font-bold text-sm text-indigo-900 mb-2">Klima Servisi</h3>
+                                <p class="text-xs text-indigo-600 mb-3">Split/VRF/Kaset</p>
+                                <div class="text-xs text-green-600 font-bold">₺300-2.500</div>
                             </div>
                         </div>
                         
                         <!-- Hover Overlay -->
                         <div class="absolute inset-0 bg-indigo-900 bg-opacity-95 minimal-corner opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-white z-10">
                             <div class="h-full flex flex-col">
-                                <h4 class="font-bold text-sm mb-3 text-center">Nakliye Hizmetleri</h4>
+                                <h4 class="font-bold text-sm mb-3 text-center">Klima Hizmetleri</h4>
                                 <div class="space-y-2 text-xs flex-grow">
                                     <div class="flex justify-between">
-                                        <span>Ev Tasima</span>
-                                        <span class="text-yellow-300">TL1.5K-5K</span>
+                                        <span>Split Klima</span>
+                                        <span class="text-yellow-300">₺400-2K</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>Ofis Tasima</span>
-                                        <span class="text-yellow-300">TL2K-8K</span>
+                                        <span>VRF Sistem</span>
+                                        <span class="text-yellow-300">₺800-2.5K</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>Esya Tasima</span>
-                                        <span class="text-yellow-300">TL400-1.5K</span>
+                                        <span>Kaset Klima</span>
+                                        <span class="text-yellow-300">₆00-2.2K</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>Kargo/Kurye</span>
-                                        <span class="text-yellow-300">TL50-300</span>
+                                        <span>Montaj & Bakım</span>
+                                        <span class="text-yellow-300">₺300-1.5K</span>
                                     </div>
                                 </div>
                                 <button class="w-full bg-yellow-500 text-indigo-900 py-2 mt-3 sharp-corner text-xs font-bold hover:bg-yellow-400 transition">
@@ -2577,84 +2581,84 @@ app.get('/bayi', (c) => {
                         </div>
                     </div>
 
-                    <!-- Kisisel Hizmetler -->
+                    <!-- Ses Sistemi -->
                     <div class="relative group cursor-pointer">
-                        <div class="bg-white border-2 border-pink-200 p-6 minimal-corner hover:border-pink-500 transition-all duration-300 hover:shadow-lg">
+                        <div class="bg-white border-2 border-cyan-200 p-6 minimal-corner hover:border-cyan-500 transition-all duration-300 hover:shadow-lg">
                             <div class="text-center">
-                                <div class="w-8 h-8 bg-pink-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-pink-600 transition duration-300">
-                                    <i class="fas fa-user-nurse text-white text-lg"></i>
+                                <div class="w-8 h-8 bg-cyan-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-cyan-600 transition duration-300">
+                                    <i class="fas fa-volume-up text-white text-lg"></i>
                                 </div>
-                                <h3 class="font-bold text-sm text-pink-900 mb-2">Kisisel</h3>
-                                <p class="text-xs text-pink-600 mb-3">Bakim & Guzellik</p>
-                                <div class="text-xs text-green-600 font-bold">TL200-1.500</div>
+                                <h3 class="font-bold text-sm text-cyan-900 mb-2">Ses Sistemi</h3>
+                                <p class="text-xs text-cyan-600 mb-3">Hoparlör/Amfi/Home Theater</p>
+                                <div class="text-xs text-green-600 font-bold">₺250-3.500</div>
                             </div>
                         </div>
                         
                         <!-- Hover Overlay -->
-                        <div class="absolute inset-0 bg-pink-900 bg-opacity-95 minimal-corner opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-white z-10">
+                        <div class="absolute inset-0 bg-cyan-900 bg-opacity-95 minimal-corner opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-white z-10">
                             <div class="h-full flex flex-col">
-                                <h4 class="font-bold text-sm mb-3 text-center">Kisisel Hizmetler</h4>
+                                <h4 class="font-bold text-sm mb-3 text-center">Ses Sistemi Kurulumu</h4>
                                 <div class="space-y-2 text-xs flex-grow">
                                     <div class="flex justify-between">
-                                        <span>Berber/Kuafor</span>
-                                        <span class="text-yellow-300">TL100-500</span>
+                                        <span>Home Theater</span>
+                                        <span class="text-yellow-300">₺800-3.5K</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>Masaj</span>
-                                        <span class="text-yellow-300">TL300-800</span>
+                                        <span>Müzik Sistemi</span>
+                                        <span class="text-yellow-300">₺400-2K</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>Hasta Bakimi</span>
-                                        <span class="text-yellow-300">TL800-1.5K</span>
+                                        <span>Hoparlör Montajı</span>
+                                        <span class="text-yellow-300">₺250-1K</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>Cocuk Bakimi</span>
-                                        <span class="text-yellow-300">TL200-600</span>
+                                        <span>Amfi Kurulumu</span>
+                                        <span class="text-yellow-300">₺300-1.5K</span>
                                     </div>
                                 </div>
-                                <button class="w-full bg-yellow-500 text-pink-900 py-2 mt-3 sharp-corner text-xs font-bold hover:bg-yellow-400 transition">
+                                <button class="w-full bg-yellow-500 text-cyan-900 py-2 mt-3 sharp-corner text-xs font-bold hover:bg-yellow-400 transition">
                                     Hemen Talep Et
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Otomotiv -->
+                    <!-- Elektronik Cihazlar -->
                     <div class="relative group cursor-pointer">
-                        <div class="bg-white border-2 border-red-200 p-6 minimal-corner hover:border-red-500 transition-all duration-300 hover:shadow-lg">
+                        <div class="bg-white border-2 border-orange-200 p-6 minimal-corner hover:border-orange-500 transition-all duration-300 hover:shadow-lg">
                             <div class="text-center">
-                                <div class="w-8 h-8 bg-red-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-red-600 transition duration-300">
-                                    <i class="fas fa-car text-white text-lg"></i>
+                                <div class="w-8 h-8 bg-orange-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-orange-600 transition duration-300">
+                                    <i class="fas fa-mobile-alt text-white text-lg"></i>
                                 </div>
-                                <h3 class="font-bold text-sm text-red-900 mb-2">Otomotiv</h3>
-                                <p class="text-xs text-red-600 mb-3">Arac Bakim & Servis</p>
-                                <div class="text-xs text-green-600 font-bold">TL300-3.000</div>
+                                <h3 class="font-bold text-sm text-orange-900 mb-2">Elektronik Cihazlar</h3>
+                                <p class="text-xs text-orange-600 mb-3">Telefon/Tablet/Konsol</p>
+                                <div class="text-xs text-green-600 font-bold">₺150-1.800</div>
                             </div>
                         </div>
                         
                         <!-- Hover Overlay -->
-                        <div class="absolute inset-0 bg-red-900 bg-opacity-95 minimal-corner opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-white z-10">
+                        <div class="absolute inset-0 bg-orange-900 bg-opacity-95 minimal-corner opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-white z-10">
                             <div class="h-full flex flex-col">
-                                <h4 class="font-bold text-sm mb-3 text-center">Otomotiv Hizmetleri</h4>
+                                <h4 class="font-bold text-sm mb-3 text-center">Elektronik Tamiri</h4>
                                 <div class="space-y-2 text-xs flex-grow">
                                     <div class="flex justify-between">
-                                        <span>Arac Yikama</span>
-                                        <span class="text-yellow-300">TL100-300</span>
+                                        <span>Telefon Tamiri</span>
+                                        <span class="text-yellow-300">₺200-1.2K</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>Oto Elektrik</span>
-                                        <span class="text-yellow-300">TL400-1.5K</span>
+                                        <span>Tablet Servisi</span>
+                                        <span class="text-yellow-300">₺300-1.5K</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>Lastik Degisim</span>
-                                        <span class="text-yellow-300">TL200-800</span>
+                                        <span>PlayStation/Xbox</span>
+                                        <span class="text-yellow-300">₺400-1.8K</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>Arac Servisi</span>
-                                        <span class="text-yellow-300">TL800-3K</span>
+                                        <span>Ekran Değişimi</span>
+                                        <span class="text-yellow-300">₺150-800</span>
                                     </div>
                                 </div>
-                                <button class="w-full bg-yellow-500 text-red-900 py-2 mt-3 sharp-corner text-xs font-bold hover:bg-yellow-400 transition">
+                                <button class="w-full bg-yellow-500 text-orange-900 py-2 mt-3 sharp-corner text-xs font-bold hover:bg-yellow-400 transition">
                                     Hemen Talep Et
                                 </button>
                             </div>
@@ -2676,7 +2680,7 @@ app.get('/bayi', (c) => {
                             <div class="mb-8">
                                 <div class="mb-4">
                                     <div class="flex items-center mb-2">
-                                        <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-22">
+                                        <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-10">
                                     </div>
                                     <p class="text-amber-400 font-medium">Bayi Web Platformu</p>
                                 </div>
@@ -3079,7 +3083,7 @@ app.get('/bayi', (c) => {
                         <div class="lg:col-span-1">
                             <div class="mb-6">
                                 <div class="flex items-center">
-                                    <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-24">
+                                    <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-10">
                                 </div>
                             </div>
                             <p class="text-blue-200 font-medium mb-6 leading-relaxed">
@@ -3331,13 +3335,13 @@ app.get('/bayi', (c) => {
                 earningsEl.textContent = earnings[Math.floor(Math.random() * earnings.length)];
             }
 
-            // Active dealers
-            const dealersEl = document.getElementById('active-dealers');
-            if (dealersEl) {
-                const current = parseInt(dealersEl.textContent) || 412;
-                const change = Math.random() > 0.7 ? (Math.random() > 0.5 ? 1 : -1) : 0;
-                dealersEl.textContent = current + change;
-            }
+            // Active dealers - DISABLED: Now synchronized with main counter system
+            // const dealersEl = document.getElementById('active-dealers');
+            // if (dealersEl) {
+            //     const current = parseInt(dealersEl.textContent) || 412;
+            //     const change = Math.random() > 0.7 ? (Math.random() > 0.5 ? 1 : -1) : 0;
+            //     dealersEl.textContent = current + change;
+            // }
 
             // Average price
             const avgPriceEl = document.getElementById('avg-price');
@@ -3748,6 +3752,187 @@ app.get('/bayi/dashboard', (c) => {
   `)
 })
 
+// SSS (Frequently Asked Questions) Route
+app.get('/sss', (c) => {
+  return c.html(`<!DOCTYPE html>
+    <html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sıkça Sorulan Sorular - Garantor360</title>
+        <meta name="description" content="Garantor360 hakkında merak edilen tüm sorular ve yanıtları. Hizmet alma süreci, garanti koşulları ve daha fazlası.">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+        <style>
+            .minimal-corner { border-radius: 4px; }
+            .sharp-corner { border-radius: 0; }
+        </style>
+    </head>
+    <body class="bg-gray-50">
+        <!-- Header -->
+        <header class="bg-white shadow-sm border-b border-gray-200">
+            <div class="max-w-6xl mx-auto px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <img src="https://page.gensparksite.com/v1/base64_upload/048c4b5ab3a7280d26f5b471c120123b" 
+                             alt="Garantor360" class="h-8 w-auto mr-3">
+                        <h1 class="text-xl font-bold text-gray-800">Sıkça Sorulan Sorular</h1>
+                    </div>
+                    <button onclick="window.close()" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 minimal-corner transition-colors">
+                        <i class="fas fa-times mr-2"></i>Kapat
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- FAQ Content -->
+        <main class="max-w-4xl mx-auto px-6 py-8">
+            <!-- Hizmet Alma Süreci -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-bold text-blue-900 mb-6 flex items-center">
+                    <i class="fas fa-cogs mr-3 text-blue-600"></i>
+                    Hizmet Alma Süreci
+                </h2>
+                <div class="space-y-4">
+                    <div class="bg-white p-6 minimal-corner shadow border border-gray-200">
+                        <h3 class="font-bold text-gray-800 mb-2 flex items-center">
+                            <i class="fas fa-question-circle mr-2 text-orange-500"></i>
+                            Hizmet talebimi nasıl oluştururum?
+                        </h3>
+                        <p class="text-gray-600">Formda şehir, ilçe, hizmet kategorisi ve sorun detayını doldurun. İsim-soyisim ve telefon bilgilerinizi ekleyin. "TALEP GÖNDER" butonuna tıklayın.</p>
+                    </div>
+                    <div class="bg-white p-6 minimal-corner shadow border border-gray-200">
+                        <h3 class="font-bold text-gray-800 mb-2 flex items-center">
+                            <i class="fas fa-question-circle mr-2 text-orange-500"></i>
+                            Talebimi gönderdikten sonra ne oluyor?
+                        </h3>
+                        <p class="text-gray-600">Talebiniz otomatik olarak yakınınızdaki doğrulanmış uzmanlara iletilir. Ortalama 12 dakika içinde size dönüş yapılır.</p>
+                    </div>
+                    <div class="bg-white p-6 minimal-corner shadow border border-gray-200">
+                        <h3 class="font-bold text-gray-800 mb-2 flex items-center">
+                            <i class="fas fa-question-circle mr-2 text-orange-500"></i>
+                            Uzmanlar nasıl seçiliyor?
+                        </h3>
+                        <p class="text-gray-600">Tüm uzmanlarımız kimlik kontrolünden geçmiştir. Lokasyonunuza yakınlık, uzmanlık alanı ve müşteri memnuniyeti puanına göre eşleştirme yapılır.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Garanti ve Güvence -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-bold text-purple-900 mb-6 flex items-center">
+                    <i class="fas fa-shield-alt mr-3 text-purple-600"></i>
+                    Garanti ve Güvenceler
+                </h2>
+                <div class="space-y-4">
+                    <div class="bg-white p-6 minimal-corner shadow border border-gray-200">
+                        <h3 class="font-bold text-gray-800 mb-2 flex items-center">
+                            <i class="fas fa-question-circle mr-2 text-orange-500"></i>
+                            Ödeme güvencesi nasıl çalışır?
+                        </h3>
+                        <p class="text-gray-600">Hizmetten memnun kalmazsanız ödediğiniz ücreti geri alırsınız. Para iade garantisi 7 gün süreyle geçerlidir.</p>
+                    </div>
+                    <div class="bg-white p-6 minimal-corner shadow border border-gray-200">
+                        <h3 class="font-bold text-gray-800 mb-2 flex items-center">
+                            <i class="fas fa-question-circle mr-2 text-orange-500"></i>
+                            İşçilik garantisi kapsamı nedir?
+                        </h3>
+                        <p class="text-gray-600">Tamamlanan işlerde 6 ay işçilik garantisi verilir. Bu süre içinde aynı problemde tekrar hizmet alabilirsiniz.</p>
+                    </div>
+                    <div class="bg-white p-6 minimal-corner shadow border border-gray-200">
+                        <h3 class="font-bold text-gray-800 mb-2 flex items-center">
+                            <i class="fas fa-question-circle mr-2 text-orange-500"></i>
+                            Sigorta koruması ne anlama gelir?
+                        </h3>
+                        <p class="text-gray-600">Hizmet sırasında oluşabilecek hasarlar sigorta kapsamındadır. Hasar tazminatı garantor360 tarafından karşılanır.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Fiyatlar ve Ödeme -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-bold text-green-900 mb-6 flex items-center">
+                    <i class="fas fa-money-bill-wave mr-3 text-green-600"></i>
+                    Fiyatlar ve Ödeme
+                </h2>
+                <div class="space-y-4">
+                    <div class="bg-white p-6 minimal-corner shadow border border-gray-200">
+                        <h3 class="font-bold text-gray-800 mb-2 flex items-center">
+                            <i class="fas fa-question-circle mr-2 text-orange-500"></i>
+                            Fiyatlar nasıl belirleniyor?
+                        </h3>
+                        <p class="text-gray-600">Her hizmet için pazar araştırması yapılır ve adil fiyatlandırma uygulanır. Sabit fiyat listelerimiz mevcuttur.</p>
+                    </div>
+                    <div class="bg-white p-6 minimal-corner shadow border border-gray-200">
+                        <h3 class="font-bold text-gray-800 mb-2 flex items-center">
+                            <i class="fas fa-question-circle mr-2 text-orange-500"></i>
+                            Hangi ödeme yöntemleri kabul ediliyor?
+                        </h3>
+                        <p class="text-gray-600">Nakit, kredi kartı, banka kartı ve havale ile ödeme yapabilirsiniz. Online ödeme seçenekleri de mevcuttur.</p>
+                    </div>
+                    <div class="bg-white p-6 minimal-corner shadow border border-gray-200">
+                        <h3 class="font-bold text-gray-800 mb-2 flex items-center">
+                            <i class="fas fa-question-circle mr-2 text-orange-500"></i>
+                            Önceden ödeme yapmak zorunda mıyım?
+                        </h3>
+                        <p class="text-gray-600">Hayır, ödeme hizmet tamamlandıktan sonra yapılır. Peşin ödeme talep eden uzmanlarla çalışmayın.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- İletişim ve Destek -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-bold text-red-900 mb-6 flex items-center">
+                    <i class="fas fa-headset mr-3 text-red-600"></i>
+                    İletişim ve Destek
+                </h2>
+                <div class="space-y-4">
+                    <div class="bg-white p-6 minimal-corner shadow border border-gray-200">
+                        <h3 class="font-bold text-gray-800 mb-2 flex items-center">
+                            <i class="fas fa-question-circle mr-2 text-orange-500"></i>
+                            7/24 destek nasıl çalışır?
+                        </h3>
+                        <p class="text-gray-600">Müşteri hizmetlerimize haftanın 7 günü, günün 24 saati ulaşabilirsiniz. Canlı sohbet, telefon ve email destegi mevcuttur.</p>
+                    </div>
+                    <div class="bg-white p-6 minimal-corner shadow border border-gray-200">
+                        <h3 class="font-bold text-gray-800 mb-2 flex items-center">
+                            <i class="fas fa-question-circle mr-2 text-orange-500"></i>
+                            Şikayetimi nasıl iletebilirim?
+                        </h3>
+                        <p class="text-gray-600">Şikayetlerinizi canlı destek, email veya telefon ile iletebilirsiniz. 48 saat içinde yanıt verilir.</p>
+                    </div>
+                    <div class="bg-white p-6 minimal-corner shadow border border-gray-200">
+                        <h3 class="font-bold text-gray-800 mb-2 flex items-center">
+                            <i class="fas fa-question-circle mr-2 text-orange-500"></i>
+                            Hukuki destek nasıl alınır?
+                        </h3>
+                        <p class="text-gray-600">Hizmet ile ilgili hukuki sorunlarınızda ücretsiz avukat desteği sağlanır. Başvuru formu ile talepte bulunabilirsiniz.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ana Sayfaya Dön -->
+            <div class="text-center mt-12">
+                <a href="/" class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 minimal-corner font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <i class="fas fa-home mr-2"></i>
+                    ANA SAYFAYA DÖN
+                </a>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-6 mt-12">
+            <div class="max-w-4xl mx-auto px-6 text-center">
+                <p class="text-gray-300">
+                    © 2024 Garantor360. Tüm hakları saklıdır. | 
+                    <strong class="text-white">7/24 Destek:</strong> 0850 123 45 67
+                </p>
+            </div>
+        </footer>
+    </body>
+    </html>`)
+})
+
 // Default route - Customer Landing Page
 app.get('/', (c) => {
   return c.html(`<!DOCTYPE html>
@@ -3773,6 +3958,7 @@ app.get('/', (c) => {
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
         <script src="/static/app.js"></script>
+        <script src="/slider.js"></script>
         <style>
             .corporate-gradient { background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); }
             .card-corporate { 
@@ -3849,6 +4035,13 @@ app.get('/', (c) => {
             .superhero-title {
               animation: titlePulse 4s ease-in-out infinite;
             }
+            
+            /* Kompakt Güvenlik Sistemi Animasyonları */
+            .security-card-hover:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+            }
+            }
             .superhero-subtitle {
               animation: subtitleFade 3s ease-in-out infinite alternate;
             }
@@ -3918,6 +4111,326 @@ app.get('/', (c) => {
                 filter: drop-shadow(0 0 35px rgba(214, 137, 16, 0.5)); 
               }
             }
+            
+            /* Fast Contact Text Glow Effect */
+            .fast-contact-text {
+              background: linear-gradient(90deg, #fbbf24, #f59e0b, #d97706, #92400e);
+              background-size: 400% 100%;
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;
+              animation: fastContactShine 3s ease-in-out infinite;
+              font-weight: 700;
+              text-shadow: 0 0 30px rgba(251, 191, 36, 0.5);
+              position: relative;
+              overflow: hidden;
+              display: inline-block;
+            }
+            
+            .fast-contact-text::before {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.6) 50%, transparent 100%);
+              animation: fastContactSweep 2.5s ease-in-out infinite;
+              z-index: 1;
+              transform: translateX(-100%);
+            }
+            
+            @keyframes fastContactShine {
+              0% { 
+                background-position: 0% 50%; 
+                filter: brightness(1) drop-shadow(0 0 10px rgba(251, 191, 36, 0.3));
+              }
+              25% {
+                background-position: 50% 50%;
+                filter: brightness(1.3) drop-shadow(0 0 20px rgba(251, 191, 36, 0.6));
+              }
+              50% { 
+                background-position: 100% 50%; 
+                filter: brightness(1.5) drop-shadow(0 0 30px rgba(251, 191, 36, 0.8));
+              }
+              75% {
+                background-position: 50% 50%;
+                filter: brightness(1.3) drop-shadow(0 0 20px rgba(251, 191, 36, 0.6));
+              }
+              100% { 
+                background-position: 0% 50%; 
+                filter: brightness(1) drop-shadow(0 0 10px rgba(251, 191, 36, 0.3));
+              }
+            }
+            
+            @keyframes fastContactSweep {
+              0% { 
+                transform: translateX(-100%);
+                opacity: 0;
+              }
+              20% { 
+                transform: translateX(-50%);
+                opacity: 1;
+              }
+              80% { 
+                transform: translateX(50%);
+                opacity: 1;
+              }
+              100% { 
+                transform: translateX(100%);
+                opacity: 0;
+              }
+            }
+            
+            /* Custom Radio Button Styles */
+            input[type="radio"][name="urgency"] {
+              appearance: none;
+              -webkit-appearance: none;
+              width: 20px;
+              height: 20px;
+              border: 2px solid #a855f7;
+              border-radius: 50%;
+              background: transparent;
+              position: relative;
+              cursor: pointer;
+              transition: all 0.3s ease;
+            }
+            
+            /* Normal - Sarı (Yellow) */
+            input[type="radio"][name="urgency"][value="normal"]:checked {
+              border-color: #eab308;
+              background: #eab308;
+            }
+            
+            input[type="radio"][name="urgency"][value="normal"]:hover {
+              border-color: #eab308;
+              box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.2);
+            }
+            
+            /* Acil - Yeşil (Green) */
+            input[type="radio"][name="urgency"][value="urgent"]:checked {
+              border-color: #22c55e;
+              background: #22c55e;
+            }
+            
+            input[type="radio"][name="urgency"][value="urgent"]:hover {
+              border-color: #22c55e;
+              box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+            }
+            
+            /* Çok Acil - Kırmızı (Red) */
+            input[type="radio"][name="urgency"][value="emergency"]:checked {
+              border-color: #dc2626;
+              background: #dc2626;
+            }
+            
+            input[type="radio"][name="urgency"][value="emergency"]:hover {
+              border-color: #dc2626;
+              box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+            }
+            
+            input[type="radio"][name="urgency"]:checked::before {
+              content: '';
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              width: 8px;
+              height: 8px;
+              border-radius: 50%;
+              background: white;
+            }
+            
+            /* Floating Dynamic Stats Text */
+            .floating-stats-text {
+              color: #ffffff;
+              text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+              opacity: 0.8;
+              transition: all 0.3s ease;
+              min-height: 20px;
+            }
+            
+            /* Floating Dynamic Activity Text */
+            .floating-activity-text {
+              color: #eab308;
+              text-shadow: 0 0 10px rgba(234, 179, 8, 0.3);
+              opacity: 0.8;
+              transition: all 0.3s ease;
+              min-height: 20px;
+            }
+            
+            /* Floating Notifications Styles */
+            #floating-notification-area {
+              position: relative;
+              overflow: hidden;
+            }
+            
+            .floating-notification {
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -50%);
+              color: #eab308;
+              font-weight: 600;
+              font-size: 16px;
+              text-align: center;
+              opacity: 0;
+              animation: floatingNotificationAppear 4s ease-in-out;
+              z-index: 10;
+              text-shadow: 0 2px 4px rgba(234, 179, 8, 0.3);
+            }
+            
+            .floating-response-text {
+              color: #eab308;
+              font-weight: 600;
+              font-size: 16px;
+              text-shadow: 0 2px 4px rgba(234, 179, 8, 0.3);
+              opacity: 0;
+              animation: floatingTextAppear 3s ease-in-out infinite;
+            }
+            
+            @keyframes floatingNotificationAppear {
+              0% { 
+                opacity: 0; 
+                transform: translate(-50%, -50%) scale(0.8);
+              }
+              15% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1);
+              }
+              85% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1);
+              }
+              100% { 
+                opacity: 0; 
+                transform: translate(-50%, -50%) scale(0.8);
+              }
+            }
+            
+            @keyframes floatingTextAppear {
+              0% { 
+                opacity: 0; 
+                transform: scale(0.95);
+              }
+              50% { 
+                opacity: 1; 
+                transform: scale(1);
+              }
+              100% { 
+                opacity: 0; 
+                transform: scale(0.95);
+              }
+            }
+            
+            /* PROFESYONEL CANLI TALEP METİNLERİ İÇİN CSS */
+            
+            #job-feed .job-category-text {
+                font-size: 14px !important;
+                font-weight: 500 !important;
+                color: #111827 !important;
+                line-height: 1.25 !important;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+            }
+            
+            #job-feed .job-details-text {
+                font-size: 12px !important;
+                font-weight: 400 !important;
+                color: #4b5563 !important;
+                line-height: 1.5 !important;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+            }
+            
+            #job-feed .job-time-text {
+                font-size: 14px !important;
+                font-weight: 600 !important;
+                color: #2563eb !important;
+                line-height: 1.4 !important;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+            }
+            
+            /* EXTRA GÜVENCE: TÜM ELEMANLAR İÇİN ZORLA STILLEME */
+            #job-feed > div > div > div > div:first-child {
+                font-size: 16px !important;
+                font-weight: 600 !important;
+                color: #1f2937 !important;
+            }
+            
+            #job-feed > div > div > div > div:nth-child(2) {
+                font-size: 14px !important;
+                font-weight: 500 !important;
+                color: #6b7280 !important;
+            }
+            
+            /* SELECT OPTION RENKLERİ DÜZELTMESİ - ENHANCED */
+            select.city-select option {
+                color: #1f2937 !important;
+                background-color: #ffffff !important;
+                font-weight: 500 !important;
+                padding: 8px 12px !important;
+                font-size: 14px !important;
+            }
+            
+            select.city-select option:hover {
+                background-color: #f3f4f6 !important;
+                color: #111827 !important;
+            }
+            
+            select.city-select option:checked,
+            select.city-select option:focus,
+            select.city-select option:active {
+                background-color: #3b82f6 !important;
+                color: #ffffff !important;
+            }
+            
+            /* Service Category Select Styling */
+            select.service-category-select option {
+                color: #1f2937 !important;
+                background-color: #ffffff !important;
+                font-weight: 500 !important;
+                padding: 8px 12px !important;
+                font-size: 14px !important;
+            }
+            
+            select.service-category-select optgroup {
+                color: #374151 !important;
+                background-color: #f9fafb !important;
+                font-weight: 600 !important;
+                padding: 4px 8px !important;
+                font-size: 13px !important;
+            }
+            
+            /* Fallback for older method */
+            #customerCity option,
+            #serviceCategory option {
+                color: #1f2937 !important;
+                background-color: #ffffff !important;
+                font-weight: 500 !important;
+            }
+            
+            #customerCity option:hover,
+            #serviceCategory option:hover {
+                background-color: #f3f4f6 !important;
+                color: #111827 !important;
+            }
+            
+            #serviceCategory optgroup {
+                color: #374151 !important;
+                background-color: #f9fafb !important;
+                font-weight: 600 !important;
+                color: #1f2937 !important;
+            }
+            
+            /* Select açıldığında option listesi için */
+            select#customerCity {
+                color: white; /* Seçili değer beyaz kalacak */
+            }
+            
+            select#customerCity option {
+                color: #1f2937 !important; /* Dropdown listesindeki seçenekler koyu */
+                background-color: white !important;
+                padding: 8px 12px;
+            }
         </style>
     </head>
     <body class="bg-slate-50">
@@ -3928,7 +4441,7 @@ app.get('/', (c) => {
                     <div class="flex items-center">
                         <!-- Garantor360 Logo -->
                         <div class="flex items-center">
-                            <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_a592278a-b85c-4292-adc2-ddfd0a7dd6db" alt="Garantor360" class="h-16">
+                            <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_a592278a-b85c-4292-adc2-ddfd0a7dd6db" alt="Garantor360" class="h-8">
                         </div>
                     </div>
                     
@@ -4029,62 +4542,599 @@ app.get('/', (c) => {
             </div>
         </section>
 
-        <!-- AI-POWERED SMART RECOMMENDATION ENGINE -->
-        <section id="ai-recommendation" class="py-20 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white">
-            <div class="max-w-6xl mx-auto px-6">
+        <!-- Service Categories -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
                 <div class="text-center mb-16">
-                    <div class="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 px-6 py-3 rounded-full mb-6">
-                        <i class="fas fa-user-tie text-purple-300 text-xl mr-3"></i>
-                        <span class="text-white font-semibold">UZMAN DANIŞMAN</span>
+                    <div class="section-divider w-20 mx-auto mb-6"></div>
+                    <h2 class="text-4xl font-bold text-slate-800 mb-4 tracking-tight">
+                        HIZMET KATEGORILERI
+                    </h2>
+                    <p class="text-slate-600 text-lg font-medium">Guvenli hizmet almanin kapsamli cozumleri</p>
+                    <div class="flex justify-center items-center space-x-6 mt-6">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-blue-900">6</div>
+                            <div class="text-slate-600 text-sm">Ana Kategori</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-orange-600">50+</div>
+                            <div class="text-slate-600 text-sm">Alt Hizmet</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-green-600">%98.7</div>
+                            <div class="text-slate-600 text-sm">Basari Orani</div>
+                        </div>
                     </div>
-                    <h2 class="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-300 to-blue-300 bg-clip-text text-transparent">
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <!-- TV Tamiri -->
+                    <div class="relative group cursor-pointer">
+                        <div class="bg-white border-2 border-blue-200 p-6 minimal-corner hover:border-blue-500 transition-all duration-300 hover:shadow-lg">
+                            <div class="text-center">
+                                <div class="w-8 h-8 bg-blue-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-blue-600 transition duration-300">
+                                    <i class="fas fa-tv text-white text-lg"></i>
+                                </div>
+                                <h3 class="font-bold text-sm text-blue-900 mb-2">TV Tamiri</h3>
+                                <p class="text-xs text-blue-600 mb-3">LCD, LED, OLED</p>
+                                <div class="text-xs text-green-600 font-bold">TL300-2.500</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Hover Overlay -->
+                        <div class="absolute inset-0 bg-blue-900 bg-opacity-95 minimal-corner opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-white z-10">
+                            <div class="h-full flex flex-col">
+                                <h4 class="font-bold text-sm mb-3 text-center">TV Tamiri Hizmetleri</h4>
+                                <div class="space-y-2 text-xs flex-grow">
+                                    <div class="flex justify-between">
+                                        <span>Ekran Degisimi</span>
+                                        <span class="text-yellow-300">TL800-2K</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Elektronik Kart</span>
+                                        <span class="text-yellow-300">TL400-1K</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Genel Bakim</span>
+                                        <span class="text-yellow-300">TL300-600</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Kurulum</span>
+                                        <span class="text-yellow-300">TL200-500</span>
+                                    </div>
+                                </div>
+                                <button onclick="scrollToServices()" class="w-full bg-yellow-500 text-blue-900 py-2 mt-3 sharp-corner text-xs font-bold hover:bg-yellow-400 transition">
+                                    Hemen Talep Et
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bilgisayar Tamiri -->
+                    <div class="relative group cursor-pointer">
+                        <div class="bg-white border-2 border-green-200 p-6 minimal-corner hover:border-green-500 transition-all duration-300 hover:shadow-lg">
+                            <div class="text-center">
+                                <div class="w-8 h-8 bg-green-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-green-600 transition duration-300">
+                                    <i class="fas fa-laptop text-white text-lg"></i>
+                                </div>
+                                <h3 class="font-bold text-sm text-green-900 mb-2">PC Tamiri</h3>
+                                <p class="text-xs text-green-600 mb-3">Masaustu & Laptop</p>
+                                <div class="text-xs text-green-600 font-bold">TL200-3.000</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Hover Overlay -->
+                        <div class="absolute inset-0 bg-green-900 bg-opacity-95 minimal-corner opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-white z-10">
+                            <div class="h-full flex flex-col">
+                                <h4 class="font-bold text-sm mb-3 text-center">PC Tamiri Hizmetleri</h4>
+                                <div class="space-y-2 text-xs flex-grow">
+                                    <div class="flex justify-between">
+                                        <span>Donanim Tamiri</span>
+                                        <span class="text-yellow-300">TL500-2K</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Yazilim Kurulum</span>
+                                        <span class="text-yellow-300">TL200-800</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Veri Kurtarma</span>
+                                        <span class="text-yellow-300">TL400-1.5K</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Genel Bakim</span>
+                                        <span class="text-yellow-300">TL200-600</span>
+                                    </div>
+                                </div>
+                                <button onclick="scrollToServices()" class="w-full bg-yellow-500 text-green-900 py-2 mt-3 sharp-corner text-xs font-bold hover:bg-yellow-400 transition">
+                                    Hemen Talep Et
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Beyaz Eşya -->
+                    <div class="relative group cursor-pointer">
+                        <div class="bg-white border-2 border-purple-200 p-6 minimal-corner hover:border-purple-500 transition-all duration-300 hover:shadow-lg">
+                            <div class="text-center">
+                                <div class="w-8 h-8 bg-purple-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-purple-600 transition duration-300">
+                                    <i class="fas fa-snowflake text-white text-lg"></i>
+                                </div>
+                                <h3 class="font-bold text-sm text-purple-900 mb-2">Beyaz Eşya</h3>
+                                <p class="text-xs text-purple-600 mb-3">Buzdolabı, Çamaşır Makinesi</p>
+                                <div class="text-xs text-green-600 font-bold">TL400-2.500</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Hover Overlay -->
+                        <div class="absolute inset-0 bg-purple-900 bg-opacity-95 minimal-corner opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-white z-10">
+                            <div class="h-full flex flex-col">
+                                <h4 class="font-bold text-sm mb-3 text-center">Beyaz Eşya Tamiri</h4>
+                                <div class="space-y-2 text-xs flex-grow">
+                                    <div class="flex justify-between">
+                                        <span>Buzdolabı</span>
+                                        <span class="text-yellow-300">TL500-1.5K</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Çamaşır Makinesi</span>
+                                        <span class="text-yellow-300">TL400-1.2K</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Bulaşık Makinesi</span>
+                                        <span class="text-yellow-300">TL400-1K</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Fırın/Ocak</span>
+                                        <span class="text-yellow-300">TL300-800</span>
+                                    </div>
+                                </div>
+                                <button onclick="scrollToServices()" class="w-full bg-yellow-500 text-purple-900 py-2 mt-3 sharp-corner text-xs font-bold hover:bg-yellow-400 transition">
+                                    Hemen Talep Et
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Klima Servisi -->
+                    <div class="relative group cursor-pointer">
+                        <div class="bg-white border-2 border-indigo-200 p-6 minimal-corner hover:border-indigo-500 transition-all duration-300 hover:shadow-lg">
+                            <div class="text-center">
+                                <div class="w-8 h-8 bg-indigo-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-indigo-600 transition duration-300">
+                                    <i class="fas fa-wind text-white text-lg"></i>
+                                </div>
+                                <h3 class="font-bold text-sm text-indigo-900 mb-2">Klima Servisi</h3>
+                                <p class="text-xs text-indigo-600 mb-3">Montaj & Bakım</p>
+                                <div class="text-xs text-green-600 font-bold">TL300-2.000</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Hover Overlay -->
+                        <div class="absolute inset-0 bg-indigo-900 bg-opacity-95 minimal-corner opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-white z-10">
+                            <div class="h-full flex flex-col">
+                                <h4 class="font-bold text-sm mb-3 text-center">Klima Hizmetleri</h4>
+                                <div class="space-y-2 text-xs flex-grow">
+                                    <div class="flex justify-between">
+                                        <span>Klima Montaj</span>
+                                        <span class="text-yellow-300">TL800-1.5K</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Gaz Dolumu</span>
+                                        <span class="text-yellow-300">TL400-800</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Genel Bakım</span>
+                                        <span class="text-yellow-300">TL300-600</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Arıza Tamiri</span>
+                                        <span class="text-yellow-300">TL500-2K</span>
+                                    </div>
+                                </div>
+                                <button onclick="scrollToServices()" class="w-full bg-yellow-500 text-indigo-900 py-2 mt-3 sharp-corner text-xs font-bold hover:bg-yellow-400 transition">
+                                    Hemen Talep Et
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Küçük Ev Aletleri -->
+                    <div class="relative group cursor-pointer">
+                        <div class="bg-white border-2 border-pink-200 p-6 minimal-corner hover:border-pink-500 transition-all duration-300 hover:shadow-lg">
+                            <div class="text-center">
+                                <div class="w-8 h-8 bg-pink-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-pink-600 transition duration-300">
+                                    <i class="fas fa-blender text-white text-lg"></i>
+                                </div>
+                                <h3 class="font-bold text-sm text-pink-900 mb-2">Küçük Ev Aletleri</h3>
+                                <p class="text-xs text-pink-600 mb-3">Elektrikli Aletler</p>
+                                <div class="text-xs text-green-600 font-bold">TL200-1.000</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Hover Overlay -->
+                        <div class="absolute inset-0 bg-pink-900 bg-opacity-95 minimal-corner opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-white z-10">
+                            <div class="h-full flex flex-col">
+                                <h4 class="font-bold text-sm mb-3 text-center">Küçük Ev Aletleri Tamiri</h4>
+                                <div class="space-y-2 text-xs flex-grow">
+                                    <div class="flex justify-between">
+                                        <span>Mikrodalga</span>
+                                        <span class="text-yellow-300">TL200-600</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Elektrikli Süpürge</span>
+                                        <span class="text-yellow-300">TL250-700</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Blender/Mutfak</span>
+                                        <span class="text-yellow-300">TL150-500</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Ütü/Saç Kurutma</span>
+                                        <span class="text-yellow-300">TL200-400</span>
+                                    </div>
+                                </div>
+                                <button onclick="scrollToServices()" class="w-full bg-yellow-500 text-pink-900 py-2 mt-3 sharp-corner text-xs font-bold hover:bg-yellow-400 transition">
+                                    Hemen Talep Et
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Elektronik Cihaz Tamiri -->
+                    <div class="relative group cursor-pointer">
+                        <div class="bg-white border-2 border-red-200 p-6 minimal-corner hover:border-red-500 transition-all duration-300 hover:shadow-lg">
+                            <div class="text-center">
+                                <div class="w-8 h-8 bg-red-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-red-600 transition duration-300">
+                                    <i class="fas fa-mobile-alt text-white text-lg"></i>
+                                </div>
+                                <h3 class="font-bold text-sm text-red-900 mb-2">Elektronik Tamiri</h3>
+                                <p class="text-xs text-red-600 mb-3">Telefon, Tablet, Oyun</p>
+                                <div class="text-xs text-green-600 font-bold">TL200-1.500</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Hover Overlay -->
+                        <div class="absolute inset-0 bg-red-900 bg-opacity-95 minimal-corner opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-white z-10">
+                            <div class="h-full flex flex-col">
+                                <h4 class="font-bold text-sm mb-3 text-center">Elektronik Tamiri</h4>
+                                <div class="space-y-2 text-xs flex-grow">
+                                    <div class="flex justify-between">
+                                        <span>Telefon Tamiri</span>
+                                        <span class="text-yellow-300">TL200-800</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Tablet Tamiri</span>
+                                        <span class="text-yellow-300">TL300-1K</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Oyun Konsolu</span>
+                                        <span class="text-yellow-300">TL400-1.2K</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Ses Sistemi</span>
+                                        <span class="text-yellow-300">TL300-1.5K</span>
+                                    </div>
+                                </div>
+                                <button onclick="scrollToServices()" class="w-full bg-yellow-500 text-red-900 py-2 mt-3 sharp-corner text-xs font-bold hover:bg-yellow-400 transition">
+                                    Hemen Talep Et
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Unified Process & Security System -->
+        <section class="py-12 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <!-- Section Header -->
+                <div class="text-center mb-8">
+                    <div class="section-divider w-20 mx-auto mb-4"></div>
+                    <h2 class="text-2xl font-bold text-slate-800 mb-2 tracking-tight">
+                        HİZMET ALMA SÜRECİMİZ
+                    </h2>
+                    <p class="text-slate-600 text-base font-medium">4 basit adımda profesyonel hizmet alın</p>
+                    
+                    <!-- Key Stats -->
+                    <div class="flex justify-center items-center space-x-6 mt-4">
+                        <div class="text-center">
+                            <div class="text-xl font-bold text-blue-900">5dk</div>
+                            <div class="text-slate-600 text-xs">Ortalama Süre</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-xl font-bold text-orange-600">7/24</div>
+                            <div class="text-slate-600 text-xs">Destek</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-xl font-bold text-green-600">%100</div>
+                            <div class="text-slate-600 text-xs">Güvenli</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Unified Process + Security Cards -->
+                <div class="bg-gradient-to-r from-slate-50 to-blue-50 rounded-xl p-5 border border-blue-200 shadow-lg">
+                    
+                    <!-- Garantor360 Header -->
+                    <div class="text-center mb-5">
+                        <div class="inline-flex items-center space-x-2 bg-white rounded-full px-4 py-2 shadow-sm border border-blue-100">
+                            <div class="w-6 h-6 bg-blue-600 rounded-md flex items-center justify-center">
+                                <i class="fas fa-shield-alt text-white text-xs"></i>
+                            </div>
+                            <span class="text-base font-bold text-slate-800">GARANTOR360 KORUMASINDA</span>
+                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        </div>
+                    </div>
+
+                    <!-- 4 Step Process with Integrated Security -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        
+                        <!-- Step 1: Talep Oluştur + Koruma -->
+                        <div class="bg-white rounded-lg p-4 border border-blue-100 hover:shadow-lg transition-all duration-300 relative">
+                            <!-- Step Icon -->
+                            <div class="flex justify-center mb-3">
+                                <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-md relative">
+                                    <i class="fas fa-edit text-white text-base"></i>
+                                    <div class="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white">
+                                        <i class="fas fa-shield-alt text-white text-xs flex items-center justify-center h-full"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Step Content -->
+                            <h3 class="text-base font-bold text-slate-800 mb-1 text-center">Talep Oluştur</h3>
+                            <p class="text-slate-600 text-xs leading-relaxed text-center mb-2">Problem tanımlayın ya da AI önerisinden kategori seçin</p>
+                            <div class="text-center text-xs text-blue-600 font-semibold mb-3">⏱️ 2 dakika</div>
+                            
+                            <!-- Security Info -->
+                            <div class="bg-blue-50 rounded-md p-2 border border-blue-100">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-3 h-3 bg-green-500 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-check text-white text-xs"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="text-xs font-semibold text-slate-800">Veri Koruması</div>
+                                        <div class="text-xs text-green-600">✓ SSL Şifreli</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Arrow (Desktop) -->
+                            <div class="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2">
+                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center border-2 border-white animate-pulse">
+                                    <i class="fas fa-arrow-right text-blue-600 text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Uzman Eşleştirme + Doğrulama -->
+                        <div class="bg-white rounded-lg p-4 border border-blue-100 hover:shadow-lg transition-all duration-300 relative">
+                            <!-- Step Icon -->
+                            <div class="flex justify-center mb-3">
+                                <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center shadow-md relative">
+                                    <i class="fas fa-user-tie text-white text-base"></i>
+                                    <div class="absolute -top-1 -right-1 w-5 h-5 bg-blue-500 rounded-full border-2 border-white">
+                                        <i class="fas fa-user-check text-white text-xs flex items-center justify-center h-full"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Step Content -->
+                            <h3 class="text-base font-bold text-slate-800 mb-1 text-center">Uzman Eşleştirme</h3>
+                            <p class="text-slate-600 text-xs leading-relaxed text-center mb-2">Size en yakın ve uygun uzmanları buluyoruz</p>
+                            <div class="text-center text-xs text-green-600 font-semibold mb-3">⚡ 15 saniye</div>
+                            
+                            <!-- Security Info -->
+                            <div class="bg-green-50 rounded-md p-2 border border-green-100">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-3 h-3 bg-blue-500 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-id-card text-white text-xs"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="text-xs font-semibold text-slate-800">Kimlik Doğrulama</div>
+                                        <div class="text-xs text-blue-600">✓ %100 Güvenli</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Arrow (Desktop) -->
+                            <div class="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2">
+                                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center border-2 border-white animate-pulse">
+                                    <i class="fas fa-arrow-right text-green-600 text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Fiyat & Randevu + Güvence -->
+                        <div class="bg-white rounded-lg p-4 border border-blue-100 hover:shadow-lg transition-all duration-300 relative">
+                            <!-- Step Icon -->
+                            <div class="flex justify-center mb-3">
+                                <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center shadow-md relative">
+                                    <i class="fas fa-handshake text-white text-base"></i>
+                                    <div class="absolute -top-1 -right-1 w-5 h-5 bg-purple-500 rounded-full border-2 border-white">
+                                        <i class="fas fa-lock text-white text-xs flex items-center justify-center h-full"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Step Content -->
+                            <h3 class="text-base font-bold text-slate-800 mb-1 text-center">Fiyat & Randevu</h3>
+                            <p class="text-slate-600 text-xs leading-relaxed text-center mb-2">Şeffaf fiyat alın ve randevu belirleyin</p>
+                            <div class="text-center text-xs text-purple-600 font-semibold mb-3">💰 Net fiyat</div>
+                            
+                            <!-- Security Info -->
+                            <div class="bg-purple-50 rounded-md p-2 border border-purple-100">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-3 h-3 bg-purple-500 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-credit-card text-white text-xs"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="text-xs font-semibold text-slate-800">Ödeme Koruması</div>
+                                        <div class="text-xs text-purple-600">✓ Escrow Sistemi</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Arrow (Desktop) -->
+                            <div class="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2">
+                                <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center border-2 border-white animate-pulse">
+                                    <i class="fas fa-arrow-right text-purple-600 text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Hizmet Tamamla + Garanti -->
+                        <div class="bg-white rounded-lg p-4 border border-blue-100 hover:shadow-lg transition-all duration-300">
+                            <!-- Step Icon -->
+                            <div class="flex justify-center mb-3">
+                                <div class="w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center shadow-md relative">
+                                    <i class="fas fa-check-circle text-white text-base"></i>
+                                    <div class="absolute -top-1 -right-1 w-5 h-5 bg-orange-500 rounded-full border-2 border-white">
+                                        <i class="fas fa-star text-white text-xs flex items-center justify-center h-full"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Step Content -->
+                            <h3 class="text-base font-bold text-slate-800 mb-1 text-center">Hizmet Tamamla</h3>
+                            <p class="text-slate-600 text-xs leading-relaxed text-center mb-2">Hizmet tamamlandıktan sonra güvenle ödeme yapın</p>
+                            <div class="text-center text-xs text-orange-600 font-semibold mb-3">🛡️ %100 Garanti</div>
+                            
+                            <!-- Security Info -->
+                            <div class="bg-orange-50 rounded-md p-2 border border-orange-100">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-3 h-3 bg-orange-500 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-award text-white text-xs"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="text-xs font-semibold text-slate-800">Kalite Garantisi</div>
+                                        <div class="text-xs text-orange-600">✓ 6 Ay Garanti</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Arrows -->
+                    <div class="lg:hidden flex justify-center items-center mt-4 space-x-4">
+                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center animate-bounce">
+                            <i class="fas fa-arrow-down text-blue-600 text-sm"></i>
+                        </div>
+                        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center animate-bounce">
+                            <i class="fas fa-arrow-down text-green-600 text-sm"></i>
+                        </div>
+                        <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center animate-bounce">
+                            <i class="fas fa-arrow-down text-purple-600 text-sm"></i>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Security Status Bar -->
+                    <div class="mt-5 bg-white rounded-lg p-3 border border-blue-100 shadow-sm">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
+                                    <div class="animate-spin">
+                                        <i class="fas fa-sync text-white text-xs"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold text-slate-800">Garantor360 Canlı İzleme</div>
+                                    <div class="text-xs text-slate-600">Tüm süreç boyunca aktif koruma</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm font-bold text-green-600">%100 Güvenli</div>
+                                <div class="text-xs text-slate-500">SSL + AI Koruması</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Progress Bar -->
+                        <div class="w-full bg-slate-200 rounded-full h-1.5 mb-3">
+                            <div class="bg-gradient-to-r from-blue-500 via-green-500 to-orange-500 h-full rounded-full animate-pulse"></div>
+                        </div>
+
+                        <!-- Security Features Grid -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-center">
+                            <div class="bg-blue-50 rounded-md p-2">
+                                <div class="text-xs font-bold text-blue-600">7/24</div>
+                                <div class="text-xs text-slate-600">Anlık İzleme</div>
+                            </div>
+                            <div class="bg-green-50 rounded-md p-2">
+                                <div class="text-xs font-bold text-green-600">Real-Time</div>
+                                <div class="text-xs text-slate-600">Canlı Takip</div>
+                            </div>
+                            <div class="bg-purple-50 rounded-md p-2">
+                                <div class="text-xs font-bold text-purple-600">AI Powered</div>
+                                <div class="text-xs text-slate-600">Akıllı Koruma</div>
+                            </div>
+                            <div class="bg-orange-50 rounded-md p-2">
+                                <div class="text-xs font-bold text-orange-600">256-bit SSL</div>
+                                <div class="text-xs text-slate-600">Şifreli Güvenlik</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+
+        <!-- AI-POWERED SMART RECOMMENDATION ENGINE -->
+        <section id="ai-recommendation" class="py-16 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="text-center mb-4">
+                    <div class="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-1 rounded-full mb-2">
+                        <i class="fas fa-user-tie text-purple-300 text-sm mr-2"></i>
+                        <span class="text-white font-semibold text-sm">UZMAN DANIŞMAN</span>
+                    </div>
+                    <h2 class="text-2xl lg:text-3xl font-bold mb-2 bg-gradient-to-r from-purple-300 to-blue-300 bg-clip-text text-transparent">
                         Size Özel Çözüm Önerisi
                     </h2>
-                    <p class="text-xl text-purple-100 max-w-3xl mx-auto leading-relaxed">
+                    <p class="text-sm text-purple-100 max-w-3xl mx-auto leading-tight">
                         Probleminizi anlatın, deneyimli uzmanlarımız size en uygun çözümü hemen önersin!
                         7/24 canlı destek ile anında yardım.
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
                     <!-- AI Problem Analysis Form -->
-                    <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8">
-                        <h3 class="text-2xl font-bold text-white mb-6 flex items-center">
-                            <i class="fas fa-headset text-purple-300 mr-3"></i>
+                    <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4">
+                        <h3 class="text-lg font-bold text-white mb-3 flex items-center">
+                            <i class="fas fa-headset text-purple-300 mr-2"></i>
                             Uzman Danışman Merkezi
-                            <span class="ml-3 bg-green-500 text-white text-xs px-2 py-1 rounded-full animate-pulse">
+                            <span class="ml-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full animate-pulse">
                                 7/24 CANLI
                             </span>
                         </h3>
                         
-                        <div class="space-y-6">
+                        <div class="space-y-3">
                             <div>
-                                <label class="block text-purple-200 text-sm font-semibold mb-3">
+                                <label class="block text-purple-200 text-xs font-semibold mb-2">
                                     Probleminizi Detaylı Anlatın
                                 </label>
                                 <textarea 
                                     id="problemDescription" 
-                                    rows="4" 
-                                    class="w-full p-4 bg-white/20 border border-white/30 rounded-xl text-white placeholder-purple-200 focus:outline-none focus:border-purple-300 focus:bg-white/25 transition-all"
-                                    placeholder="Örn: Çamaşır makinesi su almıyor ve garip sesler çıkarıyor. Elektrik kontağı var ama çalışmıyor..."
+                                    rows="3" 
+                                    class="w-full p-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-purple-200 focus:outline-none focus:border-purple-300 focus:bg-white/25 transition-all text-sm"
+                                    placeholder="Örn: Çamaşır makinesi su almıyor ve garip sesler çıkarıyor..."
                                 ></textarea>
-                                <div class="text-xs text-purple-200 mt-2">
-                                    <span id="charCount">0</span>/500 karakter - Detaylı açıklama daha iyi sonuç verir
+                                <div class="text-xs text-purple-200 mt-1">
+                                    <span id="charCount">0</span>/500 karakter
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-2 gap-4">
+                            <div class="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label class="block text-purple-200 text-sm font-semibold mb-2">Aciliyet Durumu</label>
-                                    <select id="urgencyLevel" class="w-full p-3 bg-white/20 border border-white/30 rounded-xl text-white focus:outline-none focus:border-purple-300">
+                                    <label class="block text-purple-200 text-xs font-semibold mb-1">Aciliyet Durumu</label>
+                                    <select id="urgencyLevel" class="w-full p-2 bg-white/20 border border-white/30 rounded-lg text-white focus:outline-none focus:border-purple-300 text-sm">
                                         <option value="normal">Normal (1-2 gün)</option>
                                         <option value="urgent">Acil (Aynı gün)</option>
                                         <option value="emergency">Çok Acil (1-2 saat)</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-purple-200 text-sm font-semibold mb-2">Şehir</label>
-                                    <select id="serviceLocation" class="w-full p-3 bg-white/20 border border-white/30 rounded-xl text-white focus:outline-none focus:border-purple-300">
+                                    <label class="block text-purple-200 text-xs font-semibold mb-1">Şehir</label>
+                                    <select id="serviceLocation" class="w-full p-2 bg-white/20 border border-white/30 rounded-lg text-white focus:outline-none focus:border-purple-300 text-sm">
                                         <option value="istanbul">İstanbul</option>
                                         <option value="ankara">Ankara</option>
                                         <option value="izmir">İzmir</option>
@@ -4097,61 +5147,61 @@ app.get('/', (c) => {
                                 </div>
                             </div>
 
-                            <button onclick="analyzeWithAI()" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
-                                <i class="fas fa-search mr-3"></i>
+                            <button onclick="analyzeWithAI()" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 shadow-lg text-sm">
+                                <i class="fas fa-search mr-2"></i>
                                 Hemen Analiz Et
                             </button>
                         </div>
 
                         <!-- AI Analysis States -->
-                        <div id="aiAnalysisState" class="mt-8">
+                        <div id="aiAnalysisState" class="mt-4">
                             <!-- Default State (shown initially) -->
-                            <div id="aiStateDefault" class="text-center py-8">
-                                <div class="w-16 h-16 bg-purple-500/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <i class="fas fa-lightbulb text-yellow-400 text-2xl" style="
+                            <div id="aiStateDefault" class="text-center py-4">
+                                <div class="w-12 h-12 bg-purple-500/30 rounded-full flex items-center justify-center mx-auto mb-2">
+                                    <i class="fas fa-lightbulb text-yellow-400 text-lg" style="
                                         animation: electricPowerOn 3s ease-in-out infinite;
                                         filter: drop-shadow(0 0 8px rgba(255, 255, 0, 0.6));
                                     "></i>
                                 </div>
-                                <p class="text-purple-200">
+                                <p class="text-purple-200 text-sm">
                                     Probleminizi yazın ve hemen analiz başlayalım!
                                 </p>
                             </div>
 
                             <!-- Loading State -->
-                            <div id="aiStateLoading" class="hidden text-center py-8">
-                                <div class="w-16 h-16 bg-blue-500/30 rounded-full flex items-center justify-center mx-auto mb-4 animate-spin">
-                                    <i class="fas fa-cog text-blue-300 text-2xl"></i>
+                            <div id="aiStateLoading" class="hidden text-center py-4">
+                                <div class="w-12 h-12 bg-blue-500/30 rounded-full flex items-center justify-center mx-auto mb-2 animate-spin">
+                                    <i class="fas fa-cog text-blue-300 text-lg"></i>
                                 </div>
-                                <p class="text-blue-200 font-semibold">
+                                <p class="text-blue-200 font-semibold text-sm">
                                     AI analiz ediyor...
                                 </p>
-                                <div class="w-full bg-white/20 rounded-full h-2 mt-4">
-                                    <div class="bg-gradient-to-r from-purple-400 to-blue-400 h-2 rounded-full animate-pulse" style="width: 75%"></div>
+                                <div class="w-full bg-white/20 rounded-full h-1 mt-2">
+                                    <div class="bg-gradient-to-r from-purple-400 to-blue-400 h-1 rounded-full animate-pulse" style="width: 75%"></div>
                                 </div>
                             </div>
 
                             <!-- Results State -->
                             <div id="aiStateResults" class="hidden">
-                                <div class="bg-white/20 rounded-xl p-6">
-                                    <h4 class="text-lg font-bold text-white mb-4">
-                                        <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                                <div class="bg-white/20 rounded-lg p-4">
+                                    <h4 class="text-sm font-bold text-white mb-2">
+                                        <i class="fas fa-check-circle text-green-400 mr-1"></i>
                                         AI Analiz Sonucu
                                     </h4>
-                                    <div id="recommendedCategory" class="mb-4">
+                                    <div id="recommendedCategory" class="mb-2">
                                         <!-- AI recommendation will be populated here -->
                                     </div>
-                                    <div id="alternativeOptions" class="space-y-2">
+                                    <div id="alternativeOptions" class="space-y-1">
                                         <!-- Alternative options will be populated here -->
                                     </div>
                                     
-                                    <div class="flex gap-3 mt-6">
-                                        <button onclick="proceedWithRecommendation()" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
-                                            <i class="fas fa-arrow-right mr-2"></i>
+                                    <div class="flex gap-2 mt-3">
+                                        <button onclick="proceedWithRecommendation()" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded text-xs transition-colors">
+                                            <i class="fas fa-arrow-right mr-1"></i>
                                             Bu Öneriyle Devam Et
                                         </button>
-                                        <button onclick="tryDifferentAnalysis()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
-                                            <i class="fas fa-redo mr-2"></i>
+                                        <button onclick="tryDifferentAnalysis()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded text-xs transition-colors">
+                                            <i class="fas fa-redo mr-1"></i>
                                             Tekrar Dene
                                         </button>
                                     </div>
@@ -4161,83 +5211,83 @@ app.get('/', (c) => {
                     </div>
 
                     <!-- AI Features Showcase -->
-                    <div class="space-y-8 flex flex-col h-full">
-                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6">
-                            <h4 class="text-xl font-bold text-white mb-4">
+                    <div class="space-y-4 flex flex-col h-full">
+                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4">
+                            <h4 class="text-lg font-bold text-white mb-2">
                                 Hizmet Özellikleri
                             </h4>
-                            <div class="space-y-4">
+                            <div class="space-y-2">
                                 <div class="flex items-start">
-                                    <div class="w-8 h-8 bg-green-500/30 rounded-full flex items-center justify-center flex-shrink-0 mr-3">
-                                        <i class="fas fa-percentage text-green-300 text-sm"></i>
+                                    <div class="w-6 h-6 bg-green-500/30 rounded-full flex items-center justify-center flex-shrink-0 mr-2">
+                                        <i class="fas fa-percentage text-green-300 text-xs"></i>
                                     </div>
                                     <div>
-                                        <div class="font-semibold text-white">%95 Doğruluk Oranı</div>
-                                        <div class="text-purple-200 text-sm">8 ana kategoride yüksek eşleştirme başarısı</div>
+                                        <div class="font-semibold text-white text-sm">%95 Doğruluk Oranı</div>
+                                        <div class="text-purple-200 text-xs">8 ana kategoride yüksek eşleştirme başarısı</div>
                                     </div>
                                 </div>
                                 <div class="flex items-start">
-                                    <div class="w-8 h-8 bg-blue-500/30 rounded-full flex items-center justify-center flex-shrink-0 mr-3">
-                                        <i class="fas fa-clock text-blue-300 text-sm"></i>
+                                    <div class="w-6 h-6 bg-blue-500/30 rounded-full flex items-center justify-center flex-shrink-0 mr-2">
+                                        <i class="fas fa-clock text-blue-300 text-xs"></i>
                                     </div>
                                     <div>
-                                        <div class="font-semibold text-white">Hızlı Analiz</div>
-                                        <div class="text-purple-200 text-sm">Anında kategori önerisi ve fiyat tahmini</div>
+                                        <div class="font-semibold text-white text-sm">Hızlı Analiz</div>
+                                        <div class="text-purple-200 text-xs">Anında kategori önerisi ve fiyat tahmini</div>
                                     </div>
                                 </div>
                                 <div class="flex items-start">
-                                    <div class="w-8 h-8 bg-purple-500/30 rounded-full flex items-center justify-center flex-shrink-0 mr-3">
-                                        <i class="fas fa-brain text-purple-300 text-sm"></i>
+                                    <div class="w-6 h-6 bg-purple-500/30 rounded-full flex items-center justify-center flex-shrink-0 mr-2">
+                                        <i class="fas fa-brain text-purple-300 text-xs"></i>
                                     </div>
                                     <div>
-                                        <div class="font-semibold text-white">Çoklu Öneriler</div>
-                                        <div class="text-purple-200 text-sm">Ana öneri + 2 alternatif kategori</div>
+                                        <div class="font-semibold text-white text-sm">Çoklu Öneriler</div>
+                                        <div class="text-purple-200 text-xs">Ana öneri + 2 alternatif kategori</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Supported Categories -->
-                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 flex-1">
-                            <h4 class="text-xl font-bold text-white mb-6 flex items-center">
-                                <i class="fas fa-lightbulb text-yellow-400 mr-3" style="
+                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 flex-1">
+                            <h4 class="text-lg font-bold text-white mb-3 flex items-center">
+                                <i class="fas fa-lightbulb text-yellow-400 mr-2" style="
                                     animation: electricPowerOn 3s ease-in-out infinite;
                                     filter: drop-shadow(0 0 8px rgba(255, 255, 0, 0.6));
                                 "></i>
                                 Desteklenen Kategoriler
                             </h4>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div class="flex items-center p-2 hover:bg-white/10 rounded-lg transition-all">
-                                    <i class="fas fa-bolt text-yellow-300 mr-3 text-lg"></i>
-                                    <span class="text-purple-200">Ev Elektriği</span>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="flex items-center p-1 hover:bg-white/10 rounded transition-all">
+                                    <i class="fas fa-bolt text-yellow-300 mr-2 text-sm"></i>
+                                    <span class="text-purple-200 text-xs">Ev Elektriği</span>
                                 </div>
-                                <div class="flex items-center p-2 hover:bg-white/10 rounded-lg transition-all">
-                                    <i class="fas fa-tools text-blue-300 mr-3 text-lg"></i>
-                                    <span class="text-purple-200">Beyaz Eşya</span>
+                                <div class="flex items-center p-1 hover:bg-white/10 rounded transition-all">
+                                    <i class="fas fa-tools text-blue-300 mr-2 text-sm"></i>
+                                    <span class="text-purple-200 text-xs">Beyaz Eşya</span>
                                 </div>
-                                <div class="flex items-center p-2 hover:bg-white/10 rounded-lg transition-all">
-                                    <i class="fas fa-tint text-cyan-300 mr-3 text-lg"></i>
-                                    <span class="text-purple-200">Su Tesisatı</span>
+                                <div class="flex items-center p-1 hover:bg-white/10 rounded transition-all">
+                                    <i class="fas fa-tint text-cyan-300 mr-2 text-sm"></i>
+                                    <span class="text-purple-200 text-xs">Su Tesisatı</span>
                                 </div>
-                                <div class="flex items-center p-2 hover:bg-white/10 rounded-lg transition-all">
-                                    <i class="fas fa-fire text-red-300 mr-3 text-lg"></i>
-                                    <span class="text-purple-200">Kombi & Kalorifer</span>
+                                <div class="flex items-center p-1 hover:bg-white/10 rounded transition-all">
+                                    <i class="fas fa-fire text-red-300 mr-2 text-sm"></i>
+                                    <span class="text-purple-200 text-xs">Kombi & Kalorifer</span>
                                 </div>
-                                <div class="flex items-center p-2 hover:bg-white/10 rounded-lg transition-all">
-                                    <i class="fas fa-tv text-indigo-300 mr-3 text-lg"></i>
-                                    <span class="text-purple-200">Elektronik</span>
+                                <div class="flex items-center p-1 hover:bg-white/10 rounded transition-all">
+                                    <i class="fas fa-tv text-indigo-300 mr-2 text-sm"></i>
+                                    <span class="text-purple-200 text-xs">Elektronik</span>
                                 </div>
-                                <div class="flex items-center p-2 hover:bg-white/10 rounded-lg transition-all">
-                                    <i class="fas fa-broom text-green-300 mr-3 text-lg"></i>
-                                    <span class="text-purple-200">Temizlik</span>
+                                <div class="flex items-center p-1 hover:bg-white/10 rounded transition-all">
+                                    <i class="fas fa-broom text-green-300 mr-2 text-sm"></i>
+                                    <span class="text-purple-200 text-xs">Temizlik</span>
                                 </div>
-                                <div class="flex items-center p-2 hover:bg-white/10 rounded-lg transition-all">
-                                    <i class="fas fa-paint-roller text-pink-300 mr-3 text-lg"></i>
-                                    <span class="text-purple-200">Boyama</span>
+                                <div class="flex items-center p-1 hover:bg-white/10 rounded transition-all">
+                                    <i class="fas fa-paint-roller text-pink-300 mr-2 text-sm"></i>
+                                    <span class="text-purple-200 text-xs">Boyama</span>
                                 </div>
-                                <div class="flex items-center p-2 hover:bg-white/10 rounded-lg transition-all">
-                                    <i class="fas fa-door-open text-amber-300 mr-3 text-lg"></i>
-                                    <span class="text-purple-200">Kapı & Pencere</span>
+                                <div class="flex items-center p-1 hover:bg-white/10 rounded transition-all">
+                                    <i class="fas fa-door-open text-amber-300 mr-2 text-sm"></i>
+                                    <span class="text-purple-200 text-xs">Kapı & Pencere</span>
                                 </div>
                             </div>
                         </div>
@@ -4304,440 +5354,226 @@ app.get('/', (c) => {
             </div>
         </div>
 
-        <!-- Success Stories Gallery - Auto Sliding -->
-        <div class="max-w-6xl mx-auto px-6 mb-16">
-            <div class="text-center mb-8">
-                <h2 class="text-2xl md:text-3xl font-bold text-blue-900 mb-3">MUTLU MÜŞTERİLERİMİZ</h2>
-                <p class="text-base text-gray-600">Garantor360 ile hizmet alan müşterilerimizin memnuniyet hikayeleri</p>
+        <!-- Compact Customer Success Section -->
+        <div class="max-w-6xl mx-auto px-6 mb-8">
+            <div class="text-center mb-4">
+                <h2 class="text-xl font-bold text-blue-900 mb-2">MUTLU MÜŞTERİLERİMİZ</h2>
+                <p class="text-sm text-gray-600">TV-PC-Beyaz Eşya tamirinde başarılı hizmetler</p>
             </div>
             
-            <!-- Auto-sliding Image Carousel -->
-            <div class="relative overflow-hidden rounded-xl bg-gradient-to-r from-blue-50 to-indigo-50 p-4">
-                <div id="successStoriesCarousel" class="flex transition-transform duration-700 ease-in-out">
-                    <!-- Slide 1 -->
-                    <div class="w-full flex-shrink-0">
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-                            <!-- Story 1 -->
-                            <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all duration-300">
-                                <img src="https://page.gensparksite.com/v1/base64_upload/a3350dc40a3a83a08928c6c46be858ad" 
-                                     alt="Can Usta - Klima Tamir" 
-                                     class="w-full h-32 md:h-36 object-cover object-center">
-                                <div class="p-3">
-                                    <h4 class="font-bold text-xs text-gray-800 mb-1">Klima Tamiri</h4>
-                                    <p class="text-xs text-gray-600">Selim Bey - Çok memnun!</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Story 2 -->
-                            <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all duration-300">
-                                <img src="https://page.gensparksite.com/v1/base64_upload/249fe7eafc02b698735b1eb1b44a10ff" 
-                                     alt="Elektrik Tamiri" 
-                                     class="w-full h-32 md:h-36 object-cover object-center">
-                                <div class="p-3">
-                                    <h4 class="font-bold text-xs text-gray-800 mb-1">Elektrik Tamiri</h4>
-                                    <p class="text-xs text-gray-600">Hızlı çözüm</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Story 3 -->
-                            <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all duration-300">
-                                <img src="https://page.gensparksite.com/v1/base64_upload/bc6f58fb2e5abee6389e4a9c8ecdeeff" 
-                                     alt="Kombi Servisi" 
-                                     class="w-full h-32 md:h-36 object-cover object-center">
-                                <div class="p-3">
-                                    <h4 class="font-bold text-xs text-gray-800 mb-1">Kombi Servisi</h4>
-                                    <p class="text-xs text-gray-600">Nermin Hanım - Harika!</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Story 4 -->
-                            <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all duration-300">
-                                <img src="https://page.gensparksite.com/v1/base64_upload/a473c6826973dca2df6bc09a8ac5f0a5" 
-                                     alt="Boya & Dekorasyon" 
-                                     class="w-full h-32 md:h-36 object-cover object-center">
-                                <div class="p-3">
-                                    <h4 class="font-bold text-xs text-gray-800 mb-1">Boya İşleri</h4>
-                                    <p class="text-xs text-gray-600">Handan Hanım - Yepyeni!</p>
-                                </div>
-                            </div>
-                        </div>
+            <!-- Compact Success Stories -->
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-3">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                    <!-- Story 1 - TV Tamiri -->
+                    <div class="bg-white rounded-lg shadow-sm p-2 text-center">
+                        <img src="https://page.gensparksite.com/v1/base64_upload/ee6d91c41c837953855b76e06ba10fbc" 
+                             alt="TV Tamiri" 
+                             class="w-full h-20 object-cover rounded mb-2">
+                        <h4 class="font-bold text-xs text-gray-800">TV Tamiri</h4>
+                        <p class="text-xs text-gray-600">Fulya H. ⭐⭐⭐⭐⭐</p>
                     </div>
-
-                    <!-- Slide 2 -->
-                    <div class="w-full flex-shrink-0">
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-                            <!-- Story 5 -->
-                            <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all duration-300">
-                                <img src="https://page.gensparksite.com/v1/base64_upload/d56932c85ed0438bf6d3b2a15dc9ebe7" 
-                                     alt="Tesisat Hizmetleri" 
-                                     class="w-full h-32 md:h-36 object-cover object-center">
-                                <div class="p-3">
-                                    <h4 class="font-bold text-xs text-gray-800 mb-1">Tesisat</h4>
-                                    <p class="text-xs text-gray-600">Sevcan Hanım - Düzgün iş!</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Story 6 -->
-                            <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all duration-300">
-                                <img src="https://page.gensparksite.com/v1/base64_upload/e19d2db012961ce3960fe3efb26c10f4" 
-                                     alt="Temizlik & Tadilat" 
-                                     class="w-full h-32 md:h-36 object-cover object-center">
-                                <div class="p-3">
-                                    <h4 class="font-bold text-xs text-gray-800 mb-1">Temizlik</h4>
-                                    <p class="text-xs text-gray-600">Kaliteli hizmet</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Story 7 -->
-                            <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all duration-300">
-                                <img src="https://page.gensparksite.com/v1/base64_upload/ee6d91c41c837953855b76e06ba10fbc" 
-                                     alt="TV Tamiri" 
-                                     class="w-full h-32 md:h-36 object-cover object-center">
-                                <div class="p-3">
-                                    <h4 class="font-bold text-xs text-gray-800 mb-1">TV Tamiri</h4>
-                                    <p class="text-xs text-gray-600">Fulya Hanım - Yepyeni gibi!</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Story 8 -->
-                            <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all duration-300">
-                                <img src="https://page.gensparksite.com/v1/base64_upload/613058d080d280f60ea12d55ae936a1d" 
-                                     alt="TV Servisi" 
-                                     class="w-full h-32 md:h-36 object-cover object-center">
-                                <div class="p-3">
-                                    <h4 class="font-bold text-xs text-gray-800 mb-1">TV Servisi</h4>
-                                    <p class="text-xs text-gray-600">Mehmet Bey - Mükemmel!</p>
-                                </div>
-                            </div>
-                        </div>
+                    
+                    <!-- Story 2 - Klima -->
+                    <div class="bg-white rounded-lg shadow-sm p-2 text-center">
+                        <img src="https://page.gensparksite.com/v1/base64_upload/a3350dc40a3a83a08928c6c46be858ad" 
+                             alt="Klima Tamiri" 
+                             class="w-full h-20 object-cover rounded mb-2">
+                        <h4 class="font-bold text-xs text-gray-800">Klima Servisi</h4>
+                        <p class="text-xs text-gray-600">Selim B. ⭐⭐⭐⭐⭐</p>
                     </div>
-
-                    <!-- Slide 3 - New slide with satellite installation -->
-                    <div class="w-full flex-shrink-0">
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-                            <!-- Story 9 - New Satellite Installation -->
-                            <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all duration-300">
-                                <img src="https://page.gensparksite.com/v1/base64_upload/d6a8545171922c3c8f4e47d1eb2298b7" 
-                                     alt="Sadık Teyesta - Uydu Sistemi" 
-                                     class="w-full h-32 md:h-36 object-cover object-center">
-                                <div class="p-3">
-                                    <h4 class="font-bold text-xs text-gray-800 mb-1">Uydu Sistemi</h4>
-                                    <p class="text-xs text-gray-600">Ayşe mib çekiyor!</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Repeat Story 1 for continuity -->
-                            <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all duration-300">
-                                <img src="https://page.gensparksite.com/v1/base64_upload/a3350dc40a3a83a08928c6c46be858ad" 
-                                     alt="Can Usta - Klima Tamir" 
-                                     class="w-full h-32 md:h-36 object-cover object-center">
-                                <div class="p-3">
-                                    <h4 class="font-bold text-xs text-gray-800 mb-1">Klima Tamiri</h4>
-                                    <p class="text-xs text-gray-600">Selim Bey - Çok memnun!</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Repeat Story 2 -->
-                            <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all duration-300">
-                                <img src="https://page.gensparksite.com/v1/base64_upload/249fe7eafc02b698735b1eb1b44a10ff" 
-                                     alt="Elektrik Tamiri" 
-                                     class="w-full h-32 md:h-36 object-cover object-center">
-                                <div class="p-3">
-                                    <h4 class="font-bold text-xs text-gray-800 mb-1">Elektrik Tamiri</h4>
-                                    <p class="text-xs text-gray-600">Hızlı çözüm</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Repeat Story 3 -->
-                            <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all duration-300">
-                                <img src="https://page.gensparksite.com/v1/base64_upload/bc6f58fb2e5abee6389e4a9c8ecdeeff" 
-                                     alt="Kombi Servisi" 
-                                     class="w-full h-32 md:h-36 object-cover object-center">
-                                <div class="p-3">
-                                    <h4 class="font-bold text-xs text-gray-800 mb-1">Kombi Servisi</h4>
-                                    <p class="text-xs text-gray-600">Nermin Hanım - Harika!</p>
-                                </div>
-                            </div>
-                        </div>
+                    
+                    <!-- Story 3 - PC Tamiri -->
+                    <div class="bg-white rounded-lg shadow-sm p-2 text-center">
+                        <img src="https://page.gensparksite.com/v1/base64_upload/249fe7eafc02b698735b1eb1b44a10ff" 
+                             alt="PC Tamiri" 
+                             class="w-full h-20 object-cover rounded mb-2">
+                        <h4 class="font-bold text-xs text-gray-800">PC Tamiri</h4>
+                        <p class="text-xs text-gray-600">Ahmet K. ⭐⭐⭐⭐⭐</p>
                     </div>
-                </div>
-
-                <!-- Carousel Indicators -->
-                <div class="flex justify-center mt-4 space-x-2">
-                    <button class="story-dot w-2 h-2 rounded-full bg-blue-300 transition-colors duration-300" onclick="changeStorySlide(0)"></button>
-                    <button class="story-dot w-2 h-2 rounded-full bg-blue-300/50 transition-colors duration-300" onclick="changeStorySlide(1)"></button>
-                    <button class="story-dot w-2 h-2 rounded-full bg-blue-300/50 transition-colors duration-300" onclick="changeStorySlide(2)"></button>
+                    
+                    <!-- Story 4 - Beyaz Eşya -->
+                    <div class="bg-white rounded-lg shadow-sm p-2 text-center">
+                        <img src="https://page.gensparksite.com/v1/base64_upload/bc6f58fb2e5abee6389e4a9c8ecdeeff" 
+                             alt="Beyaz Eşya Tamiri" 
+                             class="w-full h-20 object-cover rounded mb-2">
+                        <h4 class="font-bold text-xs text-gray-800">Beyaz Eşya</h4>
+                        <p class="text-xs text-gray-600">Nermin H. ⭐⭐⭐⭐⭐</p>
+                    </div>
                 </div>
                 
-                <!-- Progress Indicator -->
-                <div class="mt-4">
-                    <div class="flex items-center justify-center text-xs text-blue-600">
-                        <i class="fas fa-clock mr-1"></i>
-                        <span>Otomatik değişim: <span id="storyTimer">4</span> saniye</span>
+                <!-- Compact Stats -->
+                <div class="flex justify-center items-center mt-3 space-x-4 text-xs text-blue-700">
+                    <div class="flex items-center">
+                        <i class="fas fa-users mr-1"></i>
+                        <span>47.500+ Memnun</span>
                     </div>
-                    <div class="w-full bg-blue-200 rounded-full h-1 mt-2">
-                        <div id="storyProgress" class="bg-blue-600 h-1 rounded-full transition-all duration-100 ease-linear" style="width: 0%"></div>
+                    <div class="flex items-center">
+                        <i class="fas fa-star mr-1"></i>
+                        <span>4.8/5 Puan</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-shield-check mr-1"></i>
+                        <span>%98 Başarı</span>
                     </div>
                 </div>
-            </div>
-
-            <!-- Call to Action -->
-            <div class="text-center mt-8">
-                <button onclick="scrollToService()" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg text-sm">
-                    <i class="fas fa-tools mr-2"></i>
-                    Siz de Hizmet Alın
-                </button>
-                <p class="text-xs text-gray-600 mt-3">Binlerce memnun müşterimize katılın!</p>
             </div>
         </div>
 
         <!-- Live Statistics -->
         <section id="stats" class="py-12 bg-slate-50">
             <div class="max-w-7xl mx-auto px-6">
-                <!-- Customer Stats Header -->
-                <div class="text-center mb-10">
-                    <h2 class="text-4xl font-bold text-blue-900 mb-4 tracking-tight">
+                <!-- Customer Stats Header - Kompakt -->
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-bold text-blue-900 mb-2 tracking-tight">
                         PLATFORM İSTATİSTİKLERİ
                     </h2>
-                    <p class="text-blue-600 text-lg font-medium">Güvenilir hizmet verileri ve başarı oranları</p>
+                    <p class="text-blue-600 text-sm font-medium">Güvenilir hizmet verileri ve başarı oranları</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-                    <div class="bg-blue-900 text-white p-8 minimal-corner card-corporate">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+                    <div class="bg-blue-900 text-white p-4 minimal-corner card-corporate">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-blue-200 text-sm font-medium mb-2">BUGÜN TAMAMLANAN İŞ</p>
-                                <p class="text-4xl font-bold stats-counter text-white" id="daily-jobs">347</p>
+                                <p class="text-blue-200 text-xs font-medium mb-1">BUGÜN TAMAMLANAN İŞ</p>
+                                <p class="text-2xl font-bold stats-counter text-white" id="daily-jobs">357</p>
                             </div>
-                            <div class="w-3 h-3 bg-amber-400 sharp-corner pulse-dot"></div>
+                            <div class="w-2 h-2 bg-amber-400 sharp-corner pulse-dot"></div>
                         </div>
-                        <div class="mt-6 pt-4 border-t border-blue-700">
-                            <span class="text-amber-400 text-lg font-semibold">
+                        <div class="mt-3 pt-2 border-t border-blue-700">
+                            <span class="text-amber-400 text-sm font-semibold">
                                 <i class="fas fa-arrow-up mr-1"></i>+34% önceki güne göre
                             </span>
                         </div>
                     </div>
 
-                    <div class="bg-white border-2 border-blue-200 p-8 minimal-corner card-corporate">
+                    <div class="bg-white border-2 border-blue-200 p-4 minimal-corner card-corporate">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-blue-600 text-sm font-medium mb-2">MÜŞTERİ MEMNUNİYET</p>
-                                <p class="text-4xl font-bold stats-counter text-blue-900">98.7<span class="text-2xl">%</span></p>
+                                <p class="text-blue-600 text-xs font-medium mb-1">MÜŞTERİ MEMNUNİYET</p>
+                                <p class="text-2xl font-bold stats-counter text-blue-900">98.7<span class="text-lg">%</span></p>
                             </div>
-                            <div class="w-3 h-3 bg-amber-400 sharp-corner"></div>
+                            <div class="w-2 h-2 bg-amber-400 sharp-corner"></div>
                         </div>
-                        <div class="mt-6 pt-4 border-t border-blue-100">
-                            <span class="text-blue-600 text-sm font-semibold">
+                        <div class="mt-3 pt-2 border-t border-blue-100">
+                            <span class="text-blue-600 text-xs font-semibold">
                                 <i class="fas fa-star mr-1"></i>5 yıldız ortalama
                             </span>
                         </div>
                     </div>
 
-                    <div class="bg-white border-2 border-blue-200 p-8 minimal-corner card-corporate">
+                    <div class="bg-white border-2 border-blue-200 p-4 minimal-corner card-corporate">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-blue-600 text-sm font-medium mb-2">AKTİF HİZMET VEREN</p>
-                                <p class="text-4xl font-bold stats-counter text-blue-900" id="active-dealers">1,247</p>
+                                <p class="text-blue-600 text-xs font-medium mb-1">AKTİF HİZMET VEREN</p>
+                                <p class="text-2xl font-bold stats-counter text-blue-900" id="active-dealers">1,247</p>
                             </div>
-                            <div class="w-3 h-3 bg-amber-400 sharp-corner"></div>
+                            <div class="w-2 h-2 bg-amber-400 sharp-corner"></div>
                         </div>
-                        <div class="mt-6 pt-4 border-t border-blue-100">
-                            <span class="text-blue-600 text-sm font-semibold">
+                        <div class="mt-3 pt-2 border-t border-blue-100">
+                            <span class="text-blue-600 text-xs font-semibold">
                                 <i class="fas fa-users mr-1"></i>Doğrulanmış uzmanlar
                             </span>
                         </div>
                     </div>
 
-                    <div class="bg-amber-500 text-white p-8 minimal-corner card-corporate">
+                    <div class="bg-amber-500 text-white p-4 minimal-corner card-corporate">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-amber-100 text-sm font-medium mb-2">ORTALAMA YANIT SÜRESİ</p>
-                                <p class="text-4xl font-bold stats-counter text-white"><span id="avg-response">12</span><span class="text-2xl">dk</span></p>
+                                <p class="text-amber-100 text-xs font-medium mb-1">ORTALAMA YANIT SÜRESİ</p>
+                                <p class="text-2xl font-bold stats-counter text-white"><span id="avg-response">12</span><span class="text-lg">dk</span></p>
                             </div>
-                            <div class="w-3 h-3 bg-white sharp-corner pulse-dot"></div>
+                            <div class="w-2 h-2 bg-white sharp-corner pulse-dot"></div>
                         </div>
-                        <div class="mt-6 pt-4 border-t border-amber-600">
-                            <span class="text-amber-100 text-sm font-semibold">
+                        <div class="mt-3 pt-2 border-t border-amber-600">
+                            <span class="text-amber-100 text-xs font-semibold">
                                 <i class="fas fa-clock mr-1"></i>Hızlı çözüm
                             </span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Modern Live Feed Dashboard -->
+                <!-- Modern Live Feed Dashboard - Kompakt -->
                 <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
-                    <div class="bg-gradient-to-r from-gray-50 to-gray-100 px-8 py-6 border-b border-gray-200">
+                    <div class="bg-gradient-to-r from-gray-50 to-gray-100 px-4 py-3 border-b border-gray-200">
                         <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-3">
+                            <div class="flex items-center space-x-2">
                                 <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                                <h3 class="text-gray-800 text-2xl font-semibold tracking-tight">Canlı Talep Akışı</h3>
+                                <h3 class="text-gray-800 text-lg font-semibold tracking-tight">Canlı Talep Akışı</h3>
                                 <div class="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">CANLI</div>
                             </div>
                             <div class="flex items-center space-x-2">
-                                <span class="text-gray-500 text-sm">Son 10dk:</span>
-                                <div class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm font-semibold" id="recent-count">8</div>
+                                <span class="text-gray-500 text-xs">Son 10dk:</span>
+                                <div class="bg-gray-800 text-white px-2 py-1 rounded-full text-xs font-semibold" id="recent-count">10</div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Modern Dashboard Layout -->
-                    <div class="p-8">
-                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                            <!-- Live Requests Stream -->
-                            <div class="lg:col-span-2">
-                                <div class="flex items-center justify-between mb-6">
-                                    <h4 class="text-gray-800 font-semibold text-lg">Anlık Talepler</h4>
-                                    <div class="flex items-center space-x-2 text-sm text-gray-500">
-                                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                                        <span>Gerçek zamanlı</span>
-                                    </div>
-                                </div>
-                                <div id="job-feed" class="space-y-4 max-h-[28rem] overflow-y-auto pr-2">
-                                    <!-- Modern request cards will be populated via JavaScript -->
-                                </div>
-                            </div>
-                            
-                            <!-- Stats Panel -->
-                            <div class="space-y-6">
-                                <h4 class="text-gray-800 font-semibold text-lg mb-6">İstatistikler</h4>
-                                
-                                <!-- Activity Chart -->
-                                <div class="bg-blue-50 rounded-lg p-5 border border-blue-100">
-                                    <div class="flex justify-between items-center mb-4">
-                                        <span class="text-gray-800 text-sm font-medium">Son 6 Saat</span>
-                                        <span class="text-gray-900 font-bold text-xl" id="hourly-total">47</span>
-                                    </div>
-                                    <div class="flex items-end justify-between h-12 space-x-1">
-                                        <div class="bg-blue-300 rounded-sm flex-1" data-chart-bar="0" style="height: 30%"></div>
-                                        <div class="bg-blue-400 rounded-sm flex-1" data-chart-bar="1" style="height: 45%"></div>
-                                        <div class="bg-blue-500 rounded-sm flex-1" data-chart-bar="2" style="height: 60%"></div>
-                                        <div class="bg-blue-600 rounded-sm flex-1" data-chart-bar="3" style="height: 80%"></div>
-                                        <div class="bg-blue-700 rounded-sm flex-1" data-chart-bar="4" style="height: 100%"></div>
-                                        <div class="bg-blue-800 rounded-sm flex-1" data-chart-bar="5" style="height: 75%"></div>
-                                    </div>
-                                </div>
-                                    
-                                <!-- Top Categories -->
-                                <div class="bg-orange-50 rounded-lg p-5 border border-orange-100">
-                                    <h5 class="text-gray-800 font-medium text-sm mb-4">Popüler Kategoriler</h5>
-                                    <div class="space-y-3">
-                                        <div class="flex justify-between items-center">
-                                            <span class="text-gray-800 text-sm">Televizyon</span>
-                                            <div class="flex items-center space-x-2">
-                                                <div class="w-12 h-1.5 bg-orange-200 rounded-full overflow-hidden">
-                                                    <div class="h-full bg-orange-600 rounded-full transition-all duration-300" data-category-bar="0" style="width: 75%"></div>
-                                                </div>
-                                                <span class="text-gray-900 font-medium text-sm w-8" data-category-percent="0">34%</span>
-                                            </div>
-                                        </div>
-                                        <div class="flex justify-between items-center">
-                                            <span class="text-gray-800 text-sm">Beyaz Eşya</span>
-                                            <div class="flex items-center space-x-2">
-                                                <div class="w-12 h-1.5 bg-orange-200 rounded-full overflow-hidden">
-                                                    <div class="h-full bg-orange-500 rounded-full transition-all duration-300" data-category-bar="1" style="width: 50%"></div>
-                                                </div>
-                                                <span class="text-gray-900 font-medium text-sm w-8" data-category-percent="1">28%</span>
-                                            </div>
-                                        </div>
-                                        <div class="flex justify-between items-center">
-                                            <span class="text-gray-800 text-sm">Klima</span>
-                                            <div class="flex items-center space-x-2">
-                                                <div class="w-12 h-1.5 bg-orange-200 rounded-full overflow-hidden">
-                                                    <div class="h-full bg-orange-400 rounded-full transition-all duration-300" data-category-bar="2" style="width: 40%"></div>
-                                                </div>
-                                                <span class="text-gray-900 font-medium text-sm w-8" data-category-percent="2">22%</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                    
-                                <!-- Top Cities -->
-                                <div class="bg-green-50 rounded-lg p-5 border border-green-100">
-                                    <h5 class="text-gray-800 font-medium text-sm mb-4">Aktif Şehirler</h5>
-                                    <div class="space-y-3">
-                                        <div class="flex justify-between items-center">
-                                            <span class="text-gray-800 text-sm">İstanbul</span>
-                                            <span class="text-gray-900 font-semibold" data-city="İstanbul">47</span>
-                                        </div>
-                                        <div class="flex justify-between items-center">
-                                            <span class="text-gray-800 text-sm">Ankara</span>
-                                            <span class="text-gray-900 font-semibold" data-city="Ankara">28</span>
-                                        </div>
-                                        <div class="flex justify-between items-center">
-                                            <span class="text-gray-800 text-sm">Bursa</span>
-                                            <span class="text-gray-900 font-semibold" data-city="Bursa">14</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Anlık talep bölümü kaldırıldı -->
                 </div>
             </div>
         </section>
 
         <!-- SOCIAL PROOF & CUSTOMER SUCCESS STORIES -->
-        <section id="social-proof" class="py-20 bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 text-white">
+        <section id="social-proof" class="py-2 bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 text-white">
             <div class="max-w-6xl mx-auto px-6">
-                <div class="text-center mb-16">
-                    <div class="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 px-6 py-3 rounded-full mb-6">
-                        <i class="fas fa-heart text-red-400 text-xl mr-3"></i>
-                        <span class="font-semibold">MÜŞTERİ MEMNUNIYETI</span>
+                <div class="text-center mb-8">
+                    <div class="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-1 rounded-full mb-4">
+                        <i class="fas fa-heart text-red-400 text-sm mr-1"></i>
+                        <span class="font-semibold text-xs">MÜŞTERİ MEMNUNIYETI</span>
                     </div>
-                    <h2 class="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-transparent">
+                    <h2 class="text-2xl lg:text-3xl font-bold mb-4 bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-transparent">
                         Mutlu Müşterilerimiz Konuşuyor
                     </h2>
-                    <p class="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed mb-6">
-                        15.000+ memnun müşterinin deneyimleri ve gerçek yorumları. 
+                    <p class="text-sm text-blue-100 max-w-3xl mx-auto leading-relaxed mb-6">
+                        47.500+ memnun müşterinin deneyimleri ve gerçek yorumları. 
                         Garantor360 ile hayatları nasıl kolaylaştıklarını keşfedin!
                     </p>
                     
                     <!-- Live Statistics Row -->
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 max-w-4xl mx-auto">
                         <!-- Active Users -->
-                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6">
+                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-3">
                             <div class="flex items-center justify-center space-x-3">
                                 <div class="flex items-center">
                                     <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse mr-2"></div>
                                     <span class="text-green-300 font-semibold">ŞU ANDA CANLI:</span>
                                 </div>
-                                <div class="text-2xl font-bold text-yellow-300" id="liveUserCount">1,847</div>
+                                <div class="text-xl font-bold text-yellow-300" id="liveUserCount">1,847</div>
                                 <span class="text-blue-200">kişi</span>
                             </div>
-                            <div class="text-xs text-blue-300 text-center mt-2">
+                            <div class="text-xs text-blue-300 text-center mt-1">
                                 <i class="fas fa-eye mr-1"></i>
                                 Son 5 dakikada siteyi ziyaret eden kullanıcılar
                             </div>
                         </div>
 
                         <!-- Active Services -->
-                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6">
+                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-3">
                             <div class="flex items-center justify-center space-x-3">
                                 <div class="flex items-center">
                                     <div class="w-3 h-3 bg-blue-400 rounded-full animate-pulse mr-2"></div>
                                     <span class="text-blue-300 font-semibold">AKTİF HİZMET:</span>
                                 </div>
-                                <div class="text-2xl font-bold text-yellow-300" id="activeServices">324</div>
+                                <div class="text-xl font-bold text-yellow-300" id="activeServices">156</div>
                                 <span class="text-blue-200">adet</span>
                             </div>
-                            <div class="text-xs text-blue-300 text-center mt-2">
+                            <div class="text-xs text-blue-300 text-center mt-1">
                                 <i class="fas fa-tools mr-1"></i>
                                 Şu anda devam eden servis çalışmaları
                             </div>
                         </div>
 
                         <!-- Expert Online -->
-                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6">
+                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-3">
                             <div class="flex items-center justify-center space-x-3">
                                 <div class="flex items-center">
                                     <div class="w-3 h-3 bg-orange-400 rounded-full animate-pulse mr-2"></div>
                                     <span class="text-orange-300 font-semibold">UZMAN ONLİNE:</span>
                                 </div>
-                                <div class="text-2xl font-bold text-yellow-300" id="onlineExperts">156</div>
+                                <div class="text-xl font-bold text-yellow-300" id="onlineExperts">156</div>
                                 <span class="text-blue-200">usta</span>
                             </div>
-                            <div class="text-xs text-blue-300 text-center mt-2">
+                            <div class="text-xs text-blue-300 text-center mt-1">
                                 <i class="fas fa-user-check mr-1"></i>
                                 Şu anda hizmet verebilecek uzmanlar
                             </div>
@@ -4746,21 +5582,21 @@ app.get('/', (c) => {
                 </div>
 
                 <!-- Live Statistics -->
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                     <div class="text-center">
-                        <div class="text-3xl lg:text-4xl font-bold text-blue-300 mb-2" id="liveCustomers">15,247</div>
+                        <div class="text-xl lg:text-2xl font-bold text-blue-300 mb-1" id="liveCustomers">47,583</div>
                         <div class="text-blue-100 text-sm">Memnun Müşteri</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-3xl lg:text-4xl font-bold text-green-300 mb-2">4.9</div>
+                        <div class="text-xl lg:text-2xl font-bold text-green-300 mb-1">4.9</div>
                         <div class="text-blue-100 text-sm">Ortalama Puan</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-3xl lg:text-4xl font-bold text-yellow-300 mb-2">%98</div>
+                        <div class="text-xl lg:text-2xl font-bold text-yellow-300 mb-1">%98</div>
                         <div class="text-blue-100 text-sm">Sorunsuz İş</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-3xl lg:text-4xl font-bold text-purple-300 mb-2" id="liveJobs">23,891</div>
+                        <div class="text-xl lg:text-2xl font-bold text-purple-300 mb-1" id="liveJobs">23,891</div>
                         <div class="text-blue-100 text-sm">Tamamlanan İş</div>
                     </div>
                 </div>
@@ -4771,10 +5607,10 @@ app.get('/', (c) => {
                         <div id="reviewsCarousel" class="flex transition-transform duration-500 ease-in-out">
                             <!-- Review 1 -->
                             <div class="w-full flex-shrink-0">
-                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                                    <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8">
-                                        <div class="flex items-center mb-6">
-                                            <img src="https://ui-avatars.com/api/?name=Ayse+Kaya&background=f59e0b&color=fff" alt="Ayşe Kaya" class="w-16 h-16 rounded-full mr-4">
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                    <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 min-h-[240px] flex flex-col">
+                                        <div class="flex items-center mb-3">
+                                            <img src="https://ui-avatars.com/api/?name=Ayse+Kaya&background=f59e0b&color=fff" alt="Ayşe Kaya" class="w-12 h-12 rounded-full mr-3">
                                             <div>
                                                 <h4 class="text-lg font-bold text-white">Ayşe Kaya</h4>
                                                 <div class="flex items-center">
@@ -4789,19 +5625,19 @@ app.get('/', (c) => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <blockquote class="text-blue-100 leading-relaxed mb-4">
+                                        <blockquote class="text-blue-100 leading-relaxed mb-4 flex-grow">
                                             "Evdeki elektrik problemi için aradım. 2 saat içinde 3 farklı elektrikçi teklif verdi! 
                                             En uygun fiyatlısını seçtim, aynı gün geldi ve sorunu çözdü. Harika bir sistem!"
                                         </blockquote>
-                                        <div class="text-xs text-blue-300">
+                                        <div class="text-xs text-blue-300 mt-auto">
                                             <i class="fas fa-check-circle mr-1"></i>
                                             Doğrulanmış Müşteri • 2 gün önce
                                         </div>
                                     </div>
 
-                                    <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8">
-                                        <div class="flex items-center mb-6">
-                                            <img src="https://ui-avatars.com/api/?name=Mehmet+Ozturk&background=059669&color=fff" alt="Mehmet Öztürk" class="w-16 h-16 rounded-full mr-4">
+                                    <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 min-h-[240px] flex flex-col">
+                                        <div class="flex items-center mb-3">
+                                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face&auto=format&q=80" alt="Mehmet Öztürk" class="w-12 h-12 rounded-full mr-3">
                                             <div>
                                                 <h4 class="text-lg font-bold text-white">Mehmet Öztürk</h4>
                                                 <div class="flex items-center">
@@ -4816,11 +5652,11 @@ app.get('/', (c) => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <blockquote class="text-blue-100 leading-relaxed mb-4">
+                                        <blockquote class="text-blue-100 leading-relaxed mb-4 flex-grow">
                                             "Klima arızası için kullandım. Fiyat hesaplayıcı gerçekten çok başarılı, 
                                             önceden ne kadar ödeyeceğimi biliyordum. Garantor360 sayesinde dolandırılma korkum kalmadı!"
                                         </blockquote>
-                                        <div class="text-xs text-blue-300">
+                                        <div class="text-xs text-blue-300 mt-auto">
                                             <i class="fas fa-check-circle mr-1"></i>
                                             Doğrulanmış Müşteri • 5 gün önce
                                         </div>
@@ -4830,10 +5666,10 @@ app.get('/', (c) => {
 
                             <!-- Review 2 -->
                             <div class="w-full flex-shrink-0">
-                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                                    <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8">
-                                        <div class="flex items-center mb-6">
-                                            <img src="https://ui-avatars.com/api/?name=Zeynep+Yilmaz&background=7c3aed&color=fff" alt="Zeynep Yılmaz" class="w-16 h-16 rounded-full mr-4">
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                    <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 min-h-[240px] flex flex-col">
+                                        <div class="flex items-center mb-3">
+                                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face&auto=format&q=80" alt="Zeynep Yılmaz" class="w-12 h-12 rounded-full mr-3">
                                             <div>
                                                 <h4 class="text-lg font-bold text-white">Zeynep Yılmaz</h4>
                                                 <div class="flex items-center">
@@ -4848,19 +5684,19 @@ app.get('/', (c) => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <blockquote class="text-blue-100 leading-relaxed mb-4">
+                                        <blockquote class="text-blue-100 leading-relaxed mb-4 flex-grow">
                                             "Ev temizliği için sürekli kullanıyorum. Uzman eşleştirme sistemi muhteşem! 
                                             Her seferinde kaliteli ve güvenilir temizlikçiler geliyor. Kesinlikle tavsiye ederim."
                                         </blockquote>
-                                        <div class="text-xs text-blue-300">
+                                        <div class="text-xs text-blue-300 mt-auto">
                                             <i class="fas fa-check-circle mr-1"></i>
                                             Doğrulanmış Müşteri • 1 hafta önce
                                         </div>
                                     </div>
 
-                                    <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8">
-                                        <div class="flex items-center mb-6">
-                                            <img src="https://ui-avatars.com/api/?name=Ali+Celik&background=dc2626&color=fff" alt="Ali Çelik" class="w-16 h-16 rounded-full mr-4">
+                                    <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 min-h-[240px] flex flex-col">
+                                        <div class="flex items-center mb-3">
+                                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face&auto=format&q=80" alt="Ali Çelik" class="w-12 h-12 rounded-full mr-3">
                                             <div>
                                                 <h4 class="text-lg font-bold text-white">Ali Çelik</h4>
                                                 <div class="flex items-center">
@@ -4875,13 +5711,196 @@ app.get('/', (c) => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <blockquote class="text-blue-100 leading-relaxed mb-4">
+                                        <blockquote class="text-blue-100 leading-relaxed mb-4 flex-grow">
                                             "Tesisatçı aradım, AI önerisi ile 10 dakikada sorunu tarif ettim ve uygun uzman buldu. 
                                             Bu kadar kolay olacağını hiç düşünmemiştim. Artık hep Garantor360 kullanacağım!"
                                         </blockquote>
-                                        <div class="text-xs text-blue-300">
+                                        <div class="text-xs text-blue-300 mt-auto">
                                             <i class="fas fa-check-circle mr-1"></i>
                                             Doğrulanmış Müşteri • 3 gün önce
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Review 3 -->
+                            <div class="w-full flex-shrink-0">
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                    <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 min-h-[240px] flex flex-col">
+                                        <div class="flex items-center mb-3">
+                                            <img src="https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=100&h=100&fit=crop&crop=face&auto=format&q=80" alt="Fatma Demir" class="w-12 h-12 rounded-full mr-3">
+                                            <div>
+                                                <h4 class="text-lg font-bold text-white">Fatma Demir</h4>
+                                                <div class="flex items-center">
+                                                    <div class="flex text-yellow-400 mr-2">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                    </div>
+                                                    <span class="text-blue-200 text-sm">Antalya, Muratpaşa</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <blockquote class="text-blue-100 leading-relaxed mb-4 flex-grow">
+                                            "Televizyonum bozulmuştu, tamiri için 5 farklı teknisyenden teklif aldım. 
+                                            En uygun fiyatlı ve en yakın olanı seçtim. Aynı gün gelip TV'mi tamir etti. 
+                                            Garantor360'dan çok memnunum!"
+                                        </blockquote>
+                                        <div class="text-xs text-blue-300 mt-auto">
+                                            <i class="fas fa-check-circle mr-1"></i>
+                                            Doğrulanmış Müşteri • 4 gün önce
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 min-h-[240px] flex flex-col">
+                                        <div class="flex items-center mb-3">
+                                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop&crop=face&auto=format&q=80" alt="Hasan Koç" class="w-12 h-12 rounded-full mr-3">
+                                            <div>
+                                                <h4 class="text-lg font-bold text-white">Hasan Koç</h4>
+                                                <div class="flex items-center">
+                                                    <div class="flex text-yellow-400 mr-2">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                    </div>
+                                                    <span class="text-blue-200 text-sm">Adana, Seyhan</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <blockquote class="text-blue-100 leading-relaxed mb-4 flex-grow">
+                                            "Buzdolabım arızalandı, acil tamire ihtiyacım vardı. Uygulamayı indirdim, 
+                                            hemen 3 beyaz eşya ustası ile iletişim kurdum. En hızlı gelebileni seçtim, 
+                                            2 saatte geldi ve sorunu çözdü. Mükemmel!"
+                                        </blockquote>
+                                        <div class="text-xs text-blue-300 mt-auto">
+                                            <i class="fas fa-check-circle mr-1"></i>
+                                            Doğrulanmış Müşteri • 1 gün önce
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Review 4 -->
+                            <div class="w-full flex-shrink-0">
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                    <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 min-h-[240px] flex flex-col">
+                                        <div class="flex items-center mb-3">
+                                            <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=100&h=100&fit=crop&crop=face&auto=format&q=80" alt="Elif Arslan" class="w-12 h-12 rounded-full mr-3">
+                                            <div>
+                                                <h4 class="text-lg font-bold text-white">Elif Arslan</h4>
+                                                <div class="flex items-center">
+                                                    <div class="flex text-yellow-400 mr-2">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                    </div>
+                                                    <span class="text-blue-200 text-sm">Konya, Selçuklu</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <blockquote class="text-blue-100 leading-relaxed mb-4 flex-grow">
+                                            "Laptopumun ekranı kırılmıştı, onarım için güvenilir bir yer arıyordum. 
+                                            Garantor360 sayesinde hızlıca laptop tamircisi buldum. 
+                                            Uygun fiyata, garantili onarım yaptı. Kesinlikle tavsiye ederim!"
+                                        </blockquote>
+                                        <div class="text-xs text-blue-300 mt-auto">
+                                            <i class="fas fa-check-circle mr-1"></i>
+                                            Doğrulanmış Müşteri • 6 gün önce
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 min-h-[240px] flex flex-col">
+                                        <div class="flex items-center mb-3">
+                                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face&auto=format&q=80" alt="Mustafa Yıldız" class="w-12 h-12 rounded-full mr-3">
+                                            <div>
+                                                <h4 class="text-lg font-bold text-white">Mustafa Yıldız</h4>
+                                                <div class="flex items-center">
+                                                    <div class="flex text-yellow-400 mr-2">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                    </div>
+                                                    <span class="text-blue-200 text-sm">Gaziantep, Şahinbey</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <blockquote class="text-blue-100 leading-relaxed mb-4 flex-grow">
+                                            "Klimam çalışmıyordu, yaz ayında çok zorluk yaşıyorduk. 
+                                            Garantor360'dan klima teknisyeni buldum, çok profesyonel bir ekip geldi. 
+                                            Sorunu çözdüler ve bakım da yaptılar. Müthiş bir hizmet!"
+                                        </blockquote>
+                                        <div class="text-xs text-blue-300 mt-auto">
+                                            <i class="fas fa-check-circle mr-1"></i>
+                                            Doğrulanmış Müşteri • 8 gün önce
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Review 5 -->
+                            <div class="w-full flex-shrink-0">
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                    <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 min-h-[240px] flex flex-col">
+                                        <div class="flex items-center mb-3">
+                                            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&h=100&fit=crop&crop=face&auto=format&q=80" alt="Gamze Polat" class="w-12 h-12 rounded-full mr-3">
+                                            <div>
+                                                <h4 class="text-lg font-bold text-white">Gamze Polat</h4>
+                                                <div class="flex items-center">
+                                                    <div class="flex text-yellow-400 mr-2">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                    </div>
+                                                    <span class="text-blue-200 text-sm">Eskişehir, Odunpazarı</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <blockquote class="text-blue-100 leading-relaxed mb-4 flex-grow">
+                                            "Çamaşır makinam bozulmuştu, tamir ettirmeye korkuyordum çünkü daha önce 
+                                            kötü deneyimler yaşamıştım. Garantor360'dan güvenilir bir usta buldum. 
+                                            Hem ucuz hem de çok kaliteli iş yaptı!"
+                                        </blockquote>
+                                        <div class="text-xs text-blue-300 mt-auto">
+                                            <i class="fas fa-check-circle mr-1"></i>
+                                            Doğrulanmış Müşteri • 2 hafta önce
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 min-h-[240px] flex flex-col">
+                                        <div class="flex items-center mb-3">
+                                            <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=100&h=100&fit=crop&crop=face&auto=format&q=80" alt="Emre Şahin" class="w-12 h-12 rounded-full mr-3">
+                                            <div>
+                                                <h4 class="text-lg font-bold text-white">Emre Şahin</h4>
+                                                <div class="flex items-center">
+                                                    <div class="flex text-yellow-400 mr-2">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                    </div>
+                                                    <span class="text-blue-200 text-sm">Samsun, İlkadım</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <blockquote class="text-blue-100 leading-relaxed mb-4 flex-grow">
+                                            "PC'im çalışmıyordu, önemli dosyalarım vardı kaybetme korkusu yaşıyordum. 
+                                            Garantor360'dan bilgisayar teknisyeni buldum. Hem verilerimi kurtardı 
+                                            hem de bilgisayarımı tamir etti. İnanılmaz profesyonel!"
+                                        </blockquote>
+                                        <div class="text-xs text-blue-300 mt-auto">
+                                            <i class="fas fa-check-circle mr-1"></i>
+                                            Doğrulanmış Müşteri • 10 gün önce
                                         </div>
                                     </div>
                                 </div>
@@ -4890,26 +5909,29 @@ app.get('/', (c) => {
                     </div>
 
                     <!-- Navigation Dots -->
-                    <div class="flex justify-center mt-8 space-x-3">
+                    <div class="flex justify-center mt-6 space-x-3">
                         <button onclick="changeReviewSlide(0)" class="review-dot w-3 h-3 rounded-full bg-white transition-all"></button>
                         <button onclick="changeReviewSlide(1)" class="review-dot w-3 h-3 rounded-full bg-white/40 transition-all"></button>
+                        <button onclick="changeReviewSlide(2)" class="review-dot w-3 h-3 rounded-full bg-white/40 transition-all"></button>
+                        <button onclick="changeReviewSlide(3)" class="review-dot w-3 h-3 rounded-full bg-white/40 transition-all"></button>
+                        <button onclick="changeReviewSlide(4)" class="review-dot w-3 h-3 rounded-full bg-white/40 transition-all"></button>
                     </div>
                 </div>
 
                 <!-- Live Activity - Side by Side -->
-                <div class="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <!-- Real-time Success Stories -->
-                    <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
-                        <h3 class="text-2xl font-bold text-center text-white mb-8">
+                    <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
+                        <h3 class="text-xl font-bold text-center text-white mb-4">
                             <i class="fas fa-broadcast-tower text-green-400 mr-3"></i>
                             Canlı İş Tamamlama Bildirimleri
                         </h3>
                         
-                        <div id="liveNotifications" class="space-y-3 max-h-40 overflow-hidden">
-                            <!-- Live notifications will be inserted here -->
+                        <div id="liveNotifications" class="space-y-2 max-h-40 overflow-hidden">
+                            <!-- JavaScript ile doldurulacak -->
                         </div>
                         
-                        <div class="text-center mt-6">
+                        <div class="text-center mt-4">
                             <div class="inline-flex items-center text-green-300 text-sm">
                                 <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse mr-2"></div>
                                 Gerçek zamanlı güncellemeler
@@ -4918,17 +5940,17 @@ app.get('/', (c) => {
                     </div>
 
                     <!-- Live Comments System -->
-                    <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
-                        <h3 class="text-2xl font-bold text-center text-white mb-8">
-                            <i class="fas fa-comments text-blue-400 mr-3"></i>
+                    <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
+                        <h3 class="text-lg font-bold text-center text-white mb-2">
+                            <i class="fas fa-comments text-blue-400 mr-2"></i>
                             Canlı Müşteri Yorumları
                         </h3>
                         
-                        <div id="liveComments" class="space-y-4 max-h-60 overflow-hidden">
-                            <!-- Live comments will be inserted here -->
+                        <div id="liveComments" class="space-y-2 max-h-40 overflow-hidden">
+                            <!-- JavaScript ile doldurulacak -->
                         </div>
                         
-                        <div class="text-center mt-6">
+                        <div class="text-center mt-2">
                             <div class="inline-flex items-center text-blue-300 text-sm">
                                 <div class="w-2 h-2 bg-blue-400 rounded-full animate-pulse mr-2"></div>
                                 Her saniye yeni yorumlar geliyor
@@ -4960,7 +5982,7 @@ app.get('/', (c) => {
                 <div class="relative mb-10 py-2 -mt-20">
                     
                     <div class="relative z-20 container mx-auto px-6">
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start relative">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start relative" style="grid-template-columns: 1fr 1fr; gap: 2rem;">
                             
                             <!-- Superhero Between Containers -->
                             <div class="hidden lg:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
@@ -4988,7 +6010,7 @@ app.get('/', (c) => {
 
                                         <!-- Problems List -->
                                         <div class="p-2 space-y-1">
-                                            <div class="flex items-start p-2 hover:bg-slate-50 transition-colors duration-200 rounded-xl">
+                                            <div class="flex items-start p-4 hover:bg-slate-50 transition-colors duration-200 rounded-xl">
                                                 <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                     <i class="fas fa-search text-slate-500 text-lg"></i>
                                                 </div>
@@ -5072,7 +6094,7 @@ app.get('/', (c) => {
                                         <div class="px-3 py-1 border-b border-blue-700">
                                             <div class="text-center">
                                                 <div class="flex items-center justify-center mb-1">
-                                                    <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-20 w-auto mr-2">
+                                                    <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-8 w-auto mr-2">
                                                     <h3 class="text-2xl font-bold text-white">KORUMA</h3>
                                                 </div>
                                                 <p class="text-blue-200 text-base">Artik kimse sizi dolandiramaz!</p>
@@ -5081,7 +6103,7 @@ app.get('/', (c) => {
 
                                         <!-- Solutions List -->
                                         <div class="p-2 space-y-1 text-white">
-                                            <div class="flex items-start p-2 hover:bg-white/5 transition-colors duration-200 rounded-xl">
+                                            <div class="flex items-start p-4 hover:bg-white/5 transition-colors duration-200 rounded-xl">
                                                 <div class="w-8 h-8 bg-amber-400/20 rounded-lg flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                                                 <i class="fas fa-user-shield text-amber-400 text-lg"></i>
                                             </div>
@@ -5159,80 +6181,6 @@ app.get('/', (c) => {
                 </div>
 
 
-
-                <!-- Modern Security Features -->
-                <section class="py-16 bg-white">
-                    <div class="max-w-5xl mx-auto px-6">
-                        <!-- Enhanced Compact Security Section -->
-                        <div class="text-center mb-8">
-                            <div class="inline-flex items-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-full text-sm font-bold mb-4 shadow-lg">
-                                <i class="fas fa-shield-check mr-2 text-yellow-300"></i>
-                                🛡️ GÜVENLİK GARANTİSİ
-                            </div>
-                            <h3 class="text-2xl font-bold text-slate-800 mb-3">
-                                <span class="text-blue-600">TAM</span> GÜVENLİK SİSTEMİ
-                            </h3>
-                            <p class="text-slate-600 text-base font-medium">Modern güvenlik protokolleri ile <span class="text-green-600 font-bold">%100 korunursunuz</span></p>
-                        </div>
-
-                        <!-- Enhanced Security Features -->
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                            <div class="group text-center p-4 rounded-xl bg-gradient-to-br from-green-50 to-green-100 hover:from-green-100 hover:to-green-200 border border-green-200 hover:border-green-300 transition-all duration-300 transform hover:scale-105">
-                                <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:shadow-lg transition-shadow">
-                                    <i class="fas fa-shield-check text-white text-lg"></i>
-                                </div>
-                                <h4 class="text-sm font-bold text-slate-800 mb-1">💰 Para Güvenliği</h4>
-                                <p class="text-xs text-green-600 font-semibold">%100 İade Garantisi</p>
-                            </div>
-                            
-                            <div class="group text-center p-4 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 border border-blue-200 hover:border-blue-300 transition-all duration-300 transform hover:scale-105">
-                                <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:shadow-lg transition-shadow">
-                                    <i class="fas fa-user-check text-white text-lg"></i>
-                                </div>
-                                <h4 class="text-sm font-bold text-slate-800 mb-1">✅ Doğrulanmış Uzmanlar</h4>
-                                <p class="text-xs text-blue-600 font-semibold">Kimlik Kontrollü</p>
-                            </div>
-                            
-                            <div class="group text-center p-4 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 hover:from-purple-100 hover:to-purple-200 border border-purple-200 hover:border-purple-300 transition-all duration-300 transform hover:scale-105">
-                                <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:shadow-lg transition-shadow">
-                                    <i class="fas fa-eye text-white text-lg"></i>
-                                </div>
-                                <h4 class="text-sm font-bold text-slate-800 mb-1">👁️ Canlı Takip</h4>
-                                <p class="text-xs text-purple-600 font-semibold">7/24 İzleme</p>
-                            </div>
-                            
-                            <div class="group text-center p-4 rounded-xl bg-gradient-to-br from-amber-50 to-amber-100 hover:from-amber-100 hover:to-amber-200 border border-amber-200 hover:border-amber-300 transition-all duration-300 transform hover:scale-105">
-                                <div class="w-12 h-12 bg-gradient-to-r from-amber-500 to-amber-600 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:shadow-lg transition-shadow">
-                                    <i class="fas fa-balance-scale text-white text-lg"></i>
-                                </div>
-                                <h4 class="text-sm font-bold text-slate-800 mb-1">⚖️ Hukuki Destek</h4>
-                                <p class="text-xs text-amber-600 font-semibold">Yasal Koruma</p>
-                            </div>
-                        </div>
-
-                        <!-- Enhanced Stats with Emphasis -->
-                        <div class="bg-gradient-to-r from-slate-50 via-white to-slate-50 rounded-xl p-4 border border-slate-200 shadow-sm">
-                            <div class="grid grid-cols-4 gap-4 text-center">
-                                <div class="group">
-                                    <div class="text-2xl font-black text-red-600 mb-1 group-hover:scale-110 transition-transform">0</div>
-                                    <div class="text-xs font-semibold text-slate-600">🚫 Dolandırıcılık</div>
-                                </div>
-                                <div class="group">
-                                    <div class="text-2xl font-black text-green-600 mb-1 group-hover:scale-110 transition-transform">98.9%</div>
-                                    <div class="text-xs font-semibold text-slate-600">🛡️ Güvenlik</div>
-                                </div>
-                                <div class="group">
-                                    <div class="text-2xl font-black text-blue-600 mb-1 group-hover:scale-110 transition-transform">24/7</div>
-                                    <div class="text-xs font-semibold text-slate-600">🔒 Koruma</div>
-                                </div>
-                                <div class="group">
-                                    <div class="text-2xl font-black text-purple-600 mb-1 group-hover:scale-110 transition-transform">15dk</div>
-                                    <div class="text-xs font-semibold text-slate-600">⚡ Müdahale</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
 
                 <!-- Service & Emergency Section -->
                 <div class="bg-slate-100 text-gray-800 p-6 minimal-corner">
@@ -5356,761 +6304,200 @@ app.get('/', (c) => {
                     <p class="text-gray-600 text-lg leading-relaxed">81 ilde guvenli hizmet alin, profesyonel cozumler</p>
                 </div>
 
-                <!-- Live City Statistics Grid -->
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 mb-8">
-                    <!-- İstanbul -->
-                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="font-bold text-gray-800 text-sm">İSTANBUL</h3>
-                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <!-- Kompakt Şehir Kart Sistemi -->
+                <div class="max-w-6xl mx-auto mt-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        
+                        <!-- İSTANBUL -->
+                        <div class="bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl p-4 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer" onclick="scrollToServices()">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-lg font-bold">İSTANBUL</h3>
+                                <div class="w-3 h-3 bg-blue-300 rounded-full animate-pulse"></div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm opacity-90">📍 Aktif Teknisyen</span>
+                                    <span class="font-bold">347</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm opacity-90">⚡ Yanıt Süresi</span>
+                                    <span class="font-bold">8dk</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm opacity-90">⭐ Memnuniyet</span>
+                                    <span class="font-bold">4.9/5</span>
+                                </div>
+                                <div class="mt-3 pt-3 border-t border-blue-400">
+                                    <div class="text-xs text-blue-200">🔥 En Popüler: TV Tamiri</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="space-y-1 text-xs">
-                            <div class="flex justify-between">
-                                <span class="text-orange-600">Yeni Talep:</span>
-                                <span class="font-bold text-orange-600">47</span>
+
+                        <!-- ANKARA -->
+                        <div class="bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-xl p-4 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer" onclick="scrollToServices()">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-lg font-bold">ANKARA</h3>
+                                <div class="w-3 h-3 bg-indigo-300 rounded-full animate-pulse"></div>
                             </div>
-                            <div class="flex justify-between">
-                                <span class="text-blue-600">Aktif Usta:</span>
-                                <span class="font-bold text-blue-600">147</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-green-600">Tamamlanan:</span>
-                                <span class="font-bold text-green-600">89</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-purple-600">İşlemde:</span>
-                                <span class="font-bold text-purple-600">34</span>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm opacity-90">📍 Aktif Teknisyen</span>
+                                    <span class="font-bold">156</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm opacity-90">⚡ Yanıt Süresi</span>
+                                    <span class="font-bold">12dk</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm opacity-90">⭐ Memnuniyet</span>
+                                    <span class="font-bold">4.8/5</span>
+                                </div>
+                                <div class="mt-3 pt-3 border-t border-indigo-400">
+                                    <div class="text-xs text-indigo-200">🔥 En Popüler: Kombi Servisi</div>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- İZMİR -->
+                        <div class="bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl p-4 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer" onclick="scrollToServices()">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-lg font-bold">İZMİR</h3>
+                                <div class="w-3 h-3 bg-purple-300 rounded-full animate-pulse"></div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm opacity-90">📍 Aktif Teknisyen</span>
+                                    <span class="font-bold">89</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm opacity-90">⚡ Yanıt Süresi</span>
+                                    <span class="font-bold">15dk</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm opacity-90">⭐ Memnuniyet</span>
+                                    <span class="font-bold">4.7/5</span>
+                                </div>
+                                <div class="mt-3 pt-3 border-t border-purple-400">
+                                    <div class="text-xs text-purple-200">🔥 En Popüler: Beyaz Eşya</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BURSA -->
+                        <div class="bg-gradient-to-br from-blue-700 to-indigo-800 rounded-xl p-4 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer" onclick="scrollToServices()">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-lg font-bold">BURSA</h3>
+                                <div class="w-3 h-3 bg-blue-300 rounded-full animate-pulse"></div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm opacity-90">📍 Aktif Teknisyen</span>
+                                    <span class="font-bold">67</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm opacity-90">⚡ Yanıt Süresi</span>
+                                    <span class="font-bold">18dk</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm opacity-90">⭐ Memnuniyet</span>
+                                    <span class="font-bold">4.6/5</span>
+                                </div>
+                                <div class="mt-3 pt-3 border-t border-blue-400">
+                                    <div class="text-xs text-blue-200">🔥 En Popüler: Teknik Onarım</div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <!-- Ankara -->
-                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="font-bold text-gray-800 text-sm">ANKARA</h3>
-                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <!-- Alt Şehirler Satırı -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                        
+                        <!-- ANTALYA -->
+                        <div class="bg-gradient-to-br from-purple-600 to-indigo-700 rounded-lg p-3 text-white shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer" onclick="scrollToServices()">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="text-sm font-bold">ANTALYA</h4>
+                                <div class="w-2 h-2 bg-purple-300 rounded-full animate-pulse"></div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-center">
+                                <div>
+                                    <div class="text-lg font-bold">54</div>
+                                    <div class="text-xs opacity-80">Teknisyen</div>
+                                </div>
+                                <div>
+                                    <div class="text-lg font-bold">20dk</div>
+                                    <div class="text-xs opacity-80">Yanıt</div>
+                                </div>
+                                <div>
+                                    <div class="text-lg font-bold">4.5</div>
+                                    <div class="text-xs opacity-80">Puan</div>
+                                </div>
+                            </div>
+                            <div class="text-xs text-purple-200 mt-2 text-center">Klima Bakımı</div>
                         </div>
-                        <div class="space-y-1 text-xs">
-                            <div class="flex justify-between">
-                                <span class="text-orange-600">Yeni Talep:</span>
-                                <span class="font-bold text-orange-600">28</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-blue-600">Aktif Usta:</span>
-                                <span class="font-bold text-blue-600">85</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-green-600">Tamamlanan:</span>
-                                <span class="font-bold text-green-600">67</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-purple-600">İşlemde:</span>
-                                <span class="font-bold text-purple-600">19</span>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- İzmir -->
-                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="font-bold text-gray-800 text-sm">İZMİR</h3>
-                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        <!-- ADANA -->
+                        <div class="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-lg p-3 text-white shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer" onclick="scrollToServices()">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="text-sm font-bold">ADANA</h4>
+                                <div class="w-2 h-2 bg-indigo-300 rounded-full animate-pulse"></div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-center">
+                                <div>
+                                    <div class="text-lg font-bold">43</div>
+                                    <div class="text-xs opacity-80">Teknisyen</div>
+                                </div>
+                                <div>
+                                    <div class="text-lg font-bold">22dk</div>
+                                    <div class="text-xs opacity-80">Yanıt</div>
+                                </div>
+                                <div>
+                                    <div class="text-lg font-bold">4.4</div>
+                                    <div class="text-xs opacity-80">Puan</div>
+                                </div>
+                            </div>
+                            <div class="text-xs text-indigo-200 mt-2 text-center">Beyaz Eşya</div>
                         </div>
-                        <div class="space-y-1 text-xs">
-                            <div class="flex justify-between">
-                                <span class="text-orange-600">Yeni Talep:</span>
-                                <span class="font-bold text-orange-600">19</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-blue-600">Aktif Usta:</span>
-                                <span class="font-bold text-blue-600">62</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-green-600">Tamamlanan:</span>
-                                <span class="font-bold text-green-600">45</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-purple-600">İşlemde:</span>
-                                <span class="font-bold text-purple-600">13</span>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Bursa -->
-                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="font-bold text-gray-800 text-sm">BURSA</h3>
-                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        <!-- KONYA -->
+                        <div class="bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg p-3 text-white shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer" onclick="scrollToServices()">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="text-sm font-bold">KONYA</h4>
+                                <div class="w-2 h-2 bg-blue-300 rounded-full animate-pulse"></div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-center">
+                                <div>
+                                    <div class="text-lg font-bold">38</div>
+                                    <div class="text-xs opacity-80">Teknisyen</div>
+                                </div>
+                                <div>
+                                    <div class="text-lg font-bold">25dk</div>
+                                    <div class="text-xs opacity-80">Yanıt</div>
+                                </div>
+                                <div>
+                                    <div class="text-lg font-bold">4.3</div>
+                                    <div class="text-xs opacity-80">Puan</div>
+                                </div>
+                            </div>
+                            <div class="text-xs text-blue-200 mt-2 text-center">Enerji & Isıtma</div>
                         </div>
-                        <div class="space-y-1 text-xs">
-                            <div class="flex justify-between">
-                                <span class="text-orange-600">Yeni Talep:</span>
-                                <span class="font-bold text-orange-600">14</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-blue-600">Aktif Usta:</span>
-                                <span class="font-bold text-blue-600">38</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-green-600">Tamamlanan:</span>
-                                <span class="font-bold text-green-600">29</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-purple-600">İşlemde:</span>
-                                <span class="font-bold text-purple-600">9</span>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Antalya -->
-                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="font-bold text-gray-800 text-sm">ANTALYA</h3>
-                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                        </div>
-                        <div class="space-y-1 text-xs">
-                            <div class="flex justify-between">
-                                <span class="text-orange-600">Yeni Talep:</span>
-                                <span class="font-bold text-orange-600">16</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-blue-600">Aktif Usta:</span>
-                                <span class="font-bold text-blue-600">41</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-green-600">Tamamlanan:</span>
-                                <span class="font-bold text-green-600">32</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-purple-600">İşlemde:</span>
-                                <span class="font-bold text-purple-600">11</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Adana -->
-                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="font-bold text-gray-800 text-sm">ADANA</h3>
-                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                        </div>
-                        <div class="space-y-1 text-xs">
-                            <div class="flex justify-between">
-                                <span class="text-orange-600">Yeni Talep:</span>
-                                <span class="font-bold text-orange-600">11</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-blue-600">Aktif Usta:</span>
-                                <span class="font-bold text-blue-600">28</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-green-600">Tamamlanan:</span>
-                                <span class="font-bold text-green-600">21</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-purple-600">İşlemde:</span>
-                                <span class="font-bold text-purple-600">7</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Konya -->
-                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="font-bold text-gray-800 text-sm">KONYA</h3>
-                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                        </div>
-                        <div class="space-y-1 text-xs">
-                            <div class="flex justify-between">
-                                <span class="text-orange-600">Yeni Talep:</span>
-                                <span class="font-bold text-orange-600">9</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-blue-600">Aktif Usta:</span>
-                                <span class="font-bold text-blue-600">24</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-green-600">Tamamlanan:</span>
-                                <span class="font-bold text-green-600">18</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-purple-600">İşlemde:</span>
-                                <span class="font-bold text-purple-600">5</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Gaziantep -->
-                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="font-bold text-gray-800 text-sm">GAZİANTEP</h3>
-                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                        </div>
-                        <div class="space-y-1 text-xs">
-                            <div class="flex justify-between">
-                                <span class="text-orange-600">Yeni Talep:</span>
-                                <span class="font-bold text-orange-600">7</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-blue-600">Aktif Usta:</span>
-                                <span class="font-bold text-blue-600">19</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-green-600">Tamamlanan:</span>
-                                <span class="font-bold text-green-600">14</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-purple-600">İşlemde:</span>
-                                <span class="font-bold text-purple-600">4</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Kayseri -->
-                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="font-bold text-gray-800 text-sm">KAYSERİ</h3>
-                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                        </div>
-                        <div class="space-y-1 text-xs">
-                            <div class="flex justify-between">
-                                <span class="text-orange-600">Yeni Talep:</span>
-                                <span class="font-bold text-orange-600">8</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-blue-600">Aktif Usta:</span>
-                                <span class="font-bold text-blue-600">16</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-green-600">Tamamlanan:</span>
-                                <span class="font-bold text-green-600">12</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-purple-600">İşlemde:</span>
-                                <span class="font-bold text-purple-600">3</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Eskişehir -->
-                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="font-bold text-gray-800 text-sm">ESKİŞEHİR</h3>
-                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                        </div>
-                        <div class="space-y-1 text-xs">
-                            <div class="flex justify-between">
-                                <span class="text-orange-600">Yeni Talep:</span>
-                                <span class="font-bold text-orange-600">6</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-blue-600">Aktif Usta:</span>
-                                <span class="font-bold text-blue-600">13</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-green-600">Tamamlanan:</span>
-                                <span class="font-bold text-green-600">9</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-purple-600">İşlemde:</span>
-                                <span class="font-bold text-purple-600">2</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Samsun -->
-                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="font-bold text-gray-800 text-sm">SAMSUN</h3>
-                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                        </div>
-                        <div class="space-y-1 text-xs">
-                            <div class="flex justify-between">
-                                <span class="text-orange-600">Yeni Talep:</span>
-                                <span class="font-bold text-orange-600">12</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-blue-600">Aktif Usta:</span>
-                                <span class="font-bold text-blue-600">21</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-green-600">Tamamlanan:</span>
-                                <span class="font-bold text-green-600">16</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-purple-600">İşlemde:</span>
-                                <span class="font-bold text-purple-600">6</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Denizli -->
-                    <div class="bg-white border-2 border-blue-200 rounded-lg p-3 hover:border-blue-400 transition-colors">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="font-bold text-gray-800 text-sm">DENİZLİ</h3>
-                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                        </div>
-                        <div class="space-y-1 text-xs">
-                            <div class="flex justify-between">
-                                <span class="text-orange-600">Yeni Talep:</span>
-                                <span class="font-bold text-orange-600">5</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-blue-600">Aktif Usta:</span>
-                                <span class="font-bold text-blue-600">15</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-green-600">Tamamlanan:</span>
-                                <span class="font-bold text-green-600">11</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-purple-600">İşlemde:</span>
-                                <span class="font-bold text-purple-600">3</span>
-                            </div>
-                        </div>
                     </div>
 
 
                 </div>
-
-
-            </div>
-        </section>
-
-        <!-- Service Categories -->
-        <section class="py-20 bg-white">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="text-center mb-16">
-                    <div class="section-divider w-20 mx-auto mb-6"></div>
-                    <h2 class="text-4xl font-bold text-slate-800 mb-4 tracking-tight">
-                        HIZMET KATEGORILERI
-                    </h2>
-                    <p class="text-slate-600 text-lg font-medium">Guvenli hizmet almanin kapsamli cozumleri</p>
-                    <div class="flex justify-center items-center space-x-6 mt-6">
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-blue-900">6</div>
-                            <div class="text-slate-600 text-sm">Ana Kategori</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-orange-600">50+</div>
-                            <div class="text-slate-600 text-sm">Alt Hizmet</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-green-600">%98.7</div>
-                            <div class="text-slate-600 text-sm">Basari Orani</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                    <!-- Teknik Onarim -->
-                    <div class="bg-white border-2 border-blue-200 p-4 minimal-corner group hover:border-orange-500 hover:shadow-lg transition-all duration-300 cursor-pointer relative overflow-hidden">
-                        <div class="text-center relative z-10">
-                            <div class="w-8 h-8 bg-blue-900 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-orange-600 transition-colors duration-300">
-                                <i class="fas fa-tv text-white text-lg"></i>
-                            </div>
-                            <h3 class="font-bold text-slate-800 mb-2 text-sm">TEKNIK ONARIM</h3>
-                            <div class="text-xs text-slate-600 mb-3">TV-PC-Beyaz Esya</div>
-                            <div class="text-center">
-                                <div class="text-orange-600 font-bold text-sm">TL280-2.5K</div>
-                                <div class="text-slate-500 text-xs">Ortalama Fiyat</div>
-                            </div>
-                        </div>
-                        <!-- Hover Overlay -->
-                        <div class="absolute inset-0 bg-blue-900 bg-opacity-95 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex flex-col justify-center text-white">
-                            <div class="text-center">
-                                <h4 class="font-bold text-white text-sm mb-3">TEKNIK ONARIM</h4>
-                                <div class="space-y-2 text-xs">
-                                    <div class="flex justify-between">
-                                        <span>TV Tamiri</span>
-                                        <span class="font-bold">TL400-1.2K</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Camasir Makinesi</span>
-                                        <span class="font-bold">TL350-800</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Klima Servisi</span>
-                                        <span class="font-bold">TL200-600</span>
-                                    </div>
-                                </div>
-                                <button onclick="scrollToServices()" class="w-full bg-orange-600 text-white py-2 sharp-corner text-xs font-bold hover:bg-orange-700 transition duration-200 mt-3">
-                                    HIZMET AL
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Ev Bakim & Tadilat -->
-                    <div class="bg-white border-2 border-green-200 p-4 minimal-corner group hover:border-green-500 hover:shadow-lg transition-all duration-300 cursor-pointer relative overflow-hidden">
-                        <div class="text-center relative z-10">
-                            <div class="w-8 h-8 bg-green-700 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-green-600 transition-colors duration-300">
-                                <i class="fas fa-home text-white text-lg"></i>
-                            </div>
-                            <h3 class="font-bold text-slate-800 mb-2 text-sm">EV BAKIM</h3>
-                            <div class="text-xs text-slate-600 mb-3">Boyama-Elektrik-Tesisat</div>
-                            <div class="text-center">
-                                <div class="text-green-600 font-bold text-sm">TL500-5K</div>
-                                <div class="text-slate-500 text-xs">Ortalama Fiyat</div>
-                            </div>
-                        </div>
-                        <!-- Hover Overlay -->
-                        <div class="absolute inset-0 bg-green-700 bg-opacity-95 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex flex-col justify-center text-white">
-                            <div class="text-center">
-                                <h4 class="font-bold text-white text-sm mb-3">EV BAKIM & TADILAT</h4>
-                                <div class="space-y-2 text-xs">
-                                    <div class="flex justify-between">
-                                        <span>Boyama & Badana</span>
-                                        <span class="font-bold">TL1.5K-4K</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Elektrik Isleri</span>
-                                        <span class="font-bold">TL300-1.2K</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Su Tesisati</span>
-                                        <span class="font-bold">TL400-1.5K</span>
-                                    </div>
-                                </div>
-                                <button onclick="scrollToServices()" class="w-full bg-green-600 text-white py-2 sharp-corner text-xs font-bold hover:bg-green-700 transition duration-200 mt-3">
-                                    HIZMET AL
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Temizlik Hizmetleri -->
-                    <div class="bg-white border-2 border-purple-200 p-4 minimal-corner group hover:border-purple-500 hover:shadow-lg transition-all duration-300 cursor-pointer relative overflow-hidden">
-                        <div class="text-center relative z-10">
-                            <div class="w-8 h-8 bg-purple-700 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-purple-600 transition-colors duration-300">
-                                <i class="fas fa-broom text-white text-lg"></i>
-                            </div>
-                            <h3 class="font-bold text-slate-800 mb-2 text-sm">TEMIZLIK</h3>
-                            <div class="text-xs text-slate-600 mb-3">Ev-Hali-Derin Temizlik</div>
-                            <div class="text-center">
-                                <div class="text-purple-600 font-bold text-sm">TL200-1.5K</div>
-                                <div class="text-slate-500 text-xs">Ortalama Fiyat</div>
-                            </div>
-                        </div>
-                        <!-- Hover Overlay -->
-                        <div class="absolute inset-0 bg-purple-700 bg-opacity-95 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex flex-col justify-center text-white">
-                            <div class="text-center">
-                                <h4 class="font-bold text-white text-sm mb-3">TEMIZLIK HIZMETLERI</h4>
-                                <div class="space-y-2 text-xs">
-                                    <div class="flex justify-between">
-                                        <span>Ev Temizligi</span>
-                                        <span class="font-bold">TL150-400</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Hali Yikama</span>
-                                        <span class="font-bold">TL200-600</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Derin Temizlik</span>
-                                        <span class="font-bold">TL350-800</span>
-                                    </div>
-                                </div>
-                                <button onclick="scrollToServices()" class="w-full bg-purple-600 text-white py-2 sharp-corner text-xs font-bold hover:bg-purple-700 transition duration-200 mt-3">
-                                    HIZMET AL
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Nakliye & Tasimacilik -->
-                    <div class="bg-white border-2 border-indigo-200 p-4 minimal-corner group hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer relative overflow-hidden">
-                        <div class="text-center relative z-10">
-                            <div class="w-8 h-8 bg-indigo-700 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-indigo-600 transition-colors duration-300">
-                                <i class="fas fa-truck text-white text-lg"></i>
-                            </div>
-                            <h3 class="font-bold text-slate-800 mb-2 text-sm">NAKLIYE</h3>
-                            <div class="text-xs text-slate-600 mb-3">Ev Tasima-Esya Nakli</div>
-                            <div class="text-center">
-                                <div class="text-indigo-600 font-bold text-sm">TL800-4K</div>
-                                <div class="text-slate-500 text-xs">Ortalama Fiyat</div>
-                            </div>
-                        </div>
-                        <!-- Hover Overlay -->
-                        <div class="absolute inset-0 bg-indigo-700 bg-opacity-95 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex flex-col justify-center text-white">
-                            <div class="text-center">
-                                <h4 class="font-bold text-white text-sm mb-3">NAKLIYE & TASIMA</h4>
-                                <div class="space-y-2 text-xs">
-                                    <div class="flex justify-between">
-                                        <span>Ev Tasima</span>
-                                        <span class="font-bold">TL1.2K-3K</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Esya Nakli</span>
-                                        <span class="font-bold">TL300-800</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Ofis Tasima</span>
-                                        <span class="font-bold">TL800-2K</span>
-                                    </div>
-                                </div>
-                                <button onclick="scrollToServices()" class="w-full bg-indigo-600 text-white py-2 sharp-corner text-xs font-bold hover:bg-indigo-700 transition duration-200 mt-3">
-                                    HIZMET AL
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Kisisel Hizmetler -->
-                    <div class="bg-white border-2 border-pink-200 p-4 minimal-corner group hover:border-pink-500 hover:shadow-lg transition-all duration-300 cursor-pointer relative overflow-hidden">
-                        <div class="text-center relative z-10">
-                            <div class="w-8 h-8 bg-pink-700 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-pink-600 transition-colors duration-300">
-                                <i class="fas fa-user text-white text-lg"></i>
-                            </div>
-                            <h3 class="font-bold text-slate-800 mb-2 text-sm">KISISEL</h3>
-                            <div class="text-xs text-slate-600 mb-3">Kuafor-Masaj-Ozel Ders</div>
-                            <div class="text-center">
-                                <div class="text-pink-600 font-bold text-sm">TL150-800</div>
-                                <div class="text-slate-500 text-xs">Ortalama Fiyat</div>
-                            </div>
-                        </div>
-                        <!-- Hover Overlay -->
-                        <div class="absolute inset-0 bg-pink-700 bg-opacity-95 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex flex-col justify-center text-white">
-                            <div class="text-center">
-                                <h4 class="font-bold text-white text-sm mb-3">KISISEL HIZMETLER</h4>
-                                <div class="space-y-2 text-xs">
-                                    <div class="flex justify-between">
-                                        <span>Kuafor Hizmeti</span>
-                                        <span class="font-bold">TL100-300</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Masaj Terapi</span>
-                                        <span class="font-bold">TL200-500</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Ozel Ders</span>
-                                        <span class="font-bold">TL150-400</span>
-                                    </div>
-                                </div>
-                                <button onclick="scrollToServices()" class="w-full bg-pink-600 text-white py-2 sharp-corner text-xs font-bold hover:bg-pink-700 transition duration-200 mt-3">
-                                    HIZMET AL
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Otomotiv & Arac -->
-                    <div class="bg-white border-2 border-red-200 p-4 minimal-corner group hover:border-red-500 hover:shadow-lg transition-all duration-300 cursor-pointer relative overflow-hidden">
-                        <div class="text-center relative z-10">
-                            <div class="w-8 h-8 bg-red-700 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-red-600 transition-colors duration-300">
-                                <i class="fas fa-car text-white text-lg"></i>
-                            </div>
-                            <h3 class="font-bold text-slate-800 mb-2 text-sm">OTOMOTIV</h3>
-                            <div class="text-xs text-slate-600 mb-3">Tamir-Yikama-Bakim</div>
-                            <div class="text-center">
-                                <div class="text-red-600 font-bold text-sm">TL200-2K</div>
-                                <div class="text-slate-500 text-xs">Ortalama Fiyat</div>
-                            </div>
-                        </div>
-                        <!-- Hover Overlay -->
-                        <div class="absolute inset-0 bg-red-700 bg-opacity-95 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex flex-col justify-center text-white">
-                            <div class="text-center">
-                                <h4 class="font-bold text-white text-sm mb-3">OTOMOTIV HIZMETLER</h4>
-                                <div class="space-y-2 text-xs">
-                                    <div class="flex justify-between">
-                                        <span>Arac Tamiri</span>
-                                        <span class="font-bold">TL500-1.5K</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Detayli Yikama</span>
-                                        <span class="font-bold">TL80-200</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Periyodik Bakim</span>
-                                        <span class="font-bold">TL300-800</span>
-                                    </div>
-                                </div>
-                                <button onclick="scrollToServices()" class="w-full bg-red-600 text-white py-2 sharp-corner text-xs font-bold hover:bg-red-700 transition duration-200 mt-3">
-                                    HIZMET AL
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </section>
 
         <!-- Benefits Section -->
 
-        <!-- Customer Testimonials Section -->
-        <section class="py-20 bg-gray-50">
-            <div class="max-w-7xl mx-auto px-6">
-                <!-- Previous Customer Reviews (Auto-sliding) -->
-                <div class="mb-8">
-                    <div class="text-center mb-6">
-                        <div class="flex items-center justify-center text-sm text-gray-500">
-                            <i class="fas fa-history mr-2"></i>
-                            <span>Son 30 günde alınan gerçek yorumlar</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Auto-sliding Reviews -->
-                    <div class="relative overflow-hidden">
-                        <div id="autoSlideReviews" class="flex space-x-4 transition-transform duration-500 ease-in-out">
-                            <!-- Mini Review 1 -->
-                            <div class="bg-white p-4 rounded-lg shadow border border-gray-100 w-64 flex-shrink-0">
-                                <div class="flex items-center mb-2">
-                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b3bb?w=32&h=32&fit=crop&crop=face&auto=format&q=80" 
-                                         alt="Ayse K." class="w-8 h-8 rounded-full mr-2">
-                                    <div class="flex-1">
-                                        <div class="font-medium text-sm text-gray-800">Ayşe K.</div>
-                                        <div class="text-xs text-gray-500">İstanbul</div>
-                                    </div>
-                                    <div class="flex text-yellow-400 text-xs">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                </div>
-                                <p class="text-xs text-gray-600 leading-relaxed">
-                                    "Çamaşır makinesi tamiri çok başarılı. 2 saatte geldi, 1 saatte tamir etti. Kesinlikle tavsiye ederim!"
-                                </p>
-                                <div class="flex justify-between items-center mt-2">
-                                    <span class="bg-blue-50 text-blue-600 px-2 py-1 rounded text-xs">Beyaz Eşya</span>
-                                    <span class="text-xs text-gray-400">15 Eylül</span>
-                                </div>
-                            </div>
 
-                            <!-- Mini Review 2 -->
-                            <div class="bg-white p-4 rounded-lg shadow border border-gray-100 w-64 flex-shrink-0">
-                                <div class="flex items-center mb-2">
-                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face&auto=format&q=80" 
-                                         alt="Mehmet Ö." class="w-8 h-8 rounded-full mr-2">
-                                    <div class="flex-1">
-                                        <div class="font-medium text-sm text-gray-800">Mehmet Ö.</div>
-                                        <div class="text-xs text-gray-500">Ankara</div>
-                                    </div>
-                                    <div class="flex text-yellow-400 text-xs">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                </div>
-                                <p class="text-xs text-gray-600 leading-relaxed">
-                                    "Elektrik arızası gece vakti çözüldü. 45 dakikada geldi, 6 ay garanti verdi. Profesyonel hizmet!"
-                                </p>
-                                <div class="flex justify-between items-center mt-2">
-                                    <span class="bg-yellow-50 text-yellow-600 px-2 py-1 rounded text-xs">Elektrik</span>
-                                    <span class="text-xs text-gray-400">18 Eylül</span>
-                                </div>
-                            </div>
-
-                            <!-- Mini Review 3 -->
-                            <div class="bg-white p-4 rounded-lg shadow border border-gray-100 w-64 flex-shrink-0">
-                                <div class="flex items-center mb-2">
-                                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face&auto=format&q=80" 
-                                         alt="Zeynep D." class="w-8 h-8 rounded-full mr-2">
-                                    <div class="flex-1">
-                                        <div class="font-medium text-sm text-gray-800">Zeynep D.</div>
-                                        <div class="text-xs text-gray-500">İzmir</div>
-                                    </div>
-                                    <div class="flex text-yellow-400 text-xs">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                </div>
-                                <p class="text-xs text-gray-600 leading-relaxed">
-                                    "Kombi arızası kış ortasında çözüldü. 1 saatte teknisyen buldum. İş kalitesi mükemmel!"
-                                </p>
-                                <div class="flex justify-between items-center mt-2">
-                                    <span class="bg-orange-50 text-orange-600 px-2 py-1 rounded text-xs">Kombi</span>
-                                    <span class="text-xs text-gray-400">14 Eylül</span>
-                                </div>
-                            </div>
-
-                            <!-- Mini Review 4 -->
-                            <div class="bg-white p-4 rounded-lg shadow border border-gray-100 w-64 flex-shrink-0">
-                                <div class="flex items-center mb-2">
-                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face&auto=format&q=80" 
-                                         alt="Ali Y." class="w-8 h-8 rounded-full mr-2">
-                                    <div class="flex-1">
-                                        <div class="font-medium text-sm text-gray-800">Ali Y.</div>
-                                        <div class="text-xs text-gray-500">Bursa</div>
-                                    </div>
-                                    <div class="flex text-yellow-400 text-xs">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                </div>
-                                <p class="text-xs text-gray-600 leading-relaxed">
-                                    "TV tamiri uygun fiyata garantili şekilde halledildi. WhatsApp desteği çok praktik!"
-                                </p>
-                                <div class="flex justify-between items-center mt-2">
-                                    <span class="bg-purple-50 text-purple-600 px-2 py-1 rounded text-xs">TV Tamiri</span>
-                                    <span class="text-xs text-gray-400">16 Eylül</span>
-                                </div>
-                            </div>
-
-                            <!-- Mini Review 5 -->
-                            <div class="bg-white p-4 rounded-lg shadow border border-gray-100 w-64 flex-shrink-0">
-                                <div class="flex items-center mb-2">
-                                    <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=32&h=32&fit=crop&crop=face&auto=format&q=80" 
-                                         alt="Fatma Ş." class="w-8 h-8 rounded-full mr-2">
-                                    <div class="flex-1">
-                                        <div class="font-medium text-sm text-gray-800">Fatma Ş.</div>
-                                        <div class="text-xs text-gray-500">Antalya</div>
-                                    </div>
-                                    <div class="flex text-yellow-400 text-xs">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                </div>
-                                <p class="text-xs text-gray-600 leading-relaxed">
-                                    "Su tesisatı acil servisi 30 dakikada geldi. İş kalitesi ve güler yüzü için teşekkürler!"
-                                </p>
-                                <div class="flex justify-between items-center mt-2">
-                                    <span class="bg-blue-50 text-blue-600 px-2 py-1 rounded text-xs">Su Tesisatı</span>
-                                    <span class="text-xs text-gray-400">17 Eylül</span>
-                                </div>
-                            </div>
-
-                            <!-- Mini Review 6 -->
-                            <div class="bg-white p-4 rounded-lg shadow border border-gray-100 w-64 flex-shrink-0">
-                                <div class="flex items-center mb-2">
-                                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=32&h=32&fit=crop&crop=face&auto=format&q=80" 
-                                         alt="Osman K." class="w-8 h-8 rounded-full mr-2">
-                                    <div class="flex-1">
-                                        <div class="font-medium text-sm text-gray-800">Osman K.</div>
-                                        <div class="text-xs text-gray-500">Adana</div>
-                                    </div>
-                                    <div class="flex text-yellow-400 text-xs">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                </div>
-                                <p class="text-xs text-gray-600 leading-relaxed">
-                                    "Klima sorunu 2 saatte çözüldü. Fiyat çok makul, ailecek memnun kaldık. Harika!"
-                                </p>
-                                <div class="flex justify-between items-center mt-2">
-                                    <span class="bg-cyan-50 text-cyan-600 px-2 py-1 rounded text-xs">Klima</span>
-                                    <span class="text-xs text-gray-400">13 Eylül</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </section>
+
+        <!-- Benefits Section -->
+
+
 
         <!-- Customer Benefits Section -->
         <section class="py-20 bg-white">
@@ -6187,91 +6574,112 @@ app.get('/', (c) => {
 
 
         <!-- Service Request Form -->
-        <section class="py-20 bg-slate-50" id="hizmet-al">
+        <section class="py-8 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white" id="hizmet-al">
             <div class="max-w-6xl mx-auto px-6">
-                <div class="text-center mb-12">
-                    <div class="section-divider w-32 mx-auto mb-8"></div>
-                    <div class="inline-flex items-center bg-green-100 text-green-800 px-6 py-3 minimal-corner mb-4">
-                        <i class="fas fa-shield-check text-green-600 mr-3"></i>
-                        <span class="font-bold">%100 GUVENLI HIZMET BASVURUSU</span>
+                <div class="text-center mb-3">
+                    <div class="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-2 rounded-full mb-2">
+                        <i class="fas fa-shield-check text-green-300 mr-2"></i>
+                        <span class="text-white font-semibold text-sm">%100 GUVENLI HIZMET BASVURUSU</span>
                     </div>
-                    <h2 class="text-5xl font-bold text-blue-900 mb-6 tracking-tight">
+                    <h2 class="text-2xl lg:text-3xl font-bold mb-2 text-green-300 tracking-tight">
                         GUVENLI HIZMET ALMAK ICIN
-                        <span class="block text-green-700">TALEBINIZI BILDIRIN</span>
                     </h2>
-
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <!-- Service Request Form -->
-                    <div class="lg:col-span-2 bg-white p-8 minimal-corner shadow-lg border-2 border-blue-100">
-                        
-
-
-
-
-                        <form id="serviceRequestForm" class="space-y-6">
+                <div class="flex flex-col lg:flex-row gap-6 items-start" style="max-width: 100%;">
+                    <!-- Form area - increased width by 50px -->
+                    <!-- Service Request Form - LEFT SIDE - Width increased by 50px -->
+                    <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-4 shadow-lg flex-1" style="min-width: 0; max-width: calc(100% - 330px);">
+                        <form id="serviceRequestForm" class="space-y-3">
 
 
                             <!-- Location Information -->
                             <div data-step="1" class="form-step">
-                                <div class="flex items-center justify-between mb-4">
-                                    <h4 class="text-lg font-bold text-blue-900">1 Konum Bilgileri</h4>
-                                    <div id="step1Reward" class="hidden bg-blue-100 text-blue-800 px-3 py-1 minimal-corner text-sm font-bold">
+                                <div class="flex items-center justify-between mb-0.5">
+                                    <h4 class="text-base font-bold text-white">1 Konum Bilgileri</h4>
+                                    <div id="step1Reward" class="hidden bg-white/20 text-purple-200 px-2 py-1 rounded text-xs font-bold">
                                         <i class="fas fa-map-marker-alt mr-1"></i>En yakin ustalar bulunuyor...
                                     </div>
                                 </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                                     <div>
-                                        <label class="block text-sm font-bold text-blue-900 mb-2">
-                                            <i class="fas fa-map-marker-alt mr-2"></i>Sehir *
+                                        <label class="block text-xs font-bold text-purple-200 mb-0.5">
+                                            <i class="fas fa-map-marker-alt mr-1"></i>Sehir *
                                         </label>
                                         <select id="customerCity" required 
-                                                class="w-full p-4 border-2 border-blue-200 sharp-corner focus:border-amber-400 focus:outline-none transition duration-200"
-                                                onchange="updateFormProgress(); validateStep(1); showNearbyExperts();">
-                                            <option value="">Sehir Secin</option>
-                                            <option value="Istanbul">Istanbul</option>
-                                            <option value="Ankara">Ankara</option>
-                                            <option value="Izmir">Izmir</option>
-                                            <option value="Bursa">Bursa</option>
-                                            <option value="Antalya">Antalya</option>
-                                            <option value="Adana">Adana</option>
-                                            <option value="Gaziantep">Gaziantep</option>
-                                            <option value="Konya">Konya</option>
-                                            <option value="Diger">Diger</option>
+                                                class="w-full p-1.5 bg-white/20 border border-white/30 rounded-lg text-white focus:border-purple-300 focus:outline-none transition duration-200 text-sm city-select"
+                                                onchange="updateFormProgress(); validateStep(1); showNearbyExperts(); handleCityChange();">
+                                            <option value="" class="bg-white text-gray-800">Şehir Seçin</option>
+                                            <option value="İstanbul" class="bg-white text-gray-800">İstanbul</option>
+                                            <option value="Ankara" class="bg-white text-gray-800">Ankara</option>
+                                            <option value="İzmir" class="bg-white text-gray-800">İzmir</option>
+                                            <option value="Bursa" class="bg-white text-gray-800">Bursa</option>
+                                            <option value="Antalya" class="bg-white text-gray-800">Antalya</option>
+                                            <option value="Adana" class="bg-white text-gray-800">Adana</option>
+                                            <option value="Gaziantep" class="bg-white text-gray-800">Gaziantep</option>
+                                            <option value="Konya" class="bg-white text-gray-800">Konya</option>
+                                            <option value="Mersin" class="bg-white text-gray-800">Mersin</option>
+                                            <option value="Kayseri" class="bg-white text-gray-800">Kayseri</option>
+                                            <option value="Eskişehir" class="bg-white text-gray-800">Eskişehir</option>
+                                            <option value="Diyarbakır" class="bg-white text-gray-800">Diyarbakır</option>
+                                            <option value="Samsun" class="bg-white text-gray-800">Samsun</option>
+                                            <option value="Denizli" class="bg-white text-gray-800">Denizli</option>
+                                            <option value="Şanlıurfa" class="bg-white text-gray-800">Şanlıurfa</option>
+                                            <option value="Adapazarı" class="bg-white text-gray-800">Adapazarı</option>
+                                            <option value="Malatya" class="bg-white text-gray-800">Malatya</option>
+                                            <option value="Kahramanmaraş" class="bg-white text-gray-800">Kahramanmaraş</option>
+                                            <option value="Erzurum" class="bg-white text-gray-800">Erzurum</option>
+                                            <option value="Van" class="bg-white text-gray-800">Van</option>
+                                            <option value="Batman" class="bg-white text-gray-800">Batman</option>
+                                            <option value="Elazığ" class="bg-white text-gray-800">Elazığ</option>
+                                            <option value="İzmit" class="bg-white text-gray-800">İzmit</option>
+                                            <option value="Manisa" class="bg-white text-gray-800">Manisa</option>
+                                            <option value="Sivas" class="bg-white text-gray-800">Sivas</option>
+                                            <option value="Gebze" class="bg-white text-gray-800">Gebze</option>
+                                            <option value="Balıkesir" class="bg-white text-gray-800">Balıkesir</option>
+                                            <option value="Tarsus" class="bg-white text-gray-800">Tarsus</option>
+                                            <option value="Çorum" class="bg-white text-gray-800">Çorum</option>
+                                            <option value="Diğer" class="bg-white text-gray-800">Diğer (Kendim Yazacağım)</option>
                                         </select>
+                                        <!-- Custom City Input (hidden by default) -->
+                                        <input type="text" id="customCityInput" 
+                                               class="w-full p-1.5 bg-white/20 border border-white/30 rounded-lg text-white placeholder-purple-200 focus:border-purple-300 focus:outline-none transition duration-200 text-sm mt-2 hidden"
+                                               placeholder="Şehrinizi yazın (örn: Trabzon, Ordu, vb.)"
+                                               onchange="updateFormProgress();">
                                         <div id="cityValidation" class="text-xs mt-1 hidden">
-                                            <span class="text-blue-600"><i class="fas fa-search mr-1"></i>Sehrinizde uzman araniyor...</span>
+                                            <span class="text-purple-200"><i class="fas fa-search mr-1"></i>Sehrinizde uzman araniyor...</span>
                                         </div>
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-bold text-blue-900 mb-2">
-                                            <i class="fas fa-building mr-2"></i>Ilce
+                                        <label class="block text-xs font-bold text-purple-200 mb-0.5">
+                                            <i class="fas fa-building mr-1"></i>Ilce
                                         </label>
                                         <input type="text" id="customerDistrict" 
-                                               class="w-full p-4 border-2 border-blue-200 sharp-corner focus:border-amber-400 focus:outline-none transition duration-200"
+                                               class="w-full p-2 bg-white/20 border border-white/30 rounded-lg text-white placeholder-purple-200 focus:border-purple-300 focus:outline-none transition duration-200 text-sm"
                                                placeholder="Orn: Kadikoy"
                                                onchange="updateFormProgress();">
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Service Category -->
+                            <!-- Service Category & Contact Info -->
                             <div data-step="2" class="form-step">
-                                <div class="flex items-center justify-between mb-4">
-                                    <h4 class="text-lg font-bold text-blue-900">2 Hizmet Kategorisi</h4>
-                                    <div id="step2Reward" class="hidden bg-purple-100 text-purple-800 px-3 py-1 minimal-corner text-sm font-bold">
+                                <div class="flex items-center justify-between mb-0.5">
+                                    <h4 class="text-base font-bold text-white">2 Hizmet Kategorisi ve Iletisim</h4>
+                                    <div id="step2Reward" class="hidden bg-white/20 text-purple-200 px-2 py-1 rounded text-xs font-bold">
                                         <i class="fas fa-tools mr-1"></i>Fiyat hesaplaniyor...
                                     </div>
                                 </div>
-                                <div>
-                                    <label class="block text-base font-bold text-blue-900 mb-3">
-                                        <i class="fas fa-tools mr-2 text-lg"></i>Hizmet Kategorisi *
-                                    </label>
-                                    <select id="serviceCategory" required 
-                                            class="w-full p-6 text-lg border-2 border-blue-200 sharp-corner focus:border-amber-400 focus:outline-none transition duration-200"
-                                            onchange="updateFormProgress(); validateStep(2); showEstimatedPrice();">
-                                        <option value="">Kategori Secin</option>
+                                <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">
+                                    <!-- Hizmet Kategorisi - Kisaltilmis -->
+                                    <div class="lg:col-span-1">
+                                        <label class="block text-xs font-bold text-purple-200 mb-0.5">
+                                            <i class="fas fa-tools mr-1"></i>Hizmet Kategorisi *
+                                        </label>
+                                        <select id="serviceCategory" required 
+                                                class="w-full p-1.5 text-sm bg-white/20 border border-white/30 rounded-lg text-white focus:border-purple-300 focus:outline-none transition duration-200 service-category-select"
+                                                onchange="updateFormProgress(); validateStep(2); showEstimatedPrice();">
+                                            <option value="" class="bg-white text-gray-800">Kategori Secin</option>
                                     
                                     <!-- TEKNIK ONARIM - Detaylandirilmis -->
                                     <optgroup label=" TEKNIK ONARIM HIZMETLERI">
@@ -6314,33 +6722,56 @@ app.get('/', (c) => {
                                         <option value="Nakliye">Nakliye & Tasima</option>
                                         <option value="Diger">Diger (Aciklama kisminda belirtiniz)</option>
                                     </optgroup>
-                                    </select>
-                                    <div id="categoryValidation" class="text-xs mt-1 hidden">
-                                        <span class="text-purple-600"><i class="fas fa-calculator mr-1"></i>Tahmini fiyat hesaplaniyor...</span>
+                                        </select>
+                                        <div id="categoryValidation" class="text-xs mt-1 hidden">
+                                            <span class="text-purple-200"><i class="fas fa-calculator mr-1"></i>Tahmini fiyat hesaplaniyor...</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Isim Soyisim -->
+                                    <div>
+                                        <label class="block text-xs font-bold text-purple-200 mb-0.5">
+                                            <i class="fas fa-user mr-1"></i>Isim Soyisim *
+                                        </label>
+                                        <input type="text" id="customerName" required 
+                                               class="w-full p-2 bg-white/20 border border-white/30 rounded-lg text-white placeholder-purple-200 focus:border-purple-300 focus:outline-none transition duration-200 text-sm"
+                                               placeholder="Orn: Ahmet Yilmaz"
+                                               onchange="updateFormProgress();">
+                                    </div>
+                                    
+                                    <!-- Telefon -->
+                                    <div>
+                                        <label class="block text-xs font-bold text-purple-200 mb-0.5">
+                                            <i class="fas fa-phone mr-1"></i>Telefon *
+                                        </label>
+                                        <input type="tel" id="customerPhone" required 
+                                               class="w-full p-2 bg-white/20 border border-white/30 rounded-lg text-white placeholder-purple-200 focus:border-purple-300 focus:outline-none transition duration-200 text-sm"
+                                               placeholder="Orn: 0532 123 45 67"
+                                               onchange="updateFormProgress();">
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Problem Description -->
                             <div data-step="3" class="form-step">
-                                <div class="flex items-center justify-between mb-4">
-                                    <h4 class="text-lg font-bold text-blue-900">3 Sorun Detayi</h4>
-                                    <div id="step3Reward" class="hidden bg-orange-100 text-orange-800 px-3 py-1 minimal-corner text-sm font-bold">
+                                <div class="flex items-center justify-between mb-0.5">
+                                    <h4 class="text-base font-bold text-white">3 Sorun Detayi</h4>
+                                    <div id="step3Reward" class="hidden bg-white/20 text-purple-200 px-2 py-1 rounded text-xs font-bold">
                                         <i class="fas fa-brain mr-1"></i>AI analiz ediliyor...
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-bold text-blue-900 mb-2">
-                                        <i class="fas fa-edit mr-2"></i>Sorun Detayi *
+                                    <label class="block text-xs font-bold text-purple-200 mb-0.5">
+                                        <i class="fas fa-edit mr-1"></i>Sorun Detayi *
                                     </label>
-                                    <textarea id="problemDescription" required rows="4" 
-                                              class="w-full p-4 border-2 border-blue-200 sharp-corner focus:border-amber-400 focus:outline-none transition duration-200"
+                                    <textarea id="problemDescription" required rows="3" 
+                                              class="w-full p-1.5 text-sm bg-white/20 border border-white/30 rounded-lg text-white placeholder-purple-200 focus:border-purple-300 focus:outline-none transition duration-200"
                                               placeholder="Sorununuzu detayli sekilde aciklayin. Orn: Camasir makinesi calisiyor ama su almiyor, sesli calisiyor..."
                                               onchange="updateFormProgress(); validateStep(3); analyzeDescription();"></textarea>
                                     <div id="descriptionValidation" class="text-xs mt-1 hidden">
                                         <span class="text-orange-600"><i class="fas fa-robot mr-1"></i>Aciklama AI ile analiz ediliyor...</span>
                                     </div>
-                                    <div class="text-xs text-blue-600 mt-2">
+                                    <div class="text-sm text-yellow-300 mt-2 font-medium">
                                         <span id="charCount">0</span>/500 karakter - Daha detayli aciklama daha hizli cozum!
                                     </div>
                                 </div>
@@ -6348,41 +6779,66 @@ app.get('/', (c) => {
 
                             <!-- Urgency Level -->
                             <div>
-                                <label class="block text-sm font-bold text-blue-900 mb-2">
+                                <label class="block text-sm font-bold text-white mb-2">
                                     <i class="fas fa-clock mr-2"></i>Aciliyet Durumu
                                 </label>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <label class="flex items-center p-3 border-2 border-blue-200 sharp-corner cursor-pointer hover:border-amber-400 transition duration-200">
-                                        <input type="radio" name="urgency" value="normal" checked class="mr-3">
-                                        <span class="text-blue-900 font-medium">Normal</span>
+                                <div class="flex flex-wrap justify-between">
+                                    <label class="flex items-center justify-center p-1.5 border-2 border-purple-300 sharp-corner cursor-pointer hover:border-yellow-400 transition duration-200 bg-white/10 backdrop-blur-sm" style="width: calc(33.333% - 10px); margin: 0 2px;">
+                                        <input type="radio" name="urgency" value="normal" checked class="mr-2">
+                                        <span class="text-white font-medium text-sm">Normal</span>
                                     </label>
-                                    <label class="flex items-center p-3 border-2 border-blue-200 sharp-corner cursor-pointer hover:border-amber-400 transition duration-200">
-                                        <input type="radio" name="urgency" value="urgent" class="mr-3">
-                                        <span class="text-blue-900 font-medium">Acil</span>
+                                    <label class="flex items-center justify-center p-1.5 border-2 border-purple-300 sharp-corner cursor-pointer hover:border-yellow-400 transition duration-200 bg-white/10 backdrop-blur-sm" style="width: calc(33.333% - 10px); margin: 0 2px;">
+                                        <input type="radio" name="urgency" value="urgent" class="mr-2">
+                                        <span class="text-white font-medium text-sm">Acil</span>
                                     </label>
-                                    <label class="flex items-center p-3 border-2 border-blue-200 sharp-corner cursor-pointer hover:border-amber-400 transition duration-200">
-                                        <input type="radio" name="urgency" value="emergency" class="mr-3">
-                                        <span class="text-blue-900 font-medium">Cok Acil</span>
+                                    <label class="flex items-center justify-center p-1.5 border-2 border-purple-300 sharp-corner cursor-pointer hover:border-yellow-400 transition duration-200 bg-white/10 backdrop-blur-sm" style="width: calc(33.333% - 10px); margin: 0 2px;">
+                                        <input type="radio" name="urgency" value="emergency" class="mr-2">
+                                        <span class="text-white font-medium text-sm">Çok Acil</span>
                                     </label>
                                 </div>
                             </div>
 
                             <!-- Contact Preference -->
-                            <!-- Submit Button -->
-                            <div class="text-center pt-6">
+                            <!-- Submit Button Only -->
+                            <div class="text-center pt-1">
+                                <!-- Talep Gonder Butonu - En Üstte Ortalı -->
                                 <button type="submit" 
-                                        class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-4 minimal-corner font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                                    <i class="fas fa-paper-plane mr-3"></i>
+                                        class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-8 py-2 minimal-corner font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                                    <i class="fas fa-paper-plane mr-2"></i>
                                     TALEBI GONDER
                                 </button>
+                                
+                                <!-- 15px Space + Status Info -->
+                                <div style="margin-top: 15px;" class="text-center space-y-2">
+                                    <p class="text-green-500 font-bold text-base" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                                        <i class="fas fa-clock mr-2 text-blue-500"></i>
+                                        Ortalama geri donus suresi: 10 dk
+                                    </p>
+                                    <p id="dynamicStatsText" class="floating-stats-text font-bold text-base" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transition: all 0.3s ease;">
+                                        <i class="fas fa-chart-line mr-2 text-blue-400"></i>
+                                        <strong>Aktif uzman sayisi: 847</strong>
+                                    </p>
+                                    <p id="dynamicActivityText" class="floating-activity-text font-bold text-base" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transition: all 0.3s ease;">
+                                        <i class="fas fa-user-check mr-2 text-green-400"></i>
+                                        <strong>Ahmet K. elektrik hizmeti aldi</strong>
+                                    </p>
+                                </div>
+                                
 
                             </div>
 
+                            <!-- Dynamic Notifications Collector -->
+                            <!-- Floating Live Notifications Area -->
+                            <div id="floating-notification-area" class="mt-2 pt-2 min-h-8 relative">
+                                <div id="live-notification-display" class="text-center">
+                                    <!-- Live notifications will appear here as floating text -->
+                                </div>
+                            </div>
 
                         </form>
 
                         <!-- Form Status Messages -->
-                        <div id="formMessages" class="mt-6 hidden">
+                        <div id="formMessages" class="mt-2 hidden">
                             <div id="successMessage" class="bg-emerald-50 border-2 border-emerald-200 p-4 minimal-corner text-emerald-800 hidden">
                                 <i class="fas fa-check-circle mr-2"></i>
                                 <strong>Basarili!</strong> Talebiniz alindi. En kisa surede size donus yapilacak.
@@ -6393,112 +6849,124 @@ app.get('/', (c) => {
                             </div>
                         </div>
                         
-                        <!-- Response Time Info -->
-                        <div class="mt-6 p-4 bg-amber-50 border border-amber-200 minimal-corner text-center">
-                            <p class="text-amber-800 font-medium">
-                                <i class="fas fa-clock mr-2 text-amber-600"></i>
-                                <strong>Ortalama geri donus suresi: 12 dk</strong>
-                            </p>
-                        </div>
+
+
+
+
                         
 
                     </div>
 
-                    <!-- Contact Options Sidebar -->
-                    <div class="space-y-6">
-                        <!-- AI Live Chat -->
-                        <div class="bg-gradient-to-br from-purple-600 to-blue-600 text-white p-6 minimal-corner relative overflow-hidden">
-                            <div class="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -translate-y-10 translate-x-10"></div>
-                            <h3 class="text-xl font-bold text-amber-400 mb-4 relative z-10">
-                                <i class="fas fa-robot mr-2"></i>
-                                YAPAY ZEKA DESTEK
-                            </h3>
-                            <p class="text-sm mb-4 opacity-90 relative z-10">
-                                Sorularinizi aninda cevaplayalim! 7/24 aktif yapay zeka asistanimiz ile konusun.
+                    <!-- Contact Options Sidebar - RIGHT SIDE - Width reduced by 50px -->
+                    <div class="space-y-2" style="flex: 0 0 280px; width: 280px;">
+                        <!-- AI Live Chat - Compact -->
+                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white p-2 relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-10 h-10 bg-white/10 rounded-full -translate-y-6 translate-x-6"></div>
+                            <div class="mb-1 relative z-10 text-center">
+                                <img src="https://page.gensparksite.com/v1/base64_upload/048c4b5ab3a7280d26f5b471c120123b" 
+                                     alt="Garantor360" 
+                                     class="h-6 w-auto mx-auto mb-1">
+                                <h3 class="text-base font-bold text-white">
+                                    <i class="fas fa-headset mr-1"></i>
+                                    TEMSILCISI
+                                </h3>
+                            </div>
+                            <p class="text-sm mb-1 text-purple-100 relative z-10">
+                                Sorularinizi aninda cevaplayalim! <span class="text-yellow-300 font-bold">7/24</span> aktif temsilci.
                             </p>
                             <button onclick="toggleAIChat()" 
-                                    class="w-full flex items-center justify-center p-3 bg-white/20 sharp-corner hover:bg-white/30 transition duration-200 relative z-10">
-                                <i class="fas fa-comments mr-3"></i>
+                                    class="w-full flex items-center justify-center p-1.5 bg-white/20 rounded-lg hover:bg-white/30 transition duration-200 relative z-10">
+                                <i class="fas fa-comments mr-2"></i>
                                 <div>
-                                    <div class="font-bold">Canli Sohbet Baslat</div>
-                                    <div class="text-xs opacity-90">Ucretsiz & Aninda</div>
+                                    <div class="font-bold text-base">Canli Sohbet Baslat</div>
+                                    <div class="text-sm opacity-90">Ucretsiz & Aninda</div>
                                 </div>
                             </button>
                         </div>
 
-                        <!-- Quick Contact -->
-                        <div class="bg-blue-900 text-white p-6 minimal-corner">
-                            <h3 class="text-xl font-bold text-amber-400 mb-4">
-                                <i class="fas fa-phone-alt mr-2"></i>
-                                HIZLI ILETISIM
+                        <!-- Quick Contact - Compact -->
+                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white p-2">
+                            <h3 class="text-base font-bold mb-1 text-center">
+                                <i class="fas fa-phone mr-1 text-yellow-400"></i>
+                                <span class="fast-contact-text">HIZLI ILETISIM</span>
                             </h3>
-                            <div class="space-y-4">
+                            <div class="space-y-1">
                                 <a href="tel:+905001234567" 
-                                   class="flex items-center p-3 bg-blue-800 sharp-corner hover:bg-amber-500 hover:text-blue-900 transition duration-200">
-                                    <i class="fas fa-phone mr-3"></i>
+                                   class="flex items-center p-1.5 bg-white/20 rounded-lg hover:bg-purple-600 transition duration-200">
+                                    <i class="fas fa-phone mr-2"></i>
                                     <div>
-                                        <div class="font-bold">0 500 123 45 67</div>
+                                        <div class="font-bold text-base">0 500 123 45 67</div>
                                         <div class="text-sm opacity-90">Aninda Destek</div>
                                     </div>
                                 </a>
                                 <a href="https://wa.me/905001234567?text=Merhaba, Garantor360 hizmet talebi icin yazmistim..." 
                                    target="_blank"
-                                   class="flex items-center p-3 bg-[#25D366] sharp-corner hover:bg-[#20BA5A] transition duration-200">
-                                    <i class="fab fa-whatsapp mr-3 text-xl"></i>
+                                   class="flex items-center p-1.5 bg-[#25D366] rounded-lg hover:bg-[#20BA5A] transition duration-200">
+                                    <i class="fab fa-whatsapp mr-2"></i>
                                     <div>
-                                        <div class="font-bold">WhatsApp</div>
+                                        <div class="font-bold text-base">WhatsApp</div>
                                         <div class="text-sm opacity-90">Mesajla Iletisim</div>
                                     </div>
                                 </a>
                             </div>
                         </div>
 
-                        <!-- Clean Security Guarantee -->
-                        <div class="bg-white border-2 border-blue-200 p-6 minimal-corner">
-                            <div class="text-center mb-4">
-                                <div class="w-8 h-8 bg-blue-100 minimal-corner mx-auto mb-3 flex items-center justify-center">
-                                    <i class="fas fa-shield-alt text-blue-600 text-lg"></i>
+                        <!-- Compact Security Guarantee -->
+                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-1.5">
+                            <div class="text-center mb-1">
+                                <div class="w-4 h-4 bg-white/20 rounded mx-auto mb-1 flex items-center justify-center">
+                                    <i class="fas fa-shield-alt text-purple-300 text-xs"></i>
                                 </div>
-                                <h4 class="text-lg font-bold text-blue-900 mb-2">
+                                <h4 class="text-sm font-bold text-white mb-1">
                                     GUVENLIK GARANTILERI
                                 </h4>
-                                <p class="text-xs text-blue-600 font-medium">Tamamen korumali hizmet</p>
                             </div>
-                            <div class="space-y-3">
-                                <div class="flex items-center p-3 bg-blue-50 minimal-corner">
-                                    <i class="fas fa-check-circle text-blue-600 mr-3"></i>
-                                    <div>
-                                        <div class="text-sm font-semibold text-blue-900">Para Iade Garantisi</div>
-                                        <div class="text-xs text-blue-600">Memnun kalmazsan iade</div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center p-3 bg-blue-50 minimal-corner">
-                                    <i class="fas fa-check-circle text-blue-600 mr-3"></i>
-                                    <div>
-                                        <div class="text-sm font-semibold text-blue-900">Dogrulanmis Ustalar</div>
-                                        <div class="text-xs text-blue-600">Kimlik kontrollu uzmanlar</div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center p-3 bg-blue-50 minimal-corner">
-                                    <i class="fas fa-check-circle text-blue-600 mr-3"></i>
-                                    <div>
-                                        <div class="text-sm font-semibold text-blue-900">6 Ay Garanti</div>
-                                        <div class="text-xs text-blue-600">Iscilik garantisi</div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center p-3 bg-blue-50 minimal-corner">
-                                    <i class="fas fa-check-circle text-blue-600 mr-3"></i>
-                                    <div>
-                                        <div class="text-sm font-semibold text-blue-900">Hukuki Destek</div>
-                                        <div class="text-xs text-blue-600">Avukat destegi</div>
-                                    </div>
+                            
+                            
+                            <!-- Dinamik Güvenlik Bilgileri -->
+                            <div class="flex items-center p-1.5 bg-white/20 rounded mb-1">
+                                <i id="securityIcon" class="fas fa-tools text-blue-300 mr-1 text-sm"></i>
+                                <div>
+                                    <div id="securityTitle" class="text-sm font-semibold text-white">ISCILIK GARANTISI</div>
+                                    <div id="securityDetail" class="text-sm text-purple-200">6 ay garanti</div>
                                 </div>
                             </div>
-                            <div class="mt-4 p-3 bg-amber-50 border border-amber-200 minimal-corner text-center">
-                                <p class="text-xs font-semibold text-amber-800">
+                            
+                            <!-- Risk-Free Badge -->
+                            <div class="p-1.5 bg-green-500/20 border border-green-300/30 rounded text-center">
+                                <p class="text-sm font-semibold text-green-300">
                                     <i class="fas fa-shield-alt mr-1"></i>
                                     %100 Risk-Free Hizmet
                                 </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Section - Compact -->
+                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-1.5">
+                            <div class="text-center mb-1">
+                                <div class="w-4 h-4 bg-white/20 rounded mx-auto mb-1 flex items-center justify-center">
+                                    <i class="fas fa-question-circle text-amber-300 text-xs"></i>
+                                </div>
+                                <h4 class="text-sm font-bold text-white mb-1">
+                                    BİLGİ MERKEZİ
+                                </h4>
+                            </div>
+                            
+                            <!-- FAQ Content -->
+                            <div class="flex items-center p-1.5 bg-white/20 rounded mb-1">
+                                <i class="fas fa-star text-amber-300 mr-1 text-sm"></i>
+                                <div>
+                                    <div class="text-sm font-semibold text-white">GARANTOR360 FAYDALARI</div>
+                                    <div class="text-sm text-purple-200">Detayli bilgiler</div>
+                                </div>
+                            </div>
+                            
+                            <!-- FAQ Button -->
+                            <div class="p-1.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded text-center">
+                                <a href="/sss" target="_blank" class="text-sm font-semibold text-white hover:text-white">
+                                    <i class="fas fa-external-link-alt mr-1"></i>
+                                    SSS Sayfasini Gor
+                                </a>
                             </div>
                         </div>
 
@@ -6506,7 +6974,6 @@ app.get('/', (c) => {
                 </div>
             </div>
         </section>
-
 
 
         <!-- AI Chat Modal/Widget -->
@@ -6605,7 +7072,7 @@ app.get('/', (c) => {
                         <div class="lg:col-span-2 p-8">
                             <div class="mb-6">
                                 <div class="flex items-center mb-1">
-                                    <img src="https://page.gensparksite.com/v1/base64_upload/56c8b3a8afa175342843b0e8d4d4c600" alt="Garantor360" class="h-16">
+                                    <img src="https://page.gensparksite.com/v1/base64_upload/048c4b5ab3a7280d26f5b471c120123b" alt="Garantor360" class="h-8">
                                 </div>
                                 <p class="text-slate-600 font-medium">Musteri Mobil Uygulamasi</p>
                             </div>
@@ -6721,7 +7188,7 @@ app.get('/', (c) => {
                         <div class="lg:col-span-1">
                             <div class="mb-6">
                                 <div class="flex items-center">
-                                    <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-24">
+                                    <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_cf86bcd8-44b5-4426-b5e0-8f77c45da44a" alt="Garantor360" class="h-10">
                                 </div>
                             </div>
                             <p class="text-blue-200 font-medium mb-6 leading-relaxed">
@@ -7078,7 +7545,9 @@ app.get('/', (c) => {
                 const formData = {
                     customerName: document.getElementById('customerName').value.trim(),
                     customerPhone: document.getElementById('customerPhone').value.trim(),
-                    customerCity: document.getElementById('customerCity').value,
+                    customerCity: document.getElementById('customerCity').value === 'Diğer' 
+                        ? document.getElementById('customCityInput').value.trim() 
+                        : document.getElementById('customerCity').value,
                     customerDistrict: document.getElementById('customerDistrict').value.trim(),
                     serviceCategory: document.getElementById('serviceCategory').value,
                     problemDescription: document.getElementById('problemDescription').value.trim(),
@@ -7093,7 +7562,7 @@ app.get('/', (c) => {
                 formData.contactPreference = contactPreferences;
                 
                 // Client-side validation
-                if (!formData.customerName || !formData.customerPhone || !formData.serviceCategory || !formData.problemDescription) {
+                if (!formData.customerName || !formData.customerPhone || !formData.customerCity || !formData.serviceCategory || !formData.problemDescription) {
                     throw new Error('Lutfen gerekli alanlari doldurun');
                 }
                 
@@ -7172,6 +7641,134 @@ app.get('/', (c) => {
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize Hero Slider
             initHeroSlider();
+            
+            // Initialize Dynamic Notifications System - Direct Call
+            setTimeout(() => {
+                console.log('Starting notifications system directly...');
+                if (typeof window.initializeDynamicNotifications === 'function') {
+                    window.initializeDynamicNotifications();
+                    console.log('Dynamic notifications initialized!');
+                } else {
+                    // Start notifications manually if function not found
+                    console.log('Starting notifications manually...');
+                    startNotificationsManually();
+                }
+            }, 2000);
+            
+            // Initialize Dynamic Stats and Activity Text
+            setTimeout(() => {
+                initDynamicStats();
+                initDynamicActivity();
+                initSecurityGuarantees();
+            }, 2000);
+        });
+
+        // Manual notifications starter as fallback
+        function startNotificationsManually() {
+            console.log('Manual notification system starting...');
+            
+            const notifications = [
+                { text: "İstanbul'da elektrik tamiri tamamlandı", type: "success", location: "İstanbul", service: "Elektrik", icon: "fas fa-bolt" },
+                { text: "Ankara'da tesisatçı işini bitirdi", type: "success", location: "Ankara", service: "Tesisat", icon: "fas fa-wrench" },
+                { text: "Bursa'da boyacı çalışması kabul edildi", type: "success", location: "Bursa", service: "Boyacı", icon: "fas fa-paint-brush" },
+                { text: "İzmir'de klima tamiri başladı", type: "active", location: "İzmir", service: "Klima", icon: "fas fa-snowflake" }
+            ];
+            
+            let notificationIndex = 0;
+            
+            function showNotification() {
+                const notification = notifications[notificationIndex % notifications.length];
+                notificationIndex++;
+                
+                // Add to liveNotifications container
+                const liveContainer = document.getElementById('liveNotifications');
+                if (liveContainer) {
+                    addLiveNotification(liveContainer, notification);
+                }
+                
+                // Also add to liveComments container
+                const commentsContainer = document.getElementById('liveComments');
+                if (commentsContainer) {
+                    addLiveComment(commentsContainer, notification);
+                }
+            }
+            
+
+            
+            // Start showing notifications every 4 seconds
+            showNotification(); // Show first one immediately
+            setInterval(showNotification, 4000);
+        }
+        
+        // Function to add live notification to container
+        function addLiveNotification(container, notification) {
+            // Remove old notifications if too many
+            while (container.children.length >= 3) {
+                container.removeChild(container.firstChild);
+            }
+            
+            const notificationEl = document.createElement('div');
+            notificationEl.className = 'bg-white/10 backdrop-blur-sm border border-green-400/30 rounded-lg p-3 transform translate-x-full transition-all duration-500';
+            
+            const timeAgo = Math.floor(Math.random() * 5) + 1; // 1-5 dakika önce
+            
+            notificationEl.innerHTML = 
+                '<div class="flex items-center space-x-3">' +
+                    '<div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">' +
+                        '<i class="' + notification.icon + ' text-white text-xs"></i>' +
+                    '</div>' +
+                    '<div class="flex-1">' +
+                        '<div class="text-white font-semibold text-sm">' + notification.text + '</div>' +
+                        '<div class="text-green-300 text-xs">' +
+                            '<i class="fas fa-clock mr-1"></i>' + timeAgo + ' dakika önce' +
+                        '</div>' +
+                    '</div>' +
+                '</div>';
+            
+            container.appendChild(notificationEl);
+            
+            // Animate in
+            setTimeout(() => {
+                notificationEl.classList.remove('translate-x-full');
+            }, 100);
+        }
+        
+        // Function to add live comment to container  
+        function addLiveComment(container, notification) {
+            // Remove old comments if too many
+            while (container.children.length >= 4) {
+                container.removeChild(container.firstChild);
+            }
+            
+            const commentEl = document.createElement('div');
+            commentEl.className = 'bg-white/10 backdrop-blur-sm border border-blue-400/30 rounded-lg p-2 transform translate-x-full transition-all duration-500';
+            
+            const customerNames = ['Ahmet K.', 'Zeynep M.', 'Mehmet Y.', 'Ayşe T.', 'Murat S.', 'Fatma D.'];
+            const customerName = customerNames[Math.floor(Math.random() * customerNames.length)];
+            const rating = Math.random() > 0.2 ? 5 : 4; // Mostly 5 stars
+            
+            commentEl.innerHTML = 
+                '<div class="flex items-start space-x-2">' +
+                    '<div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">' +
+                        customerName.charAt(0) +
+                    '</div>' +
+                    '<div class="flex-1">' +
+                        '<div class="text-white text-xs font-semibold">' + customerName + '</div>' +
+                        '<div class="text-yellow-400 text-xs mb-1">' +
+                            '★'.repeat(rating) + '☆'.repeat(5-rating) +
+                        '</div>' +
+                        '<div class="text-blue-100 text-xs">"' + notification.service + ' hizmeti mükemmeldi!"</div>' +
+                    '</div>' +
+                '</div>';
+            
+            container.appendChild(commentEl);
+            
+            // Animate in
+            setTimeout(() => {
+                commentEl.classList.remove('translate-x-full');
+            }, 100);
+        }
+            
             const form = document.getElementById('serviceRequestForm');
             if (form) {
                 form.addEventListener('submit', handleServiceRequest);
@@ -7204,10 +7801,284 @@ app.get('/', (c) => {
                     }
                 });
             }
+            
+            // Eski dinamik sistem kaldırıldı - Yeni temiz sistem dosyanın sonunda
         });
 
-        // Simulated real-time data updates
+        // Canlı Talep Akışı - Dinamik Güncelleme Sistemi
+        function startLiveRequestFlow() {
+            const liveNotifications = document.getElementById('liveNotifications');
+            const liveComments = document.getElementById('liveComments');
+            
+            if (!liveNotifications || !liveComments) return;
+            
+            // GENİŞLETİLMİŞ TV-PC-Beyaz Eşya Hizmet Verileri - 50+ Çeşit
+            const serviceTypes = [
+                // TV TAMİRLERİ
+                { service: 'TV Tamiri', details: 'Samsung 75" Neo QLED 8K', location: 'İstanbul, Beşiktaş', color: 'green' },
+                { service: 'TV Tamiri', details: 'LG 65" OLED C3', location: 'İstanbul, Kadıköy', color: 'green' },
+                { service: 'TV Tamiri', details: 'Sony 55" Bravia XR', location: 'İstanbul, Şişli', color: 'green' },
+                { service: 'TV Tamiri', details: 'TCL 50" QLED', location: 'İstanbul, Ümraniye', color: 'green' },
+                { service: 'TV Panel Değişimi', details: 'Philips 43" 4K Smart', location: 'İstanbul, Bakırköy', color: 'emerald' },
+                { service: 'TV Anakart Tamiri', details: 'Grundig 40" LED', location: 'İstanbul, Maltepe', color: 'teal' },
+                
+                // PC TAMİRLERİ
+                { service: 'PC Tamiri', details: 'Gaming RTX 4090 Setup', location: 'Ankara, Kızılay', color: 'blue' },
+                { service: 'PC Tamiri', details: 'İş Bilgisayarı Dell OptiPlex', location: 'Ankara, Çankaya', color: 'blue' },
+                { service: 'PC Kurulum', details: 'AMD Ryzen 7 + RTX 4070', location: 'Ankara, Keçiören', color: 'cyan' },
+                { service: 'PC Format', details: 'Windows 11 Kurulumu', location: 'Ankara, Mamak', color: 'sky' },
+                { service: 'PC Temizlik', details: 'Desktop Deep Clean', location: 'Ankara, Etimesgut', color: 'indigo' },
+                { service: 'Oyun PC Toplama', details: 'Intel i7 + RTX 4060 Ti', location: 'İzmir, Konak', color: 'violet' },
+                
+                // LAPTOP TAMİRLERİ
+                { service: 'Laptop Tamiri', details: 'MacBook Pro 16" M2 Max', location: 'İzmir, Alsancak', color: 'purple' },
+                { service: 'Laptop Tamiri', details: 'ASUS ROG Strix G15', location: 'İzmir, Bornova', color: 'purple' },
+                { service: 'Laptop Tamiri', details: 'HP Pavilion 15.6"', location: 'İzmir, Karşıyaka', color: 'purple' },
+                { service: 'Laptop Ekran Değişimi', details: 'Lenovo ThinkPad X1', location: 'İzmir, Bayraklı', color: 'fuchsia' },
+                { service: 'Laptop Klavye Tamiri', details: 'Dell XPS 13 Plus', location: 'Bursa, Osmangazi', color: 'pink' },
+                
+                // BUZDOLABI TAMİRLERİ
+                { service: 'Buzdolabı Tamiri', details: 'LG InstaView Door-in-Door', location: 'Bursa, Nilüfer', color: 'yellow' },
+                { service: 'Buzdolabı Tamiri', details: 'Samsung Family Hub 4', location: 'Bursa, Yıldırım', color: 'yellow' },
+                { service: 'Buzdolabı Gaz Dolumu', details: 'Bosch Serie 4 No-Frost', location: 'Antalya, Muratpaşa', color: 'amber' },
+                { service: 'Buzdolabı Kompresör', details: 'Arçelik A++ 640 Lt', location: 'Antalya, Kepez', color: 'orange' },
+                { service: 'Buzdolabı Termostat', details: 'Vestel NF640 X A++', location: 'Antalya, Konyaaltı', color: 'red' },
+                
+                // ÇAMAŞIR MAKİNESİ TAMİRLERİ
+                { service: 'Çamaşır Makinesi', details: 'Bosch WAX32EH0TR 10kg', location: 'Gaziantep, Şahinbey', color: 'red' },
+                { service: 'Çamaşır Makinesi', details: 'LG F4WV912P2 12kg', location: 'Konya, Selçuklu', color: 'red' },
+                { service: 'Çamaşır M. Pompa', details: 'Samsung WW12T504DAW', location: 'Adana, Seyhan', color: 'rose' },
+                { service: 'Çamaşır M. Rulman', details: 'Arçelik 9143 YP 9kg', location: 'Kayseri, Melikgazi', color: 'pink' },
+                { service: 'Çamaşır M. Kilit', details: 'Beko WMY 91443 LB1', location: 'Eskişehir, Odunpazarı', color: 'fuchsia' },
+                
+                // KLİMA SERVİSLERİ
+                { service: 'Klima Servisi', details: 'Daikin Ururu Sarara', location: 'İstanbul, Şişli', color: 'indigo' },
+                { service: 'Klima Servisi', details: 'Mitsubishi Electric MSZ', location: 'İstanbul, Beyoğlu', color: 'indigo' },
+                { service: 'Klima Montaj', details: 'LG Artcool Gallery 18K', location: 'Ankara, Yenimahalle', color: 'blue' },
+                { service: 'Klima Gaz Dolumu', details: 'Samsung WindFree Elite', location: 'İzmir, Gaziemir', color: 'cyan' },
+                { service: 'Klima Temizlik', details: 'Vestel Vega Plus 12K', location: 'Bursa, Gemlik', color: 'sky' },
+                { service: 'VRV Klima Sistemi', details: 'Daikin VRV IV-S 8HP', location: 'Antalya, Aksu', color: 'teal' },
+                
+                // BULAŞIK MAKİNESİ TAMİRLERİ  
+                { service: 'Bulaşık Makinesi', details: 'Siemens iQ700 speedMatic', location: 'Ankara, Bahçelievler', color: 'emerald' },
+                { service: 'Bulaşık Makinesi', details: 'Bosch Serie 6 XXL', location: 'İzmir, Narlıdere', color: 'green' },
+                { service: 'Bulaşık M. Motor', details: 'Beko DFN39430X', location: 'Bursa, Mudanya', color: 'lime' },
+                { service: 'Bulaşık M. Pompa', details: 'Arçelik 6263 I 14 Kişilik', location: 'Mersin, Mezitli', color: 'emerald' },
+                
+                // KÜÇÜK EV ALETLERİ
+                { service: 'Mikrodalga Tamiri', details: 'Panasonic NN-DS596M', location: 'İstanbul, Avcılar', color: 'slate' },
+                { service: 'Fırın Tamiri', details: 'Bosch HBG635BS1 Ankastre', location: 'Ankara, Pursaklar', color: 'gray' },
+                { service: 'Davlumbaz Tamiri', details: 'Siemens LC87KHM60 90cm', location: 'İzmir, Çiğli', color: 'zinc' },
+                { service: 'Ocak Tamiri', details: 'Arçelik AFO 5652 B', location: 'Bursa, İnegöl', color: 'stone' },
+                { service: 'Süpürge Tamiri', details: 'Dyson V15 Detect Absolute', location: 'Antalya, Serik', color: 'neutral' },
+                { service: 'Ütü Tamiri', details: 'Philips PerfectCare Elite', location: 'Trabzon, Ortahisar', color: 'gray' },
+                
+                // ELEKTRONİK CİHAZLAR
+                { service: 'Telefon Tamiri', details: 'iPhone 15 Pro Max', location: 'İstanbul, Taksim', color: 'purple' },
+                { service: 'Tablet Tamiri', details: 'iPad Pro 12.9" M2', location: 'Ankara, Ulus', color: 'violet' },
+                { service: 'Konsol Tamiri', details: 'PlayStation 5 Slim', location: 'İzmir, Foça', color: 'indigo' },
+                { service: 'Hoparlör Tamiri', details: 'JBL PartyBox 710', location: 'Bursa, Orhangazi', color: 'blue' },
+                { service: 'Kulaklık Tamiri', details: 'Sony WH-1000XM5', location: 'Antalya, Manavgat', color: 'sky' },
+                
+                // AKILLI EV CİHAZLARI
+                { service: 'Akıllı TV Setup', details: 'Samsung Neo QLED 8K AI', location: 'İstanbul, Levent', color: 'emerald' },
+                { service: 'Ses Sistemi', details: 'Bose Lifestyle 650', location: 'Ankara, Bilkent', color: 'teal' },
+                { service: 'Projektör Kurulum', details: 'Epson EH-TW7100 4K', location: 'İzmir, Cesme', color: 'cyan' },
+                { service: 'Güvenlik Kamera', details: 'Hikvision 4K NVR Sistem', location: 'Bursa, Karacabey', color: 'slate' },
+                { service: 'Akıllı Ev Sistemi', details: 'Samsung SmartThings Hub', location: 'Antalya, Kas', color: 'zinc' }
+            ];
+            
+            const customerNames = [
+                'Mehmet K.', 'Ayşe Y.', 'Can S.', 'Elif K.', 'Murat D.', 'Zeynep A.', 'Ali R.', 'Fatma B.',
+                'Ahmet T.', 'Seda M.', 'Burak Ö.', 'Deniz L.', 'Cem Y.', 'Pınar G.', 'Oğuz B.', 'Merve K.',
+                'Emre D.', 'Selin A.', 'Barış C.', 'Gizem E.', 'Kaan P.', 'Tuğba R.', 'Serkan M.', 'Ebru T.',
+                'Volkan S.', 'Esra H.', 'Tolga K.', 'Nazlı B.', 'Onur G.', 'Burcu Y.', 'Arda F.', 'İpek L.'
+            ];
+            const comments = [
+                // TV Yorumları
+                'TV\'im artık mükemmel çalışıyor! Görüntü kalitesi harika 📺✨',
+                '8K TV kurulumu mükemmeldi, sinema keyfi evimde 🎬🔥',
+                'OLED TV tamiri çok başarılı, renkler canlı 🌈👍',
+                'Smart TV ayarları perfect, tüm uygulamalar çalışıyor 📱💯',
+                'TV panel değişimi süper oldu, yepyeni gibi 🆕🎉',
+                
+                // PC Yorumları  
+                'Gaming PC\'im şimdi çok güçlü, tüm oyunlar Ultra ayarlarda 🎮⚡',
+                'PC kurulum hizmetinden çok memnunum, hız inanılmaz 🚀💪',
+                'İş bilgisayarım artık çok hızlı, verimliliğim arttı 💼⚡',
+                'PC format işlemi harika, Windows 11 çok smooth 🖥️✨',
+                'Oyun PC toplama servisi mükemmel, RTX performansı 🔥🎯',
+                
+                // Laptop Yorumları
+                'MacBook tamiri profesyoneldi, M2 chip uçuyor 🍎💨',
+                'Gaming laptop\'ım yeniden hayata döndü 🎮💥',
+                'Laptop ekran değişimi perfect, 4K görüntü net 📱🌟',
+                'İş laptop\'ım artık çok verimli çalışıyor 💻📈',
+                'Laptop klavye tamiri başarılı, yazma keyfi geri geldi ⌨️😊',
+                
+                // Beyaz Eşya Yorumları
+                'Buzdolabım mükemmel soğutuyor, enerji tasarrufu var ❄️💚',
+                'Çamaşır makinem sessiz çalışıyor, yeni gibi 🌊✨',
+                'Bulaşık makinesi tamiri süper, temizlik mükemmel 🍽️💎',
+                'Mikrodalga tamiri başarılı, hızlı ısıtma geri geldi 🔥⚡',
+                'Fırın tamiri harika, ekmeklerim artık perfect 🍞👨‍🍳',
+                
+                // Klima Yorumları
+                'Klima servisi mükemmeldi, evim çok serin ve sessiz ❄️🏠',
+                'VRV sistem kurulumu professional, tüm odalar ideal 🌡️✅',
+                'Klima temizliği süper, hava quality çok iyi 💨😌',
+                'Split klima montajı perfect, enerji tasarruflu 💡💚',
+                'Inverter klima tamiri başarılı, sessiz çalışıyor 🔇❄️',
+                
+                // Elektronik Yorumları
+                'iPhone tamiri mükemmel, ekran yepyeni gibi 📱✨',
+                'PlayStation tamiri süper, oyunlar lag-free 🎮🚀',
+                'Tablet tamiri başarılı, dokunma hassasiyeti perfect 📋👆',
+                'Kulaklık tamiri harika, ses kalitesi muhteşem 🎧🎵',
+                'Hoparlör tamiri excellent, bass performansı top 🔊🎶',
+                
+                // Genel Memnuniyet
+                'Hizmet kalitesi A+, kesinlikle tavsiye ederim 👌⭐',
+                'Teknisyen çok bilgili ve güler yüzlü 😊👨‍🔧',
+                'Fiyat-performans oranı mükemmel 💰✅',
+                'Zamanında geldi, işini hızlı bitirdi ⏰💯',
+                'Garantili hizmet, güvenle tercih edin 🛡️✨',
+                'Problem tamamen çözüldü, teşekkürler 🙏💪',
+                'Profesyonel ekip, kaliteli malzeme 👥🔧',
+                'İkinci kez hizmet alıyorum, yine mükemmel 🔄⭐'
+            ];
+            
+            let notificationIndex = 0;
+            let commentIndex = 0;
+            
+            // İlk yüklemede loading mesajını temizle
+            function clearLoadingMessages() {
+                // Bildirimlerdeki loading mesajını temizle
+                const loadingNotification = liveNotifications.querySelector('div');
+                if (loadingNotification && loadingNotification.textContent.includes('yükleniyor')) {
+                    liveNotifications.innerHTML = '';
+                }
+                
+                // Yorumlardaki loading mesajını temizle
+                const loadingComment = liveComments.querySelector('div');
+                if (loadingComment && loadingComment.textContent.includes('yükleniyor')) {
+                    liveComments.innerHTML = '';
+                }
+            }
+            
+            // Yeni talep bildirimi ekleme - ÇOK DAHA DİNAMİK
+            function addNewNotification() {
+                clearLoadingMessages();
+                const service = serviceTypes[Math.floor(Math.random() * serviceTypes.length)]; // Rastgele seçim
+                const timeOptions = ['şimdi', '1 dk önce', '2 dk önce', '3 dk önce', '4 dk önce', '5 dk önce', '30 sn önce', '45 sn önce'];
+                const timeAgo = timeOptions[Math.floor(Math.random() * timeOptions.length)];
+                
+                const notification = document.createElement('div');
+                notification.className = 'bg-white/10 border-l-4 border-' + service.color + '-400 p-3 rounded-r-lg transform translate-x-full transition-all duration-500 shadow-lg';
+                
+                notification.innerHTML = 
+                    '<div class="flex items-center justify-between">' +
+                        '<div class="flex-1">' +
+                            '<div class="text-white font-semibold text-sm">' + service.service + ' Tamamlandı</div>' +
+                            '<div class="text-' + service.color + '-200 text-xs">' + service.details + ' - ' + service.location + '</div>' +
+                        '</div>' +
+                        '<div class="text-' + service.color + '-400 font-bold text-xs">' + timeAgo + '</div>' +
+                    '</div>';
+                
+                // En üste ekle
+                liveNotifications.insertBefore(notification, liveNotifications.firstChild);
+                
+                // Çarpıcı animasyon efekti + Ses
+                setTimeout(() => {
+                    notification.classList.remove('translate-x-full');
+                    notification.classList.add('animate-pulse');
+                    
+                    // Yeni talep ses efekti (opsiyonel)
+                    try {
+                        const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEbBDGJ0fPQfS4ELnjK7+KURQ0PVK3n77BdGAg+ltryxnkpBSl+zPLaizsIGGS57+OXRBAUXrTp66hVFApGn+DyvmEbBDGJ0fPQfS4ELnjK7+KURQ0PVK3n77BdGAg+ltryxnkpBSl+zPLaizsIGGS57+OXRBAUXrTp66hVFApGn+DyvmEbBDGJ0fPQfS4ELnjK7+KURQ0PVK3n77BdGAg+ltryxnkpBSl+zPLaizsIGGS57+OXRBAUXrTp66hVFApGn+DyvmEbBDGJ0fPQfS4ELnjK7+KURQ0PVK3n77BdGAg+ltryxnkpBSl+zPLaizsIGGS57+OXRBAUXrTp66hVFA==');
+                        audio.volume = 0.1; // Çok düşük ses seviyesi
+                        audio.play().catch(() => {}); // Hata varsa sessizce devam et
+                    } catch(e) {}
+                    
+                    setTimeout(() => {
+                        notification.classList.remove('animate-pulse');
+                    }, 1000);
+                }, 100);
+                
+                // Fazla olanları sil (maksimum 4 tane - hızlı değişim için)
+                while (liveNotifications.children.length > 4) {
+                    liveNotifications.removeChild(liveNotifications.lastChild);
+                }
+                
+                notificationIndex++;
+            }
+            
+            // Yeni yorum ekleme - TAM RANDOMİZE
+            function addNewComment() {
+                clearLoadingMessages();
+                const service = serviceTypes[Math.floor(Math.random() * serviceTypes.length)]; // Rastgele hizmet
+                const customer = customerNames[Math.floor(Math.random() * customerNames.length)]; // Rastgele müşteri
+                const comment = comments[Math.floor(Math.random() * comments.length)]; // Rastgele yorum
+                const initials = customer.split(' ').map(n => n[0]).join('');
+                const timeOptions = ['şimdi', '1 dk', '2 dk', '3 dk', '30 sn', '45 sn', '1,5 dk', '2,5 dk'];
+                const timeText = timeOptions[Math.floor(Math.random() * timeOptions.length)];
+                
+                const commentEl = document.createElement('div');
+                commentEl.className = 'bg-white/10 p-3 rounded-lg transform translate-x-full transition-all duration-500 shadow-lg';
+                
+                commentEl.innerHTML = 
+                    '<div class="flex items-start space-x-2">' +
+                        '<div class="w-8 h-8 bg-' + service.color + '-500 rounded-full flex items-center justify-center">' +
+                            '<span class="text-white text-xs font-bold">' + initials + '</span>' +
+                        '</div>' +
+                        '<div class="flex-1">' +
+                            '<div class="text-white text-xs font-semibold">' + customer + '</div>' +
+                            '<div class="text-' + service.color + '-200 text-xs">"' + comment + '"</div>' +
+                            '<div class="text-' + service.color + '-300 text-xs mt-1">⭐⭐⭐⭐⭐ | ' + service.service + '</div>' +
+                        '</div>' +
+                        '<div class="text-' + service.color + '-400 text-xs">' + timeText + '</div>' +
+                    '</div>';
+                
+                // En üste ekle
+                liveComments.insertBefore(commentEl, liveComments.firstChild);
+                
+                // Çarpıcı animasyon efekti
+                setTimeout(() => {
+                    commentEl.classList.remove('translate-x-full');
+                    commentEl.classList.add('animate-bounce');
+                    setTimeout(() => {
+                        commentEl.classList.remove('animate-bounce');
+                    }, 1000);
+                }, 100);
+                
+                // Fazla olanları sil (maksimum 3 tane - hızlı değişim için)
+                while (liveComments.children.length > 3) {
+                    liveComments.removeChild(liveComments.lastChild);
+                }
+                
+                commentIndex++;
+            }
+            
+            // ULTRA HIZLI SÜREKLI AKIŞ - Çok daha sık güncelleme!
+            // Her 1-2 saniyede bir yeni talep bildirimi (ÇILGIN HIZLI!)
+            setInterval(addNewNotification, 1000 + Math.random() * 1000);
+            
+            // Her 1.5-2.5 saniyede bir yeni yorum (ÇILGIN HIZLI!)
+            setInterval(addNewComment, 1500 + Math.random() * 1000);
+            
+            // Sayfa yüklendiğinde HEMEN başlasın - çoklu dalga
+            setTimeout(addNewNotification, 500);   // İlk bildirim
+            setTimeout(addNewComment, 800);        // İlk yorum
+            setTimeout(addNewNotification, 1200);  // İkinci bildirim
+            setTimeout(addNewComment, 1600);       // İkinci yorum
+            setTimeout(addNewNotification, 2100);  // Üçüncü bildirim
+            setTimeout(addNewComment, 2400);       // Üçüncü yorum
+        }
+        
+        // Simulated real-time data updates - DISABLED (using unified system)
         function updateStats() {
+            // DISABLED - Now using unified statistics system
+            return;
             // Daily jobs counter
             const dailyJobsEl = document.getElementById('daily-jobs');
             if (dailyJobsEl) {
@@ -7224,13 +8095,13 @@ app.get('/', (c) => {
                 earningsEl.textContent = newValue.toLocaleString('tr-TR');
             }
 
-            // Active dealers
-            const dealersEl = document.getElementById('active-dealers');
-            if (dealersEl) {
-                const current = parseInt(dealersEl.textContent) || 412;
-                const change = Math.random() > 0.7 ? (Math.random() > 0.5 ? 1 : -1) : 0;
-                dealersEl.textContent = current + change;
-            }
+            // Active dealers - DISABLED: Now synchronized with main counter system
+            // const dealersEl = document.getElementById('active-dealers');
+            // if (dealersEl) {
+            //     const current = parseInt(dealersEl.textContent) || 412;
+            //     const change = Math.random() > 0.7 ? (Math.random() > 0.5 ? 1 : -1) : 0;
+            //     dealersEl.textContent = current + change;
+            // }
 
             // Average price
             const avgPriceEl = document.getElementById('avg-price');
@@ -7241,34 +8112,9 @@ app.get('/', (c) => {
         }
 
         // Enhanced customer request feed simulation
-        function addJobToFeed() {
-            const feed = document.getElementById('job-feed');
-            if (!feed) return;
+        // ESKİ addJobToFeed FONKSIYONU KALDIRILDI
 
-            const cities = ['Istanbul', 'Ankara', 'Izmir', 'Bursa', 'Antalya', 'Adana', 'Gaziantep', 'Konya', 'Kayseri', 'Mersin'];
-            const districts = ['Kadikoy', 'Besiktas', 'Cankaya', 'Nilufer', 'Muratpasa', 'Seyhan', 'Sehitkamil', 'Selcuklu', 'Melikgazi', 'Yenisehir'];
-            const requests = [
-                { category: 'Televizyon Tamiri', description: 'Ekran yanmiyor, ses geliyor', priority: 'NORMAL', urgent: false },
-                { category: 'Camasir Makinesi', description: 'Su almiyor, calismiyor', priority: 'ACIL', urgent: true },
-                { category: 'Bulasik Makinesi', description: 'Suyu bosaltmiyor', priority: 'NORMAL', urgent: false },
-                { category: 'Klima Servisi', description: 'Sogutmuyor, gurultu var', priority: 'ACIL', urgent: true },
-                { category: 'Bilgisayar Tamiri', description: 'Acilmiyor, fan sesi var', priority: 'NORMAL', urgent: false },
-                { category: 'Kombi Servisi', description: 'Sicak su vermiyor', priority: 'YUKSEK', urgent: true },
-                { category: 'Buzdolabi Tamiri', description: 'Dondurucu bolumu calismiyor', priority: 'NORMAL', urgent: false },
-                { category: 'Firin Tamiri', description: 'Isinmiyor, termostat sorunu', priority: 'NORMAL', urgent: false }
-            ];
-
-            const customerNames = ['Ahmet Y.', 'Zeynep K.', 'Mehmet S.', 'Fatma D.', 'Ali R.', 'Ayse T.', 'Mustafa G.', 'Elif B.'];
-
-            const city = cities[Math.floor(Math.random() * cities.length)];
-            const district = districts[Math.floor(Math.random() * districts.length)];
-            const request = requests[Math.floor(Math.random() * requests.length)];
-            const customerName = customerNames[Math.floor(Math.random() * customerNames.length)];
-            const time = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
-            const requestId = 'T' + Math.floor(Math.random() * 9000 + 1000);
-
-            const priorityColor = request.priority === 'ACIL' ? 'bg-red-600' : 
-                                request.priority === 'YUKSEK' ? 'bg-orange-600' : 'bg-slate-600';
+        // ESKİ KOD PARÇALARI KALDIRILDI
 
             const requestElement = document.createElement('div');
             requestElement.className = \`bg-white border border-slate-200 minimal-corner p-4 hover:border-orange-600 transition-all duration-200 \${request.urgent ? 'border-l-4 border-l-red-500' : ''}\`;
@@ -7329,104 +8175,13 @@ app.get('/', (c) => {
             }
         }
 
-        // Smart compact city service display with hover effects
+        // City opportunities function disabled - no city categories to display
         function populateCityOpportunities() {
-            const container = document.getElementById('city-opportunities');
-            if (!container) return;
-
-            // Top 6 cities for main display - others will be in modal
-            const cities = [
-                // Top 6 Major Cities Only
-                { name: 'Istanbul', price: 'TL280-450', time: '2-4h', rating: '4.8', requests: 127, popular: 'TV-Klima-Elektrik', tier: 'major' },
-                { name: 'Ankara', price: 'TL240-380', time: '1-3h', rating: '4.7', requests: 89, popular: 'Kombi-PC-Su Tesisati', tier: 'major' },
-                { name: 'Izmir', price: 'TL250-400', time: '2-4h', rating: '4.9', requests: 76, popular: 'Camasir-Klima-Temizlik', tier: 'major' },
-                { name: 'Bursa', price: 'TL220-350', time: '1-2h', rating: '4.8', requests: 64, popular: 'Bulasik-Elektrik-Boyama', tier: 'regional' },
-                { name: 'Antalya', price: 'TL260-420', time: '2-3h', rating: '4.6', requests: 58, popular: 'Klima-TV-Su Tesisati', tier: 'regional' },
-                { name: 'Adana', price: 'TL210-340', time: '1-3h', rating: '4.7', requests: 45, popular: 'Kombi-Camasir-Elektrik', tier: 'regional' }
-            ];
-
-            cities.forEach(city => {
-                const cityCard = document.createElement('div');
-                
-                // Tier-based styling
-                const tierColors = {
-                    major: 'border-blue-300 hover:border-blue-500 hover:shadow-lg',
-                    regional: 'border-orange-300 hover:border-orange-500 hover:shadow-md', 
-                    emerging: 'border-green-300 hover:border-green-500 hover:shadow-md',
-                    secondary: 'border-slate-300 hover:border-slate-500 hover:shadow-sm'
-                };
-                
-                cityCard.className = \`bg-white border-2 \${tierColors[city.tier]} minimal-corner p-3 cursor-pointer group transition-all duration-300 hover:scale-105 relative overflow-hidden\`;
-                
-                cityCard.innerHTML = \`
-                    <!-- Main Content (Always Visible) -->
-                    <div class="relative z-10">
-                        <!-- Header -->
-                        <div class="flex items-center justify-between mb-2">
-                            <div class="flex items-center space-x-2">
-                                <div class="w-5 h-5 bg-blue-900 sharp-corner flex items-center justify-center group-hover:bg-orange-600 transition-colors duration-300">
-                                    <i class="fas fa-map-marker-alt text-white text-xs"></i>
-                                </div>
-                                <h3 class="font-bold text-slate-800 text-sm truncate">\${city.name}</h3>
-                            </div>
-                            <div class="flex items-center space-x-1 text-amber-500">
-                                <i class="fas fa-star text-xs"></i>
-                                <span class="text-slate-700 text-xs font-medium">\${city.rating}</span>
-                            </div>
-                        </div>
-                        
-                        <!-- Price & Time Grid -->
-                        <div class="grid grid-cols-2 gap-1 mb-2 text-xs">
-                            <div class="bg-slate-50 p-1.5 sharp-corner text-center">
-                                <div class="text-slate-500 font-medium text-xs">Fiyat</div>
-                                <div class="text-orange-600 font-bold text-xs">\${city.price}</div>
-                            </div>
-                            <div class="bg-slate-50 p-1.5 sharp-corner text-center">
-                                <div class="text-slate-500 font-medium text-xs">Sure</div>
-                                <div class="text-green-600 font-bold text-xs">\${city.time}</div>
-                            </div>
-                        </div>
-
-                        <!-- Quick Info -->
-                        <div class="text-slate-400 text-xs text-center">
-                            \${city.requests} gunluk talep
-                        </div>
-                    </div>
-
-                    <!-- Hover Overlay (Hidden by default) -->
-                    <div class="absolute inset-0 bg-white bg-opacity-95 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex flex-col justify-center">
-                        <div class="text-center">
-                            <h4 class="font-bold text-slate-800 text-sm mb-2">\${city.name}</h4>
-                            <div class="border-t border-slate-200 pt-2 mb-2">
-                                <div class="text-slate-600 text-lg font-medium mb-1">Populer Hizmetler:</div>
-                                <div class="text-slate-700 text-xs leading-tight font-medium">\${city.popular}</div>
-                            </div>
-                            <div class="flex justify-between text-xs mb-2">
-                                <span class="text-slate-600">Fiyat:</span>
-                                <span class="font-bold text-orange-600">\${city.price}</span>
-                            </div>
-                            <div class="flex justify-between text-xs mb-3">
-                                <span class="text-slate-600">Yanit:</span>
-                                <span class="font-bold text-green-600">\${city.time}</span>
-                            </div>
-                            <button onclick="scrollToServices()" class="w-full bg-orange-600 text-white py-2 sharp-corner text-xs font-bold hover:bg-orange-700 transition duration-200">
-                                HIZMET AL
-                            </button>
-                        </div>
-                    </div>
-                \`;
-                
-                container.appendChild(cityCard);
-            });
+            // Function disabled to remove city categories from "Sehir Bazinda Hizmet Imkanlari" section
+            return;
         }
 
-        // Initialize job feed with sample data
-        function initializeJobFeed() {
-            // Add initial jobs with varying delays for realistic effect
-            for (let i = 0; i < 8; i++) {
-                setTimeout(() => addJobToFeed(), i * 800);
-            }
-        }
+        // Anlık talep fonksiyonları kaldırıldı
 
         // Update live statistics
         function updateLiveStats() {
@@ -8544,18 +9299,33 @@ app.get('/', (c) => {
                 }, 1000);
             }
             
-            // Update active services
+            // Update active services - AYNI DEĞER İKİ YERDE
+            const minServices = 33;
+            const maxServices = 350;
+            const newServices = Math.floor(Math.random() * (maxServices - minServices + 1)) + minServices;
+            const formattedServices = newServices.toLocaleString('tr-TR');
+            
+            // 1. Mutlu müşteriler bölümündeki AKTİF HİZMET
             const servicesCounter = document.getElementById('activeServices');
             if (servicesCounter) {
-                const baseServices = 320;
-                const variation = Math.floor(Math.random() * 30) - 15; // ±15
-                const newServices = baseServices + variation;
-                servicesCounter.textContent = newServices.toLocaleString('tr-TR');
+                servicesCounter.textContent = formattedServices;
                 
                 // Add pulse effect
                 servicesCounter.classList.add('animate-pulse');
                 setTimeout(() => {
                     servicesCounter.classList.remove('animate-pulse');
+                }, 1000);
+            }
+            
+            // 2. İstatistikler bölümündeki AKTİF HİZMET VEREN
+            const activeDealers = document.getElementById('active-dealers');
+            if (activeDealers) {
+                activeDealers.textContent = formattedServices;
+                
+                // Add pulse effect
+                activeDealers.classList.add('animate-pulse');
+                setTimeout(() => {
+                    activeDealers.classList.remove('animate-pulse');
                 }, 1000);
             }
             
@@ -8666,10 +9436,50 @@ app.get('/', (c) => {
             container.style.transform = \`translateX(\${translateX}px)\`;
         }
 
+        // Missing Live Notifications Functions - RESTORED
+        window.populateCityOpportunities = function() {
+            // Populate city opportunities in the stats section
+            console.log('Populating city opportunities...');
+        }
+        
+        // Anlık talep fonksiyonları kaldırıldı - müşteri arayüzünden çıkarıldı
+        
+        window.updateStats = function() {
+            // Update various statistics counters
+            const dailyJobs = document.getElementById('daily-jobs');
+            const activeDealer = document.getElementById('active-dealers');
+            const avgResponse = document.getElementById('avg-response');
+            const recentCount = document.getElementById('recent-count');
+            
+            if (dailyJobs) {
+                const current = parseInt(dailyJobs.textContent) || 357;
+                dailyJobs.textContent = current + Math.floor(Math.random() * 3);
+            }
+            
+            if (activeDealer) {
+                const current = parseInt(activeDealer.textContent.replace(',', '')) || 1247;
+                const change = Math.floor(Math.random() * 5) - 2; // -2 to +2
+                activeDealer.textContent = (current + change).toLocaleString('tr-TR');
+            }
+            
+            if (avgResponse) {
+                const times = [10, 11, 12, 13, 14, 15];
+                avgResponse.textContent = times[Math.floor(Math.random() * times.length)];
+            }
+            
+            if (recentCount) {
+                const count = Math.floor(Math.random() * 5) + 8; // 8-12
+                recentCount.textContent = count;
+            }
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            populateCityOpportunities();
-            initializeJobFeed();
+            console.log('DOM loaded, starting all systems...');
+            
+            // Anlık talep başlatma kodu kaldırıldı
+            
+            if (window.populateCityOpportunities) window.populateCityOpportunities();
             initializeSocialProof();
             initializeLiveComments();
             initializeAutoSlideReviews();
@@ -8680,8 +9490,7 @@ app.get('/', (c) => {
             // Update live stats every 15 seconds (original + social proof)
             setInterval(updateLiveStats, 15000);
             
-            // Add new job every 8 seconds for more activity
-            setInterval(addJobToFeed, 8000);
+            // Anlık talep interval kodu kaldırıldı
             
             // Add service completions every 12 seconds
             setInterval(addServiceCompletion, 12000);
@@ -9352,6 +10161,22 @@ app.get('/', (c) => {
             resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
+        // Handle city selection change - show/hide custom input
+        function handleCityChange() {
+            const citySelect = document.getElementById('customerCity');
+            const customInput = document.getElementById('customCityInput');
+            
+            if (citySelect && customInput) {
+                if (citySelect.value === 'Diğer') {
+                    customInput.classList.remove('hidden');
+                    customInput.focus();
+                } else {
+                    customInput.classList.add('hidden');
+                    customInput.value = ''; // Clear custom input when not used
+                }
+            }
+        }
+
         function proceedToChat() {
             const chatSystem = document.getElementById('liveChatSystem');
             chatSystem.classList.remove('hidden');
@@ -9444,6 +10269,127 @@ app.get('/', (c) => {
                     window.initializeFloatingNotifications();
                 }
             }, 3000);
+            
+            // FORCE START NOTIFICATIONS - IMMEDIATELY
+            console.log('FORCING NOTIFICATION START NOW!');
+            setTimeout(() => {
+                console.log('Starting job feed...');
+                // Initialize job feed
+                if (document.getElementById('job-feed')) {
+                    console.log('Found job-feed container, starting...');
+                    initializeJobFeed();
+                    setInterval(addJobToFeed, 8000);
+                } else {
+                    console.log('job-feed container not found!');
+                }
+                
+                // Initialize other systems - SAFELY
+                try { initializeSocialProof(); } catch(e) { console.log('initializeSocialProof not found'); }
+                try { initializeLiveComments(); } catch(e) { console.log('initializeLiveComments not found'); }
+                
+                // Start stats updates
+                try { setInterval(updateStats, 10000); } catch(e) { console.log('updateStats not found'); }
+                try { setInterval(updateLiveStats, 15000); } catch(e) { console.log('updateLiveStats not found'); }
+                try { setInterval(addServiceCompletion, 12000); } catch(e) { console.log('addServiceCompletion not found'); }
+                try { setInterval(showSocialProofNotification, 20000); } catch(e) { console.log('showSocialProofNotification not found'); }
+                try { setInterval(addLiveComment, 6000); } catch(e) { console.log('addLiveComment not found'); }
+                try { setInterval(updateLiveUserCount, 30000); } catch(e) { console.log('updateLiveUserCount not found'); }
+                
+                // Update ALL LIVE STATS - COMPREHENSIVE DYNAMIC UPDATES
+                setInterval(() => {
+                    console.log('Updating all dynamic stats...');
+                    
+                    // Update daily jobs
+                    const dailyJobs = document.getElementById('daily-jobs');
+                    if (dailyJobs) {
+                        const current = parseInt(dailyJobs.textContent) || 357;
+                        dailyJobs.textContent = current + Math.floor(Math.random() * 3);
+                    }
+                    
+                    // Update active dealers - DISABLED: Now synchronized with main counter system  
+                    // const activeDealer = document.getElementById('active-dealers');
+                    // if (activeDealer) {
+                    //     const current = parseInt(activeDealer.textContent.replace(',', '')) || 1247;
+                    //     const change = Math.floor(Math.random() * 5) - 2;
+                    //     activeDealer.textContent = (current + change).toLocaleString('tr-TR');
+                    // }
+                    
+                    // Update avg response
+                    const avgResponse = document.getElementById('avg-response');
+                    if (avgResponse) {
+                        const times = [10, 11, 12, 13, 14, 15];
+                        avgResponse.textContent = times[Math.floor(Math.random() * times.length)];
+                    }
+                    
+                    // Update live user count (ŞU ANDA CANLI)
+                    const liveUserCount = document.getElementById('liveUserCount');
+                    if (liveUserCount) {
+                        const baseCount = 1800;
+                        const variation = Math.floor(Math.random() * 100) - 50;
+                        const newCount = baseCount + variation;
+                        liveUserCount.textContent = newCount.toLocaleString('tr-TR');
+                    }
+                    
+                    // Active services güncelleme devre dışı (çakışmayı engellemek için)
+                    // updateLiveUserCount fonksiyonu zaten güncelleme yapıyor
+                    
+                    // Update online experts (UZMAN ONLİNE)
+                    const onlineExperts = document.getElementById('onlineExperts');
+                    if (onlineExperts) {
+                        const baseExperts = 150;
+                        const variation = Math.floor(Math.random() * 20) - 10;
+                        const newExperts = baseExperts + variation;
+                        onlineExperts.textContent = newExperts.toLocaleString('tr-TR');
+                    }
+                    
+                    // Update hourly total (Son 6 Saat)
+                    const hourlyTotal = document.getElementById('hourly-total');
+                    if (hourlyTotal) {
+                        const baseTalep = 45;
+                        const variation = Math.floor(Math.random() * 15) - 7;
+                        const newTalep = baseTalep + variation;
+                        hourlyTotal.textContent = newTalep;
+                    }
+                    
+                    // Update recent count (Son 10dk)
+                    const recentCount = document.getElementById('recent-count');
+                    if (recentCount) {
+                        const count = Math.floor(Math.random() * 5) + 8;
+                        recentCount.textContent = count;
+                    }
+                    
+                    // Update dynamic stats text (Aktif uzman sayisi: 847)
+                    const dynamicStatsText = document.getElementById('dynamicStatsText');
+                    if (dynamicStatsText) {
+                        const statsMessages = [
+                            { icon: 'fas fa-users', text: 'Aktif uzman sayısı: ' + (800 + Math.floor(Math.random() * 100)), color: 'text-blue-500' },
+                            { icon: 'fas fa-chart-line', text: 'Bugünkü tamamlanan iş: ' + (1200 + Math.floor(Math.random() * 100)), color: 'text-green-500' },
+                            { icon: 'fas fa-smile', text: 'Müşteri memnuniyeti: %' + (97 + Math.floor(Math.random() * 3)), color: 'text-yellow-500' },
+                            { icon: 'fas fa-fire', text: 'Günlük talep sayısı: ' + (2800 + Math.floor(Math.random() * 100)), color: 'text-red-500' }
+                        ];
+                        const randomStat = statsMessages[Math.floor(Math.random() * statsMessages.length)];
+                        dynamicStatsText.innerHTML = '<i class="' + randomStat.icon + ' mr-2 ' + randomStat.color + '"></i><strong>' + randomStat.text + '</strong>';
+                    }
+                    
+                    // Update dynamic activity text (Ahmet K. elektrik hizmeti aldi)
+                    const dynamicActivityText = document.getElementById('dynamicActivityText');
+                    if (dynamicActivityText) {
+                        const activities = [
+                            'Ahmet K. elektrik hizmeti aldı',
+                            'Zeynep H. 5/5 yıldız verdi', 
+                            'Mehmet S. klima tamiri tamamladı',
+                            'Ayşe D. beyaz eşya servisi aldı',
+                            'Ali R. TV tamiri hizmeti aldı',
+                            'Fatma K. temizlik hizmeti tamamladı'
+                        ];
+                        const randomActivity = activities[Math.floor(Math.random() * activities.length)];
+                        dynamicActivityText.innerHTML = '<i class="fas fa-user-check mr-2 text-green-500"></i><strong>' + randomActivity + '</strong>';
+                    }
+                    
+                }, 8000); // Her 8 saniyede bir güncelle
+                
+                console.log('All notification systems started!');
+            }, 1000);
         });
 
         </script>
@@ -9580,6 +10526,181 @@ app.get('/', (c) => {
         </div>
 
         <script>
+        // Dynamic Stats Text System (Statistics)
+        window.initDynamicStats = function() {
+            console.log('Initializing dynamic stats...');
+            
+            const statsMessages = [
+                { icon: 'fas fa-users', text: 'Aktif uzman sayisi: 847', color: 'text-blue-500' },
+                { icon: 'fas fa-chart-line', text: 'Bugunku tamamlanan is: 1.247', color: 'text-green-500' },
+                { icon: 'fas fa-smile', text: 'Musteri memnuniyeti: %98', color: 'text-yellow-500' },
+                { icon: 'fas fa-fire', text: 'Gunluk talep sayisi: 2.847', color: 'text-red-500' }
+            ];
+            
+            let currentIndex = 0;
+            const textElement = document.getElementById('dynamicStatsText');
+            
+            if (!textElement) {
+                console.log('dynamicStatsText element not found!');
+                return;
+            }
+            
+            function updateStatsText() {
+                const stat = statsMessages[currentIndex];
+                
+                textElement.style.opacity = '0';
+                textElement.style.transform = 'translateY(10px)';
+                
+                setTimeout(() => {
+                    textElement.innerHTML = '<i class="' + stat.icon + ' mr-2 ' + stat.color + '"></i><strong>' + stat.text + '</strong>';
+                    textElement.style.opacity = '1';
+                    textElement.style.transform = 'translateY(0)';
+                    currentIndex = (currentIndex + 1) % statsMessages.length;
+                }, 200);
+            }
+            
+            updateStatsText();
+            setInterval(updateStatsText, 3000);
+        }
+        
+        // Dynamic Activity Text System (User Activities)
+        window.initDynamicActivity = function() {
+            console.log('Initializing dynamic activities...');
+            
+            const activityMessages = [
+                { icon: 'fas fa-user-check', text: 'Ahmet K. elektrik hizmeti aldi', color: 'text-green-500' },
+                { icon: 'fas fa-star', text: 'Zeynep H. 5/5 yildiz verdi', color: 'text-yellow-500' },
+                { icon: 'fas fa-wrench', text: 'Ankara da tesisatci onarimlarinin tamamlanmasi', color: 'text-gray-500' },
+                { icon: 'fas fa-paint-brush', text: 'Bursa da boyaci calismasi kabul edildi', color: 'text-purple-500' },
+                { icon: 'fas fa-home', text: 'Ayse K. ev temizligi hizmeti aldi', color: 'text-pink-500' },
+                { icon: 'fas fa-bolt', text: 'Istanbul da elektrik tamiri tamamlandi', color: 'text-yellow-500' },
+                { icon: 'fas fa-snowflake', text: 'Izmir de klima tamiri basladi', color: 'text-blue-400' },
+                { icon: 'fas fa-tools', text: 'Konya da cam tamircisi arandi', color: 'text-orange-500' },
+                { icon: 'fas fa-handshake', text: 'Antalya da temizlik hizmeti tamamlandi', color: 'text-green-500' },
+                { icon: 'fas fa-trophy', text: 'Adana da mobilyaci teklifleri verdi', color: 'text-yellow-600' },
+                { icon: 'fas fa-tv', text: 'Mehmet B. TV tamiri hizmeti aldi', color: 'text-blue-500' },
+                { icon: 'fas fa-hammer', text: 'Gaziantep te marangoz isi kabul edildi', color: 'text-amber-600' },
+                { icon: 'fas fa-car', text: 'Fatma S. nakliye hizmeti tamamlandi', color: 'text-indigo-500' },
+                { icon: 'fas fa-laptop', text: 'Trabzon da bilgisayar tamiri basladi', color: 'text-cyan-500' },
+                { icon: 'fas fa-fire', text: 'Kemal A. kombi bakimi hizmeti aldi', color: 'text-red-500' },
+                { icon: 'fas fa-leaf', text: 'Samsun da bahcivan calismasi tamamlandi', color: 'text-green-600' },
+                { icon: 'fas fa-cogs', text: 'Diyarbakir da makine tamiri kabul edildi', color: 'text-slate-500' },
+                { icon: 'fas fa-phone', text: 'Esra T. telefon tamiri hizmeti aldi', color: 'text-teal-500' },
+                { icon: 'fas fa-couch', text: 'Kayseri de koltuk tamiri basladi', color: 'text-brown-500' },
+                { icon: 'fas fa-shower', text: 'Mersin de banyo tadilati tamamlandi', color: 'text-blue-600' },
+                { icon: 'fas fa-camera', text: 'Halil M. guvenlik kamerasi kuruldu', color: 'text-purple-600' },
+                { icon: 'fas fa-wifi', text: 'Denizli de internet kurulumu yapildi', color: 'text-emerald-500' },
+                { icon: 'fas fa-solar-panel', text: 'Erzurum da gunes paneli montaji', color: 'text-orange-600' },
+                { icon: 'fas fa-kitchen-set', text: 'Aylin K. mutfak tadilati hizmeti aldi', color: 'text-rose-500' }
+            ];
+            
+            let currentIndex = 0;
+            const textElement = document.getElementById('dynamicActivityText');
+            
+            if (!textElement) {
+                console.log('dynamicActivityText element not found!');
+                return;
+            }
+            
+            function updateActivityText() {
+                const activity = activityMessages[currentIndex];
+                
+                textElement.style.opacity = '0';
+                textElement.style.transform = 'translateY(10px)';
+                
+                setTimeout(() => {
+                    textElement.innerHTML = '<i class="' + activity.icon + ' mr-2 ' + activity.color + '"></i><strong>' + activity.text + '</strong>';
+                    textElement.style.opacity = '1';
+                    textElement.style.transform = 'translateY(0)';
+                    currentIndex = (currentIndex + 1) % activityMessages.length;
+                }, 200);
+            }
+            
+            updateActivityText();
+            setInterval(updateActivityText, 2500);
+        }
+        
+        // Security Guarantees Rotation System
+        window.initSecurityGuarantees = function() {
+            console.log('Initializing security guarantees...');
+            
+            const guarantees = [
+                { icon: 'fas fa-money-bill-wave', title: 'ODEME GUVENCESI', desc: 'Para iade garantisi', color: 'text-green-300' },
+                { icon: 'fas fa-tools', title: 'ISCILIK GARANTISI', desc: '6 ay garanti', color: 'text-blue-300' },
+                { icon: 'fas fa-user-check', title: 'DOGRULANMIS USTALAR', desc: 'Kimlik kontrolu', color: 'text-purple-300' },
+                { icon: 'fas fa-shield-alt', title: 'SIGORTA KORUMASI', desc: 'Hasar tazminati', color: 'text-orange-300' },
+                { icon: 'fas fa-gavel', title: 'HUKUKI DESTEK', desc: 'Avukat destegi', color: 'text-amber-300' },
+                { icon: 'fas fa-clock', title: '7/24 DESTEK', desc: 'Surekli destek', color: 'text-cyan-300' }
+            ];
+            
+            let currentIndex = 0;
+            const element = document.getElementById('securityGuarantee');
+            
+            if (!element) {
+                console.log('securityGuarantee element not found!');
+                return;
+            }
+            
+            function updateGuarantee() {
+                const guarantee = guarantees[currentIndex];
+                
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(10px)';
+                
+                setTimeout(() => {
+                    element.innerHTML = 
+                        '<i class="' + guarantee.icon + ' ' + guarantee.color + ' mr-3 text-lg"></i>' +
+                        '<div>' +
+                            '<div class="text-sm font-semibold text-white">' + guarantee.title + '</div>' +
+                            '<div class="text-xs text-purple-200">' + guarantee.desc + '</div>' +
+                        '</div>';
+                    
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                    
+                    currentIndex = (currentIndex + 1) % guarantees.length;
+                }, 200);
+            }
+            
+            updateGuarantee();
+            setInterval(updateGuarantee, 3000);
+        }
+        
+
+        
+        // Also try to start it immediately when page loads
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(() => {
+                    if (typeof window.initDynamicStats === 'function') {
+                        window.initDynamicStats();
+                    }
+                    if (typeof window.initDynamicActivity === 'function') {
+                        window.initDynamicActivity();
+                    }
+                    if (typeof window.initSecurityGuarantees === 'function') {
+                        window.initSecurityGuarantees();
+                    }
+
+                }, 1500);
+            });
+        } else {
+            setTimeout(() => {
+                if (typeof window.initDynamicStats === 'function') {
+                    window.initDynamicStats();
+                }
+                if (typeof window.initDynamicActivity === 'function') {
+                    window.initDynamicActivity();
+                }
+                if (typeof window.initSecurityGuarantees === 'function') {
+                    window.initSecurityGuarantees();
+                }
+                if (typeof window.initDynamicStatus === 'function') {
+                    window.initDynamicStatus();
+                }
+            }, 1500);
+        }
+
         // Smart Alert & Motivation System Functions - TEMPORARILY DISABLED FOR DEBUGGING
         /*
         let exitIntentTriggered = false;
@@ -9875,562 +10996,403 @@ app.get('/', (c) => {
             const conversionMessages = [
                 { icon: 'fas fa-handshake', color: 'blue', title: 'Ahmet K. hizmeti aldi!', message: '5 dakika once - Elektrik isleri' },
                 { icon: 'fas fa-star', color: 'yellow', title: 'Mukemmel puan aldik!', message: 'Zeynep H. - 5/5 yildiz verdi' },
-                { icon: 'fas fa-phone', color: 'green', title: 'Yeni teklif geldi!', message: 'Su tesisati - 15 dakika icinde yanit' },
-                { icon: 'fas fa-medal', color: 'purple', title: 'Bu ay 1.250 mutlu musteri!', message: 'Hedefimizi %145 astik' }
             ];
             
-            let index = 0;
+            let notificationIndex = 0;
             
-            function showConversionNotification(messageData) {
-                const container = document.getElementById('conversionNotifications');
-                const notification = document.createElement('div');
-                const notificationId = 'conversion-' + Date.now();
+            function showNextConversionNotification() {
+                if (conversionMessages.length === 0) return;
                 
-                notification.id = notificationId;
-                notification.className = 'bg-white border border-gray-200 shadow-lg minimal-corner p-3 transform translate-y-full transition-all duration-500 hover:shadow-xl';
-                
-                notification.innerHTML = '<div class="flex items-center">' +
-                    '<div class="w-6 h-6 bg-' + messageData.color + '-500 minimal-corner flex items-center justify-center mr-3">' +
-                        '<i class="' + messageData.icon + ' text-white text-xs"></i>' +
-                    '</div>' +
-                    '<div class="flex-1">' +
-                        '<h4 class="font-bold text-gray-800 text-xs">' + messageData.title + '</h4>' +
-                        '<p class="text-gray-600 text-xs">' + messageData.message + '</p>' +
-                    '</div>' +
-                '</div>';
-                
-                container.appendChild(notification);
-                
-                // Animate in
-                setTimeout(() => {
-                    notification.classList.remove('translate-y-full');
-                }, 100);
-                
-                // Auto remove after 5 seconds
-                setTimeout(() => {
-                    notification.classList.add('translate-y-full');
-                    setTimeout(() => {
-                        notification.remove();
-                    }, 500);
-                }, 5000);
+                const message = conversionMessages[notificationIndex % conversionMessages.length];
+                showConversionNotification(message);
+                notificationIndex++;
             }
             
-            function showNextConversion() {
-                if (index >= conversionMessages.length) {
-                    index = 0;
-                }
-                showConversionNotification(conversionMessages[index]);
-                index++;
-                
-                // Show next after 12-20 seconds
-                setTimeout(showNextConversion, 12000 + Math.random() * 8000);
-            }
-            
-            showNextConversion();
+            setInterval(showNextConversionNotification, 25000);
+            setTimeout(showNextConversionNotification, 8000);
         }
 
-        // Smart Form Optimization & Conversion Boost System Functions
-        let formProgress = 0;
-        let completedSteps = new Set();
-
-        // Form progress tracking
-        function updateFormProgress() {
-            const requiredFields = [
-                { id: 'customerName', step: 1 },
-                { id: 'customerPhone', step: 1 },
-                { id: 'customerCity', step: 2 },
-                { id: 'serviceCategory', step: 3 },
-                { id: 'problemDescription', step: 4 }
-            ];
-
-            let filledFields = 0;
-            let currentStep = 1;
-
-            requiredFields.forEach(field => {
-                const element = document.getElementById(field.id);
-                if (element && element.value.trim()) {
-                    filledFields++;
-                    currentStep = Math.max(currentStep, field.step);
-                }
-            });
-
-            const progress = Math.round((filledFields / requiredFields.length) * 100);
-            formProgress = progress;
-
-            // Update progress bar
-            const progressBar = document.getElementById('smartProgressBar');
-            const progressPercent = document.getElementById('formCompletionPercent');
-            
-            if (progressBar) {
-                progressBar.style.width = progress + '%';
-            }
-            if (progressPercent) {
-                progressPercent.textContent = progress + '%';
-            }
-
-            // Update step indicators
-            updateStepIndicators(currentStep);
-
-            // Show completion reward at 100%
-            if (progress === 100) {
-                showCompletionReward();
-            }
-        }
-
-        function updateStepIndicators(currentStep) {
-            for (let i = 1; i <= 5; i++) {
-                const stepElement = document.getElementById('step' + i);
-                if (!stepElement) continue;
-                
-                const circle = stepElement.querySelector('.w-6');
-                const text = stepElement.querySelector('div:last-child');
-                
-                if (!circle || !text) continue;
-
-                if (i <= currentStep) {
-                    circle.classList.remove('bg-gray-300');
-                    circle.classList.add('bg-green-500');
-                    text.classList.remove('text-gray-500');
-                    text.classList.add('text-green-700');
-                } else {
-                    circle.classList.remove('bg-green-500');
-                    circle.classList.add('bg-gray-300');
-                    text.classList.remove('text-green-700');
-                    text.classList.add('text-gray-500');
-                }
-            }
-        }
-
-        function validateStep(stepNumber) {
-            if (completedSteps.has(stepNumber)) return;
-
-            let isValid = false;
-            let rewardElement;
-
-            switch(stepNumber) {
-                case 1:
-                    const name = document.getElementById('customerName').value.trim();
-                    const phone = document.getElementById('customerPhone').value.trim();
-                    isValid = name && phone;
-                    rewardElement = document.getElementById('step1Reward');
-                    
-                    if (name) {
-                        document.getElementById('nameValidation').classList.remove('hidden');
-                    }
-                    if (phone) {
-                        document.getElementById('phoneValidation').classList.remove('hidden');
-                    }
-                    break;
-
-                case 2:
-                    const city = document.getElementById('customerCity').value;
-                    isValid = city;
-                    rewardElement = document.getElementById('step2Reward');
-                    
-                    if (city) {
-                        document.getElementById('cityValidation').classList.remove('hidden');
-                    }
-                    break;
-
-                case 3:
-                    const category = document.getElementById('serviceCategory').value;
-                    isValid = category;
-                    rewardElement = document.getElementById('step3Reward');
-                    
-                    if (category) {
-                        document.getElementById('categoryValidation').classList.remove('hidden');
-                    }
-                    break;
-
-                case 4:
-                    const description = document.getElementById('problemDescription').value.trim();
-                    isValid = description.length > 10;
-                    rewardElement = document.getElementById('step4Reward');
-                    
-                    if (description.length > 10) {
-                        document.getElementById('descriptionValidation').classList.remove('hidden');
-                    }
-                    break;
-            }
-
-            if (isValid && !completedSteps.has(stepNumber)) {
-                completedSteps.add(stepNumber);
-                showStepReward(rewardElement);
-            }
-        }
-
-        function showStepReward(rewardElement) {
-            if (rewardElement) {
-                rewardElement.classList.remove('hidden');
-                rewardElement.classList.add('animate-bounce');
-                
-                setTimeout(() => {
-                    rewardElement.classList.remove('animate-bounce');
-                }, 1000);
-                
-                setTimeout(() => {
-                    rewardElement.classList.add('hidden');
-                }, 3000);
-            }
-        }
-
-        function showCompletionReward() {
-            const step5Reward = document.getElementById('step5Reward');
-            if (step5Reward && !step5Reward.classList.contains('animate-bounce')) {
-                step5Reward.classList.remove('hidden');
-                step5Reward.classList.add('animate-bounce');
-                
-                // Update submit button
-                const submitBtn = document.getElementById('smartSubmitBtn');
-                const btnText = document.getElementById('submitBtnText');
-                
-                submitBtn.classList.remove('animate-pulse');
-                submitBtn.classList.add('animate-bounce');
-                btnText.textContent = '  TAMAMLA & UZMAN ESLESTIR!';
-            }
-        }
-
-        // One-Click Modal
-        function showOneClickModal() {
-            let modal = document.getElementById('oneClickModal');
-            if (modal) {
-                modal.remove();
-            }
-
-            modal = document.createElement('div');
-            modal.id = 'oneClickModal';
-            modal.className = 'fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center';
-            modal.innerHTML = 
-                '<div class="bg-white max-w-md mx-4 minimal-corner shadow-2xl border-4 border-orange-300 transform scale-95 transition-all duration-300">' +
-                    '<div class="bg-gradient-to-r from-orange-500 to-red-500 text-white p-6 text-center">' +
-                        '<div class="w-16 h-16 bg-white/20 minimal-corner mx-auto mb-4 flex items-center justify-center">' +
-                            '<i class="fas fa-rocket text-white text-2xl animate-bounce"></i>' +
-                        '</div>' +
-                        '<h3 class="text-2xl font-bold mb-2">TEK TIKLA BASVUR</h3>' +
-                        '<p class="text-orange-100 text-sm">Sadece 2 bilgi - Hemen uzman eslestirme!</p>' +
-                    '</div>' +
-                    '<div class="p-8">' +
-                        '<div class="space-y-4">' +
-                            '<div>' +
-                                '<label class="block text-sm font-bold text-gray-800 mb-2">Telefon Numaraniz</label>' +
-                                '<input type="tel" id="quickPhone" class="w-full p-3 border-2 border-gray-200 minimal-corner focus:border-orange-500" placeholder="0 5xx xxx xx xx">' +
-                            '</div>' +
-                            '<div>' +
-                                '<label class="block text-sm font-bold text-gray-800 mb-2">Hangi Hizmet?</label>' +
-                                '<select id="quickService" class="w-full p-3 border-2 border-gray-200 minimal-corner focus:border-orange-500">' +
-                                    '<option value="">Seciniz...</option>' +
-                                    '<option value="Elektrik">Elektrik Isleri</option>' +
-                                    '<option value="Beyaz Esya">Beyaz Esya Tamiri</option>' +
-                                    '<option value="Su Tesisati">Su Tesisati</option>' +
-                                    '<option value="Kombi">Kombi & Kalorifer</option>' +
-                                    '<option value="Temizlik">Temizlik Hizmetleri</option>' +
-                                '</select>' +
-                            '</div>' +
-                        '</div>' +
-                        '<div class="mt-6 space-y-3">' +
-                            '<button onclick="submitOneClick()" class="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-4 px-6 minimal-corner transition duration-200">' +
-                                '<i class="fas fa-rocket mr-2"></i>HEMEN UZMAN ESLESTIR' +
-                            '</button>' +
-                            '<button onclick="closeOneClickModal()" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-3 px-6 minimal-corner transition duration-200">' +
-                                'Iptal' +
-                            '</button>' +
-                        '</div>' +
-                    '</div>' +
-                '</div>';
-            
-            document.body.appendChild(modal);
-            
-            setTimeout(() => {
-                modal.querySelector('.bg-white').classList.add('scale-100');
-                modal.querySelector('.bg-white').classList.remove('scale-95');
-            }, 100);
-        }
-
-        function closeOneClickModal() {
-            const modal = document.getElementById('oneClickModal');
-            if (modal) {
-                const content = modal.querySelector('.bg-white');
-                content.classList.add('scale-95');
-                content.classList.remove('scale-100');
-                
-                setTimeout(() => {
-                    modal.remove();
-                }, 300);
-            }
-        }
-
-        function submitOneClick() {
-            const phone = document.getElementById('quickPhone').value.trim();
-            const service = document.getElementById('quickService').value;
-            
-            if (!phone || !service) {
-                alert('Lutfen telefon numarasi ve hizmet turu seciniz.');
-                return;
-            }
-            
-            // Simulate quick submit
-            const submitBtn = event.target;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Eslestiriliyor...';
-            submitBtn.disabled = true;
-            
-            setTimeout(() => {
-                closeOneClickModal();
-                showSuccessCelebration('Harika! 3 uzman telefon numaraniza WhatsApp mesaji gonderecek. 5 dakika icinde teklifler gelecek!');
-            }, 2000);
-        }
-
-        // Instant Callback
-        function requestInstantCallback() {
-            const phone = prompt('Telefon numaraniz (0 5xx xxx xx xx):');
-            
-            if (!phone) return;
-            
-            if (phone.length < 10) {
-                alert('Lutfen gecerli bir telefon numarasi girin.');
-                return;
-            }
-            
-            // Simulate callback request
-            showCallbackConfirmation(phone);
-        }
-
-        function showCallbackConfirmation(phone) {
-            let modal = document.getElementById('callbackModal');
-            if (modal) {
-                modal.remove();
-            }
-
-            modal = document.createElement('div');
-            modal.id = 'callbackModal';
-            modal.className = 'fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center';
-            modal.innerHTML = 
-                '<div class="bg-white max-w-md mx-4 minimal-corner shadow-2xl border-4 border-green-300">' +
-                    '<div class="bg-gradient-to-r from-green-500 to-blue-500 text-white p-6 text-center">' +
-                        '<div class="w-16 h-16 bg-white/20 minimal-corner mx-auto mb-4 flex items-center justify-center">' +
-                            '<i class="fas fa-phone text-white text-2xl animate-pulse"></i>' +
-                        '</div>' +
-                        '<h3 class="text-2xl font-bold mb-2">TELEFON GELIYOR!</h3>' +
-                        '<p class="text-green-100 text-sm">30 saniye icinde ' + phone + ' aranacak</p>' +
-                    '</div>' +
-                    '<div class="p-8 text-center">' +
-                        '<div class="mb-6">' +
-                            '<div class="text-3xl font-bold text-green-600 mb-2" id="callbackCountdown">30</div>' +
-                            '<div class="text-sm text-gray-600">saniye sonra telefon calacak</div>' +
-                        '</div>' +
-                        '<button onclick="closeCallbackModal()" class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-3 px-6 minimal-corner transition duration-200">' +
-                            'Iptal Et' +
-                        '</button>' +
-                    '</div>' +
-                '</div>';
-            
-            document.body.appendChild(modal);
-            
-            // Countdown timer
-            let countdown = 30;
-            const countdownElement = document.getElementById('callbackCountdown');
-            
-            const countdownInterval = setInterval(() => {
-                countdown--;
-                if (countdownElement) {
-                    countdownElement.textContent = countdown;
-                }
-                
-                if (countdown <= 0) {
-                    clearInterval(countdownInterval);
-                    closeCallbackModal();
-                    showSuccessCelebration('Telefon caliyor! Lutfen acin. Uzmanimiz size hizmet detaylarini soracak.');
-                }
-            }, 1000);
-        }
-
-        function closeCallbackModal() {
-            const modal = document.getElementById('callbackModal');
-            if (modal) {
-                modal.remove();
-            }
-        }
-
-        // Helper functions for form enhancement
-        function showNearbyExperts() {
-            const city = document.getElementById('customerCity').value;
-            if (city) {
-                const expertsCount = Math.floor(Math.random() * 10) + 15; // 15-25 uzman
-                showTemporaryMessage('step2Reward', expertsCount + ' uzman ' + city + ' icin bulundu!', 3000);
-            }
-        }
-
-        function showEstimatedPrice() {
-            const category = document.getElementById('serviceCategory').value;
-            if (category) {
-                const prices = {
-                    'Elektrik Isleri': 'TL180-500',
-                    'Beyaz Esya': 'TL250-800',
-                    'Su Tesisati': 'TL200-600'
-                };
-                const price = prices[category] || 'TL200-700';
-                showTemporaryMessage('step3Reward', 'Tahmini maliyet: ' + price, 3000);
-            }
-        }
-
-        function analyzeDescription() {
-            const description = document.getElementById('problemDescription').value;
-            const charCountElement = document.getElementById('charCount');
-            
-            if (charCountElement) {
-                charCountElement.textContent = description.length;
-            }
-            
-            if (description.length > 20) {
-                showTemporaryMessage('step4Reward', 'Detayli aciklama - Daha hizli cozum!', 3000);
-            }
-        }
-
-        function showTemporaryMessage(elementId, message, duration) {
-            const element = document.getElementById(elementId);
-            if (element) {
-                const originalContent = element.innerHTML;
-                element.innerHTML = '<i class="fas fa-info-circle mr-1"></i>' + message;
-                element.classList.remove('hidden');
-                
-                setTimeout(() => {
-                    element.innerHTML = originalContent;
-                    element.classList.add('hidden');
-                }, duration);
-            }
-        }
-
-        // Enhanced form submit
-        function handleSmartSubmit(event) {
-            event.preventDefault();
-            
-            // Enhanced success celebration
-            handleCustomerFormSuccess(event);
-        }
-
-        // Functions now externalized to app.js
-
-        // Initialize smart form system
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add character counter to description
-            const descriptionField = document.getElementById('problemDescription');
-            if (descriptionField) {
-                descriptionField.addEventListener('input', function() {
-                    const charCount = document.getElementById('charCount');
-                    if (charCount) {
-                        charCount.textContent = this.value.length;
-                    }
-                });
-            }
-            
-            // Initialize progress tracking
-            updateFormProgress();
-        });
-
-        // Initialize system on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            // Delay initialization to not interfere with main page load
-            setTimeout(() => {
-                // initSmartAlertSystem(); // DISABLED FOR DEBUGGING
-            }, 2000);
-        });
-        */ // END OF COMMENTED BLOCK
-        </script>
-
-        <!-- FLOATING NOTIFICATION SYSTEM -->
-        <!-- Online Users Counter -->
-        <div id="onlineUsersNotification" class="fixed top-4 right-4 z-40 bg-green-500 text-white px-4 py-2 rounded-full shadow-lg transform transition-all duration-300">
-            <div class="flex items-center space-x-2">
-                <div class="w-2 h-2 bg-green-300 rounded-full animate-pulse"></div>
-                <span class="text-sm font-semibold">
-                    <span id="onlineCount">1,247</span> kişi şu anda online
-                </span>
-            </div>
-        </div>
-
-        <!-- Recent Activity Notifications Container -->
-        <div id="floatingNotifications" class="fixed top-20 right-4 z-40 space-y-3 w-80 max-w-sm">
-            <!-- Dynamic notifications will be inserted here -->
-        </div>
-
-        <!-- Bottom Left: Recent Reviews -->
-        <div id="recentReviewsContainer" class="fixed bottom-20 left-4 z-40 space-y-3 w-80 max-w-sm">
-            <!-- Recent review notifications will be inserted here -->
-        </div>
-
-        <!-- Bottom Right: Service Completions -->
-        <div id="serviceCompletionsContainer" class="fixed bottom-32 right-4 z-40 space-y-3 w-72 max-w-sm">
-            <!-- Service completion notifications will be inserted here -->
-        </div>
-
-        <!-- Floating Emergency Help Button -->
-        <div class="fixed bottom-4 right-4 z-50">
-            <button onclick="openWhatsAppChat()" 
-                    class="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full font-bold text-sm transition-all duration-300 transform hover:scale-110 shadow-lg group">
-                <i class="fab fa-whatsapp text-2xl group-hover:animate-bounce"></i>
-            </button>
-        </div>
-
-        <script>
-        // Modern WhatsApp Chat Function
-        function openWhatsAppChat() {
-            const message = encodeURIComponent(
-                'Merhaba! Garantor360 ile ilgili bilgi almak istiyorum. Güvenli hizmet almak için ne yapmam gerekiyor?'
-            );
-            const phoneNumber = '905001234567';
-            window.open('https://wa.me/' + phoneNumber + '?text=' + message, '_blank');
-        }
-
-        // Scroll to Services Function  
-        function scrollToServices() {
-            const servicesSection = document.getElementById('services') || document.querySelector('[href="#services"]');
-            if (servicesSection) {
-                servicesSection.scrollIntoView({ behavior: 'smooth' });
-            } else {
-                showServiceModal();
-            }
-        }
-
-        // Modern Service Modal
-        function showServiceModal() {
-            const modal = document.createElement('div');
-            modal.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4';
-            modal.innerHTML = \`
-                <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl transform transition-all">
-                    <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6 rounded-t-2xl">
-                        <div class="flex items-center justify-between">
-                            <h3 class="text-xl font-bold">Hizmet Talebi</h3>
-                            <button onclick="this.closest('.fixed').remove()" class="text-white/80 hover:text-white">
-                                <i class="fas fa-times text-xl"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="p-6 space-y-4">
-                        <div class="text-center">
-                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i class="fas fa-handshake text-blue-600 text-2xl"></i>
-                            </div>
-                            <p class="text-gray-600 mb-6">Size en uygun uzmanı bulmak için hangi yöntemi tercih edersiniz?</p>
-                        </div>
-                        
-                        <div class="space-y-3">
-                            <button onclick="openWhatsAppChat()" class="w-full bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2">
-                                <i class="fab fa-whatsapp text-lg"></i>
-                                <span>WhatsApp ile Hızlı Talep</span>
-                            </button>
-                            
-                            <button onclick="window.location.href='#hizmet-al'" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2">
-                                <i class="fas fa-form text-lg"></i>
-                                <span>Detaylı Form Doldur</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            \`;
-            document.body.appendChild(modal);
-        }
         </script>
     </body>
-    </html>`)
+    </html>`
+  )
+})
+
+// Separate script for slider to avoid conflicts
+app.get('/slider.js', (c) => {
+  return new Response(`
+// CUSTOMER REVIEWS SLIDER - SIMPLE VERSION
+console.log('Slider script loaded!');
+
+var currentSlide = 0;
+var totalSlides = 5;
+var sliderTimer = null;
+
+function changeReviewSlide(slideIndex) {
+    console.log('Changing to slide:', slideIndex);
+    currentSlide = slideIndex;
+    updateSliderView();
+}
+
+function updateSliderView() {
+    var carousel = document.getElementById('reviewsCarousel');
+    if (carousel) {
+        var translateX = -(currentSlide * 100);
+        carousel.style.transform = 'translateX(' + translateX + '%)';
+        console.log('Updated to slide', currentSlide, 'with transform', translateX + '%');
+    }
+    
+    var dots = document.querySelectorAll('.review-dot');
+    for (var i = 0; i < dots.length; i++) {
+        if (i === currentSlide) {
+            dots[i].className = 'review-dot w-3 h-3 rounded-full bg-white transition-all';
+        } else {
+            dots[i].className = 'review-dot w-3 h-3 rounded-full bg-white/40 transition-all';
+        }
+    }
+}
+
+function autoAdvance() {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    console.log('Auto advancing to slide:', currentSlide);
+    updateSliderView();
+}
+
+function startSlider() {
+    console.log('Starting slider with', totalSlides, 'slides');
+    if (sliderTimer) clearInterval(sliderTimer);
+    sliderTimer = setInterval(autoAdvance, 4000);
+    updateSliderView();
+}
+
+// Export to window
+window.changeReviewSlide = changeReviewSlide;
+window.startSlider = startSlider;
+
+// ==========================================
+// DİNAMİK CANLI BİLDİRİMLER SİSTEMİ
+// ==========================================
+
+// Dinamik update fonksiyonu - GLOBAL SCOPE
+function updateLiveNotifications() {
+    console.log('🔄 Updating live notifications...');
+    
+    const notifications = document.getElementById('liveNotifications');
+    const comments = document.getElementById('liveComments');
+    
+    // ZENGİN TV-PC-BEYAZ EŞYA SERVİSLERİ
+    const services = [
+        // TV TAMİRLERİ - Premium Modeller
+        'TV Tamiri - Samsung Neo QLED 8K 75"',
+        'TV Tamiri - LG OLED evo C3 65"', 
+        'TV Tamiri - Sony Bravia XR A95K',
+        'TV Panel Değişimi - TCL C845 Mini LED',
+        'TV Anakart Tamiri - Philips OLED908',
+        'Smart TV Kurulum - Hisense U8K ULED',
+        'TV Hoparlör Tamiri - Grundig Vision 7',
+        'TV Yazılım Güncelleme - Vestel 4K UHD',
+        
+        // PC & LAPTOP TAMİRLERİ - Gaming & İş
+        'Gaming PC Kurulum - RTX 4090 + i9-13900K',
+        'İş PC Tamiri - Dell OptiPlex 7090 SFF',
+        'PC Anakart Tamiri - ASUS ROG Maximus',
+        'Gaming Laptop Tamiri - ASUS ROG Strix G18',
+        'MacBook Tamiri - MacBook Pro 16" M2 Max',
+        'PC Soğutma Sistemi - Corsair iCUE H150i',
+        'Oyun PC Toplama - AMD Ryzen 9 + RTX 4080',
+        'Laptop Ekran Tamiri - Lenovo Legion Pro 7',
+        'PC Format & Setup - Windows 11 Pro Kurulum',
+        'SSD Upgrade - Samsung 980 PRO 2TB NVMe',
+        
+        // BEYAZ EŞYA - Premium Markalar
+        'Buzdolabı Tamiri - Samsung Family Hub RF23M',
+        'Buzdolabı Tamiri - LG InstaView Door-in-Door', 
+        'Çamaşır Makinesi - Bosch Serie | 8 WAX32EH0TR',
+        'Çamaşır Makinesi - LG TurboWash360 F4WV912P2',
+        'Bulaşık Makinesi - Siemens iQ700 speedMatic',
+        'Bulaşık Makinesi - Bosch Serie 8 Crystal Dry',
+        'Mikrodalga Tamiri - Panasonic NN-DS596MEPG',
+        'Fırın Tamiri - Bosch HBG675BS1 Piroliz',
+        'Davlumbaz Tamiri - Siemens LC87KHM60T',
+        
+        // KLİMA & HVAC SİSTEMLERİ
+        'VRV Klima Sistemi - Daikin VRV 5 A-series',
+        'Split Klima Tamiri - Mitsubishi Electric MSZ-LN',
+        'Klima Gaz Dolumu - LG Artcool Gallery AC12SQ',
+        'Klima Montaj & Setup - Samsung WindFree Elite',
+        'Multi Split Sistem - Fujitsu General ASHG12KMCC',
+        'Inverter Klima Tamiri - Vestel Vega Plus 18000',
+        
+        // ELEKTRONİK CİHAZLAR
+        'iPhone Tamiri - iPhone 15 Pro Max 1TB',
+        'Samsung Tamiri - Galaxy S24 Ultra 512GB',
+        'Tablet Tamiri - iPad Pro 12.9" M2 Wi-Fi',
+        'PlayStation Tamiri - PS5 Slim Digital Edition',
+        'Xbox Tamiri - Xbox Series X 1TB SSD',
+        'Akıllı Saat Tamiri - Apple Watch Ultra 2',
+        'Kulaklık Tamiri - Sony WH-1000XM5 Wireless',
+        'Hoparlör Setup - JBL PartyBox 710 Bluetooth'
+    ];
+    
+    const locations = [
+        'İstanbul, Beşiktaş', 'İstanbul, Kadıköy', 'İstanbul, Şişli', 'İstanbul, Beyoğlu',
+        'Ankara, Çankaya', 'Ankara, Kızılay', 'Ankara, Bahçelievler', 'Ankara, Keçiören',  
+        'İzmir, Konak', 'İzmir, Alsancak', 'İzmir, Bornova', 'İzmir, Karşıyaka',
+        'Bursa, Osmangazi', 'Bursa, Nilüfer', 'Bursa, Yıldırım', 'Bursa, Gemlik',
+        'Antalya, Muratpaşa', 'Antalya, Kepez', 'Antalya, Konyaaltı', 'Antalya, Serik',
+        'Gaziantep, Şahinbey', 'Konya, Selçuklu', 'Adana, Seyhan', 'Kayseri, Melikgazi'
+    ];
+    const timeAgo = ['şimdi', '1 dk önce', '2 dk önce', '3 dk önce', '30 sn önce', '45 sn önce', '1.5 dk önce'];
+    
+    const customerNames = [
+        'Mehmet K.', 'Ayşe Y.', 'Can S.', 'Elif M.', 'Murat D.', 'Zeynep A.', 'Ali R.', 'Fatma B.',
+        'Ahmet T.', 'Seda L.', 'Burak Ö.', 'Deniz K.', 'Cem Y.', 'Pınar G.', 'Oğuz B.', 'Merve S.',
+        'Emre D.', 'Selin A.', 'Barış C.', 'Gizem E.', 'Kaan P.', 'Tuğba R.', 'Serkan M.', 'Ebru T.',
+        'Volkan S.', 'Esra H.', 'Tolga K.', 'Nazlı B.', 'Onur G.', 'Burcu Y.', 'Arda F.', 'İpek L.'
+    ];
+    const customerComments = [
+        // TV Yorumları - Kısa & Noktalı  
+        'OLED TV tamiri mükemmel, artık sinema keyfi evimde...',
+        '8K görüntü kalitesi harika oldu, çok teşekkürler...',
+        'Smart TV kurulumu perfect, tüm uygulamalar çalışıyor...',
+        'Panel değişimi süper, yepyeni gibi görünüyor...',
+        'TV sesinde problem vardı, şimdi müthiş ses kalitesi...',
+        'QLED teknolojisi harika, renkler çok canlı...',
+        
+        // PC & Laptop Yorumları - Kısa & Noktalı
+        'Gaming PC kurulumu efsane, RTX performansı müthiş...',
+        'MacBook tamiri professional, M2 chip gerçekten uçuyor...',
+        'PC format çok hızlı oldu, Windows 11 çok smooth...',
+        'SSD upgrade sonrası bilgisayarım roket gibi hızlı...',
+        'Laptop ekranı yenilendi, 4K kalite gerçekten süper...',
+        'Oyun PC toplama hizmeti A+, fps ciddi arttı...',
+        'İş bilgisayarım artık çok verimli çalışıyor...',
+        'Anakart tamiri başarılı, tüm portlar perfect...',
+        
+        // Beyaz Eşya Yorumları - Kısa & Noktalı  
+        'Buzdolabı tamiri mükemmel, artık sessiz çalışıyor...',
+        'Çamaşır makinesi artık 10/10, temizlik harika...',
+        'Bulaşık makinesi tamiri başarılı, spotless sonuç...',
+        'Mikrodalga yeniden hayata döndü, çok hızlı...',
+        'Fırın tamiri süper, ekmeklerim artık perfect...',
+        'Family Hub özelliği artık mükemmel çalışıyor...',
+        'Kompresör tamiri başarılı, enerji tasarrufu var...',
+        'Pompa değişimi perfect, artık sessiz yıkıyor...',
+        
+        // Klima Yorumları - Kısa & Noktalı
+        'VRV sistem kurulumu professional, tüm ev ideal...',
+        'Klima tamiri mükemmel, sessiz ve güçlü soğutma...',
+        'Split montaj çok temiz, duvarda iz kalmadı...',
+        'Inverter klima artık energy efficient çalışıyor...',
+        'Multi split sistemi harika, her oda ayrı kontrol...',
+        'Gaz dolumu perfect, soğutma performansı geri geldi...',
+        
+        // Elektronik Yorumları - Kısa & Noktalı
+        'iPhone ekranı yepyeni gibi, dokunmatik hassas...',
+        'PlayStation tamiri süper, lag problemi tamamen...',
+        'iPad Pro tamiri başarılı, Apple Pencil çalışıyor...',
+        'Galaxy S24 kamera sorunu tamamen çözüldü...',
+        'Apple Watch tamiri perfect, battery life uzun...',
+        'Kulaklık ses kalitesi geri geldi, bass muhteşem...',
+        'Tablet ekran tamiri başarılı, çok net görüntü...',
+        'Konsol fan temizliği perfect, artık sessiz...',
+        
+        // Genel Memnuniyet - Kısa & Noktalı
+        'Hizmet kalitesi A+, kesinlikle tavsiye ederim...',
+        'Teknisyen çok bilgili, gerçekten işini biliyor...',
+        'Zamanında geldi, çok hızlı çözüm buldu...',
+        'Fiyat-performans mükemmel, çok uygun fiyat...',
+        'Garantili hizmet, güvenle tercih edebilirsiniz...',
+        'Problem tamamen çözüldü, çok memnunum...',
+        'Profesyonel ekip, kaliteli malzeme kullanıyor...',
+        'İkinci kez hizmet alıyorum, yine mükemmel...',
+        'Müşteri hizmetleri de çok iyi, çok anlayışlı...',
+        'Randevu sistemi kolay, esnek saatler mevcut...',
+        'Ödeme seçenekleri uygun, taksit imkanı var...',
+        'Servis sonrası takip yapıyorlar, çok caring...',
+        'Usta çok deneyimli, işi hızlı ve temiz yapıyor...',
+        'Malzeme kalitesi yüksek, orijinal parça kullanıyor...'
+    ];
+    
+    // Bildirimleri güncelle
+    if (notifications) {
+        console.log('✅ Found notifications container');
+        const randomService = services[Math.floor(Math.random() * services.length)];
+        const randomLocation = locations[Math.floor(Math.random() * locations.length)];
+        const randomTime = timeAgo[Math.floor(Math.random() * timeAgo.length)];
+        
+        const div = document.createElement('div');
+        div.className = 'bg-white/10 border-l-4 border-green-400 p-3 text-white text-sm rounded-r-lg shadow-lg mb-2 transform opacity-0 scale-95 transition-all duration-300';
+        div.innerHTML = 
+            '<div class="font-semibold">' + randomService + '</div>' +
+            '<div class="text-green-200 text-xs">' + randomLocation + ' • ' + randomTime + '</div>';
+        
+        // YENİ İÇERİK EN ÜSTTE GÖRÜNSÜN
+        if (notifications.firstChild) {
+            notifications.insertBefore(div, notifications.firstChild);
+        } else {
+            notifications.appendChild(div);
+        }
+        
+        // Animasyon için
+        setTimeout(function() {
+            div.style.opacity = '1';
+            div.style.transform = 'scale(1)';
+        }, 50);
+        
+        // Maximum 5 bildirim tut
+        while (notifications.children.length > 5) {
+            notifications.removeChild(notifications.lastChild);
+        }
+        console.log('✅ Added new notification:', randomService);
+    } else {
+        console.log('❌ liveNotifications container not found!');
+    }
+    
+    // Yorumları güncelle
+    if (comments) {
+        console.log('✅ Found comments container');
+        const randomName = customerNames[Math.floor(Math.random() * customerNames.length)];
+        const randomComment = customerComments[Math.floor(Math.random() * customerComments.length)];
+        
+        const div = document.createElement('div');
+        div.className = 'bg-white/10 p-3 text-white text-sm rounded-lg shadow-lg mb-2 transform opacity-0 scale-95 transition-all duration-300';
+        // Rastgele yıldız sayısı (4 veya 5 yıldız)
+        const starCount = Math.random() < 0.7 ? 5 : 4; // %70 ihtimalle 5 yıldız, %30 ihtimalle 4 yıldız
+        const stars = '⭐'.repeat(starCount);
+        
+        div.innerHTML = 
+            '<div class="font-medium">' + randomName + '</div>' +
+            '<div class="text-yellow-400 text-sm my-1">' + stars + '</div>' +
+            '<div class="text-blue-200 text-xs">' + randomComment + '</div>' +
+            '<div class="text-green-300 text-xs mt-1 flex items-center">' +
+                '<i class="fas fa-check-circle mr-1"></i>' +
+                'Doğrulanmış Kullanıcı' +
+            '</div>';
+        
+        // YENİ YORUM EN ÜSTTE GÖRÜNSÜN  
+        if (comments.firstChild) {
+            comments.insertBefore(div, comments.firstChild);
+        } else {
+            comments.appendChild(div);
+        }
+        
+        // Animasyon için
+        setTimeout(function() {
+            div.style.opacity = '1';
+            div.style.transform = 'scale(1)';
+        }, 50);
+        
+        // Maximum 5 yorum tut
+        while (comments.children.length > 5) {
+            comments.removeChild(comments.lastChild);
+        }
+        console.log('✅ Added new comment:', randomName);
+    } else {
+        console.log('❌ liveComments container not found!');
+    }
+}
+
+// ==========================================
+// DİNAMİK GÜVENLİK GARANTİLERİ SİSTEMİ
+// ==========================================
+
+// Dinamik güvenlik garantileri verisi
+function updateSecurityGuarantees() {
+    const securityData = [
+        {
+            icon: 'fas fa-tools',
+            title: 'IŞÇILIK GARANTISI',
+            detail: '6 ay garanti',
+            color: 'text-blue-300'
+        },
+        {
+            icon: 'fas fa-shield-check',
+            title: 'ÖDEME GÜVENCESI',
+            detail: '24 saat koruma',
+            color: 'text-green-300'
+        },
+        {
+            icon: 'fas fa-medal',
+            title: 'KALİTE GARANTISI',
+            detail: 'A+ sertifikali',
+            color: 'text-amber-300'
+        },
+        {
+            icon: 'fas fa-headset',
+            title: 'DESTEK GARANTISI',
+            detail: '7/24 yardım',
+            color: 'text-purple-300'
+        },
+        {
+            icon: 'fas fa-clock',
+            title: 'SÜRE GARANTISI',
+            detail: 'Zamanında teslimat',
+            color: 'text-cyan-300'
+        },
+        {
+            icon: 'fas fa-certificate',
+            title: 'UZMAN GARANTISI',
+            detail: 'Sertifikalı teknisyen',
+            color: 'text-orange-300'
+        },
+        {
+            icon: 'fas fa-undo',
+            title: 'İADE GARANTISI',
+            detail: 'Koşulsuz iade',
+            color: 'text-pink-300'
+        }
+    ];
+    
+    const securityIcon = document.getElementById('securityIcon');
+    const securityTitle = document.getElementById('securityTitle');
+    const securityDetail = document.getElementById('securityDetail');
+    
+    if (securityIcon && securityTitle && securityDetail) {
+        const randomSecurity = securityData[Math.floor(Math.random() * securityData.length)];
+        
+        // Icon ve rengi güncelle
+        securityIcon.className = randomSecurity.icon + ' ' + randomSecurity.color + ' mr-1 text-xs';
+        
+        // Başlık güncelle
+        securityTitle.textContent = randomSecurity.title;
+        
+        // Detay güncelle
+        securityDetail.textContent = randomSecurity.detail;
+        
+        console.log('🛡️ Updated security guarantee:', randomSecurity.title);
+    }
+}
+
+// Export to global scope
+window.updateLiveNotifications = updateLiveNotifications;
+window.updateSecurityGuarantees = updateSecurityGuarantees;
+
+// Auto-start when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM ready, starting slider...');
+    setTimeout(startSlider, 1000);
+    
+    console.log('🚀 Starting live notifications system...');
+    // İlk güncellemeyi hemen başlat
+    setTimeout(updateLiveNotifications, 2000);
+    
+    // Her 3 saniyede bir güncelle  
+    setInterval(updateLiveNotifications, 3000);
+    
+    console.log('🛡️ Starting dynamic security guarantees...');
+    // İlk güvenlik garantisi güncellemesi
+    setTimeout(updateSecurityGuarantees, 1500);
+    
+    // Her 4 saniyede bir güvenlik garantilerini güncelle
+    setInterval(updateSecurityGuarantees, 4000);
+});
+`, {
+    headers: {
+      'Content-Type': 'application/javascript',
+      'Cache-Control': 'no-cache'
+    }
+  })
 })
 
 export default app
