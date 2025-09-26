@@ -4496,7 +4496,7 @@ app.get('/', (c) => {
                     <!-- Left Superhero -->
                     <div class="text-center superhero-container">
                         <div class="superhero-glow mb-6">
-                            <img src="/static/garantor360-superhero.png" alt="Garantor360 G&#252;venlik Koruyucusu" class="w-full max-w-sm mx-auto superhero-image">
+                            <img src="/static/garantor360-new-superhero.png" alt="Garantor360 G&#252;venlik Koruyucusu" class="w-full max-w-sm mx-auto superhero-image">
                         </div>
                         <h3 class="text-2xl font-bold text-white mb-4 superhero-title">G&#252;venlik Koruyucusu</h3>
                         <p class="text-blue-100 text-lg superhero-subtitle">&#214;deme g&#252;venli&#287;iniz bizim sorumlulu&#287;umuz!</p>
@@ -6037,7 +6037,7 @@ app.get('/', (c) => {
                             
                             <!-- Superhero Between Containers -->
                             <div class="hidden lg:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
-                                <img src="/static/garantor360-superhero.png" 
+                                <img src="/static/garantor360-new-superhero.png" 
                                      alt="Garantor360 Superhero" 
                                      class="w-96 h-96 object-contain opacity-100 floating-animation">
                             </div>
