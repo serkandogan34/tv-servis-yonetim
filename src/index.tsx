@@ -5297,25 +5297,59 @@ app.get('/', (c) => {
         </section>
 
         <!-- 360° Logo Background Section -->
-        <section class="relative py-8 bg-slate-50 overflow-hidden">
-            <div class="absolute inset-0 flex items-center justify-center opacity-5">
+        <section class="relative py-16 bg-gradient-to-br from-slate-50 to-orange-50 overflow-hidden">
+            <!-- Large Background Logo -->
+            <div class="absolute inset-0 flex items-center justify-center opacity-20">
                 <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_da4a2c84-aaac-47c9-a813-6b04eedeba63" 
                      alt="360° Güvenlik" 
-                     class="w-96 h-96 object-contain animate-pulse" 
-                     style="filter: saturate(0.8);">
+                     class="w-[600px] h-[600px] object-contain animate-pulse" 
+                     style="filter: saturate(1.2) brightness(1.1);">
             </div>
+            
+            <!-- Fallback Logo if main doesn't load -->
+            <div class="absolute inset-0 flex items-center justify-center opacity-15">
+                <div class="w-80 h-80 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center shadow-2xl">
+                    <div class="text-white text-8xl font-bold transform -rotate-12">360°</div>
+                    <div class="absolute bottom-8 right-8 text-white text-2xl">
+                        <i class="fas fa-smile"></i>
+                    </div>
+                </div>
+            </div>
+            
             <div class="max-w-7xl mx-auto px-6 relative z-10">
                 <div class="text-center">
-                    <div class="inline-flex items-center space-x-3 bg-white/90 backdrop-blur-sm rounded-full px-6 py-3 shadow-lg border border-orange-200">
-                        <div class="w-8 h-8 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center">
-                            <span class="text-white font-bold text-sm">360°</span>
+                    <div class="inline-flex items-center space-x-3 bg-white/95 backdrop-blur-sm rounded-full px-8 py-4 shadow-xl border border-orange-200">
+                        <div class="w-10 h-10 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center animate-pulse">
+                            <span class="text-white font-bold text-lg">360°</span>
                         </div>
-                        <span class="text-slate-800 font-bold text-lg">KAPSAMLI KORUMA GARANTİSİ</span>
-                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        <span class="text-slate-800 font-bold text-xl">KAPSAMLI KORUMA GARANTİSİ</span>
+                        <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                     </div>
-                    <p class="text-slate-600 text-sm mt-3 font-medium">
+                    <p class="text-slate-700 text-lg mt-4 font-semibold">
                         Her açıdan güvenli hizmet deneyimi için 360° koruma sistemi
                     </p>
+                    
+                    <!-- Additional Visual Elements -->
+                    <div class="flex justify-center items-center space-x-8 mt-6">
+                        <div class="text-center">
+                            <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-2">
+                                <i class="fas fa-shield-alt text-orange-600 text-xl"></i>
+                            </div>
+                            <div class="text-slate-800 font-bold text-sm">Güvenlik</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-2">
+                                <i class="fas fa-clock text-blue-600 text-xl"></i>
+                            </div>
+                            <div class="text-slate-800 font-bold text-sm">7/24 Destek</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-2">
+                                <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                            </div>
+                            <div class="text-slate-800 font-bold text-sm">%100 Garanti</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
