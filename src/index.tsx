@@ -4855,26 +4855,23 @@ app.get('/', (c) => {
                 <!-- Unified Process + Security Cards -->
                 <div class="bg-gradient-to-r from-slate-50 to-blue-50 rounded-xl p-5 border border-blue-200 shadow-lg relative overflow-hidden">
                     
-                    <!-- 360° Large Background Logo -->
-                    <div class="absolute inset-0 flex items-center justify-center opacity-12">
+                    <!-- 360° Background Logo - Behind Content -->
+                    <div class="absolute inset-0 flex items-center justify-center opacity-6 -z-10">
                         <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_da4a2c84-aaac-47c9-a813-6b04eedeba63" 
                              alt="360° Güvenlik Arka Plan" 
                              class="w-full h-full object-contain" 
-                             style="filter: saturate(0.8) brightness(1.2); transform: scale(1.2);">
+                             style="filter: saturate(0.3) brightness(1.5) grayscale(0.2); transform: scale(0.8);">
                     </div>
                     
-                    <!-- Fallback Large 360° Logo -->
-                    <div class="absolute inset-0 flex items-center justify-center opacity-10">
-                        <div class="w-96 h-96 bg-gradient-to-br from-orange-400/20 to-orange-600/20 rounded-full flex items-center justify-center">
-                            <span class="text-orange-500/40 text-9xl font-bold transform rotate-12">360°</span>
-                            <div class="absolute bottom-16 right-16 text-orange-400/30 text-4xl transform rotate-45">
-                                <i class="fas fa-smile"></i>
-                            </div>
+                    <!-- Fallback 360° Logo - Behind Content -->
+                    <div class="absolute inset-0 flex items-center justify-center opacity-4 -z-10">
+                        <div class="w-80 h-80 flex items-center justify-center">
+                            <span class="text-slate-300 text-8xl font-bold transform rotate-12 select-none">360°</span>
                         </div>
                     </div>
                     
                     <!-- Garantor360 Header -->
-                    <div class="text-center mb-5">
+                    <div class="text-center mb-5 relative z-10">
                         <div class="inline-flex items-center space-x-2 bg-white rounded-full px-4 py-2 shadow-sm border border-blue-100">
                             <div class="w-6 h-6 bg-blue-600 rounded-md flex items-center justify-center">
                                 <i class="fas fa-shield-alt text-white text-xs"></i>
@@ -4885,7 +4882,7 @@ app.get('/', (c) => {
                     </div>
 
                     <!-- 4 Step Process with Integrated Security -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 relative z-10">
                         
                         <!-- Step 1: Talep Oluştur + Koruma -->
                         <div class="bg-white rounded-lg p-4 border border-blue-100 hover:shadow-lg transition-all duration-300 relative">

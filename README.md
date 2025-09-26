@@ -72,7 +72,20 @@
   - ✅ **Text Size**: text-4xl → text-9xl massive scale
   - ✅ **Coverage**: Tüm container alanını kaplıyor
   - ✅ **Positioning**: İnset-0 ile tam kaplama
-- **Bundle Size**: 708.46kB → 708.77kB (+0.31kB minimal artış)
+- **Bundle Size**: 708.77kB → 708.57kB (-0.2kB optimize)
+
+### ⚡ **Z-Index ve Şeffaflık Düzeltmesi - Kritik Sorun Giderimi**
+- **Problem**: 360° logo kartların üstüne çıkmış, kartlar gözükmüyordu
+- **Ana Çözüm**: Z-index layering sistemi uygulandı
+- **Düzeltme Detayları**:
+  - ✅ **Logo Z-Index**: -z-10 (arka planda zorunlu yerleşim)
+  - ✅ **Kartlar Z-Index**: z-10 (üst katmanda garantili görünüm)
+  - ✅ **Header Z-Index**: z-10 (içerik koruması)
+  - ✅ **Opacity Azaltma**: %12 → %6 (çok daha şeffaf)
+  - ✅ **Fallback Opacity**: %10 → %4 (minimal görünürlük)
+  - ✅ **Filter İyileştirme**: grayscale(0.2) + saturate(0.3) subtle efekt
+  - ✅ **Scale Azaltma**: 1.2x → 0.8x (kartlarla çakışma önleme)
+  - ✅ **Color Neutral**: Turuncu arka plan kaldırıldı, şeffaf yapıldı
 
 ## 🧠 **YENİ: AI-POWERED SMART RECOMMENDATION ENGINE**
 
