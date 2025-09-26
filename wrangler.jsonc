@@ -12,5 +12,10 @@
       "database_name": "tvservis-production",
       "database_id": "will-be-set-after-creation"
     }
-  ]
+  ],
+  
+  // Environment Variables (development will use .dev.vars)
+  "vars": {
+    "NODE_ENV": "production"
+  }
 }

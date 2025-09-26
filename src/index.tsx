@@ -14,6 +14,7 @@ import { NotificationService } from './utils/notifications'
 // Type definitions for Cloudflare bindings
 type Bindings = {
   DB: D1Database
+  N8N_WEBHOOK_URL?: string
 }
 
 const app = new Hono<{ Bindings: Bindings }>()
@@ -191,9 +192,11 @@ app.post('/api/service-request', async (c) => {
       source: 'garantor360_website'
     }
     
-    // n8n webhook URL'si (environment variable olarak tanimlanmali)
-    // Production'da gercek n8n webhook URL'ini buraya ekleyeceksiniz
-    const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL || null
+    // n8n webhook URL'si (Cloudflare environment variable)
+    // Development: .dev.vars dosyasindan, Production: wrangler secrets'dan
+    const n8nWebhookUrl = c.env.N8N_WEBHOOK_URL || null
+    let webhookSuccess = false
+    let webhookResponseText = null
     
     if (n8nWebhookUrl) {
       try {
@@ -210,13 +213,20 @@ app.post('/api/service-request', async (c) => {
           throw new Error(`Webhook failed: ${webhookResponse.status}`)
         }
         
-        console.log('n8n webhook sent successfully:', requestCode)
+        const webhookResult = await webhookResponse.text()
+        console.log('n8n webhook sent successfully:', requestCode, webhookResult)
+        webhookSuccess = true
+        webhookResponseText = webhookResult
       } catch (webhookError) {
         console.error('n8n webhook error:', webhookError)
+        webhookSuccess = false
+        webhookResponseText = webhookError.message
         // Webhook hatasi olsa bile local kaydi yapip kullaniciya basarili donus verebiliriz
       }
     } else {
       console.log('n8n webhook URL not configured, skipping webhook call')
+      webhookSuccess = false
+      webhookResponseText = 'N8N webhook URL not configured'
     }
     
     // Local database'e de kaydet (opsiyonel, backup icin)
@@ -225,13 +235,13 @@ app.post('/api/service-request', async (c) => {
         INSERT INTO service_requests (
           request_code, customer_name, customer_phone, customer_city, 
           customer_district, service_category, problem_description, 
-          urgency, contact_preference, created_at, status
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          urgency, contact_preference, created_at, status, n8n_sent, n8n_response
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `).bind(
         requestCode, customerName, customerPhone, customerCity,
         requestData.customerDistrict || '', serviceCategory, problemDescription,
         requestData.urgency || 'normal', JSON.stringify(requestData.contactPreference || ['phone']),
-        timestamp, 'received'
+        timestamp, 'received', webhookSuccess ? 1 : 0, webhookResponseText || null
       ).run()
     } catch (dbError) {
       console.error('Database save error:', dbError)
