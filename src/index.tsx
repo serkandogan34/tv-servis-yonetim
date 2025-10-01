@@ -3955,6 +3955,9 @@ app.get('/sss', (c) => {
 
 // Default route - Customer Landing Page
 app.get('/', (c) => {
+  // Generate realistic live user count
+  const liveUserCount = Math.floor(Math.random() * 21) + 35; // 35-55 range
+  
   return c.html(`<!DOCTYPE html>
     <html lang="tr">
     <head>
@@ -5821,7 +5824,7 @@ app.get('/', (c) => {
                                     <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse mr-2"></div>
                                     <span class="text-green-300 font-semibold">ŞU ANDA CANLI:</span>
                                 </div>
-                                <div class="text-xl font-bold text-yellow-300" id="liveUserCount">47</div>
+                                <div class="text-xl font-bold text-yellow-300" id="liveUserCount">${liveUserCount}</div>
                                 <span class="text-blue-200">kişi</span>
                             </div>
                             <div class="text-xs text-blue-300 text-center mt-1">

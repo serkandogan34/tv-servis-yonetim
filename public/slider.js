@@ -149,6 +149,31 @@ if (document.readyState === 'loading') {
     initSlider();
 }
 
+// Live Counter Update (Simple & Reliable)
+function updateLiveCounter() {
+    console.log('🔢 Updating live counter...');
+    
+    const counter = document.getElementById('liveUserCount');
+    if (!counter) {
+        console.log('❌ liveUserCount not found');
+        return;
+    }
+    
+    const currentCount = parseInt(counter.textContent) || 47;
+    const change = Math.floor(Math.random() * 3) - 1; // -1, 0, or +1
+    const newCount = Math.max(35, Math.min(55, currentCount + change));
+    
+    counter.textContent = newCount;
+    console.log('✅ Counter updated:', currentCount, '→', newCount);
+}
+
+// Start live counter updates
+setTimeout(function() {
+    console.log('🚀 Starting live counter system...');
+    updateLiveCounter(); // Initial update
+    setInterval(updateLiveCounter, 8000); // Update every 8 seconds
+}, 3000);
+
 // Backup method
 setTimeout(function() {
     console.log('⏰ Backup timer triggered');
