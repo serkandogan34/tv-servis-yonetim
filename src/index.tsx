@@ -4757,7 +4757,7 @@ app.get('/', (c) => {
                     </div>
 
                     <!-- Right: Superhero with Active Service Counter -->
-                    <div class="relative flex items-center justify-center order-1 lg:order-2">
+                    <div class="relative flex items-center justify-center order-1 lg:order-2 mt-3">
                         <!-- Active Service Counter (Top Right) -->
                         <div class="absolute right-0 z-30" style="top: 260px; transform: translateX(0px);">
                             <div class="px-2 py-1 md:bg-white/95 md:backdrop-blur-md md:rounded-2xl md:px-4 md:py-2.5 md:shadow-xl md:border md:border-blue-100">
