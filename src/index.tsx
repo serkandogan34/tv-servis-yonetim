@@ -5097,7 +5097,9 @@ app.get('/', (c) => {
                             <div class="w-4 h-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mr-1 shadow-sm">
                                 <i class="fas fa-shield-check text-white text-xs"></i>
                             </div>
-                            <span class="text-slate-800 font-bold text-sm">GARANTOR360</span>
+                            <span class="font-bold text-sm">
+                                <span class="text-slate-800">Garantor</span><span class="text-amber-500">360°</span>
+                            </span>
                             <div class="w-1.5 h-1.5 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full animate-pulse ml-1"></div>
                         </div>
                         <h2 class="text-xl font-bold text-slate-800 mb-1">4 Basit Adımda Güvenli Hizmet</h2>
