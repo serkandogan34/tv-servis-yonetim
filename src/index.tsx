@@ -6552,7 +6552,7 @@ app.get('/', (c) => {
                                     <div class="bg-gradient-to-br from-blue-900 to-blue-800 border border-blue-300 hover:border-blue-200 transition-all duration-300 rounded-2xl shadow-sm hover:shadow-md relative" style="min-height: 600px;">
                                 
                                         <!-- PC Header (ESKİ TASARIM) -->
-                                        <div class="px-3 pt-1 pb-3 border-b border-blue-700">
+                                        <div class="px-3 pt-1 pb-6 border-b border-blue-700">
                                             <div class="text-center">
                                                 <div class="flex items-center justify-center mb-1">
                                                     <div class="text-lg font-bold mr-2">
