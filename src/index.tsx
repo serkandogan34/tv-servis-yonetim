@@ -5121,8 +5121,8 @@ app.get('/', (c) => {
                             
                             <!-- Mini Icon -->
                             <div class="flex justify-center mb-2 relative z-10">
-                                <div class="w-8 h-8 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 rounded-lg flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 relative">
-                                    <i class="fas fa-edit text-white text-sm"></i>
+                                <div class="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 rounded-lg flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 relative">
+                                    <i class="fas fa-edit text-white text-sm lg:text-lg"></i>
                                     <div class="absolute -top-0.5 -right-0.5 w-3 h-3 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full border border-white shadow-sm">
                                         <i class="fas fa-shield-check text-white text-xs flex items-center justify-center h-full"></i>
                                     </div>
@@ -5173,8 +5173,8 @@ app.get('/', (c) => {
                             
                             <!-- Mini Icon -->
                             <div class="flex justify-center mb-2 relative z-10">
-                                <div class="w-8 h-8 bg-gradient-to-br from-green-500 via-green-600 to-emerald-600 rounded-lg flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 relative">
-                                    <i class="fas fa-users text-white text-sm"></i>
+                                <div class="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-green-500 via-green-600 to-emerald-600 rounded-lg flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 relative">
+                                    <i class="fas fa-users text-white text-sm lg:text-lg"></i>
                                     <div class="absolute -top-0.5 -right-0.5 w-3 h-3 bg-gradient-to-r from-blue-400 to-blue-500 rounded-full border border-white shadow-sm">
                                         <i class="fas fa-user-check text-white text-xs flex items-center justify-center h-full"></i>
                                     </div>
@@ -5225,8 +5225,8 @@ app.get('/', (c) => {
                             
                             <!-- Mini Icon -->
                             <div class="flex justify-center mb-2 relative z-10">
-                                <div class="w-8 h-8 bg-gradient-to-br from-purple-500 via-purple-600 to-pink-600 rounded-lg flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 relative">
-                                    <i class="fas fa-handshake text-white text-sm"></i>
+                                <div class="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-purple-500 via-purple-600 to-pink-600 rounded-lg flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 relative">
+                                    <i class="fas fa-handshake text-white text-sm lg:text-lg"></i>
                                     <div class="absolute -top-0.5 -right-0.5 w-3 h-3 bg-gradient-to-r from-amber-400 to-orange-500 rounded-full border border-white shadow-sm">
                                         <i class="fas fa-dollar-sign text-white text-xs flex items-center justify-center h-full"></i>
                                     </div>
@@ -5277,8 +5277,8 @@ app.get('/', (c) => {
                             
                             <!-- Mini Icon -->
                             <div class="flex justify-center mb-2 relative z-10">
-                                <div class="w-8 h-8 bg-gradient-to-br from-orange-500 via-red-500 to-pink-600 rounded-lg flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 relative">
-                                    <i class="fas fa-check-circle text-white text-sm"></i>
+                                <div class="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-orange-500 via-red-500 to-pink-600 rounded-lg flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 relative">
+                                    <i class="fas fa-check-circle text-white text-sm lg:text-lg"></i>
                                     <div class="absolute -top-0.5 -right-0.5 w-3 h-3 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-full border border-white shadow-sm">
                                         <i class="fas fa-star text-white text-xs flex items-center justify-center h-full"></i>
                                     </div>
@@ -5648,7 +5648,7 @@ app.get('/', (c) => {
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
                     <!-- Story 1 - TV Tamiri -->
                     <div class="bg-white rounded-lg shadow-sm p-2 text-center">
-                        <img src="https://page.gensparksite.com/v1/base64_upload/ee6d91c41c837953855b76e06ba10fbc" 
+                        <img src="https://page.gensparksite.com/v1/base64_upload/613058d080d280f60ea12d55ae936a1d" 
                              alt="TV Tamiri" 
                              class="w-full h-25 object-cover rounded mb-2">
                         <h4 class="font-bold text-xs text-gray-800">TV Tamiri</h4>
@@ -5663,15 +5663,7 @@ app.get('/', (c) => {
                         <h4 class="font-bold text-xs text-gray-800">Klima Servisi</h4>
                         <p class="text-xs text-gray-600">Selim B. ⭐⭐⭐⭐⭐</p>
                     </div>
-                    
-                    <!-- Story 3 - PC Tamiri -->
-                    <div class="bg-white rounded-lg shadow-sm p-2 text-center">
-                        <img src="https://page.gensparksite.com/v1/base64_upload/249fe7eafc02b698735b1eb1b44a10ff" 
-                             alt="PC Tamiri" 
-                             class="w-full h-25 object-cover rounded mb-2">
-                        <h4 class="font-bold text-xs text-gray-800">PC Tamiri</h4>
-                        <p class="text-xs text-gray-600">Ahmet K. ⭐⭐⭐⭐⭐</p>
-                    </div>
+
                     
                     <!-- Story 4 - Beyaz Eşya -->
                     <div class="bg-white rounded-lg shadow-sm p-2 text-center">
@@ -5680,6 +5672,15 @@ app.get('/', (c) => {
                              class="w-full h-25 object-cover rounded mb-2">
                         <h4 class="font-bold text-xs text-gray-800">Beyaz Eşya</h4>
                         <p class="text-xs text-gray-600">Nermin H. ⭐⭐⭐⭐⭐</p>
+                    </div>
+                    
+                    <!-- Story 5 - TV Tamiri -->
+                    <div class="bg-white rounded-lg shadow-sm p-2 text-center">
+                        <img src="https://page.gensparksite.com/v1/base64_upload/ee6d91c41c837953855b76e06ba10fbc" 
+                             alt="TV Tamiri" 
+                             class="w-full h-25 object-cover rounded mb-2">
+                        <h4 class="font-bold text-xs text-gray-800">TV Tamiri</h4>
+                        <p class="text-xs text-gray-600">Fulya H. ⭐⭐⭐⭐⭐</p>
                     </div>
                 </div>
                 
@@ -5892,7 +5893,7 @@ app.get('/', (c) => {
                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                     <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 min-h-[240px] flex flex-col">
                                         <div class="flex items-center mb-3">
-                                            <img src="https://ui-avatars.com/api/?name=Ayse+Kaya&background=f59e0b&color=fff" alt="Ayşe Kaya" class="w-12 h-12 rounded-full mr-3">
+                                            <img src="https://images.unsplash.com/photo-1494790108755-2616c26d4c46?w=150&h=150&fit=crop&crop=face&auto=format&q=90" alt="Ayşe Kaya" class="w-9 h-9 md:w-11 md:h-11 rounded-full mr-3 object-cover" style="object-position: center 15%;">
                                             <div>
                                                 <h4 class="text-lg font-bold text-white">Ayşe Kaya</h4>
                                                 <div class="flex items-center">
@@ -5919,7 +5920,7 @@ app.get('/', (c) => {
 
                                     <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 min-h-[240px] flex flex-col">
                                         <div class="flex items-center mb-3">
-                                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face&auto=format&q=80" alt="Mehmet Öztürk" class="w-12 h-12 rounded-full mr-3">
+                                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face&auto=format&q=90" alt="Mehmet Öztürk" class="w-9 h-9 md:w-11 md:h-11 rounded-full mr-3 object-cover" style="object-position: center 20%;">
                                             <div>
                                                 <h4 class="text-lg font-bold text-white">Mehmet Öztürk</h4>
                                                 <div class="flex items-center">
@@ -5978,7 +5979,7 @@ app.get('/', (c) => {
 
                                     <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 min-h-[240px] flex flex-col">
                                         <div class="flex items-center mb-3">
-                                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face&auto=format&q=80" alt="Ali Çelik" class="w-12 h-12 rounded-full mr-3">
+                                            <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671d66?w=150&h=150&fit=crop&crop=face&auto=format&q=90" alt="Ali Çelik" class="w-9 h-9 md:w-11 md:h-11 rounded-full mr-3 object-cover" style="object-position: center 20%;">
                                             <div>
                                                 <h4 class="text-lg font-bold text-white">Ali Çelik</h4>
                                                 <div class="flex items-center">
@@ -6010,7 +6011,7 @@ app.get('/', (c) => {
                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                     <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 min-h-[240px] flex flex-col">
                                         <div class="flex items-center mb-3">
-                                            <img src="https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=100&h=100&fit=crop&crop=face&auto=format&q=80" alt="Fatma Demir" class="w-12 h-12 rounded-full mr-3">
+                                            <img src="https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=150&h=150&fit=crop&crop=face&auto=format&q=90" alt="Fatma Demir" class="w-9 h-9 md:w-11 md:h-11 rounded-full mr-3 object-cover" style="object-position: center 20%;">
                                             <div>
                                                 <h4 class="text-lg font-bold text-white">Fatma Demir</h4>
                                                 <div class="flex items-center">
@@ -6038,7 +6039,7 @@ app.get('/', (c) => {
 
                                     <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 min-h-[240px] flex flex-col">
                                         <div class="flex items-center mb-3">
-                                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop&crop=face&auto=format&q=80" alt="Hasan Koç" class="w-12 h-12 rounded-full mr-3">
+                                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face&auto=format&q=90" alt="Hasan Koç" class="w-9 h-9 md:w-11 md:h-11 rounded-full mr-3 object-cover" style="object-position: center 25%;">
                                             <div>
                                                 <h4 class="text-lg font-bold text-white">Hasan Koç</h4>
                                                 <div class="flex items-center">
@@ -6071,7 +6072,7 @@ app.get('/', (c) => {
                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                     <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 min-h-[240px] flex flex-col">
                                         <div class="flex items-center mb-3">
-                                            <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=100&h=100&fit=crop&crop=face&auto=format&q=80" alt="Elif Arslan" class="w-12 h-12 rounded-full mr-3">
+                                            <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=150&h=150&fit=crop&crop=face&auto=format&q=90" alt="Elif Arslan" class="w-9 h-9 md:w-11 md:h-11 rounded-full mr-3 object-cover" style="object-position: center 15%;">
                                             <div>
                                                 <h4 class="text-lg font-bold text-white">Elif Arslan</h4>
                                                 <div class="flex items-center">
@@ -6099,7 +6100,7 @@ app.get('/', (c) => {
 
                                     <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 min-h-[240px] flex flex-col">
                                         <div class="flex items-center mb-3">
-                                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face&auto=format&q=80" alt="Mustafa Yıldız" class="w-12 h-12 rounded-full mr-3">
+                                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face&auto=format&q=90" alt="Mustafa Yıldız" class="w-9 h-9 md:w-11 md:h-11 rounded-full mr-3 object-cover" style="object-position: center 10%;">
                                             <div>
                                                 <h4 class="text-lg font-bold text-white">Mustafa Yıldız</h4>
                                                 <div class="flex items-center">
@@ -6132,7 +6133,7 @@ app.get('/', (c) => {
                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                     <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 min-h-[240px] flex flex-col">
                                         <div class="flex items-center mb-3">
-                                            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&h=100&fit=crop&crop=face&auto=format&q=80" alt="Gamze Polat" class="w-12 h-12 rounded-full mr-3">
+                                            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&h=150&fit=crop&crop=face&auto=format&q=90" alt="Gamze Polat" class="w-9 h-9 md:w-11 md:h-11 rounded-full mr-3 object-cover" style="object-position: center 15%;">
                                             <div>
                                                 <h4 class="text-lg font-bold text-white">Gamze Polat</h4>
                                                 <div class="flex items-center">
@@ -6160,7 +6161,7 @@ app.get('/', (c) => {
 
                                     <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 min-h-[240px] flex flex-col">
                                         <div class="flex items-center mb-3">
-                                            <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=100&h=100&fit=crop&crop=face&auto=format&q=80" alt="Emre Şahin" class="w-12 h-12 rounded-full mr-3">
+                                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face&auto=format&q=90" alt="Emre Şahin" class="w-9 h-9 md:w-11 md:h-11 rounded-full mr-3 object-cover" style="object-position: center 15%;">
                                             <div>
                                                 <h4 class="text-lg font-bold text-white">Emre Şahin</h4>
                                                 <div class="flex items-center">
