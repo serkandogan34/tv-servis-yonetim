@@ -6555,7 +6555,9 @@ app.get('/', (c) => {
                                         <div class="px-3 py-1 border-b border-blue-700">
                                             <div class="text-center">
                                                 <div class="flex items-center justify-center mb-1">
-                                                    <img src="/static/garantor360-logo-white.png" alt="Garantor360" class="h-8 w-auto mr-2">
+                                                    <div class="text-lg font-bold mr-2">
+                                                        <span class="text-white">Garantor</span><span class="text-amber-400">360°</span>
+                                                    </div>
                                                     <h3 class="text-2xl font-bold text-white">KORUMA</h3>
                                                 </div>
                                                 <p class="text-blue-200 text-base">Art&#305;k kimse sizi doland&#305;ramaz!</p>
