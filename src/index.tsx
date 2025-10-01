@@ -4633,7 +4633,7 @@ app.get('/', (c) => {
                 <div class="flex justify-between items-center h-16 relative md:flex md:justify-between">
                     <!-- Desktop Logo -->
                     <div class="hidden md:flex items-center">
-                        <img src="/static/garantor360-logo.png" alt="Garantor360" class="h-12">
+                        <img src="/static/garantor360-logo.png" alt="Garantor360" class="h-14">
                     </div>
                     
                     <!-- Mobile Layout: HİZMET AL (Left) + Hamburger (Right) -->
