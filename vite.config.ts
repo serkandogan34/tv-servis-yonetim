@@ -10,5 +10,13 @@ export default defineConfig({
       adapter,
       entry: 'src/index.tsx'
     })
-  ]
+  ],
+  build: {
+    charset: 'utf8',
+    rollupOptions: {
+      output: {
+        charset: 'utf8'
+      }
+    }
+  }
 })
