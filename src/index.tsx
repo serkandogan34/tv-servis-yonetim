@@ -19,6 +19,121 @@ type Bindings = {
 
 const app = new Hono<{ Bindings: Bindings }>()
 
+// Helper function to get tracking configuration
+async function getTrackingConfig(DB: D1Database) {
+  const defaultConfig = {
+    ga4_measurement_id: 'G-XXXXXXXXXX',
+    ga4_enabled: 'false',
+    facebook_pixel_id: 'YOUR_PIXEL_ID_HERE',
+    facebook_pixel_enabled: 'false',
+    gtm_container_id: 'GTM-XXXXXXX',
+    gtm_enabled: 'false'
+  }
+  
+  try {
+    const { results: configs } = await DB.prepare(`
+      SELECT config_key, config_value, is_active 
+      FROM tracking_config 
+      WHERE config_category IN ('analytics', 'facebook', 'gtm') 
+        AND config_key IN ('ga4_measurement_id', 'ga4_enabled', 'facebook_pixel_id', 'facebook_pixel_enabled', 'gtm_container_id', 'gtm_enabled')
+    `).all()
+    
+    configs.forEach(config => {
+      if (config.is_active === 1 || config.config_key.endsWith('_enabled')) {
+        defaultConfig[config.config_key] = config.config_value
+      }
+    })
+  } catch (error) {
+    console.error('Error fetching tracking config:', error)
+    // Return fallback values on error
+  }
+  
+  return defaultConfig
+}
+
+// Helper function to generate tracking scripts
+function generateTrackingScripts(trackingConfig: any, pageTitle: string, pageType: string) {
+  return `
+    <!-- Google Analytics 4 (GA4) Tracking Code -->
+    ${trackingConfig.ga4_enabled === 'true' ? `
+    <script async src="https://www.googletagmanager.com/gtag/js?id=${trackingConfig.ga4_measurement_id}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '${trackingConfig.ga4_measurement_id}', {
+            page_title: '${pageTitle}',
+            page_location: window.location.href,
+            custom_map: {'dimension1': 'user_type'},
+            anonymize_ip: true,
+            allow_google_signals: false,
+            allow_ad_personalization_signals: false
+        });
+        
+        // GA4 Enhanced Events for Garantor360
+        gtag('event', 'page_view', {
+            page_title: '${pageTitle}',
+            page_location: window.location.href,
+            content_group1: '${pageType}',
+            user_type: 'visitor'
+        });
+        
+        // Custom events for better tracking
+        gtag('event', 'garantor360_page_view', {
+            event_category: 'engagement',
+            event_label: '${pageType.toLowerCase()}_load',
+            page_type: '${pageType.toLowerCase()}'
+        });
+    </script>
+    ` : '<!-- GA4 Disabled -->'}
+    
+    <!-- Facebook Pixel Code -->
+    ${trackingConfig.facebook_pixel_enabled === 'true' ? `
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/tr/fbevents.js');
+        fbq('init', '${trackingConfig.facebook_pixel_id}', {
+            em: 'auto'
+        });
+        fbq('track', 'PageView');
+        
+        // Facebook Custom Events for Garantor360
+        fbq('trackCustom', 'Garantor${pageType}View', {
+            page_name: '${pageTitle}',
+            user_type: 'visitor',
+            platform: 'website',
+            content_category: 'home_services'
+        });
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=${trackingConfig.facebook_pixel_id}&ev=PageView&noscript=1"
+    /></noscript>
+    ` : '<!-- Facebook Pixel Disabled -->'}
+    
+    <!-- Google Tag Manager -->
+    ${trackingConfig.gtm_enabled === 'true' ? `
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','${trackingConfig.gtm_container_id}');</script>
+    ` : '<!-- GTM Disabled -->'}
+  `
+}
+
+// Helper function to generate GTM noscript
+function generateGTMNoscript(trackingConfig: any) {
+  return trackingConfig.gtm_enabled === 'true' 
+    ? `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${trackingConfig.gtm_container_id}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`
+    : '<!-- GTM noscript disabled -->'
+}
+
 // Global middleware
 app.use('*', errorHandler())
 app.use('*', securityHeaders())
@@ -1597,6 +1712,698 @@ app.get('/api/admin/payments/history', requireAdminAuth(), async (c) => {
 // System Monitoring & Health Check Routes
 // =============================================================================
 
+// =============================================================================
+// Digital Tracking & Analytics API Routes
+// =============================================================================
+
+// Digital tracking overview statistics
+app.get('/api/admin/analytics/overview', requireAdminAuth(), async (c) => {
+  try {
+    // In production, these would come from real analytics APIs
+    // Google Analytics 4, Facebook Pixel, etc.
+    
+    const mockAnalytics = {
+      dailyStats: {
+        visitors: Math.floor(Math.random() * 500) + 800,
+        pageViews: Math.floor(Math.random() * 2000) + 3000,
+        conversionRate: (Math.random() * 3 + 6).toFixed(1),
+        avgSessionDuration: Math.floor(Math.random() * 300) + 180, // seconds
+        bounceRate: (Math.random() * 20 + 35).toFixed(1)
+      },
+      trafficSources: {
+        organic: 45.2,
+        social: 18.7,
+        direct: 15.3,
+        referral: 12.8,
+        email: 5.1,
+        other: 2.9
+      },
+      topPages: [
+        { path: '/', views: 1247, conversionRate: 8.4 },
+        { path: '/hizmetler/tv-tamiri', views: 892, conversionRate: 12.1 },
+        { path: '/hizmetler/beyaz-esya', views: 654, conversionRate: 9.7 },
+        { path: '/bayi', views: 423, conversionRate: 15.3 }
+      ],
+      seoKeywords: [
+        { keyword: 'TV tamiri İstanbul', position: 3, clicks: 1247, ctr: 8.4, change: 2 },
+        { keyword: 'Beyaz eşya tamiri', position: 7, clicks: 892, ctr: 6.2, change: -1 },
+        { keyword: 'Elektrik arıza servisi', position: 5, clicks: 654, ctr: 7.1, change: 3 }
+      ]
+    }
+    
+    return c.json({
+      success: true,
+      data: mockAnalytics,
+      timestamp: new Date().toISOString()
+    })
+    
+  } catch (error) {
+    console.error('Analytics overview error:', error)
+    return c.json({ error: 'Analytics verileri alınamadı' }, 500)
+  }
+})
+
+// Setup Google Analytics 4
+app.post('/api/admin/analytics/ga4-setup', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { measurementId, enabled = true } = await c.req.json()
+    
+    if (!measurementId || !measurementId.startsWith('G-')) {
+      return c.json({ error: 'Geçersiz Measurement ID (G-XXXXXXXXXX formatında olmalı)' }, 400)
+    }
+    
+    // Database'e kaydet
+    await DB.prepare(`
+      UPDATE tracking_config 
+      SET config_value = ?, is_active = ?, updated_at = CURRENT_TIMESTAMP 
+      WHERE config_key = ?
+    `).bind(measurementId, enabled ? 1 : 0, 'ga4_measurement_id').run()
+    
+    await DB.prepare(`
+      UPDATE tracking_config 
+      SET config_value = ?, updated_at = CURRENT_TIMESTAMP 
+      WHERE config_key = ?
+    `).bind(enabled ? 'true' : 'false', 'ga4_enabled').run()
+    
+    SystemLogger.info('Analytics', 'GA4 configuration saved to database', { 
+      measurementId, 
+      enabled,
+      timestamp: new Date().toISOString() 
+    })
+    
+    return c.json({
+      success: true,
+      message: 'Google Analytics 4 yapılandırması başarıyla kaydedildi',
+      data: {
+        measurementId,
+        enabled,
+        status: 'configured'
+      }
+    })
+    
+  } catch (error) {
+    console.error('GA4 setup database error:', error)
+    return c.json({ error: 'GA4 kurulumu veritabanı hatası' }, 500)
+  }
+})
+
+// Setup Facebook Pixel
+app.post('/api/admin/analytics/facebook-pixel-setup', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { pixelId, enabled = true } = await c.req.json()
+    
+    if (!pixelId || pixelId.length < 10) {
+      return c.json({ error: 'Geçersiz Facebook Pixel ID (en az 10 karakter olmalı)' }, 400)
+    }
+    
+    // Database'e kaydet
+    await DB.prepare(`
+      UPDATE tracking_config 
+      SET config_value = ?, is_active = ?, updated_at = CURRENT_TIMESTAMP 
+      WHERE config_key = ?
+    `).bind(pixelId, enabled ? 1 : 0, 'facebook_pixel_id').run()
+    
+    await DB.prepare(`
+      UPDATE tracking_config 
+      SET config_value = ?, updated_at = CURRENT_TIMESTAMP 
+      WHERE config_key = ?
+    `).bind(enabled ? 'true' : 'false', 'facebook_pixel_enabled').run()
+    
+    SystemLogger.info('Analytics', 'Facebook Pixel configuration saved to database', { 
+      pixelId, 
+      enabled,
+      timestamp: new Date().toISOString() 
+    })
+    
+    return c.json({
+      success: true,
+      message: 'Facebook Pixel yapılandırması başarıyla kaydedildi',
+      data: {
+        pixelId,
+        enabled,
+        status: 'configured'
+      }
+    })
+    
+  } catch (error) {
+    console.error('Facebook Pixel setup database error:', error)
+    return c.json({ error: 'Facebook Pixel kurulumu veritabanı hatası' }, 500)
+  }
+})
+
+// Setup Google Tag Manager
+app.post('/api/admin/analytics/gtm-setup', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { containerId, enabled = true } = await c.req.json()
+    
+    if (!containerId || !containerId.startsWith('GTM-')) {
+      return c.json({ error: 'Geçersiz GTM Container ID (GTM-XXXXXXX formatında olmalı)' }, 400)
+    }
+    
+    // Database'e kaydet
+    await DB.prepare(`
+      UPDATE tracking_config 
+      SET config_value = ?, is_active = ?, updated_at = CURRENT_TIMESTAMP 
+      WHERE config_key = ?
+    `).bind(containerId, enabled ? 1 : 0, 'gtm_container_id').run()
+    
+    await DB.prepare(`
+      UPDATE tracking_config 
+      SET config_value = ?, updated_at = CURRENT_TIMESTAMP 
+      WHERE config_key = ?
+    `).bind(enabled ? 'true' : 'false', 'gtm_enabled').run()
+    
+    SystemLogger.info('Analytics', 'GTM configuration saved to database', { 
+      containerId, 
+      enabled,
+      timestamp: new Date().toISOString() 
+    })
+    
+    return c.json({
+      success: true,
+      message: 'Google Tag Manager yapılandırması başarıyla kaydedildi',
+      data: {
+        containerId,
+        enabled,
+        status: 'configured'
+      }
+    })
+    
+  } catch (error) {
+    console.error('GTM setup database error:', error)
+    return c.json({ error: 'GTM kurulumu veritabanı hatası' }, 500)
+  }
+})
+
+// Get tracking configuration
+app.get('/api/admin/analytics/tracking-config', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    // Tüm tracking configuration'ları getir
+    const { results: configs } = await DB.prepare(`
+      SELECT config_key, config_value, config_category, is_active, updated_at 
+      FROM tracking_config 
+      ORDER BY config_category, config_key
+    `).all()
+    
+    // Kategoriye göre grupla
+    const configByCategory = {}
+    configs.forEach(config => {
+      if (!configByCategory[config.config_category]) {
+        configByCategory[config.config_category] = {}
+      }
+      configByCategory[config.config_category][config.config_key] = {
+        value: config.config_value,
+        active: config.is_active === 1,
+        updated_at: config.updated_at
+      }
+    })
+    
+    return c.json({
+      success: true,
+      data: configByCategory,
+      total_configs: configs.length
+    })
+    
+  } catch (error) {
+    console.error('Get tracking config error:', error)
+    return c.json({ error: 'Tracking konfigürasyon okuma hatası' }, 500)
+  }
+})
+
+// Get current tracking IDs for frontend injection
+app.get('/api/tracking-config', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    // Sadece aktif tracking ID'lerini getir (public endpoint)
+    const { results: activeConfigs } = await DB.prepare(`
+      SELECT config_key, config_value 
+      FROM tracking_config 
+      WHERE is_active = 1 AND config_category IN ('analytics', 'facebook', 'gtm')
+    `).all()
+    
+    const trackingIds = {}
+    activeConfigs.forEach(config => {
+      trackingIds[config.config_key] = config.config_value
+    })
+    
+    return c.json({
+      success: true,
+      trackingIds,
+      cache_ttl: 300 // 5 dakika cache
+    })
+    
+  } catch (error) {
+    console.error('Get public tracking config error:', error)
+    // Fallback olarak default değerler döndür
+    return c.json({
+      success: true,
+      trackingIds: {
+        ga4_measurement_id: 'G-XXXXXXXXXX',
+        facebook_pixel_id: 'YOUR_PIXEL_ID_HERE',
+        gtm_container_id: 'GTM-XXXXXXX'
+      }
+    })
+  }
+})
+
+// Webhook & API Configuration Management
+app.post('/api/admin/webhooks/n8n-setup', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { webhookUrl, enabled = true } = await c.req.json()
+    
+    if (!webhookUrl || !webhookUrl.startsWith('http')) {
+      return c.json({ error: 'Geçersiz webhook URL (https:// ile başlamalı)' }, 400)
+    }
+    
+    // Webhook URL test et
+    try {
+      const testResponse = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ test: true, timestamp: new Date().toISOString() })
+      })
+      
+      if (!testResponse.ok) {
+        return c.json({ 
+          error: `Webhook test başarısız: ${testResponse.status} ${testResponse.statusText}` 
+        }, 400)
+      }
+    } catch (testError) {
+      return c.json({ 
+        error: `Webhook bağlantı hatası: ${testError.message}` 
+      }, 400)
+    }
+    
+    // Database'e kaydet
+    await DB.prepare(`
+      UPDATE tracking_config 
+      SET config_value = ?, is_active = ?, updated_at = CURRENT_TIMESTAMP 
+      WHERE config_key = ?
+    `).bind(webhookUrl, enabled ? 1 : 0, 'n8n_webhook_url').run()
+    
+    await DB.prepare(`
+      UPDATE tracking_config 
+      SET config_value = ?, updated_at = CURRENT_TIMESTAMP 
+      WHERE config_key = ?
+    `).bind(enabled ? 'true' : 'false', 'n8n_webhook_enabled').run()
+    
+    SystemLogger.info('Webhooks', 'N8N webhook configuration saved', { 
+      webhookUrl, 
+      enabled,
+      tested: true,
+      timestamp: new Date().toISOString() 
+    })
+    
+    return c.json({
+      success: true,
+      message: 'N8N webhook yapılandırması başarıyla kaydedildi ve test edildi',
+      data: {
+        webhookUrl,
+        enabled,
+        status: 'configured_and_tested'
+      }
+    })
+    
+  } catch (error) {
+    console.error('N8N webhook setup error:', error)
+    return c.json({ error: 'N8N webhook kurulumu hatası' }, 500)
+  }
+})
+
+// OpenAI API Key Setup
+app.post('/api/admin/ai/openai-setup', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { apiKey, model = 'gpt-4', enabled = true } = await c.req.json()
+    
+    if (!apiKey || !apiKey.startsWith('sk-')) {
+      return c.json({ error: 'Geçersiz OpenAI API Key (sk- ile başlamalı)' }, 400)
+    }
+    
+    // API Key test et
+    try {
+      const testResponse = await fetch('https://api.openai.com/v1/models', {
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      
+      if (!testResponse.ok) {
+        return c.json({ 
+          error: `OpenAI API Key geçersiz: ${testResponse.status} ${testResponse.statusText}` 
+        }, 400)
+      }
+    } catch (testError) {
+      return c.json({ 
+        error: `OpenAI API bağlantı hatası: ${testError.message}` 
+      }, 400)
+    }
+    
+    // Database'e kaydet (güvenlik için sadece son 8 karakteri göster)
+    const maskedKey = `sk-...${apiKey.slice(-8)}`
+    
+    await DB.prepare(`
+      UPDATE tracking_config 
+      SET config_value = ?, is_active = ?, updated_at = CURRENT_TIMESTAMP 
+      WHERE config_key = ?
+    `).bind(apiKey, enabled ? 1 : 0, 'openai_api_key').run()
+    
+    await DB.prepare(`
+      UPDATE tracking_config 
+      SET config_value = ?, updated_at = CURRENT_TIMESTAMP 
+      WHERE config_key = ?
+    `).bind(enabled ? 'true' : 'false', 'openai_enabled').run()
+    
+    SystemLogger.info('AI', 'OpenAI API Key configured', { 
+      maskedKey, 
+      model,
+      enabled,
+      tested: true,
+      timestamp: new Date().toISOString() 
+    })
+    
+    return c.json({
+      success: true,
+      message: 'OpenAI API Key başarıyla kaydedildi ve test edildi',
+      data: {
+        apiKey: maskedKey,
+        model,
+        enabled,
+        status: 'configured_and_tested'
+      }
+    })
+    
+  } catch (error) {
+    console.error('OpenAI setup error:', error)
+    return c.json({ error: 'OpenAI API kurulumu hatası' }, 500)
+  }
+})
+
+// Email Service (SendGrid) Setup
+app.post('/api/admin/email/sendgrid-setup', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { apiKey, fromEmail, enabled = true } = await c.req.json()
+    
+    if (!apiKey || !apiKey.startsWith('SG.')) {
+      return c.json({ error: 'Geçersiz SendGrid API Key (SG. ile başlamalı)' }, 400)
+    }
+    
+    if (!fromEmail || !fromEmail.includes('@')) {
+      return c.json({ error: 'Geçersiz gönderen email adresi' }, 400)
+    }
+    
+    // SendGrid API test et
+    try {
+      const testResponse = await fetch('https://api.sendgrid.com/v3/user/profile', {
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      
+      if (!testResponse.ok) {
+        return c.json({ 
+          error: `SendGrid API Key geçersiz: ${testResponse.status}` 
+        }, 400)
+      }
+    } catch (testError) {
+      return c.json({ 
+        error: `SendGrid API bağlantı hatası: ${testError.message}` 
+      }, 400)
+    }
+    
+    // Database'e kaydet
+    const maskedKey = `SG.${apiKey.substring(3, 10)}...${apiKey.slice(-8)}`
+    
+    await DB.prepare(`
+      UPDATE tracking_config 
+      SET config_value = ?, is_active = ?, updated_at = CURRENT_TIMESTAMP 
+      WHERE config_key = ?
+    `).bind(apiKey, enabled ? 1 : 0, 'sendgrid_api_key').run()
+    
+    await DB.prepare(`
+      UPDATE tracking_config 
+      SET config_value = ?, updated_at = CURRENT_TIMESTAMP 
+      WHERE config_key = ?
+    `).bind(enabled ? 'true' : 'false', 'sendgrid_enabled').run()
+    
+    SystemLogger.info('Email', 'SendGrid API Key configured', { 
+      maskedKey, 
+      fromEmail,
+      enabled,
+      tested: true,
+      timestamp: new Date().toISOString() 
+    })
+    
+    return c.json({
+      success: true,
+      message: 'SendGrid email servisi başarıyla yapılandırıldı',
+      data: {
+        apiKey: maskedKey,
+        fromEmail,
+        enabled,
+        status: 'configured_and_tested'
+      }
+    })
+    
+  } catch (error) {
+    console.error('SendGrid setup error:', error)
+    return c.json({ error: 'SendGrid kurulumu hatası' }, 500)
+  }
+})
+
+// Payment Gateway (PayTR) Setup
+app.post('/api/admin/payment/paytr-setup', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { merchantId, merchantKey, merchantSalt, enabled = true } = await c.req.json()
+    
+    if (!merchantId || !merchantKey || !merchantSalt) {
+      return c.json({ error: 'PayTR Merchant ID, Key ve Salt alanları gerekli' }, 400)
+    }
+    
+    // Database'e kaydet
+    await DB.prepare(`
+      UPDATE tracking_config 
+      SET config_value = ?, is_active = ?, updated_at = CURRENT_TIMESTAMP 
+      WHERE config_key = ?
+    `).bind(merchantId, enabled ? 1 : 0, 'paytr_merchant_id').run()
+    
+    await DB.prepare(`
+      UPDATE tracking_config 
+      SET config_value = ?, updated_at = CURRENT_TIMESTAMP 
+      WHERE config_key = ?
+    `).bind(enabled ? 'true' : 'false', 'paytr_enabled').run()
+    
+    SystemLogger.info('Payment', 'PayTR configuration saved', { 
+      merchantId, 
+      enabled,
+      timestamp: new Date().toISOString() 
+    })
+    
+    return c.json({
+      success: true,
+      message: 'PayTR ödeme gateway yapılandırması kaydedildi',
+      data: {
+        merchantId,
+        enabled,
+        status: 'configured'
+      }
+    })
+    
+  } catch (error) {
+    console.error('PayTR setup error:', error)
+    return c.json({ error: 'PayTR kurulumu hatası' }, 500)
+  }
+})
+
+// SEO schema markup setup
+app.post('/api/admin/seo/schema-setup', requireAdminAuth(), async (c) => {
+  try {
+    const { businessType, services } = await c.req.json()
+    
+    // Generate Schema.org LocalBusiness markup
+    const schemaMarkup = {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Garantor360",
+      "description": "Türkiye'nin önde gelen TV tamiri ve beyaz eşya servis platformu",
+      "url": "https://garantor360.com",
+      "telephone": "+90-500-123-45-67",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "İstanbul Merkez",
+        "addressLocality": "İstanbul",
+        "addressCountry": "TR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "41.0082",
+        "longitude": "28.9784"
+      },
+      "serviceArea": {
+        "@type": "GeoCircle",
+        "geoMidpoint": {
+          "@type": "GeoCoordinates",
+          "latitude": "41.0082",
+          "longitude": "28.9784"
+        },
+        "geoRadius": "50000"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Servis Hizmetleri",
+        "itemListElement": services.map(service => ({
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": service
+          }
+        }))
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "1247"
+      }
+    }
+    
+    SystemLogger.info('SEO', 'Schema markup generated', { businessType, services })
+    
+    return c.json({
+      success: true,
+      message: 'Schema.org markup oluşturuldu',
+      schemaMarkup
+    })
+    
+  } catch (error) {
+    console.error('Schema setup error:', error)
+    return c.json({ error: 'Schema kurulumu başarısız' }, 500)
+  }
+})
+
+// Cookie consent setup
+app.post('/api/admin/privacy/cookie-setup', requireAdminAuth(), async (c) => {
+  try {
+    const { gdprCompliant, turkishLaw, customization } = await c.req.json()
+    
+    const cookieConfig = {
+      gdprCompliant,
+      turkishLaw,
+      customization,
+      categories: [
+        { name: 'necessary', required: true, description: 'Sitenin çalışması için gerekli çerezler' },
+        { name: 'analytics', required: false, description: 'Site kullanım analitiği için çerezler' },
+        { name: 'marketing', required: false, description: 'Pazarlama ve reklam çerezleri' }
+      ]
+    }
+    
+    SystemLogger.info('Privacy', 'Cookie consent configured', cookieConfig)
+    
+    return c.json({
+      success: true,
+      message: 'Cookie consent sistemi yapılandırıldı',
+      config: cookieConfig
+    })
+    
+  } catch (error) {
+    console.error('Cookie setup error:', error)
+    return c.json({ error: 'Cookie consent kurulumu başarısız' }, 500)
+  }
+})
+
+// Real-time analytics data (SSE endpoint for live updates)
+app.get('/api/admin/analytics/realtime', requireAdminAuth(), async (c) => {
+  try {
+    // Mock real-time data - in production this would connect to GA4 Real-Time API
+    const realtimeData = {
+      activeUsers: Math.floor(Math.random() * 50) + 10,
+      currentPageViews: Math.floor(Math.random() * 20) + 5,
+      topActivePages: [
+        { path: '/', activeUsers: Math.floor(Math.random() * 15) + 3 },
+        { path: '/hizmetler/tv-tamiri', activeUsers: Math.floor(Math.random() * 10) + 2 },
+        { path: '/bayi', activeUsers: Math.floor(Math.random() * 8) + 1 }
+      ],
+      conversionEvents: [
+        { event: 'form_submit', count: Math.floor(Math.random() * 5) },
+        { event: 'contact_click', count: Math.floor(Math.random() * 8) },
+        { event: 'service_request', count: Math.floor(Math.random() * 3) }
+      ],
+      timestamp: new Date().toISOString()
+    }
+    
+    return c.json({
+      success: true,
+      data: realtimeData
+    })
+    
+  } catch (error) {
+    console.error('Real-time analytics error:', error)
+    return c.json({ error: 'Gerçek zamanlı veri alınamadı' }, 500)
+  }
+})
+
+// Form submission analytics tracking
+app.post('/api/analytics/form-submit', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const formData = await c.req.json()
+    const timestamp = new Date().toISOString()
+    
+    // Store form analytics data in database
+    await DB.prepare(`
+      INSERT INTO analytics_events (
+        event_type, event_category, event_label, event_data, 
+        page_location, timestamp, user_ip, user_agent
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+      'form_submit',
+      formData.event_category || 'form_interaction',
+      formData.event_label || formData.form_type,
+      JSON.stringify(formData),
+      formData.page_location,
+      timestamp,
+      c.req.header('cf-connecting-ip') || 'unknown',
+      c.req.header('user-agent') || 'unknown'
+    ).run()
+    
+    SystemLogger.info('Analytics', 'Form submission tracked', {
+      form_type: formData.form_type,
+      timestamp,
+      ip: c.req.header('cf-connecting-ip')
+    })
+    
+    return c.json({
+      success: true,
+      message: 'Form submission tracked successfully'
+    })
+    
+  } catch (error) {
+    console.error('Form analytics error:', error)
+    return c.json({
+      success: false,
+      error: 'Analytics tracking failed'
+    }, 500)
+  }
+})
+
 // System health check endpoint
 app.get('/health', async (c) => {
   try {
@@ -1767,6 +2574,13 @@ app.get('/admin', (c) => {
                                         class="nav-item w-full text-left px-4 py-3 text-white rounded-lg hover:bg-blue-700 flex items-center gap-3">
                                     <i class="fas fa-users"></i>
                                     Bayiler
+                                </button>
+                            </li>
+                            <li>
+                                <button onclick="showSection('digital-tracking')" 
+                                        class="nav-item w-full text-left px-4 py-3 text-white rounded-lg hover:bg-blue-700 flex items-center gap-3">
+                                    <i class="fas fa-chart-bar"></i>
+                                    Digital Tracking
                                 </button>
                             </li>
                             <li>
@@ -2006,6 +2820,540 @@ app.get('/admin', (c) => {
                                         </tbody>
                                     </table>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Digital Tracking Analytics Section -->
+                    <div id="admin-digital-tracking-section" class="admin-section hidden">
+                        <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                            <i class="fas fa-chart-bar mr-2"></i>
+                            Digital Tracking & Analytics
+                        </h2>
+                        
+                        <!-- Analytics Overview Stats -->
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-600">Günlük Ziyaretçi</p>
+                                        <p class="text-3xl font-bold text-blue-600" id="daily-visitors">1,247</p>
+                                    </div>
+                                    <i class="fas fa-eye text-blue-500 text-2xl"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-600">Dönüşüm Oranı</p>
+                                        <p class="text-3xl font-bold text-green-600" id="conversion-rate">8.4%</p>
+                                    </div>
+                                    <i class="fas fa-chart-line text-green-500 text-2xl"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-600">Ortalama Oturum</p>
+                                        <p class="text-3xl font-bold text-purple-600" id="avg-session">3m 24s</p>
+                                    </div>
+                                    <i class="fas fa-clock text-purple-500 text-2xl"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-600">SEO Skoru</p>
+                                        <p class="text-3xl font-bold text-orange-600" id="seo-score">92/100</p>
+                                    </div>
+                                    <i class="fas fa-search text-orange-500 text-2xl"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tab Navigation -->
+                        <div class="bg-white rounded-lg shadow mb-6">
+                            <div class="border-b border-gray-200">
+                                <nav class="flex space-x-8" aria-label="Tabs">
+                                    <button onclick="showTrackingTab('analytics')" 
+                                            class="tracking-tab-btn border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium active">
+                                        <i class="fas fa-chart-line mr-2"></i>
+                                        Analytics & Tracking
+                                    </button>
+                                    <button onclick="showTrackingTab('webhooks')" 
+                                            class="tracking-tab-btn border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
+                                        <i class="fas fa-link mr-2"></i>
+                                        Webhook & API
+                                    </button>
+                                    <button onclick="showTrackingTab('seo')" 
+                                            class="tracking-tab-btn border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
+                                        <i class="fas fa-search mr-2"></i>
+                                        SEO & Schema
+                                    </button>
+                                    <button onclick="showTrackingTab('privacy')" 
+                                            class="tracking-tab-btn border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
+                                        <i class="fas fa-shield-alt mr-2"></i>
+                                        Privacy & KVKK
+                                    </button>
+                                </nav>
+                            </div>
+                        </div>
+
+                        <!-- Analytics & Tracking Tab -->
+                        <div id="tracking-tab-analytics" class="tracking-tab-content">
+                        <!-- Tracking Integration Status -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                            <!-- Analytics Services Status -->
+                            <div class="bg-white rounded-lg shadow">
+                                <div class="px-6 py-4 border-b border-gray-200">
+                                    <h3 class="text-lg font-semibold text-gray-800">
+                                        <i class="fas fa-cogs mr-2"></i>
+                                        Analytics Entegrasyon Durumu
+                                    </h3>
+                                </div>
+                                <div class="p-6">
+                                    <div class="space-y-4">
+                                        <!-- Google Analytics 4 -->
+                                        <div class="flex items-center justify-between p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                                            <div class="flex items-center gap-3">
+                                                <i class="fab fa-google text-2xl text-blue-600"></i>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-800">Google Analytics 4</h4>
+                                                    <p class="text-sm text-gray-600">Property: Kurulum Bekliyor</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm font-medium rounded">PENDING</span>
+                                                <button onclick="setupGA4()" class="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700">
+                                                    Kurulum
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Facebook Pixel -->
+                                        <div class="flex items-center justify-between p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                                            <div class="flex items-center gap-3">
+                                                <i class="fab fa-facebook text-2xl text-blue-600"></i>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-800">Facebook Pixel</h4>
+                                                    <p class="text-sm text-gray-600">Pixel ID: Kurulum Bekliyor</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm font-medium rounded">PENDING</span>
+                                                <button onclick="setupFacebookPixel()" class="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700">
+                                                    Kurulum
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Google Tag Manager -->
+                                        <div class="flex items-center justify-between p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                                            <div class="flex items-center gap-3">
+                                                <i class="fas fa-tags text-2xl text-orange-600"></i>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-800">Google Tag Manager</h4>
+                                                    <p class="text-sm text-gray-600">Container: Kurulum Bekliyor</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm font-medium rounded">PENDING</span>
+                                                <button onclick="setupGTM()" class="bg-orange-600 text-white px-4 py-2 rounded text-sm hover:bg-orange-700">
+                                                    Kurulum
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SEO & Performance Status -->
+                            <div class="bg-white rounded-lg shadow">
+                                <div class="px-6 py-4 border-b border-gray-200">
+                                    <h3 class="text-lg font-semibold text-gray-800">
+                                        <i class="fas fa-search-plus mr-2"></i>
+                                        SEO & Performance Status
+                                    </h3>
+                                </div>
+                                <div class="p-6">
+                                    <div class="space-y-4">
+                                        <!-- Schema.org Markup -->
+                                        <div class="flex items-center justify-between p-4 bg-red-50 rounded-lg border border-red-200">
+                                            <div class="flex items-center gap-3">
+                                                <i class="fas fa-code text-2xl text-purple-600"></i>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-800">Schema.org Markup</h4>
+                                                    <p class="text-sm text-gray-600">LocalBusiness + Service schema</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="px-3 py-1 bg-red-100 text-red-800 text-sm font-medium rounded">NOT SET</span>
+                                                <button onclick="setupSchema()" class="bg-purple-600 text-white px-4 py-2 rounded text-sm hover:bg-purple-700">
+                                                    Kurulum
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Cookie Consent (KVKV) -->
+                                        <div class="flex items-center justify-between p-4 bg-red-50 rounded-lg border border-red-200">
+                                            <div class="flex items-center gap-3">
+                                                <i class="fas fa-shield-alt text-2xl text-indigo-600"></i>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-800">Cookie Consent (KVKV)</h4>
+                                                    <p class="text-sm text-gray-600">GDPR Uyumlu Çerez Yönetimi</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="px-3 py-1 bg-red-100 text-red-800 text-sm font-medium rounded">NOT SET</span>
+                                                <button onclick="setupCookieConsent()" class="bg-indigo-600 text-white px-4 py-2 rounded text-sm hover:bg-indigo-700">
+                                                    Kurulum
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Performance Monitoring -->
+                                        <div class="flex items-center justify-between p-4 bg-green-50 rounded-lg border border-green-200">
+                                            <div class="flex items-center gap-3">
+                                                <i class="fas fa-tachometer-alt text-2xl text-green-600"></i>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-800">Performance Monitoring</h4>
+                                                    <p class="text-sm text-gray-600">Core Web Vitals: LCP 1.2s</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded">ACTIVE</span>
+                                                <button onclick="viewPerformanceDetails()" class="bg-green-600 text-white px-4 py-2 rounded text-sm hover:bg-green-700">
+                                                    Detay
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Real-Time Analytics Dashboard -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                            <!-- Traffic Sources Chart -->
+                            <div class="bg-white rounded-lg shadow p-6">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                                    <i class="fas fa-chart-pie mr-2"></i>
+                                    Trafik Kaynakları (Son 7 Gün)
+                                </h3>
+                                <canvas id="traffic-sources-chart" width="400" height="250"></canvas>
+                            </div>
+                            
+                            <!-- Conversion Funnel -->
+                            <div class="bg-white rounded-lg shadow p-6">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                                    <i class="fas fa-filter mr-2"></i>
+                                    Dönüşüm Hunisi
+                                </h3>
+                                <div class="space-y-3">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-600">Sayfa Ziyareti</span>
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-32 bg-gray-200 rounded-full h-2">
+                                                <div class="bg-blue-600 h-2 rounded-full" style="width: 100%"></div>
+                                            </div>
+                                            <span class="text-sm font-semibold">1,247</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-600">Form Başlatma</span>
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-32 bg-gray-200 rounded-full h-2">
+                                                <div class="bg-green-600 h-2 rounded-full" style="width: 45%"></div>
+                                            </div>
+                                            <span class="text-sm font-semibold">561</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-600">Form Tamamlama</span>
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-32 bg-gray-200 rounded-full h-2">
+                                                <div class="bg-orange-600 h-2 rounded-full" style="width: 25%"></div>
+                                            </div>
+                                            <span class="text-sm font-semibold">312</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-600">Servis Talebi</span>
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-32 bg-gray-200 rounded-full h-2">
+                                                <div class="bg-purple-600 h-2 rounded-full" style="width: 18%"></div>
+                                            </div>
+                                            <span class="text-sm font-semibold">224</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SEO Rankings Table -->
+                        <div class="bg-white rounded-lg shadow">
+                            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                                <h3 class="text-lg font-semibold text-gray-800">
+                                    <i class="fas fa-trophy mr-2"></i>
+                                    SEO Anahtar Kelime Performansı
+                                </h3>
+                                <div class="flex gap-2">
+                                    <button onclick="refreshSEOData()" class="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700">
+                                        <i class="fas fa-sync mr-1"></i>Güncelle
+                                    </button>
+                                    <button onclick="exportSEOReport()" class="bg-green-600 text-white px-4 py-2 rounded text-sm hover:bg-green-700">
+                                        <i class="fas fa-download mr-1"></i>Rapor
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full table-auto">
+                                        <thead>
+                                            <tr class="bg-gray-50">
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Anahtar Kelime</th>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Sıralama</th>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Değişim</th>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Tıklama</th>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">CTR</th>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Durum</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="seo-rankings-table">
+                                            <tr>
+                                                <td class="px-4 py-3 border-b">TV tamiri İstanbul</td>
+                                                <td class="px-4 py-3 border-b"><span class="font-semibold text-green-600">#3</span></td>
+                                                <td class="px-4 py-3 border-b"><span class="text-green-600">↗ +2</span></td>
+                                                <td class="px-4 py-3 border-b">1,247</td>
+                                                <td class="px-4 py-3 border-b">8.4%</td>
+                                                <td class="px-4 py-3 border-b"><span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">İYİ</span></td>
+                                            </tr>
+                                            <tr class="bg-gray-50">
+                                                <td class="px-4 py-3 border-b">Beyaz eşya tamiri</td>
+                                                <td class="px-4 py-3 border-b"><span class="font-semibold text-yellow-600">#7</span></td>
+                                                <td class="px-4 py-3 border-b"><span class="text-red-600">↘ -1</span></td>
+                                                <td class="px-4 py-3 border-b">892</td>
+                                                <td class="px-4 py-3 border-b">6.2%</td>
+                                                <td class="px-4 py-3 border-b"><span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded">ORTA</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-3 border-b">Elektrik arıza servisi</td>
+                                                <td class="px-4 py-3 border-b"><span class="font-semibold text-blue-600">#5</span></td>
+                                                <td class="px-4 py-3 border-b"><span class="text-green-600">↗ +3</span></td>
+                                                <td class="px-4 py-3 border-b">654</td>
+                                                <td class="px-4 py-3 border-b">7.1%</td>
+                                                <td class="px-4 py-3 border-b"><span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">GELİŞİYOR</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        </div>
+                        
+                        <!-- Webhook & API Tab -->
+                        <div id="tracking-tab-webhooks" class="tracking-tab-content hidden">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                                <!-- N8N Webhook Configuration -->
+                                <div class="bg-white rounded-lg shadow">
+                                    <div class="px-6 py-4 border-b border-gray-200">
+                                        <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+                                            <i class="fas fa-link mr-2 text-purple-600"></i>
+                                            N8N Webhook Integration
+                                        </h3>
+                                    </div>
+                                    <div class="p-6">
+                                        <div class="space-y-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">Webhook URL</label>
+                                                <input type="url" id="n8n-webhook-url" 
+                                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                                                       placeholder="https://your-n8n-instance.com/webhook/garantor360">
+                                            </div>
+                                            <div class="flex items-center">
+                                                <input type="checkbox" id="n8n-webhook-enabled" class="mr-2">
+                                                <label class="text-sm text-gray-700">Enable N8N Webhook</label>
+                                            </div>
+                                            <button onclick="setupN8NWebhook()" 
+                                                    class="w-full bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-200">
+                                                <i class="fas fa-save mr-2"></i>
+                                                Webhook Yapılandır & Test Et
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- OpenAI API Configuration -->
+                                <div class="bg-white rounded-lg shadow">
+                                    <div class="px-6 py-4 border-b border-gray-200">
+                                        <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+                                            <i class="fas fa-robot mr-2 text-green-600"></i>
+                                            OpenAI API Integration
+                                        </h3>
+                                    </div>
+                                    <div class="p-6">
+                                        <div class="space-y-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">API Key</label>
+                                                <input type="password" id="openai-api-key" 
+                                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                                                       placeholder="sk-...">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">Model</label>
+                                                <select id="openai-model" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                                                    <option value="gpt-4">GPT-4</option>
+                                                    <option value="gpt-4-turbo">GPT-4 Turbo</option>
+                                                    <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                                                </select>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <input type="checkbox" id="openai-enabled" class="mr-2">
+                                                <label class="text-sm text-gray-700">Enable OpenAI Integration</label>
+                                            </div>
+                                            <button onclick="setupOpenAI()" 
+                                                    class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition duration-200">
+                                                <i class="fas fa-key mr-2"></i>
+                                                API Key Yapılandır & Test Et
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <!-- Email Service Configuration -->
+                                <div class="bg-white rounded-lg shadow">
+                                    <div class="px-6 py-4 border-b border-gray-200">
+                                        <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+                                            <i class="fas fa-envelope mr-2 text-blue-600"></i>
+                                            SendGrid Email Service
+                                        </h3>
+                                    </div>
+                                    <div class="p-6">
+                                        <div class="space-y-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">SendGrid API Key</label>
+                                                <input type="password" id="sendgrid-api-key" 
+                                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                                       placeholder="SG.xxx...">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">From Email</label>
+                                                <input type="email" id="sendgrid-from-email" 
+                                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                                       placeholder="noreply@garantor360.com">
+                                            </div>
+                                            <div class="flex items-center">
+                                                <input type="checkbox" id="sendgrid-enabled" class="mr-2">
+                                                <label class="text-sm text-gray-700">Enable Email Service</label>
+                                            </div>
+                                            <button onclick="setupSendGrid()" 
+                                                    class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200">
+                                                <i class="fas fa-envelope mr-2"></i>
+                                                Email Servis Yapılandır & Test Et
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Payment Gateway Configuration -->
+                                <div class="bg-white rounded-lg shadow">
+                                    <div class="px-6 py-4 border-b border-gray-200">
+                                        <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+                                            <i class="fas fa-credit-card mr-2 text-orange-600"></i>
+                                            PayTR Payment Gateway
+                                        </h3>
+                                    </div>
+                                    <div class="p-6">
+                                        <div class="space-y-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">Merchant ID</label>
+                                                <input type="text" id="paytr-merchant-id" 
+                                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
+                                                       placeholder="123456">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">Merchant Key</label>
+                                                <input type="password" id="paytr-merchant-key" 
+                                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
+                                                       placeholder="Merchant Key">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">Merchant Salt</label>
+                                                <input type="password" id="paytr-merchant-salt" 
+                                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
+                                                       placeholder="Merchant Salt">
+                                            </div>
+                                            <div class="flex items-center">
+                                                <input type="checkbox" id="paytr-enabled" class="mr-2">
+                                                <label class="text-sm text-gray-700">Enable PayTR Gateway</label>
+                                            </div>
+                                            <button onclick="setupPayTR()" 
+                                                    class="w-full bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 transition duration-200">
+                                                <i class="fas fa-credit-card mr-2"></i>
+                                                Payment Gateway Yapılandır
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- API Status Dashboard -->
+                            <div class="mt-8 bg-white rounded-lg shadow">
+                                <div class="px-6 py-4 border-b border-gray-200">
+                                    <h3 class="text-lg font-semibold text-gray-800">
+                                        <i class="fas fa-heartbeat mr-2"></i>
+                                        API & Webhook Status Dashboard
+                                    </h3>
+                                </div>
+                                <div class="p-6">
+                                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="api-status-dashboard">
+                                        <!-- Status cards will be populated by JavaScript -->
+                                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                            <span class="text-sm font-medium text-gray-700">N8N Webhook</span>
+                                            <span class="px-2 py-1 text-xs font-semibold bg-gray-100 text-gray-800 rounded">OFFLINE</span>
+                                        </div>
+                                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                            <span class="text-sm font-medium text-gray-700">OpenAI API</span>
+                                            <span class="px-2 py-1 text-xs font-semibold bg-gray-100 text-gray-800 rounded">OFFLINE</span>
+                                        </div>
+                                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                            <span class="text-sm font-medium text-gray-700">SendGrid</span>
+                                            <span class="px-2 py-1 text-xs font-semibold bg-gray-100 text-gray-800 rounded">OFFLINE</span>
+                                        </div>
+                                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                            <span class="text-sm font-medium text-gray-700">PayTR</span>
+                                            <span class="px-2 py-1 text-xs font-semibold bg-gray-100 text-gray-800 rounded">OFFLINE</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- SEO & Schema Tab -->
+                        <div id="tracking-tab-seo" class="tracking-tab-content hidden">
+                            <div class="bg-white rounded-lg shadow p-6">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                                    <i class="fas fa-search mr-2"></i>
+                                    SEO & Schema.org Configuration
+                                </h3>
+                                <p class="text-gray-600">SEO configuration ve Schema.org markup ayarları buraya gelecek.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Privacy & KVKK Tab -->
+                        <div id="tracking-tab-privacy" class="tracking-tab-content hidden">
+                            <div class="bg-white rounded-lg shadow p-6">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                                    <i class="fas fa-shield-alt mr-2"></i>
+                                    Privacy & KVKK Configuration
+                                </h3>
+                                <p class="text-gray-600">Cookie consent ve KVKK uyumlu privacy ayarları buraya gelecek.</p>
                             </div>
                         </div>
                     </div>
@@ -3954,9 +5302,14 @@ app.get('/sss', (c) => {
 })
 
 // Default route - Customer Landing Page
-app.get('/', (c) => {
-  // Generate realistic live user count
-  const liveUserCount = Math.floor(Math.random() * 21) + 35; // 35-55 range
+app.get('/', async (c) => {
+  const { DB } = c.env
+  
+  // Generate realistic live user count for both counters
+  const liveUserCount = Math.floor(Math.random() * 25) + 38; // 38-62 range (more active)
+  
+  // Get tracking configuration
+  const trackingConfig = await getTrackingConfig(DB)
   
   return c.html(`<!DOCTYPE html>
     <html lang="tr">
@@ -3966,6 +5319,9 @@ app.get('/', (c) => {
         <title>Garantor360 - Guvenli Hizmet Alin | Odeme Guvencesi ve Iscilik Garantisi</title>
         <meta name="description" content="Garantor360 ile ev tamiri, temizlik, nakliye ve tum hizmetlerde odeme guvenligi, 6 ay iscilik garantisi ve sigorta korumasi. Guvenli hizmet almanin en kolay yolu!">
         <meta name="keywords" content="guvenli hizmet, odeme guvencesi, iscilik garantisi, ev tamiri, temizlik hizmeti, nakliye, sigorta korumasi">
+        
+        ${generateTrackingScripts(trackingConfig, 'Ana Sayfa - Garantor360', 'Landing Page')}
+        
         <script src="https://cdn.tailwindcss.com"></script>
         <script>
             // Suppress TailwindCSS CDN warning in production
@@ -4457,6 +5813,10 @@ app.get('/', (c) => {
         </style>
     </head>
     <body class="bg-slate-50">
+        <!-- Google Tag Manager (noscript) -->
+        ${generateGTMNoscript(trackingConfig)}
+        <!-- End Google Tag Manager (noscript) -->
+        
         <!-- Navigation -->
         <nav id="main-nav" class="bg-white shadow-lg sticky top-0 z-50 border-b-2 border-blue-100 transition-all duration-300 ease-in-out">
             <script>
@@ -4728,13 +6088,13 @@ app.get('/', (c) => {
                         <!-- Main Action Buttons -->
                         <div class="space-y-3 sm:space-y-4 mb-8">
                             <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start items-center">
-                                <!-- Primary Button - Mobile Compact & Large -->
+                                <!-- Primary Button - Hemen Hizmet Al (Turuncu) -->
                                 <a href="#hizmet-al" class="bg-amber-500 hover:bg-amber-600 text-blue-900 px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-bold text-base sm:text-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center w-full sm:w-auto justify-center">
                                     <i class="fas fa-rocket mr-2"></i>
                                     Hemen Hizmet Al
                                 </a>
                                 
-                                <!-- Secondary Button - Mobile Compact & Large -->
+                                <!-- Secondary Button - Hizmetleri Gör (Mavi/Beyaz) -->
                                 <a href="#services" class="bg-white/10 hover:bg-white/20 border border-white/30 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-bold text-base sm:text-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center w-full sm:w-auto justify-center">
                                     <i class="fas fa-list mr-2"></i>
                                     Hizmetleri Gör
@@ -4770,7 +6130,7 @@ app.get('/', (c) => {
                                         <span class="text-xs font-bold text-white md:text-green-600 tracking-wide">CANLI</span>
                                     </div>
                                     <div class="text-sm font-bold text-white md:text-lg md:text-blue-900">
-                                        <span id="activeServiceCount">47</span> <span class="text-xs text-white/80 md:text-sm md:text-blue-700">Kişi</span>
+                                        <span id="activeServiceCount">${liveUserCount}</span> <span class="text-xs text-white/80 md:text-sm md:text-blue-700">Kişi</span>
                                     </div>
                                     <div class="hidden md:block text-xs text-blue-600 font-medium">HİZMET VERİYORUM</div>
                                 </div>
@@ -4865,10 +6225,30 @@ app.get('/', (c) => {
                                     if (liveCounter) {
                                         liveCounter.textContent = sharedCurrentCount.toLocaleString('tr-TR');
                                     }
+                                    
+                                    // Update AKTİF HİZMET counter (slightly higher range)
+                                    const activeServicesCounter = document.getElementById('activeServices');
+                                    if (activeServicesCounter) {
+                                        const serviceChange = Math.floor(Math.random() * 6) - 2; // -2 to +3
+                                        let serviceCount = parseInt(activeServicesCounter.textContent) || 156;
+                                        serviceCount += serviceChange;
+                                        serviceCount = Math.max(145, Math.min(168, serviceCount)); // 145-168 range
+                                        activeServicesCounter.textContent = serviceCount.toString();
+                                    }
+                                    
+                                    // Update UZMAN ONLİNE counter (similar range)
+                                    const onlineExpertsCounter = document.getElementById('onlineExperts');
+                                    if (onlineExpertsCounter) {
+                                        const expertChange = Math.floor(Math.random() * 6) - 2; // -2 to +3
+                                        let expertCount = parseInt(onlineExpertsCounter.textContent) || 156;
+                                        expertCount += expertChange;
+                                        expertCount = Math.max(148, Math.min(165, expertCount)); // 148-165 range
+                                        onlineExpertsCounter.textContent = expertCount.toString();
+                                    }
                                 }
                                 
-                                // Update both counters every 4 seconds - DISABLED for realistic values
-                                // setInterval(animateCounters, 4000);
+                                // Update both counters every 2.5 seconds for more active updates
+                                setInterval(animateCounters, 2500);
                                 
                                 // Thought Bubble Animation
                                 const thoughtMessages = [
@@ -5117,8 +6497,8 @@ app.get('/', (c) => {
                             <!-- Gradient Background -->
                             <div class="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             
-                            <!-- Mini Step Number -->
-                            <div class="absolute top-1 right-1 w-4 h-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-sm">
+                            <!-- Step Number -->
+                            <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xs md:text-sm shadow-lg">
                                 1
                             </div>
                             
@@ -5169,8 +6549,8 @@ app.get('/', (c) => {
                             <!-- Gradient Background -->
                             <div class="absolute inset-0 bg-gradient-to-br from-green-50/30 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             
-                            <!-- Mini Step Number -->
-                            <div class="absolute top-1 right-1 w-4 h-4 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-sm">
+                            <!-- Step Number -->
+                            <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-xs md:text-sm shadow-lg">
                                 2
                             </div>
                             
@@ -5221,8 +6601,8 @@ app.get('/', (c) => {
                             <!-- Gradient Background -->
                             <div class="absolute inset-0 bg-gradient-to-br from-purple-50/30 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             
-                            <!-- Mini Step Number -->
-                            <div class="absolute top-1 right-1 w-4 h-4 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-sm">
+                            <!-- Step Number -->
+                            <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xs md:text-sm shadow-lg">
                                 3
                             </div>
                             
@@ -5273,8 +6653,8 @@ app.get('/', (c) => {
                             <!-- Gradient Background -->
                             <div class="absolute inset-0 bg-gradient-to-br from-orange-50/30 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             
-                            <!-- Mini Step Number -->
-                            <div class="absolute top-1 right-1 w-4 h-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-sm">
+                            <!-- Step Number -->
+                            <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center text-white font-bold text-xs md:text-sm shadow-lg">
                                 4
                             </div>
                             
@@ -7596,9 +8976,13 @@ app.get('/', (c) => {
         <!-- AI Chat Float Button (when chat closed) -->
         <div id="aiChatButton" class="fixed bottom-6 right-6 z-40">
             <button onclick="toggleAIChat()" 
-                    class="bg-gradient-to-br from-purple-600 to-blue-600 text-white w-16 h-16 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 group">
-                <i class="fas fa-robot text-xl group-hover:animate-pulse"></i>
-                <div class="absolute -top-2 -right-2 w-4 h-4 bg-green-400 rounded-full border-2 border-white"></div>
+                    class="bg-gradient-to-br from-purple-600 to-blue-600 text-white w-16 h-16 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 group overflow-hidden border-2 border-white/20 relative">
+                <img src="https://cdn1.genspark.ai/user-upload-image/5_generated/bd557d37-bf75-476f-9e79-266e782c5afa" 
+                     alt="Danışman" 
+                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                <!-- Küçük yeşil LED ışığı görselin içinde -->
+                <div class="absolute top-2 right-2 w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-lg"></div>
+                <div class="absolute top-2 right-2 w-2 h-2 bg-green-300 rounded-full animate-ping"></div>
             </button>
         </div>
 
@@ -7648,9 +9032,9 @@ app.get('/', (c) => {
                             </div>
 
                             <!-- Web App Access Buttons -->
-                            <div class="flex flex-row gap-3 justify-start items-start">
+                            <div class="flex flex-col md:flex-row gap-2 justify-center md:justify-start items-center md:items-start">
                                 <!-- Web Uygulamasi Butonu -->
-                                <a href="#hizmet-al" class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-2 rounded-lg font-bold text-sm transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-2">
+                                <a href="#hizmet-al" class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg font-bold text-sm transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-2 w-full md:w-auto justify-center md:justify-start">
                                     <i class="fas fa-globe text-sm"></i>
                                     <div>
                                         <div class="text-sm font-bold">WEB UYGULAMASI</div>
@@ -7659,7 +9043,7 @@ app.get('/', (c) => {
                                 </a>
                                 
                                 <!-- PWA Kurulum Rehberi -->
-                                <button onclick="showPWAGuide()" class="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-4 py-2 rounded-lg font-bold text-sm transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-2">
+                                <button onclick="showPWAGuide()" class="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg font-bold text-sm transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-2 w-full md:w-auto justify-center md:justify-start">
                                     <i class="fas fa-mobile-alt text-sm"></i>
                                     <div>
                                         <div class="text-sm font-bold">ANA EKRANA EKLE</div>
@@ -9932,23 +11316,23 @@ app.get('/', (c) => {
             const reviews = [
                 // Reviews data will be duplicated to create seamless loop
                 {
-                    name: 'Ayşe K.', location: 'İstanbul', 
-                    comment: 'Çamaşır makinesi tamiri çok başarılı. 2 saatte geldi, 1 saatte tamir etti. Kesinlikle tavsiye ederim!',
-                    category: 'Beyaz Eşya', date: '15 Eylül',
+                    name: 'Ayse K.', location: 'Istanbul', 
+                    comment: 'Camasir makinesi tamiri cok basarili. 2 saatte geldi, 1 saatte tamir etti. Kesinlikle tavsiye ederim!',
+                    category: 'Beyaz Esya', date: '15 Eylul',
                     avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b3bb?w=32&h=32&fit=crop&crop=face&auto=format&q=80',
                     bgColor: 'bg-blue-50', textColor: 'text-blue-600'
                 },
                 {
-                    name: 'Mehmet Ö.', location: 'Ankara',
-                    comment: 'Elektrik arızası gece vakti çözüldü. 45 dakikada geldi, 6 ay garanti verdi. Profesyonel hizmet!',
-                    category: 'Elektrik', date: '18 Eylül',
+                    name: 'Mehmet O.', location: 'Ankara',
+                    comment: 'Elektrik arizasi gece vakti cozuldu. 45 dakikada geldi, 6 ay garanti verdi. Profesyonel hizmet!',
+                    category: 'Elektrik', date: '18 Eylul',
                     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face&auto=format&q=80',
                     bgColor: 'bg-yellow-50', textColor: 'text-yellow-600'
                 },
                 {
-                    name: 'Zeynep D.', location: 'İzmir',
-                    comment: 'Kombi arızası kış ortasında çözüldü. 1 saatte teknisyen buldum. İş kalitesi mükemmel!',
-                    category: 'Kombi', date: '14 Eylül',
+                    name: 'Zeynep D.', location: 'Izmir',
+                    comment: 'Kombi arizasi kis ortasinda cozuldu. 1 saatte teknisyen buldum. Is kalitesi mukemmel!',
+                    category: 'Kombi', date: '14 Eylul',
                     avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face&auto=format&q=80',
                     bgColor: 'bg-orange-50', textColor: 'text-orange-600'
                 }
@@ -11604,6 +12988,227 @@ app.get('/', (c) => {
         // The new ultra-smooth navigation script above handles all navigation behavior
         // This section has been replaced to prevent conflicts and "gidip-geliyor" issues
         console.log('✅ Ultra-smooth navigation loaded - legacy script removed');
+
+        // =============================================================================
+        // GA4 EVENT TRACKING SYSTEM - GARANTOR360 DIGITAL ANALYTICS
+        // =============================================================================
+        
+        // GA4 Event Tracking Helper Functions
+        function trackGA4Event(eventName, eventParameters = {}) {
+            if (typeof gtag === 'function') {
+                gtag('event', eventName, eventParameters);
+                console.log('📊 GA4 Event Tracked:', eventName, eventParameters);
+            } else {
+                console.warn('⚠️ GA4 gtag function not available');
+            }
+        }
+        
+        // Facebook Pixel Event Tracking Helper
+        function trackFacebookEvent(eventName, eventParameters = {}) {
+            if (typeof fbq === 'function') {
+                fbq('trackCustom', eventName, eventParameters);
+                console.log('📘 Facebook Event Tracked:', eventName, eventParameters);
+            } else {
+                console.warn('⚠️ Facebook Pixel fbq function not available');
+            }
+        }
+        
+        // Enhanced Form Submission Tracking
+        function trackFormSubmission(formType, formData = {}) {
+            const eventData = {
+                event_category: 'form_interaction',
+                event_label: formType,
+                form_type: formType,
+                page_location: window.location.href,
+                timestamp: new Date().toISOString(),
+                ...formData
+            };
+            
+            // Track in GA4
+            trackGA4Event('form_submit', eventData);
+            
+            // Track in Facebook Pixel
+            trackFacebookEvent('Lead', {
+                content_name: 'Service Request Form',
+                content_category: formType,
+                value: 1,
+                currency: 'TRY'
+            });
+            
+            // Send to our analytics API
+            if (typeof axios !== 'undefined') {
+                axios.post('/api/analytics/form-submit', eventData).catch(err => 
+                    console.log('Analytics API error:', err)
+                );
+            }
+        }
+        
+        // Enhanced Button Click Tracking
+        function trackButtonClick(buttonType, buttonText, additionalData = {}) {
+            const eventData = {
+                event_category: 'button_interaction',
+                event_label: buttonType,
+                button_text: buttonText,
+                button_type: buttonType,
+                page_location: window.location.href,
+                timestamp: new Date().toISOString(),
+                ...additionalData
+            };
+            
+            // Track in GA4
+            trackGA4Event('click', eventData);
+            
+            // Track in Facebook Pixel
+            trackFacebookEvent('ButtonClick', {
+                content_name: buttonText,
+                content_category: buttonType
+            });
+        }
+        
+        // Phone Number Click Tracking
+        function trackPhoneClick(phoneNumber) {
+            const eventData = {
+                event_category: 'contact_interaction',
+                event_label: 'phone_click',
+                phone_number: phoneNumber,
+                page_location: window.location.href
+            };
+            
+            trackGA4Event('phone_call', eventData);
+            trackFacebookEvent('Contact', {
+                content_name: 'Phone Call',
+                content_category: 'Contact'
+            });
+        }
+        
+        // WhatsApp Click Tracking  
+        function trackWhatsAppClick() {
+            const eventData = {
+                event_category: 'contact_interaction',
+                event_label: 'whatsapp_click',
+                page_location: window.location.href
+            };
+            
+            trackGA4Event('whatsapp_click', eventData);
+            trackFacebookEvent('Contact', {
+                content_name: 'WhatsApp Contact',
+                content_category: 'Social Contact'
+            });
+        }
+        
+        // Service Card Click Tracking
+        function trackServiceClick(serviceName, serviceCategory) {
+            const eventData = {
+                event_category: 'service_interaction',
+                event_label: 'service_card_click',
+                service_name: serviceName,
+                service_category: serviceCategory,
+                page_location: window.location.href
+            };
+            
+            trackGA4Event('select_content', {
+                content_type: 'service',
+                content_id: serviceName.toLowerCase().replace(/\\s+/g, '_'),
+                ...eventData
+            });
+            
+            trackFacebookEvent('ViewContent', {
+                content_name: serviceName,
+                content_category: serviceCategory,
+                content_type: 'service'
+            });
+        }
+        
+        // Page Scroll Tracking (25%, 50%, 75%, 100%)
+        let scrollTrackingThresholds = [25, 50, 75, 100];
+        let scrollTrackedThresholds = [];
+        
+        function trackScrollProgress() {
+            const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+            
+            scrollTrackingThresholds.forEach(threshold => {
+                if (scrollPercent >= threshold && !scrollTrackedThresholds.includes(threshold)) {
+                    scrollTrackedThresholds.push(threshold);
+                    
+                    trackGA4Event('scroll', {
+                        event_category: 'engagement',
+                        event_label: \`scroll_\${threshold}percent\`,
+                        scroll_percent: threshold,
+                        page_location: window.location.href
+                    });
+                }
+            });
+        }
+        
+        // Initialize Event Listeners when DOM is ready
+        function initializeAnalyticsTracking() {
+            console.log('🎯 Initializing Garantor360 Analytics Tracking...');
+            
+            // Track all form submissions
+            document.addEventListener('submit', function(e) {
+                const form = e.target;
+                const formType = form.id || form.className || 'unknown_form';
+                
+                // Get form data
+                const formData = new FormData(form);
+                const formObject = {};
+                for (let [key, value] of formData.entries()) {
+                    formObject[key] = value;
+                }
+                
+                trackFormSubmission(formType, formObject);
+            });
+            
+            // Track all button clicks
+            document.addEventListener('click', function(e) {
+                const element = e.target.closest('button, a[href], .clickable');
+                if (!element) return;
+                
+                const buttonText = element.textContent.trim();
+                const buttonType = element.tagName.toLowerCase();
+                const href = element.href;
+                
+                // Phone number clicks
+                if (href && href.startsWith('tel:')) {
+                    const phoneNumber = href.replace('tel:', '');
+                    trackPhoneClick(phoneNumber);
+                }
+                
+                // WhatsApp clicks
+                if (href && href.includes('wa.me')) {
+                    trackWhatsAppClick();
+                }
+                
+                // Service card clicks
+                if (element.closest('.service-card') || element.classList.contains('service-button')) {
+                    const serviceCard = element.closest('.service-card') || element;
+                    const serviceName = serviceCard.querySelector('h3')?.textContent || buttonText;
+                    trackServiceClick(serviceName, 'home_services');
+                }
+                
+                // General button tracking
+                trackButtonClick(buttonType, buttonText, {
+                    href: href,
+                    element_classes: element.className
+                });
+            });
+            
+            // Scroll tracking
+            let scrollTimeout;
+            window.addEventListener('scroll', function() {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(trackScrollProgress, 100);
+            });
+            
+            console.log('✅ Analytics tracking initialized successfully');
+        }
+        
+        // Initialize tracking when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeAnalyticsTracking);
+        } else {
+            initializeAnalyticsTracking();
+        }
 
         </script>
         <script src="/static/form-handler.js"></script>

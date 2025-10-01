@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N8N AI Garantor360 Kuralları</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; line-height: 1.6; margin: 40px; color: #333; }
+        h1 { color: #2563eb; border-bottom: 3px solid #2563eb; padding-bottom: 10px; }
+        h2 { color: #1d4ed8; margin-top: 30px; }
+        h3 { color: #3730a3; margin-top: 25px; }
+        pre { background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; }
+        code { background: #f1f5f9; padding: 2px 4px; border-radius: 4px; font-size: 14px; }
+        .json { background: #fef3c7; border-left: 4px solid #f59e0b; }
+        .prompt { background: #ecfdf5; border-left: 4px solid #10b981; }
+        .workflow { background: #ede9fe; border-left: 4px solid #8b5cf6; }
+        .security { background: #fef2f2; border-left: 4px solid #ef4444; }
+        .metrics { background: #f0f9ff; border-left: 4px solid #0ea5e9; }
+        .example { background: #fffbeb; border-left: 4px solid #f59e0b; }
+        ul li { margin-bottom: 5px; }
+        .header { text-align: center; margin-bottom: 40px; }
+        .footer { text-align: center; margin-top: 40px; font-weight: bold; color: #6366f1; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>N8N AI İÇİN GARANTOR360 AKILLI SOHBET SİSTEMİ KURALLARI</h1>
+        <p><strong>Versiyon:</strong> 1.0 | <strong>Tarih:</strong> 2024</p>
+    </div>
+
+    <h2>🎯 1. SİSTEM TANIMI</h2>
+    <p>Bu sistem Garantor360 platformunda müşteri destek sohbetini optimize etmek için otomatik veri toplayan ve AI'ya context sağlayan akıllı sistemdir.</p>
+
+    <h2>📊 2. TOPLANAN VERİ TÜRLERİ</h2>
+
+    <h3>A) Lokasyon Verisi</h3>
+    <pre class="json">{
+  "location": {
+    "city": "Istanbul/Ankara/Izmir/etc",
+    "region": "Marmara/Ic Anadolu/Ege/etc", 
+    "timezone": "Europe/Istanbul",
+    "coordinates": "41.0082,28.9784"
+  }
+}</pre>
+
+    <h3>B) Cihaz & Teknik Profil</h3>
+    <pre class="json">{
+  "device": {
+    "type": "desktop/mobile/tablet",
+    "os": "Windows/Mac/iOS/Android/Linux",
+    "browser": "Chrome/Firefox/Safari/Edge",
+    "screen_resolution": "1920x1080",
+    "is_mobile": false
+  }
+}</pre>
+
+    <h3>C) Zamanlama Bilgisi</h3>
+    <pre class="json">{
+  "timing": {
+    "local_time": "14:30",
+    "time_period": "morning/afternoon/evening/night",
+    "day_type": "weekday/weekend", 
+    "urgency_level": "low/medium/high"
+  }
+}</pre>
+
+    <h3>D) Davranış Analizi</h3>
+    <pre class="json">{
+  "behavior": {
+    "visited_pages": ["tv-tamiri", "beyaz-esya", "elektrik"],
+    "time_on_site": 180,
+    "interested_categories": ["TV Tamiri", "Beyaz Esya"],
+    "form_interactions": {
+      "started_form": true,
+      "completed_form": false,
+      "abandoned_at_step": 2
+    },
+    "visit_count": 3,
+    "user_type": "new/returning/frequent"
+  }
+}</pre>
+
+    <h3>E) Hizmet Tercihleri</h3>
+    <pre class="json">{
+  "preferences": {
+    "price_range": "budget/standard/premium",
+    "urgency_preference": "same_day/next_day/flexible",
+    "communication_style": "technical/simple/detailed"
+  }
+}</pre>
+
+    <h2>🧠 3. AI PROMPT KURALLARI</h2>
+
+    <h3>Ana Sistem Promptu:</h3>
+    <pre class="prompt">SEN GARANTOR360'ın uzman müşteri temsilcisisin. 
+
+GÖREVIN: Gelen müşteri verilerini analiz ederek kişiselleştirilmiş, 
+hızlı ve etkili çözümler sunmak.
+
+KULLANIM KURALLARI:
+1. Her müşteri için otomatik toplanan veriyi önce analiz et
+2. Kişiselleştirilmiş karşılama yap
+3. Konum bazlı fiyat/süre bilgisi ver
+4. Davranış geçmişine göre öneri yap
+5. Aciliyet seviyesini zamana göre belirle</pre>
+
+    <h3>Veri Analiz Promptu:</h3>
+    <pre class="prompt">MÜŞTERI VERİSİ ANALİZİ:
+
+Konum: {location.city} - {location.region}
+Zaman: {timing.local_time} ({timing.time_period})
+Cihaz: {device.type} - {device.os}
+Davranış: {behavior.interested_categories} kategorilerine ilgi
+Ziyaret: {behavior.visit_count}. kez, {behavior.time_on_site}s sitede
+Form: {behavior.form_interactions.started_form ? "Başladı" : "Başlamadı"}
+
+BU VERİLERE GÖRE:
+1. Müşteri profilini çıkar (acil/planlı, teknik/basit, bütçeli/premium)
+2. En uygun hizmet önerisi yap
+3. Bölgesel fiyat aralığı belirt
+4. Tahmini süre ver
+5. Kişiselleştirilmiş karşılama mesajı oluştur</pre>
+
+    <h3>Yanıt Formatı Kuralları:</h3>
+    <pre class="prompt">YANIT FORMATI:
+1. Kişisel Karşılama (konum + zaman referanslı)
+2. Sorun Analizi (davranış bazlı tahmin)  
+3. Önerilen Çözüm (kategori + aciliyet bazlı)
+4. Fiyat Aralığı (bölgesel)
+5. Zaman Tahmini (günün saatine göre)
+6. Sonraki Adım (form tamamlama/telefon/vs)
+
+ÖRNEK:
+"Merhaba! İstanbul'dan akşam saatlerinde TV tamiri arıyorsunuz galiba. 
+Sisteme göre LED TV kategorisinde sorun yaşıyorsunuz. 
+Akşam saatleri için acil servisimiz var, 2 saatte teknisyen gelebilir.
+İstanbul bölgesi TV tamiri: 600-1.200 TL arası.
+Hemen talep formunu tamamlayalım mı?"</pre>
+
+    <h2>⚙️ 4. N8N WORKFLOW KURALLARI</h2>
+
+    <h3>Veri Akışı Sırası:</h3>
+    <pre class="workflow">1. Müşteri chat butonuna tıklar
+2. Otomatik veri toplama çalışır
+3. Toplanan veri n8n'e POST edilir  
+4. n8n AI'ya context ile birlikte gönderir
+5. AI kişiselleştirilmiş yanıt üretir
+6. Yanıt chat interface'e gönderilir</pre>
+
+    <h3>N8N Node Yapısı:</h3>
+    <pre class="workflow">[Webhook] → [Data Parser] → [AI Context Builder] → [OpenAI/Claude] → [Response Formatter] → [Chat Interface]</pre>
+
+    <h3>Webhook Endpoint:</h3>
+    <pre class="workflow">POST /webhook/chat-init
+Content-Type: application/json
+
+Body: {
+  "user_data": {...},
+  "initial_message": "Merhaba, TV tamiri için destek istiyorum",
+  "session_id": "unique_session_id"
+}</pre>
+
+    <h2>🔒 5. GÜVENLİK VE GİZLİLİK KURALLARI</h2>
+    <pre class="security">1. Kişisel veri toplamadan önce kullanıcı onayı al
+2. Hassas lokasyon verisi (tam adres) toplama
+3. Verileri şifreleyerek sakla
+4. 24 saat sonra oturum verilerini sil
+5. KVKV uyumlu veri işleme yap
+6. Kullanıcı isterse verilerini sil</pre>
+
+    <h2>📈 6. BAŞARI METRİKLERİ</h2>
+    <pre class="metrics">- Yanıt Hızı: &lt;10 saniye
+- Doğru Kategori Tahmini: &gt;85%
+- Form Tamamlama Oranı: &gt;60%
+- Müşteri Memnuniyeti: &gt;4.5/5
+- Uzman Eşleştirme Başarısı: &gt;90%</pre>
+
+    <h2>📝 7. UYGULAMA ÖRNEKLERİ</h2>
+
+    <h3>Senaryo 1: Acil TV Tamiri</h3>
+    <pre class="example">Gelen Veri:
+- Konum: İstanbul, Kadıköy
+- Zaman: 19:30 (akşam)
+- Davranış: TV tamiri sayfasında 5 dakika
+- Cihaz: iPhone (mobil)
+
+AI Yanıtı:
+"İyi akşamlar! İstanbul Kadıköy'den TV tamiri için acil destek arıyorsunuz. 
+Mobil cihazınızdan gece saatlerinde ulaştığınızı görüyorum. 
+Akşam acil servisimiz aktif, 1-2 saatte teknisyen gönderebiliriz.
+Kadıköy bölgesi LED TV tamiri: 700-1.400TL arası.
+Sorunu hemen telefon ile mi konuşalım? 📞 0500 123 45 67"</pre>
+
+    <h3>Senaryo 2: Planlı Beyaz Eşya Servisi</h3>
+    <pre class="example">Gelen Veri:
+- Konum: Ankara, Çankaya
+- Zaman: 14:00 (öğleden sonra)
+- Davranış: Beyaz eşya + fiyatları inceledi
+- Cihaz: Windows desktop
+
+AI Yanıtı:
+"Merhaba! Ankara Çankaya'dan beyaz eşya tamiri planladığınızı görüyorum.
+Öğleden sonra saatleri ideal, yarın için randevu verebiliriz.
+Hangi cihazınızda sorun var? (Çamaşır makinesi/Bulaşık/Buzdolabı)
+Çankaya bölgesi ortalama fiyatlar: 500-1.000TL arası.
+Detayları form ile mi ilerleyelim?"</pre>
+
+    <div class="footer">
+        <p>© 2024 Garantor360 - Akıllı Müşteri Destek Sistemi</p>
+    </div>
+</body>
+</html>
