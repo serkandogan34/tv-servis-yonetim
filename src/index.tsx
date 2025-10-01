@@ -3060,12 +3060,14 @@ app.get('/bayi', (c) => {
             <!-- Main Footer Content -->
             <div class="py-16">
                 <div class="max-w-7xl mx-auto px-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
                         <!-- Company Info -->
                         <div class="lg:col-span-1">
                             <div class="mb-6">
                                 <div class="flex items-center">
-                                    <img src="/static/garantor360-logo-white.png" alt="Garantor360" class="h-20">
+                                    <div class="text-2xl font-bold">
+                                        <span class="text-white">Garantor</span><span class="text-amber-500">360°</span>
+                                    </div>
                                 </div>
                             </div>
                             <p class="text-blue-200 font-medium mb-6 leading-relaxed">
@@ -3101,7 +3103,7 @@ app.get('/bayi', (c) => {
 
                         <!-- Service Categories -->
                         <div>
-                            <h4 class="font-bold text-lg mb-6 tracking-tight text-amber-400">H&#304;ZMET ALANLARI</h4>
+                            <h4 class="font-bold text-lg mb-6 tracking-tight text-amber-400">HİZMET ALANLARI</h4>
                             <ul class="space-y-3">
                                 <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
                                     <i class="fas fa-tools mr-2 text-amber-500 text-sm"></i>Teknik Onarim
@@ -3151,7 +3153,7 @@ app.get('/bayi', (c) => {
 
                         <!-- Contact & Support -->
                         <div>
-                            <h4 class="font-bold text-lg mb-6 tracking-tight text-amber-400">ILETISIM & DESTEK</h4>
+                            <h4 class="font-bold text-lg mb-6 tracking-tight text-amber-400">İLETİŞİM & DESTEK</h4>
                             
                             <!-- Contact Methods -->
                             <div class="space-y-4 mb-6">
@@ -3178,7 +3180,7 @@ app.get('/bayi', (c) => {
                                         <i class="fas fa-comments text-white text-sm"></i>
                                     </div>
                                     <div>
-                                        <span class="text-white font-medium">Canli Destek</span>
+                                        <span class="text-white font-medium">Canlı Destek</span>
                                         <p class="text-blue-300 text-xs">7/24 Aktif</p>
                                     </div>
                                 </div>
@@ -3187,7 +3189,7 @@ app.get('/bayi', (c) => {
                             <!-- Working Hours -->
                             <div class="mb-6">
                                 <h5 class="font-bold text-sm mb-3 text-amber-400 flex items-center">
-                                    <i class="fas fa-clock mr-2"></i>CALISMA SAATLERI
+                                    <i class="fas fa-clock mr-2"></i>ÇALIŞMA SAATLERİ
                                 </h5>
                                 <div class="text-blue-200 text-sm space-y-1">
                                     <div class="flex justify-between">
@@ -3230,6 +3232,42 @@ app.get('/bayi', (c) => {
                                         <i class="fab fa-youtube text-sm"></i>
                                     </a>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Corporate Services -->
+                        <div>
+                            <h4 class="font-bold text-lg mb-6 tracking-tight text-amber-400">KURUMSAL HİZMETLER</h4>
+                            <ul class="space-y-3">
+                                <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
+                                    <i class="fas fa-building mr-2 text-amber-500 text-sm"></i>Otel Tamir Servisi
+                                </a></li>
+                                <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
+                                    <i class="fas fa-industry mr-2 text-amber-500 text-sm"></i>Fabrika Bakım Hizmetleri
+                                </a></li>
+                                <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
+                                    <i class="fas fa-store mr-2 text-amber-500 text-sm"></i>Mağaza Teknik Destek
+                                </a></li>
+                                <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
+                                    <i class="fas fa-hospital mr-2 text-amber-500 text-sm"></i>Hastane Ekipman Bakımı
+                                </a></li>
+                                <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
+                                    <i class="fas fa-school mr-2 text-amber-500 text-sm"></i>Okul Teknoloji Servisi
+                                </a></li>
+                                <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
+                                    <i class="fas fa-handshake mr-2 text-amber-500 text-sm"></i>Kurumsal Anlaşmalar
+                                </a></li>
+                            </ul>
+                            <div class="mt-4 p-3 bg-amber-500/10 border border-amber-400/30 rounded-lg">
+                                <p class="text-amber-300 text-xs font-semibold mb-1">
+                                    <i class="fas fa-star mr-1"></i>KURUMSAL AVANTAJLAR
+                                </p>
+                                <ul class="text-blue-200 text-xs space-y-1">
+                                    <li>• Toplu hizmet indirimleri</li>
+                                    <li>• 7/24 öncelikli destek</li>
+                                    <li>• Özel fiyatlandırma</li>
+                                    <li>• Aylık bakım anlaşmaları</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -3278,11 +3316,11 @@ app.get('/bayi', (c) => {
 
                         <!-- Security Badges -->
                         <div class="flex items-center space-x-3">
-                            <span class="text-blue-400 text-xs">Guvenli Platform</span>
+                            <span class="text-blue-400 text-xs">Güvenli Platform</span>
                             <div class="flex space-x-2">
                                 <div class="bg-amber-500 text-blue-900 px-2 py-1 sharp-corner text-xs font-bold">SSL</div>
                                 <div class="bg-amber-500 text-blue-900 px-2 py-1 sharp-corner text-xs font-bold">256BIT</div>
-                                <div class="bg-amber-500 text-blue-900 px-2 py-1 sharp-corner text-xs font-bold">GUVEN</div>
+                                <div class="bg-amber-500 text-blue-900 px-2 py-1 sharp-corner text-xs font-bold">GÜVEN</div>
                             </div>
                         </div>
                     </div>
@@ -4417,19 +4455,203 @@ app.get('/', (c) => {
     </head>
     <body class="bg-slate-50">
         <!-- Navigation -->
-        <nav class="bg-white shadow-lg sticky top-0 z-50 border-b-2 border-blue-100">
+        <nav id="main-nav" class="bg-white shadow-lg sticky top-0 z-50 border-b-2 border-blue-100 transition-all duration-300 ease-in-out">
+            <script>
+                // ULTRA SMOOTH MOBILE NAVIGATION - Advanced Anti-Jitter System
+                (function() {
+                    // Enhanced scroll tracking variables
+                    let lastScrollY = 0;
+                    let scrollTimeout;
+                    let scrollHistory = []; // Track last 5 scroll positions
+                    let isNavigationVisible = true;
+                    let scrollVelocity = 0;
+                    let lastScrollTime = 0;
+                    
+                    // Navigation element (will be found after DOM load)
+                    let nav = null;
+                    
+                    // Timing constants - Balanced for responsiveness
+                    const DEBOUNCE_TIME = 120; // Responsive but stable
+                    const MIN_SCROLL_DISTANCE = 12; // Lower threshold for sensitivity
+                    const HERO_HEIGHT = 450;
+                    const TOP_THRESHOLD = 30;
+                    const MOMENTUM_THRESHOLD = 0.2; // Much lower for responsiveness
+                    
+                    function initializeNavigation() {
+                        nav = document.getElementById('main-nav');
+                        if (!nav) {
+                            console.error('❌ Navigation element #main-nav not found!');
+                            return false;
+                        }
+                        console.log('✅ Ultra-smooth navigation initialized');
+                        return true;
+                    }
+                    
+                    function updateScrollHistory(scrollY, timestamp) {
+                        scrollHistory.push({ y: scrollY, time: timestamp });
+                        if (scrollHistory.length > 5) {
+                            scrollHistory.shift(); // Keep only last 5 positions
+                        }
+                        
+                        // Calculate scroll velocity
+                        if (scrollHistory.length >= 2) {
+                            const latest = scrollHistory[scrollHistory.length - 1];
+                            const previous = scrollHistory[scrollHistory.length - 2];
+                            const timeDiff = latest.time - previous.time;
+                            const distDiff = latest.y - previous.y;
+                            scrollVelocity = timeDiff > 0 ? Math.abs(distDiff / timeDiff) : 0;
+                        }
+                    }
+                    
+                    function getScrollMomentum() {
+                        if (scrollHistory.length < 3) return 0;
+                        
+                        let totalDirection = 0;
+                        for (let i = 1; i < scrollHistory.length; i++) {
+                            const direction = scrollHistory[i].y > scrollHistory[i-1].y ? 1 : -1;
+                            totalDirection += direction;
+                        }
+                        
+                        // Return normalized momentum (-1 to 1)
+                        return totalDirection / (scrollHistory.length - 1);
+                    }
+                    
+                    function showNavigation() {
+                        if (!nav) return;
+                        nav.style.transform = 'translateY(0)';
+                        nav.style.height = 'auto';
+                        nav.style.visibility = 'visible';
+                        nav.style.opacity = '1';
+                        isNavigationVisible = true;
+                        console.log('🔼 Navigation shown (momentum-based)');
+                    }
+                    
+                    function hideNavigation() {
+                        if (!nav) return;
+                        // Only hide on mobile
+                        if (window.innerWidth >= 768) {
+                            showNavigation();
+                            return;
+                        }
+                        
+                        nav.style.transform = 'translateY(-100%)';
+                        nav.style.height = '0px';
+                        nav.style.visibility = 'hidden';
+                        nav.style.opacity = '0';
+                        isNavigationVisible = false;
+                        console.log('🔽 Navigation hidden (momentum-based)');
+                    }
+                    
+                    function handleScroll() {
+                        const currentScrollY = window.scrollY;
+                        const currentTime = performance.now();
+                        
+                        // Desktop: always show
+                        if (window.innerWidth >= 768) {
+                            showNavigation();
+                            return;
+                        }
+                        
+                        // Update scroll tracking
+                        updateScrollHistory(currentScrollY, currentTime);
+                        
+                        // Clear existing timeout
+                        clearTimeout(scrollTimeout);
+                        
+                        scrollTimeout = setTimeout(function() {
+                            const scrollDifference = Math.abs(currentScrollY - lastScrollY);
+                            
+                            // Ignore micro-scrolls
+                            if (scrollDifference < MIN_SCROLL_DISTANCE) {
+                                return;
+                            }
+                            
+                            const momentum = getScrollMomentum();
+                            const isScrollingDown = momentum > 0.15; // More sensitive downward detection
+                            const isScrollingUp = momentum < -0.15; // More sensitive upward detection
+                            
+                            console.log('📊 Scroll Analysis:', {
+                                y: currentScrollY,
+                                diff: scrollDifference,
+                                momentum: momentum.toFixed(2),
+                                velocity: scrollVelocity.toFixed(2),
+                                direction: isScrollingDown ? 'DOWN' : isScrollingUp ? 'UP' : 'UNCLEAR'
+                            });
+                            
+                            // Decision logic based on position and momentum
+                            if (currentScrollY <= TOP_THRESHOLD) {
+                                // Always show at top of page
+                                showNavigation();
+                                console.log('🔝 At top of page - showing navigation');
+                            } else if (currentScrollY > HERO_HEIGHT && isScrollingDown) {
+                                // Hide: past hero + consistent down scroll (removed velocity requirement)
+                                hideNavigation();
+                                console.log('⬇️ Downward scroll past hero - hiding navigation');
+                            } else if (isScrollingUp) {
+                                // Show: consistent upward scroll OR back in hero area
+                                showNavigation();
+                                console.log('⬆️ Upward scroll detected - showing navigation');
+                            }
+                            
+                            lastScrollY = currentScrollY;
+                            lastScrollTime = currentTime;
+                        }, DEBOUNCE_TIME);
+                    }
+                    
+                    function handleResize() {
+                        // Desktop: always show navigation
+                        if (window.innerWidth >= 768) {
+                            showNavigation();
+                        }
+                    }
+                    
+                    // Initialize when DOM is ready
+                    function initialize() {
+                        if (document.readyState === 'loading') {
+                            document.addEventListener('DOMContentLoaded', initialize);
+                            return;
+                        }
+                        
+                        if (!initializeNavigation()) {
+                            // Retry after a short delay if nav not found
+                            setTimeout(initialize, 100);
+                            return;
+                        }
+                        
+                        // Add event listeners
+                        window.addEventListener('scroll', handleScroll, { passive: true });
+                        window.addEventListener('resize', handleResize);
+                        
+                        console.log('🚀 Ultra-smooth navigation system active');
+                    }
+                    
+                    // Start initialization
+                    initialize();
+                })();
+            </script>
             <div class="max-w-7xl mx-auto px-6">
-                <div class="flex justify-between items-center h-20 relative">
+                <div class="flex justify-between items-center h-16 relative md:flex md:justify-between">
                     <!-- Desktop Logo -->
                     <div class="hidden md:flex items-center">
-                        <img src="/static/garantor360-logo.png" alt="Garantor360" class="h-16">
+                        <img src="/static/garantor360-logo.png" alt="Garantor360" class="h-12">
                     </div>
                     
-                    <!-- Mobile Hamburger Menu (Centered) -->
-                    <div class="md:hidden flex items-center justify-center flex-1">
-                        <button class="text-gray-700 hover:text-blue-600 transition duration-200">
-                            <i class="fas fa-bars text-xl"></i>
-                        </button>
+                    <!-- Mobile Layout: HİZMET AL (Left) + Hamburger (Right) -->
+                    <div class="flex items-center justify-between w-full md:hidden">
+                        <!-- Mobile HİZMET AL Button (Left) -->
+                        <div class="flex items-center">
+                            <a href="#hizmet-al" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-4 py-2 rounded-lg font-bold text-xs transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                                <i class="fas fa-handshake mr-1"></i>
+                                HİZMET AL
+                            </a>
+                        </div>
+                        
+                        <!-- Mobile Hamburger Menu (Right) -->
+                        <div class="flex items-center">
+                            <button class="text-gray-700 hover:text-blue-600 transition duration-200">
+                                <i class="fas fa-bars text-xl"></i>
+                            </button>
+                        </div>
                     </div>
                     
                     <!-- Desktop Navigation Menu -->
@@ -4448,15 +4670,13 @@ app.get('/', (c) => {
                         </a>
                     </div>
                     
-                    <!-- Action Buttons -->
-                    <div class="flex items-center space-x-4">
+                    <!-- Desktop Action Buttons -->
+                    <div class="hidden md:flex items-center space-x-4">
                         <div class="flex flex-col items-center gap-2">
                             <a href="#hizmet-al" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-6 py-3 rounded-lg font-bold text-sm transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
                                 <i class="fas fa-handshake mr-2"></i>
-                                H&#304;ZMET AL
+                                HİZMET AL
                             </a>
-                            
-
                         </div>
                     </div>
                 </div>
@@ -4476,6 +4696,17 @@ app.get('/', (c) => {
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <!-- Left: Buttons and Content -->
                     <div class="text-center lg:text-left order-2 lg:order-1">
+                        <!-- KAYIP YOK Banner - Desktop Only, Above Yellow Badge, Left Aligned -->
+                        <div class="mb-4 hidden lg:flex lg:justify-start">
+                            <div class="inline-flex items-center bg-white/5 backdrop-blur-sm rounded-full px-6 py-2 border border-white/10">
+                                <div class="flex items-center space-x-4">
+                                    <span id="subtleSlogan" class="text-white/90 font-medium text-sm transition-all duration-500">R&#304;SK YOK</span>
+                                    <div class="w-1 h-1 bg-white/40 rounded-full"></div>
+                                    <span class="text-white/70 text-xs">%100 G&#252;venli</span>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <!-- Yellow Badge -->
                         <div class="mb-6 flex justify-center lg:justify-start">
                             <div class="bg-amber-400 text-blue-900 px-6 py-2 rounded-full font-bold text-sm">
@@ -4492,16 +4723,16 @@ app.get('/', (c) => {
                         </p>
                         
                         <!-- Main Action Buttons -->
-                        <div class="space-y-4 mb-8">
-                            <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
-                                <!-- Primary Button -->
-                                <a href="#hizmet-al" class="bg-amber-500 hover:bg-amber-600 text-blue-900 px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center">
+                        <div class="space-y-3 sm:space-y-4 mb-8">
+                            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start items-center">
+                                <!-- Primary Button - Mobile Compact & Large -->
+                                <a href="#hizmet-al" class="bg-amber-500 hover:bg-amber-600 text-blue-900 px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-bold text-base sm:text-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center w-full sm:w-auto justify-center">
                                     <i class="fas fa-rocket mr-2"></i>
                                     Hemen Hizmet Al
                                 </a>
                                 
-                                <!-- Secondary Button -->
-                                <a href="#services" class="bg-white/10 hover:bg-white/20 border border-white/30 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center">
+                                <!-- Secondary Button - Mobile Compact & Large -->
+                                <a href="#services" class="bg-white/10 hover:bg-white/20 border border-white/30 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-bold text-base sm:text-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center w-full sm:w-auto justify-center">
                                     <i class="fas fa-list mr-2"></i>
                                     Hizmetleri Gör
                                 </a>
@@ -4509,7 +4740,7 @@ app.get('/', (c) => {
                         </div>
                         
                         <!-- Security Badges -->
-                        <div class="flex flex-wrap gap-4 justify-center lg:justify-start">
+                        <div class="flex flex-wrap gap-4 justify-center lg:justify-start lg:-mt-2.5">
                             <div class="bg-green-500 text-white px-4 py-2 rounded-lg font-semibold text-sm flex items-center">
                                 <i class="fas fa-shield-check mr-2"></i>
                                 SSL Güvenlik
@@ -4528,25 +4759,50 @@ app.get('/', (c) => {
                     <!-- Right: Superhero with Active Service Counter -->
                     <div class="relative flex items-center justify-center order-1 lg:order-2">
                         <!-- Active Service Counter (Top Right) -->
-                        <div class="absolute top-0 right-4 z-30">
-                            <div class="bg-white/90 backdrop-blur-sm rounded-xl px-4 py-3 shadow-lg border border-white/20">
+                        <div class="absolute right-0 z-30" style="top: 260px; transform: translateX(0px);">
+                            <div class="px-2 py-1 md:bg-white/95 md:backdrop-blur-md md:rounded-2xl md:px-4 md:py-2.5 md:shadow-xl md:border md:border-blue-100">
                                 <div class="text-center">
-                                    <div class="text-2xl font-bold text-blue-900" id="activeServiceCount">954</div>
-                                    <div class="text-xs text-blue-700 font-semibold">Aktif Hizmet</div>
+                                    <div class="flex items-center justify-center space-x-0.5 mb-0.5 md:space-x-1 md:mb-1">
+                                        <div class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse md:w-2 md:h-2"></div>
+                                        <span class="text-xs font-bold text-white md:text-green-600 tracking-wide">CANLI</span>
+                                    </div>
+                                    <div class="text-sm font-bold text-white md:text-lg md:text-blue-900">
+                                        <span id="activeServiceCount">962</span> <span class="text-xs text-white/80 md:text-sm md:text-blue-700">Kişi</span>
+                                    </div>
+                                    <div class="hidden md:block text-xs text-blue-600 font-medium">HİZMET VERİYORUM</div>
                                 </div>
                             </div>
                         </div>
                         
                         <!-- Superhero Container -->
                         <div class="relative z-10 text-center">
+                            <!-- Thought Bubble (Comic Style) -->
+                            <div class="absolute -top-20 left-1/2 transform -translate-x-1/2 -translate-x-32 z-20 md:-top-16 md:translate-x-8">
+                                <div class="relative">
+                                    <!-- Main Bubble -->
+                                    <div class="bg-white rounded-3xl px-4 py-3 shadow-xl border-2 border-blue-200 max-w-xs relative">
+                                        <p id="thoughtText" class="text-blue-900 text-xs font-medium text-center leading-tight">
+                                            Size nasıl yardımcı olabilirim? 🤔
+                                        </p>
+                                        <!-- Bubble Tail -->
+                                        <div class="absolute -bottom-2 left-8 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8 border-t-white"></div>
+                                        <div class="absolute -bottom-1 left-8 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8 border-t-blue-200"></div>
+                                    </div>
+                                    <!-- Small thought bubbles -->
+                                    <div class="absolute -bottom-6 left-6 w-3 h-3 bg-white rounded-full border border-blue-200"></div>
+                                    <div class="absolute -bottom-4 left-4 w-2 h-2 bg-white rounded-full border border-blue-200"></div>
+                                </div>
+                            </div>
+                            
                             <!-- Superhero -->
                             <div class="superhero-glow">
                                 <img src="/static/garantor360-superhero-transparent.png" alt="Garantor360 Süper Kahraman" class="w-80 h-80 lg:w-96 lg:h-96 object-contain mx-auto superhero-image">
                             </div>
                             
                             <!-- Bottom Text -->
-                            <div class="mt-4">
-                                <p class="text-blue-200 text-sm font-medium">Canlı Hizmet Referansı</p>
+                            <div class="mt-4 text-center flex flex-col items-center justify-center">
+                                <p class="text-blue-200 text-base font-bold mx-auto">Türkiye'nin Yeni Trendi</p>
+                                <p class="text-blue-300 text-xs font-medium mt-1 mx-auto">10.000+ Kişi Yanılmış Olamaz</p>
                             </div>
                         </div>
                         
@@ -4557,16 +4813,7 @@ app.get('/', (c) => {
                     </div>
                 </div>
                             
-                <!-- Subtle Guarantee Banner -->
-                <div class="text-center mt-12">
-                    <div class="inline-flex items-center bg-white/5 backdrop-blur-sm rounded-full px-6 py-2 border border-white/10">
-                        <div class="flex items-center space-x-4">
-                            <span id="subtleSlogan" class="text-white/90 font-medium text-sm transition-all duration-500">R&#304;SK YOK</span>
-                            <div class="w-1 h-1 bg-white/40 rounded-full"></div>
-                            <span class="text-white/70 text-xs">%100 G&#252;venli</span>
-                                    </div>
-                                </div>
-                            </div>
+                <!-- Subtle Guarantee Banner - Moved to above Yellow Badge for desktop -->
                         </div>
                         
                         <script>
@@ -4592,19 +4839,65 @@ app.get('/', (c) => {
                             document.addEventListener('DOMContentLoaded', function() {
                                 setInterval(rotateSubtleSlogans, 1500);
                                 
-                                // Active Service Counter Animation
-                                function animateActiveServiceCount() {
-                                    const counter = document.getElementById('activeServiceCount');
-                                    if (counter) {
-                                        const baseCount = 954;
-                                        const randomChange = Math.floor(Math.random() * 11) - 5; // -5 to +5
-                                        const newCount = Math.max(900, baseCount + randomChange);
-                                        counter.textContent = newCount.toString();
+                                // Dynamic Counter Animation - Unified Counter for Both Displays
+                                let sharedCurrentCount = 956;
+                                
+                                function animateCounters() {
+                                    // Single counter value for both Hero and Live Users
+                                    // Small random change between -8 to +12 (more likely to increase)
+                                    const change = Math.floor(Math.random() * 21) - 8; // -8 to +12
+                                    sharedCurrentCount += change;
+                                    
+                                    // Keep within bounds 558-1488
+                                    sharedCurrentCount = Math.max(558, Math.min(1488, sharedCurrentCount));
+                                    
+                                    // Update Hero Counter (plain format)
+                                    const heroCounter = document.getElementById('activeServiceCount');
+                                    if (heroCounter) {
+                                        heroCounter.textContent = sharedCurrentCount.toString();
+                                    }
+                                    
+                                    // Update Live User Counter (Turkish format with comma)
+                                    const liveCounter = document.getElementById('liveUserCount');
+                                    if (liveCounter) {
+                                        liveCounter.textContent = sharedCurrentCount.toLocaleString('tr-TR');
                                     }
                                 }
                                 
-                                // Update counter every 3 seconds
-                                setInterval(animateActiveServiceCount, 3000);
+                                // Update both counters every 4 seconds
+                                setInterval(animateCounters, 4000);
+                                
+                                // Thought Bubble Animation
+                                const thoughtMessages = [
+                                    "Size nasıl yardımcı olabilirim? 🤔",
+                                    "Sorununuzu bildirin, en güvenli yolu bulalım! 🛡️",
+                                    "En uygun çözümü beraber uygulayalım! ✨", 
+                                    "7/24 buradayım, nasıl destek olabilirim? 💪",
+                                    "Problemlerinizi çözmek için varım! 🔧",
+                                    "Güvenli hizmet almanın yolunu gösterelim! 🎯"
+                                ];
+                                
+                                let currentThoughtIndex = 0;
+                                
+                                function rotateThoughtBubble() {
+                                    const thoughtElement = document.getElementById('thoughtText');
+                                    if (thoughtElement) {
+                                        // Fade out
+                                        thoughtElement.style.opacity = '0.3';
+                                        
+                                        setTimeout(() => {
+                                            // Change text
+                                            thoughtElement.textContent = thoughtMessages[currentThoughtIndex];
+                                            currentThoughtIndex = (currentThoughtIndex + 1) % thoughtMessages.length;
+                                            
+                                            // Fade in
+                                            thoughtElement.style.opacity = '1';
+                                        }, 300);
+                                    }
+                                }
+                                
+                                // Change thought every 3 seconds
+                                setInterval(rotateThoughtBubble, 3000);
                             });
                         </script>
 
@@ -4617,552 +4910,449 @@ app.get('/', (c) => {
             </div>
         </section>
 
-        <!-- Service Categories -->
-        <section class="py-20 bg-white">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="text-center mb-16">
-                    <div class="section-divider w-20 mx-auto mb-6"></div>
-                    <h2 class="text-4xl font-bold text-slate-800 mb-4 tracking-tight">
-                        H&#304;ZMET KATEGOR&#304;LER&#304;
-                    </h2>
-                    <p class="text-slate-600 text-lg font-medium">G&#252;venli hizmet alman&#305;n kapsaml&#305; &#231;&#246;z&#252;mleri</p>
-                    <div class="flex justify-center items-center space-x-6 mt-6">
-                        <div class="text-center">
-                            <div class="w-12 h-12 bg-amber-400 rounded-full flex items-center justify-center mx-auto mb-2">
-                                <i class="fas fa-user-tie text-blue-900 text-xl"></i>
-                            </div>
-                            <div class="text-xl font-bold text-blue-900">UZMAN DANIŞMAN</div>
-                            <div class="text-slate-600 text-sm font-medium">Size Özel Çözüm Önerisi</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-blue-900">6</div>
-                            <div class="text-slate-600 text-sm">Ana Kategori</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-orange-600">50+</div>
-                            <div class="text-slate-600 text-sm">Alt Hizmet</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-green-600">%98.7</div>
-                            <div class="text-slate-600 text-sm">Başarı Oranı</div>
-                        </div>
-                    </div>
+        <!-- Kompakt Hizmet Kategorileri Başlık Bölümü -->
+        <section class="py-6 bg-gradient-to-b from-white via-purple-50 to-purple-200">
+            <div class="max-w-7xl mx-auto px-4 text-center">
+                <div class="inline-flex items-center bg-blue-50 border border-blue-200 px-3 py-1 rounded-full mb-2">
+                    <i class="fas fa-user-tie text-blue-600 text-xs mr-1.5"></i>
+                    <span class="text-blue-800 font-bold text-xs">UZMAN DANIŞMAN</span>
+                    <div class="ml-1.5 w-1 h-1 bg-green-500 rounded-full animate-pulse"></div>
                 </div>
-
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                    <!-- TV Tamiri -->
-                    <div class="relative group cursor-pointer">
-                        <div class="bg-white border-2 border-blue-200 p-6 minimal-corner hover:border-blue-500 transition-all duration-300 hover:shadow-lg">
-                            <div class="text-center">
-                                <div class="w-8 h-8 bg-blue-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-blue-600 transition duration-300">
-                                    <i class="fas fa-tv text-white text-lg"></i>
-                                </div>
-                                <h3 class="font-bold text-sm text-blue-900 mb-2">TV Tamiri</h3>
-                                <p class="text-xs text-blue-600 mb-3">LCD, LED, OLED</p>
-                                <div class="text-xs text-green-600 font-bold">TL300-2.500</div>
-                            </div>
-                        </div>
-                        
-                        <!-- Hover Overlay -->
-                        <div class="absolute inset-0 bg-blue-900 bg-opacity-95 minimal-corner opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-white z-10">
-                            <div class="h-full flex flex-col">
-                                <h4 class="font-bold text-sm mb-3 text-center">TV Tamiri Hizmetleri</h4>
-                                <div class="space-y-2 text-xs flex-grow">
-                                    <div class="flex justify-between">
-                                        <span>Ekran Degisimi</span>
-                                        <span class="text-yellow-300">TL800-2K</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Elektronik Kart</span>
-                                        <span class="text-yellow-300">TL400-1K</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Genel Bakim</span>
-                                        <span class="text-yellow-300">TL300-600</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Kurulum</span>
-                                        <span class="text-yellow-300">TL200-500</span>
-                                    </div>
-                                </div>
-                                <button onclick="scrollToServices()" class="w-full bg-yellow-500 text-blue-900 py-2 mt-3 sharp-corner text-xs font-bold hover:bg-yellow-400 transition">
-                                    Hemen Talep Et
-                                </button>
-                            </div>
-                        </div>
+                
+                <h2 class="text-2xl md:text-3xl font-bold mb-3 text-blue-900">
+                    H&#304;ZMET KATEGOR&#304;LER&#304;
+                </h2>
+                
+                <!-- Kompakt Statistics -->
+                <div class="flex justify-center items-center space-x-6 text-sm">
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-blue-600">6</div>
+                        <div class="text-blue-700 text-xs">Kategori</div>
                     </div>
-
-                    <!-- Bilgisayar Tamiri -->
-                    <div class="relative group cursor-pointer">
-                        <div class="bg-white border-2 border-green-200 p-6 minimal-corner hover:border-green-500 transition-all duration-300 hover:shadow-lg">
-                            <div class="text-center">
-                                <div class="w-8 h-8 bg-green-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-green-600 transition duration-300">
-                                    <i class="fas fa-laptop text-white text-lg"></i>
-                                </div>
-                                <h3 class="font-bold text-sm text-green-900 mb-2">PC Tamiri</h3>
-                                <p class="text-xs text-green-600 mb-3">Masaustu & Laptop</p>
-                                <div class="text-xs text-green-600 font-bold">TL200-3.000</div>
-                            </div>
-                        </div>
-                        
-                        <!-- Hover Overlay -->
-                        <div class="absolute inset-0 bg-green-900 bg-opacity-95 minimal-corner opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-white z-10">
-                            <div class="h-full flex flex-col">
-                                <h4 class="font-bold text-sm mb-3 text-center">PC Tamiri Hizmetleri</h4>
-                                <div class="space-y-2 text-xs flex-grow">
-                                    <div class="flex justify-between">
-                                        <span>Donanim Tamiri</span>
-                                        <span class="text-yellow-300">TL500-2K</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Yazilim Kurulum</span>
-                                        <span class="text-yellow-300">TL200-800</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Veri Kurtarma</span>
-                                        <span class="text-yellow-300">TL400-1.5K</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Genel Bakim</span>
-                                        <span class="text-yellow-300">TL200-600</span>
-                                    </div>
-                                </div>
-                                <button onclick="scrollToServices()" class="w-full bg-yellow-500 text-green-900 py-2 mt-3 sharp-corner text-xs font-bold hover:bg-yellow-400 transition">
-                                    Hemen Talep Et
-                                </button>
-                            </div>
-                        </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-orange-600">50+</div>
+                        <div class="text-orange-700 text-xs">Hizmet</div>
                     </div>
-
-                    <!-- Beyaz Eşya -->
-                    <div class="relative group cursor-pointer">
-                        <div class="bg-white border-2 border-purple-200 p-6 minimal-corner hover:border-purple-500 transition-all duration-300 hover:shadow-lg">
-                            <div class="text-center">
-                                <div class="w-8 h-8 bg-purple-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-purple-600 transition duration-300">
-                                    <i class="fas fa-snowflake text-white text-lg"></i>
-                                </div>
-                                <h3 class="font-bold text-sm text-purple-900 mb-2">Beyaz Eşya</h3>
-                                <p class="text-xs text-purple-600 mb-3">Buzdolabı, Çamaşır Makinesi</p>
-                                <div class="text-xs text-green-600 font-bold">TL400-2.500</div>
-                            </div>
-                        </div>
-                        
-                        <!-- Hover Overlay -->
-                        <div class="absolute inset-0 bg-purple-900 bg-opacity-95 minimal-corner opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-white z-10">
-                            <div class="h-full flex flex-col">
-                                <h4 class="font-bold text-sm mb-3 text-center">Beyaz Eşya Tamiri</h4>
-                                <div class="space-y-2 text-xs flex-grow">
-                                    <div class="flex justify-between">
-                                        <span>Buzdolabı</span>
-                                        <span class="text-yellow-300">TL500-1.5K</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Çamaşır Makinesi</span>
-                                        <span class="text-yellow-300">TL400-1.2K</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Bulaşık Makinesi</span>
-                                        <span class="text-yellow-300">TL400-1K</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Fırın/Ocak</span>
-                                        <span class="text-yellow-300">TL300-800</span>
-                                    </div>
-                                </div>
-                                <button onclick="scrollToServices()" class="w-full bg-yellow-500 text-purple-900 py-2 mt-3 sharp-corner text-xs font-bold hover:bg-yellow-400 transition">
-                                    Hemen Talep Et
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Klima Servisi -->
-                    <div class="relative group cursor-pointer">
-                        <div class="bg-white border-2 border-indigo-200 p-6 minimal-corner hover:border-indigo-500 transition-all duration-300 hover:shadow-lg">
-                            <div class="text-center">
-                                <div class="w-8 h-8 bg-indigo-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-indigo-600 transition duration-300">
-                                    <i class="fas fa-wind text-white text-lg"></i>
-                                </div>
-                                <h3 class="font-bold text-sm text-indigo-900 mb-2">Klima Servisi</h3>
-                                <p class="text-xs text-indigo-600 mb-3">Montaj & Bakım</p>
-                                <div class="text-xs text-green-600 font-bold">TL300-2.000</div>
-                            </div>
-                        </div>
-                        
-                        <!-- Hover Overlay -->
-                        <div class="absolute inset-0 bg-indigo-900 bg-opacity-95 minimal-corner opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-white z-10">
-                            <div class="h-full flex flex-col">
-                                <h4 class="font-bold text-sm mb-3 text-center">Klima Hizmetleri</h4>
-                                <div class="space-y-2 text-xs flex-grow">
-                                    <div class="flex justify-between">
-                                        <span>Klima Montaj</span>
-                                        <span class="text-yellow-300">TL800-1.5K</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Gaz Dolumu</span>
-                                        <span class="text-yellow-300">TL400-800</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Genel Bakım</span>
-                                        <span class="text-yellow-300">TL300-600</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Arıza Tamiri</span>
-                                        <span class="text-yellow-300">TL500-2K</span>
-                                    </div>
-                                </div>
-                                <button onclick="scrollToServices()" class="w-full bg-yellow-500 text-indigo-900 py-2 mt-3 sharp-corner text-xs font-bold hover:bg-yellow-400 transition">
-                                    Hemen Talep Et
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Küçük Ev Aletleri -->
-                    <div class="relative group cursor-pointer">
-                        <div class="bg-white border-2 border-pink-200 p-6 minimal-corner hover:border-pink-500 transition-all duration-300 hover:shadow-lg">
-                            <div class="text-center">
-                                <div class="w-8 h-8 bg-pink-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-pink-600 transition duration-300">
-                                    <i class="fas fa-blender text-white text-lg"></i>
-                                </div>
-                                <h3 class="font-bold text-sm text-pink-900 mb-2">Küçük Ev Aletleri</h3>
-                                <p class="text-xs text-pink-600 mb-3">Elektrikli Aletler</p>
-                                <div class="text-xs text-green-600 font-bold">TL200-1.000</div>
-                            </div>
-                        </div>
-                        
-                        <!-- Hover Overlay -->
-                        <div class="absolute inset-0 bg-pink-900 bg-opacity-95 minimal-corner opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-white z-10">
-                            <div class="h-full flex flex-col">
-                                <h4 class="font-bold text-sm mb-3 text-center">Küçük Ev Aletleri Tamiri</h4>
-                                <div class="space-y-2 text-xs flex-grow">
-                                    <div class="flex justify-between">
-                                        <span>Mikrodalga</span>
-                                        <span class="text-yellow-300">TL200-600</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Elektrikli Süpürge</span>
-                                        <span class="text-yellow-300">TL250-700</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Blender/Mutfak</span>
-                                        <span class="text-yellow-300">TL150-500</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Ütü/Saç Kurutma</span>
-                                        <span class="text-yellow-300">TL200-400</span>
-                                    </div>
-                                </div>
-                                <button onclick="scrollToServices()" class="w-full bg-yellow-500 text-pink-900 py-2 mt-3 sharp-corner text-xs font-bold hover:bg-yellow-400 transition">
-                                    Hemen Talep Et
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Elektronik Cihaz Tamiri -->
-                    <div class="relative group cursor-pointer">
-                        <div class="bg-white border-2 border-red-200 p-6 minimal-corner hover:border-red-500 transition-all duration-300 hover:shadow-lg">
-                            <div class="text-center">
-                                <div class="w-8 h-8 bg-red-500 sharp-corner mx-auto mb-3 flex items-center justify-center group-hover:bg-red-600 transition duration-300">
-                                    <i class="fas fa-mobile-alt text-white text-lg"></i>
-                                </div>
-                                <h3 class="font-bold text-sm text-red-900 mb-2">Elektronik Tamiri</h3>
-                                <p class="text-xs text-red-600 mb-3">Telefon, Tablet, Oyun</p>
-                                <div class="text-xs text-green-600 font-bold">TL200-1.500</div>
-                            </div>
-                        </div>
-                        
-                        <!-- Hover Overlay -->
-                        <div class="absolute inset-0 bg-red-900 bg-opacity-95 minimal-corner opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-white z-10">
-                            <div class="h-full flex flex-col">
-                                <h4 class="font-bold text-sm mb-3 text-center">Elektronik Tamiri</h4>
-                                <div class="space-y-2 text-xs flex-grow">
-                                    <div class="flex justify-between">
-                                        <span>Telefon Tamiri</span>
-                                        <span class="text-yellow-300">TL200-800</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Tablet Tamiri</span>
-                                        <span class="text-yellow-300">TL300-1K</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Oyun Konsolu</span>
-                                        <span class="text-yellow-300">TL400-1.2K</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Ses Sistemi</span>
-                                        <span class="text-yellow-300">TL300-1.5K</span>
-                                    </div>
-                                </div>
-                                <button onclick="scrollToServices()" class="w-full bg-yellow-500 text-red-900 py-2 mt-3 sharp-corner text-xs font-bold hover:bg-yellow-400 transition">
-                                    Hemen Talep Et
-                                </button>
-                            </div>
-                        </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-green-600">%98.7</div>
+                        <div class="text-green-700 text-xs">Başarı</div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- KOMPAKT AI CONSULTATION INTERFACE - Service Categories -->
+        <section class="py-8 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white relative overflow-hidden">
+            <!-- Background Effects -->
+            <div class="absolute inset-0 backdrop-blur-sm"></div>
+            
+            <div class="max-w-7xl mx-auto px-4 relative z-10">
 
-        <!-- Unified Process & Security System -->
-        <section class="py-12 bg-white">
-            <div class="max-w-7xl mx-auto px-6">
-                <!-- Section Header -->
-                <div class="text-center mb-8">
-                    <div class="section-divider w-20 mx-auto mb-4"></div>
-                    <h2 class="text-2xl font-bold text-slate-800 mb-2 tracking-tight">
-                        HİZMET ALMA SÜRECİMİZ
-                    </h2>
-                    <p class="text-slate-600 text-base font-medium">4 basit adımda profesyonel hizmet alın</p>
-                    
-                    <!-- Key Stats -->
-                    <div class="flex justify-center items-center space-x-6 mt-4">
-                        <div class="text-center">
-                            <div class="text-xl font-bold text-blue-900">5dk</div>
-                            <div class="text-slate-600 text-xs">Ortalama Süre</div>
+                <!-- Kompakt Service Categories Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
+                    <!-- TV Tamiri -->
+                    <div class="group cursor-pointer">
+                        <div class="bg-white/15 backdrop-blur-sm border border-white/30 rounded-xl p-3 hover:bg-white/20 hover:border-white/40 transition-all duration-300 hover:transform hover:scale-105">
+                            <div class="text-center">
+                                <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                                    <i class="fas fa-tv text-white text-sm"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-white mb-1">TV Tamiri</h3>
+                                <p class="text-blue-200 text-xs mb-1">LCD, LED, OLED</p>
+                                <div class="text-xs font-bold text-green-300">₺300-2.5K</div>
+                            </div>
                         </div>
-                        <div class="text-center">
-                            <div class="text-xl font-bold text-orange-600">7/24</div>
-                            <div class="text-slate-600 text-xs">Destek</div>
+                    </div>
+
+                    <!-- PC Tamiri -->
+                    <div class="group cursor-pointer">
+                        <div class="bg-white/15 backdrop-blur-sm border border-white/30 rounded-xl p-3 hover:bg-white/20 hover:border-white/40 transition-all duration-300 hover:transform hover:scale-105">
+                            <div class="text-center">
+                                <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-green-600 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                                    <i class="fas fa-laptop text-white text-sm"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-white mb-1">PC Tamiri</h3>
+                                <p class="text-green-200 text-xs mb-1">Masaüstü & Laptop</p>
+                                <div class="text-xs font-bold text-green-300">₺200-3K</div>
+                            </div>
                         </div>
-                        <div class="text-center">
-                            <div class="text-xl font-bold text-green-600">%100</div>
-                            <div class="text-slate-600 text-xs">Güvenli</div>
+                    </div>
+
+                    <!-- Beyaz Eşya -->
+                    <div class="group cursor-pointer">
+                        <div class="bg-white/15 backdrop-blur-sm border border-white/30 rounded-xl p-3 hover:bg-white/20 hover:border-white/40 transition-all duration-300 hover:transform hover:scale-105">
+                            <div class="text-center">
+                                <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                                    <i class="fas fa-snowflake text-white text-sm"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-white mb-1">Beyaz Eşya</h3>
+                                <p class="text-purple-200 text-xs mb-1">Buzdolabı, Çamaşır</p>
+                                <div class="text-xs font-bold text-green-300">₺400-2.5K</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Klima Servisi -->
+                    <div class="group cursor-pointer">
+                        <div class="bg-white/15 backdrop-blur-sm border border-white/30 rounded-xl p-3 hover:bg-white/20 hover:border-white/40 transition-all duration-300 hover:transform hover:scale-105">
+                            <div class="text-center">
+                                <div class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                                    <i class="fas fa-wind text-white text-sm"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-white mb-1">Klima Servisi</h3>
+                                <p class="text-indigo-200 text-xs mb-1">Montaj & Bakım</p>
+                                <div class="text-xs font-bold text-green-300">₺300-2K</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Küçük Ev Aletleri -->
+                    <div class="group cursor-pointer">
+                        <div class="bg-white/15 backdrop-blur-sm border border-white/30 rounded-xl p-3 hover:bg-white/20 hover:border-white/40 transition-all duration-300 hover:transform hover:scale-105">
+                            <div class="text-center">
+                                <div class="w-10 h-10 bg-gradient-to-r from-pink-500 to-pink-600 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                                    <i class="fas fa-blender text-white text-sm"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-white mb-1">Küçük Ev Aletleri</h3>
+                                <p class="text-pink-200 text-xs mb-1">Elektrikli Aletler</p>
+                                <div class="text-xs font-bold text-green-300">₺200-1K</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Elektronik Tamiri -->
+                    <div class="group cursor-pointer">
+                        <div class="bg-white/15 backdrop-blur-sm border border-white/30 rounded-xl p-3 hover:bg-white/20 hover:border-white/40 transition-all duration-300 hover:transform hover:scale-105">
+                            <div class="text-center">
+                                <div class="w-10 h-10 bg-gradient-to-r from-red-500 to-red-600 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                                    <i class="fas fa-mobile-alt text-white text-sm"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-white mb-1">Elektronik</h3>
+                                <p class="text-red-200 text-xs mb-1">Telefon, Tablet</p>
+                                <div class="text-xs font-bold text-green-300">₺200-1.5K</div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Unified Process + Security Cards -->
-                <div class="bg-white rounded-xl p-5 border border-blue-200 shadow-lg relative overflow-hidden">
-                    
-                    <!-- Tek 360° Background Logo -->
-                    <div class="absolute inset-0 flex items-center justify-center opacity-10 z-0" style="pointer-events: none;">
-                        <img src="https://cdn1.genspark.ai/user-upload-image/rmbg_generated/0_da4a2c84-aaac-47c9-a813-6b04eedeba63" 
-                             alt="360° Güvenlik Arka Plan" 
-                             class="w-2/3 h-2/3 object-contain" 
-                             style="filter: saturate(1.2) brightness(1.3); transform: scale(1.4);">
+                <!-- Kompakt HEMEN SORU SOR CTA -->
+                <div class="bg-white/15 backdrop-blur-sm border border-white/30 rounded-xl p-4 text-center">
+                    <div class="mb-3">
+                        <h3 class="text-lg font-bold text-white mb-1">HEMEN SORU SOR</h3>
+                        <p class="text-purple-200 text-xs">Probleminizi analiz edip çözüm öneriyoruz</p>
                     </div>
                     
-                    <!-- Garantor360 Header -->
-                    <div class="text-center mb-5 relative z-20">
-                        <div class="inline-flex items-center space-x-2 bg-white rounded-full px-4 py-2 shadow-sm border border-blue-100">
-                            <div class="w-6 h-6 bg-blue-600 rounded-md flex items-center justify-center">
-                                <i class="fas fa-shield-alt text-white text-xs"></i>
-                            </div>
-                            <span class="text-base font-bold text-slate-800">GARANTOR360 KORUMASINDA</span>
-                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <button onclick="scrollToServices()" class="inline-flex items-center bg-blue-600 text-white py-2.5 px-6 rounded-lg text-sm font-bold hover:bg-blue-700 transition-all duration-300 shadow-lg">
+                        <i class="fas fa-search mr-2"></i>
+                        Hemen Analiz Et
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Modern Process Section -->
+        <section class="py-16 bg-gradient-to-b from-white via-purple-25 to-purple-50">
+            <div class="max-w-7xl mx-auto px-6">
+                <!-- Kompakt Section Header -->
+                <div class="text-center mb-6">
+                    <div class="inline-flex items-center bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200 px-3 py-1 rounded-full mb-3">
+                        <i class="fas fa-route text-blue-600 text-xs mr-1"></i>
+                        <span class="text-blue-900 font-semibold text-xs">KOLAY SÜREÇ</span>
+                    </div>
+                    
+                    <h2 class="text-xl md:text-2xl font-bold mb-2 bg-gradient-to-r from-blue-900 to-purple-900 bg-clip-text text-transparent">
+                        HİZMET ALMA SÜRECİMİZ
+                    </h2>
+                    <p class="text-slate-600 text-sm font-medium mb-4 max-w-2xl mx-auto">
+                        4 basit adımda profesyonel hizmet alın
+                    </p>
+                    
+                    <!-- Kompakt Stats Cards -->
+                    <div class="grid grid-cols-3 gap-2 max-w-lg mx-auto">
+                        <div class="bg-white/70 backdrop-blur-sm border border-white/50 rounded-lg p-2 shadow-md hover:shadow-lg transition-all duration-300">
+                            <div class="text-lg font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">5dk</div>
+                            <div class="text-slate-600 text-xs font-medium">Ortalama Süre</div>
+                        </div>
+                        <div class="bg-white/70 backdrop-blur-sm border border-white/50 rounded-lg p-2 shadow-md hover:shadow-lg transition-all duration-300">
+                            <div class="text-lg font-bold bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">7/24</div>
+                            <div class="text-slate-600 text-xs font-medium">Canlı Destek</div>
+                        </div>
+                        <div class="bg-white/70 backdrop-blur-sm border border-white/50 rounded-lg p-2 shadow-md hover:shadow-lg transition-all duration-300">
+                            <div class="text-lg font-bold bg-gradient-to-r from-green-500 to-green-600 bg-clip-text text-transparent">%100</div>
+                            <div class="text-slate-600 text-xs font-medium">Güvenli</div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- 4 Step Process with Integrated Security -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 relative z-20">
+                <!-- Tam Kompakt Process Cards Container -->
+                <div class="bg-white/70 backdrop-blur-lg rounded-lg p-3 border border-white/20 shadow-lg relative overflow-hidden">
+                    
+                    <!-- Modern Gradient Background -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-purple-50/30 to-pink-50/20 rounded-lg"></div>
+                    
+                    <!-- Mini Section Header -->
+                    <div class="text-center mb-3 relative z-10">
+                        <div class="inline-flex items-center bg-gradient-to-r from-blue-50 to-purple-50 backdrop-blur-sm border border-blue-100/50 px-2 py-1 rounded-full mb-2 shadow-md">
+                            <div class="w-4 h-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mr-1 shadow-sm">
+                                <i class="fas fa-shield-check text-white text-xs"></i>
+                            </div>
+                            <span class="text-slate-800 font-bold text-xs">GARANTOR360</span>
+                            <div class="w-1.5 h-1.5 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full animate-pulse ml-1"></div>
+                        </div>
+                        <h2 class="text-lg font-bold text-slate-800 mb-1">4 Basit Adımda Güvenli Hizmet</h2>
+                        <p class="text-slate-600 text-xs max-w-xl mx-auto">Modern teknoloji ile hızlı hizmet alma süreci</p>
+                    </div>
+
+                    <!-- Tam Kompakt 4-Step Process Cards -->
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 relative z-10">
                         
-                        <!-- Step 1: Talep Oluştur + Koruma -->
-                        <div class="bg-white rounded-lg p-4 border border-blue-100 hover:shadow-lg transition-all duration-300 relative">
-                            <!-- Step Icon -->
-                            <div class="flex justify-center mb-3">
-                                <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-md relative">
-                                    <i class="fas fa-edit text-white text-base"></i>
-                                    <div class="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white">
-                                        <i class="fas fa-shield-alt text-white text-xs flex items-center justify-center h-full"></i>
+                        <!-- Step 1: Mini Card -->
+                        <div class="group bg-white/80 backdrop-blur-md rounded-lg p-2 border border-white/30 hover:border-blue-200/50 hover:shadow-lg transition-all duration-300 relative overflow-hidden">
+                            <!-- Gradient Background -->
+                            <div class="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <!-- Mini Step Number -->
+                            <div class="absolute top-1 right-1 w-4 h-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-sm">
+                                1
+                            </div>
+                            
+                            <!-- Mini Icon -->
+                            <div class="flex justify-center mb-2 relative z-10">
+                                <div class="w-8 h-8 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 rounded-lg flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 relative">
+                                    <i class="fas fa-edit text-white text-sm"></i>
+                                    <div class="absolute -top-0.5 -right-0.5 w-3 h-3 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full border border-white shadow-sm">
+                                        <i class="fas fa-shield-check text-white text-xs flex items-center justify-center h-full"></i>
                                     </div>
                                 </div>
                             </div>
                             
-                            <!-- Step Content -->
-                            <h3 class="text-base font-bold text-slate-800 mb-1 text-center">Talep Oluştur</h3>
-                            <p class="text-slate-600 text-xs leading-relaxed text-center mb-2">Problem tanımlayın ya da AI önerisinden kategori seçin</p>
-                            <div class="text-center text-xs text-blue-600 font-semibold mb-3">⏱️ 2 dakika</div>
-                            
-                            <!-- Security Info -->
-                            <div class="bg-blue-50 rounded-md p-2 border border-blue-100">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-3 h-3 bg-green-500 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-check text-white text-xs"></i>
-                                    </div>
-                                    <div class="flex-1">
-                                        <div class="text-xs font-semibold text-slate-800">Veri Koruması</div>
-                                        <div class="text-xs text-green-600">✓ SSL Şifreli</div>
+                            <!-- Mini Content -->
+                            <div class="text-center relative z-10">
+                                <h3 class="text-sm font-bold text-slate-800 mb-1 group-hover:text-blue-600 transition-colors duration-300">Talep Oluştur</h3>
+                                <p class="text-slate-600 text-xs leading-tight mb-2">Problem tanımlayın</p>
+                                
+                                <!-- Mini Time Badge -->
+                                <div class="inline-flex items-center bg-gradient-to-r from-blue-50 to-blue-100 px-1.5 py-0.5 rounded-full mb-1">
+                                    <i class="fas fa-clock text-blue-600 text-xs mr-0.5"></i>
+                                    <span class="text-blue-700 font-semibold text-xs">2dk</span>
+                                </div>
+                                
+                                <!-- Mini Security Badge -->
+                                <div class="bg-gradient-to-r from-green-50 to-emerald-50 backdrop-blur-sm rounded-md p-1 border border-green-100/50">
+                                    <div class="flex items-center justify-center space-x-0.5">
+                                        <div class="w-2 h-2 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-lock text-white text-xs"></i>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="text-xs font-bold text-slate-800">SSL</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Arrow (Desktop) -->
-                            <div class="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2">
-                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center border-2 border-white animate-pulse">
-                                    <i class="fas fa-arrow-right text-blue-600 text-sm"></i>
+                            <!-- Mini Arrow (Desktop) -->
+                            <div class="hidden lg:block absolute top-1/2 -right-2 transform -translate-y-1/2 z-20">
+                                <div class="w-4 h-4 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center border border-blue-200/50 shadow-md group-hover:scale-105 transition-all duration-300">
+                                    <i class="fas fa-arrow-right text-blue-600 text-xs"></i>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Step 2: Uzman Eşleştirme + Doğrulama -->
-                        <div class="bg-white rounded-lg p-4 border border-blue-100 hover:shadow-lg transition-all duration-300 relative">
-                            <!-- Step Icon -->
-                            <div class="flex justify-center mb-3">
-                                <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center shadow-md relative">
-                                    <i class="fas fa-user-tie text-white text-base"></i>
-                                    <div class="absolute -top-1 -right-1 w-5 h-5 bg-blue-500 rounded-full border-2 border-white">
+                        <!-- Step 2: Mini Card -->
+                        <div class="group bg-white/80 backdrop-blur-md rounded-lg p-2 border border-white/30 hover:border-green-200/50 hover:shadow-lg transition-all duration-300 relative overflow-hidden">
+                            <!-- Gradient Background -->
+                            <div class="absolute inset-0 bg-gradient-to-br from-green-50/30 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <!-- Mini Step Number -->
+                            <div class="absolute top-1 right-1 w-4 h-4 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-sm">
+                                2
+                            </div>
+                            
+                            <!-- Mini Icon -->
+                            <div class="flex justify-center mb-2 relative z-10">
+                                <div class="w-8 h-8 bg-gradient-to-br from-green-500 via-green-600 to-emerald-600 rounded-lg flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 relative">
+                                    <i class="fas fa-users text-white text-sm"></i>
+                                    <div class="absolute -top-0.5 -right-0.5 w-3 h-3 bg-gradient-to-r from-blue-400 to-blue-500 rounded-full border border-white shadow-sm">
                                         <i class="fas fa-user-check text-white text-xs flex items-center justify-center h-full"></i>
                                     </div>
                                 </div>
                             </div>
                             
-                            <!-- Step Content -->
-                            <h3 class="text-base font-bold text-slate-800 mb-1 text-center">Uzman Eşleştirme</h3>
-                            <p class="text-slate-600 text-xs leading-relaxed text-center mb-2">Size en yakın ve uygun uzmanları buluyoruz</p>
-                            <div class="text-center text-xs text-green-600 font-semibold mb-3">⚡ 15 saniye</div>
-                            
-                            <!-- Security Info -->
-                            <div class="bg-green-50 rounded-md p-2 border border-green-100">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-3 h-3 bg-blue-500 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-id-card text-white text-xs"></i>
-                                    </div>
-                                    <div class="flex-1">
-                                        <div class="text-xs font-semibold text-slate-800">Kimlik Doğrulama</div>
-                                        <div class="text-xs text-blue-600">✓ %100 Güvenli</div>
+                            <!-- Mini Content -->
+                            <div class="text-center relative z-10">
+                                <h3 class="text-sm font-bold text-slate-800 mb-1 group-hover:text-green-600 transition-colors duration-300">Uzman Eşleştirme</h3>
+                                <p class="text-slate-600 text-xs leading-tight mb-2">En uygun uzmanları buluyoruz</p>
+                                
+                                <!-- Mini Time Badge -->
+                                <div class="inline-flex items-center bg-gradient-to-r from-green-50 to-emerald-50 px-1.5 py-0.5 rounded-full mb-1">
+                                    <i class="fas fa-bolt text-green-600 text-xs mr-0.5"></i>
+                                    <span class="text-green-700 font-semibold text-xs">15sn</span>
+                                </div>
+                                
+                                <!-- Mini Security Badge -->
+                                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 backdrop-blur-sm rounded-md p-1 border border-blue-100/50">
+                                    <div class="flex items-center justify-center space-x-0.5">
+                                        <div class="w-2 h-2 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-id-card text-white text-xs"></i>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="text-xs font-bold text-slate-800">Kimlik</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Arrow (Desktop) -->
-                            <div class="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2">
-                                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center border-2 border-white animate-pulse">
-                                    <i class="fas fa-arrow-right text-green-600 text-sm"></i>
+                            <!-- Mini Arrow (Desktop) -->
+                            <div class="hidden lg:block absolute top-1/2 -right-2 transform -translate-y-1/2 z-20">
+                                <div class="w-4 h-4 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center border border-green-200/50 shadow-md group-hover:scale-105 transition-all duration-300">
+                                    <i class="fas fa-arrow-right text-green-600 text-xs"></i>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Step 3: Fiyat & Randevu + Güvence -->
-                        <div class="bg-white rounded-lg p-4 border border-blue-100 hover:shadow-lg transition-all duration-300 relative">
-                            <!-- Step Icon -->
-                            <div class="flex justify-center mb-3">
-                                <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center shadow-md relative">
-                                    <i class="fas fa-handshake text-white text-base"></i>
-                                    <div class="absolute -top-1 -right-1 w-5 h-5 bg-purple-500 rounded-full border-2 border-white">
-                                        <i class="fas fa-lock text-white text-xs flex items-center justify-center h-full"></i>
+                        <!-- Step 3: Mini Card -->
+                        <div class="group bg-white/80 backdrop-blur-md rounded-lg p-2 border border-white/30 hover:border-purple-200/50 hover:shadow-lg transition-all duration-300 relative overflow-hidden">
+                            <!-- Gradient Background -->
+                            <div class="absolute inset-0 bg-gradient-to-br from-purple-50/30 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <!-- Mini Step Number -->
+                            <div class="absolute top-1 right-1 w-4 h-4 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-sm">
+                                3
+                            </div>
+                            
+                            <!-- Mini Icon -->
+                            <div class="flex justify-center mb-2 relative z-10">
+                                <div class="w-8 h-8 bg-gradient-to-br from-purple-500 via-purple-600 to-pink-600 rounded-lg flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 relative">
+                                    <i class="fas fa-handshake text-white text-sm"></i>
+                                    <div class="absolute -top-0.5 -right-0.5 w-3 h-3 bg-gradient-to-r from-amber-400 to-orange-500 rounded-full border border-white shadow-sm">
+                                        <i class="fas fa-dollar-sign text-white text-xs flex items-center justify-center h-full"></i>
                                     </div>
                                 </div>
                             </div>
                             
-                            <!-- Step Content -->
-                            <h3 class="text-base font-bold text-slate-800 mb-1 text-center">Fiyat & Randevu</h3>
-                            <p class="text-slate-600 text-xs leading-relaxed text-center mb-2">Şeffaf fiyat alın ve randevu belirleyin</p>
-                            <div class="text-center text-xs text-purple-600 font-semibold mb-3">💰 Net fiyat</div>
-                            
-                            <!-- Security Info -->
-                            <div class="bg-purple-50 rounded-md p-2 border border-purple-100">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-3 h-3 bg-purple-500 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-credit-card text-white text-xs"></i>
-                                    </div>
-                                    <div class="flex-1">
-                                        <div class="text-xs font-semibold text-slate-800">Ödeme Koruması</div>
-                                        <div class="text-xs text-purple-600">✓ Escrow Sistemi</div>
+                            <!-- Mini Content -->
+                            <div class="text-center relative z-10">
+                                <h3 class="text-sm font-bold text-slate-800 mb-1 group-hover:text-purple-600 transition-colors duration-300">Fiyat & Randevu</h3>
+                                <p class="text-slate-600 text-xs leading-tight mb-2">Şeffaf fiyat alın</p>
+                                
+                                <!-- Mini Price Badge -->
+                                <div class="inline-flex items-center bg-gradient-to-r from-purple-50 to-pink-50 px-1.5 py-0.5 rounded-full mb-1">
+                                    <i class="fas fa-coins text-purple-600 text-xs mr-0.5"></i>
+                                    <span class="text-purple-700 font-semibold text-xs">Net</span>
+                                </div>
+                                
+                                <!-- Mini Security Badge -->
+                                <div class="bg-gradient-to-r from-amber-50 to-orange-50 backdrop-blur-sm rounded-md p-1 border border-amber-100/50">
+                                    <div class="flex items-center justify-center space-x-0.5">
+                                        <div class="w-2 h-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-shield-alt text-white text-xs"></i>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="text-xs font-bold text-slate-800">Escrow</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Arrow (Desktop) -->
-                            <div class="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2">
-                                <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center border-2 border-white animate-pulse">
-                                    <i class="fas fa-arrow-right text-purple-600 text-sm"></i>
+                            <!-- Mini Arrow (Desktop) -->
+                            <div class="hidden lg:block absolute top-1/2 -right-2 transform -translate-y-1/2 z-20">
+                                <div class="w-4 h-4 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center border border-purple-200/50 shadow-md group-hover:scale-105 transition-all duration-300">
+                                    <i class="fas fa-arrow-right text-purple-600 text-xs"></i>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Step 4: Hizmet Tamamla + Garanti -->
-                        <div class="bg-white rounded-lg p-4 border border-blue-100 hover:shadow-lg transition-all duration-300">
-                            <!-- Step Icon -->
-                            <div class="flex justify-center mb-3">
-                                <div class="w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center shadow-md relative">
-                                    <i class="fas fa-check-circle text-white text-base"></i>
-                                    <div class="absolute -top-1 -right-1 w-5 h-5 bg-orange-500 rounded-full border-2 border-white">
+                        <!-- Step 4: Mini Card -->
+                        <div class="group bg-white/80 backdrop-blur-md rounded-lg p-2 border border-white/30 hover:border-orange-200/50 hover:shadow-lg transition-all duration-300 relative overflow-hidden">
+                            <!-- Gradient Background -->
+                            <div class="absolute inset-0 bg-gradient-to-br from-orange-50/30 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <!-- Mini Step Number -->
+                            <div class="absolute top-1 right-1 w-4 h-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-sm">
+                                4
+                            </div>
+                            
+                            <!-- Mini Icon -->
+                            <div class="flex justify-center mb-2 relative z-10">
+                                <div class="w-8 h-8 bg-gradient-to-br from-orange-500 via-red-500 to-pink-600 rounded-lg flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 relative">
+                                    <i class="fas fa-check-circle text-white text-sm"></i>
+                                    <div class="absolute -top-0.5 -right-0.5 w-3 h-3 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-full border border-white shadow-sm">
                                         <i class="fas fa-star text-white text-xs flex items-center justify-center h-full"></i>
                                     </div>
                                 </div>
                             </div>
                             
-                            <!-- Step Content -->
-                            <h3 class="text-base font-bold text-slate-800 mb-1 text-center">Hizmet Tamamla</h3>
-                            <p class="text-slate-600 text-xs leading-relaxed text-center mb-2">Hizmet tamamlandıktan sonra güvenle ödeme yapın</p>
-                            <div class="text-center text-xs text-orange-600 font-semibold mb-3">🛡️ %100 Garanti</div>
+                            <!-- Mini Content -->
+                            <div class="text-center relative z-10">
+                                <h3 class="text-sm font-bold text-slate-800 mb-1 group-hover:text-orange-600 transition-colors duration-300">Hizmet Tamamla</h3>
+                                <p class="text-slate-600 text-xs leading-tight mb-2">Güvenle ödeme yapın</p>
+                                
+                                <!-- Mini Guarantee Badge -->
+                                <div class="inline-flex items-center bg-gradient-to-r from-orange-50 to-red-50 px-1.5 py-0.5 rounded-full mb-1">
+                                    <i class="fas fa-shield-check text-orange-600 text-xs mr-0.5"></i>
+                                    <span class="text-orange-700 font-semibold text-xs">%100</span>
+                                </div>
+                                
+                                <!-- Mini Security Badge -->
+                                <div class="bg-gradient-to-r from-yellow-50 to-amber-50 backdrop-blur-sm rounded-md p-1 border border-yellow-100/50">
+                                    <div class="flex items-center justify-center space-x-0.5">
+                                        <div class="w-2 h-2 bg-gradient-to-r from-yellow-500 to-amber-500 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-award text-white text-xs"></i>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="text-xs font-bold text-slate-800">6Ay</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mini Mobile Progress Flow -->
+                    <div class="lg:hidden mt-2 flex justify-center items-center space-x-1">
+                        <div class="w-4 h-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center animate-bounce shadow-sm">
+                            <i class="fas fa-arrow-down text-white text-xs"></i>
+                        </div>
+                        <div class="w-4 h-4 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center animate-bounce shadow-sm" style="animation-delay: 0.2s">
+                            <i class="fas fa-arrow-down text-white text-xs"></i>
+                        </div>
+                        <div class="w-4 h-4 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center animate-bounce shadow-sm" style="animation-delay: 0.4s">
+                            <i class="fas fa-arrow-down text-white text-xs"></i>
+                        </div>
+                        <div class="w-4 h-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center animate-bounce shadow-sm" style="animation-delay: 0.6s">
+                            <i class="fas fa-check text-white text-xs"></i>
+                        </div>
+                    </div>
+
+                    <!-- Talep Gönder Butonu -->
+                    <div class="mt-8 text-center relative z-10">
+                        <button 
+                            onclick="document.getElementById('customer-request-form').scrollIntoView({ behavior: 'smooth' })"
+                            class="group inline-flex items-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 relative overflow-hidden">
                             
-                            <!-- Security Info -->
-                            <div class="bg-orange-50 rounded-md p-2 border border-orange-100">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-3 h-3 bg-orange-500 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-award text-white text-xs"></i>
-                                    </div>
-                                    <div class="flex-1">
-                                        <div class="text-xs font-semibold text-slate-800">Kalite Garantisi</div>
-                                        <div class="text-xs text-orange-600">✓ 6 Ay Garanti</div>
-                                    </div>
-                                </div>
+                            <!-- Gradient Background Animation -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
+                            
+                            <!-- Button Content -->
+                            <div class="relative z-10 flex items-center">
+                                <i class="fas fa-paper-plane text-base mr-2 group-hover:rotate-12 transition-transform duration-300"></i>
+                                <span class="text-base tracking-wide">TALEP GÖNDER</span>
+                                <i class="fas fa-arrow-right text-base ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Mobile Arrows -->
-                    <div class="md:hidden flex justify-center items-center mt-4 space-x-4">
-                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center animate-bounce">
-                            <i class="fas fa-arrow-down text-blue-600 text-sm"></i>
-                        </div>
-                        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center animate-bounce">
-                            <i class="fas fa-arrow-down text-green-600 text-sm"></i>
-                        </div>
-                        <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center animate-bounce">
-                            <i class="fas fa-arrow-down text-purple-600 text-sm"></i>
-                        </div>
-                    </div>
-
-                    <!-- Bottom Security Status Bar -->
-                    <div class="mt-5 bg-white rounded-lg p-3 border border-blue-100 shadow-sm">
-                        <div class="flex items-center justify-between mb-2">
-                            <div class="flex items-center space-x-2">
-                                <div class="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
-                                    <div class="animate-spin">
-                                        <i class="fas fa-sync text-white text-xs"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="text-sm font-bold text-slate-800">Garantor360 Canlı İzleme</div>
-                                    <div class="text-xs text-slate-600">Tüm süreç boyunca aktif koruma</div>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <div class="text-sm font-bold text-green-600">%100 Güvenli</div>
-                                <div class="text-xs text-slate-500">SSL + AI Koruması</div>
-                            </div>
-                        </div>
+                            
+                            <!-- Sparkle Animation -->
+                            <div class="absolute top-1 right-1 w-1.5 h-1.5 bg-white rounded-full animate-ping"></div>
+                            <div class="absolute bottom-1 left-1 w-1 h-1 bg-yellow-300 rounded-full animate-pulse"></div>
+                        </button>
                         
-                        <!-- Progress Bar -->
-                        <div class="w-full bg-slate-200 rounded-full h-1.5 mb-3">
-                            <div class="bg-gradient-to-r from-blue-500 via-green-500 to-orange-500 h-full rounded-full animate-pulse"></div>
-                        </div>
-
-                        <!-- Security Features Grid -->
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-center">
-                            <div class="bg-blue-50 rounded-md p-2">
-                                <div class="text-xs font-bold text-blue-600">7/24</div>
-                                <div class="text-xs text-slate-600">Anlık İzleme</div>
-                            </div>
-                            <div class="bg-green-50 rounded-md p-2">
-                                <div class="text-xs font-bold text-green-600">Real-Time</div>
-                                <div class="text-xs text-slate-600">Canlı Takip</div>
-                            </div>
-                            <div class="bg-purple-50 rounded-md p-2">
-                                <div class="text-xs font-bold text-purple-600">AI Powered</div>
-                                <div class="text-xs text-slate-600">Akıllı Koruma</div>
-                            </div>
-                            <div class="bg-orange-50 rounded-md p-2">
-                                <div class="text-xs font-bold text-orange-600">256-bit SSL</div>
-                                <div class="text-xs text-slate-600">Şifreli Güvenlik</div>
-                            </div>
-                        </div>
+                        <!-- Alt Açıklama -->
+                        <p class="text-slate-600 text-sm mt-3 font-medium">
+                            <i class="fas fa-clock text-blue-600 mr-1"></i>
+                            2 dakikada talep oluşturun, hemen yanıt alın
+                        </p>
                     </div>
+
                 </div>
 
 
@@ -5458,7 +5648,7 @@ app.get('/', (c) => {
                     <div class="bg-white rounded-lg shadow-sm p-2 text-center">
                         <img src="https://page.gensparksite.com/v1/base64_upload/ee6d91c41c837953855b76e06ba10fbc" 
                              alt="TV Tamiri" 
-                             class="w-full h-20 object-cover rounded mb-2">
+                             class="w-full h-25 object-cover rounded mb-2">
                         <h4 class="font-bold text-xs text-gray-800">TV Tamiri</h4>
                         <p class="text-xs text-gray-600">Fulya H. ⭐⭐⭐⭐⭐</p>
                     </div>
@@ -5467,7 +5657,7 @@ app.get('/', (c) => {
                     <div class="bg-white rounded-lg shadow-sm p-2 text-center">
                         <img src="https://page.gensparksite.com/v1/base64_upload/a3350dc40a3a83a08928c6c46be858ad" 
                              alt="Klima Tamiri" 
-                             class="w-full h-20 object-cover rounded mb-2">
+                             class="w-full h-25 object-cover rounded mb-2">
                         <h4 class="font-bold text-xs text-gray-800">Klima Servisi</h4>
                         <p class="text-xs text-gray-600">Selim B. ⭐⭐⭐⭐⭐</p>
                     </div>
@@ -5476,7 +5666,7 @@ app.get('/', (c) => {
                     <div class="bg-white rounded-lg shadow-sm p-2 text-center">
                         <img src="https://page.gensparksite.com/v1/base64_upload/249fe7eafc02b698735b1eb1b44a10ff" 
                              alt="PC Tamiri" 
-                             class="w-full h-20 object-cover rounded mb-2">
+                             class="w-full h-25 object-cover rounded mb-2">
                         <h4 class="font-bold text-xs text-gray-800">PC Tamiri</h4>
                         <p class="text-xs text-gray-600">Ahmet K. ⭐⭐⭐⭐⭐</p>
                     </div>
@@ -5485,7 +5675,7 @@ app.get('/', (c) => {
                     <div class="bg-white rounded-lg shadow-sm p-2 text-center">
                         <img src="https://page.gensparksite.com/v1/base64_upload/bc6f58fb2e5abee6389e4a9c8ecdeeff" 
                              alt="Beyaz Eşya Tamiri" 
-                             class="w-full h-20 object-cover rounded mb-2">
+                             class="w-full h-25 object-cover rounded mb-2">
                         <h4 class="font-bold text-xs text-gray-800">Beyaz Eşya</h4>
                         <p class="text-xs text-gray-600">Nermin H. ⭐⭐⭐⭐⭐</p>
                     </div>
@@ -5628,7 +5818,7 @@ app.get('/', (c) => {
                                     <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse mr-2"></div>
                                     <span class="text-green-300 font-semibold">ŞU ANDA CANLI:</span>
                                 </div>
-                                <div class="text-xl font-bold text-yellow-300" id="liveUserCount">1,847</div>
+                                <div class="text-xl font-bold text-yellow-300" id="liveUserCount">1,126</div>
                                 <span class="text-blue-200">kişi</span>
                             </div>
                             <div class="text-xs text-blue-300 text-center mt-1">
@@ -6051,7 +6241,7 @@ app.get('/', (c) => {
             </div>
         </section>
 
-        <!-- Garantor360 Guvence Sistemi - Minimal & Clean Design -->
+        <!-- Garantor360 Güvence Sistemi - Minimal & Clean Design -->
         <section id="guarantee" class="bg-slate-50" style="padding-top: 50px; padding-bottom: 80px;">
             <div class="max-w-7xl mx-auto px-6">
                 <!-- Security and Trust Section -->
@@ -6059,7 +6249,7 @@ app.get('/', (c) => {
                     <div class="section-divider w-20 mx-auto mb-6"></div>
 
                     <h2 class="text-4xl lg:text-5xl font-bold mb-6 tracking-tight leading-tight text-blue-900">
-                        G&#220;VENL&#304; H&#304;ZMET ALMAK
+                        G&#220;VENL&#304; HİZMET ALMAK
                         <span class="block text-amber-600">ARTIK &#199;OK KOLAY</span>
                     </h2>
                     <p class="text-lg text-slate-600 mb-8 max-w-3xl mx-auto leading-relaxed">
@@ -6878,274 +7068,17 @@ app.get('/', (c) => {
             </div>
         </section>
 
-        <!-- Modern Consultation Interface Style Service Categories -->
-        <section class="py-20 bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 relative overflow-hidden" id="services">
-            <!-- Background Pattern -->
-            <div class="absolute inset-0 opacity-10">
-                <div class="absolute inset-0" style="background-image: radial-gradient(circle at 25% 25%, #818cf8 0%, transparent 50%), radial-gradient(circle at 75% 75%, #c084fc 0%, transparent 50%);"></div>
-            </div>
-            
-            <div class="max-w-7xl mx-auto px-6 relative">
-                <!-- Header Section -->
-                <div class="text-center mb-16">
-                    <div class="inline-block bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20 mb-6">
-                        <span class="text-purple-200 font-medium text-sm">
-                            <i class="fas fa-sparkles mr-2"></i>
-                            Size Özel Hizmet Çözümleri
-                        </span>
-                    </div>
-                    <h2 class="text-5xl font-bold text-white mb-6 tracking-tight">
-                        Uzman Konsültasyon
-                        <span class="block text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">
-                            Merkezi
-                        </span>
-                    </h2>
-                    <p class="text-xl text-purple-200 max-w-3xl mx-auto leading-relaxed">
-                        Yapay zeka destekli akıllı eşleştirme sistemi ile size en uygun hizmet sağlayıcısını buluyoruz. 
-                        Profesyonel danışmanlarımız her adımda yanınızda.
-                    </p>
-                </div>
-
-                <!-- Main Consultation Interface -->
-                <div class="bg-white/10 backdrop-blur-lg rounded-3xl border border-white/20 p-8 mb-12">
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        <!-- Left: Quick Service Selection -->
-                        <div class="lg:col-span-2">
-                            <div class="mb-6">
-                                <h3 class="text-2xl font-bold text-white mb-4 flex items-center">
-                                    <div class="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center mr-3">
-                                        <i class="fas fa-search text-white"></i>
-                                    </div>
-                                    Hangi Hizmeti Arıyorsunuz?
-                                </h3>
-                                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                                    <!-- Service Categories as Interactive Cards -->
-                                    <div class="consultation-service-card group bg-white/10 hover:bg-white/20 border border-white/20 hover:border-amber-400 rounded-xl p-4 cursor-pointer transition-all duration-300">
-                                        <div class="text-center">
-                                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                                                <i class="fas fa-tv text-white text-xl"></i>
-                                            </div>
-                                            <h4 class="text-white font-semibold text-sm mb-1">Televizyon</h4>
-                                            <p class="text-purple-200 text-xs">LED/OLED/Smart TV</p>
-                                            <div class="text-amber-400 font-bold text-xs mt-2">₺300-2.500</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="consultation-service-card group bg-white/10 hover:bg-white/20 border border-white/20 hover:border-amber-400 rounded-xl p-4 cursor-pointer transition-all duration-300">
-                                        <div class="text-center">
-                                            <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                                                <i class="fas fa-laptop text-white text-xl"></i>
-                                            </div>
-                                            <h4 class="text-white font-semibold text-sm mb-1">Bilgisayar</h4>
-                                            <p class="text-purple-200 text-xs">PC/Laptop/Gaming</p>
-                                            <div class="text-amber-400 font-bold text-xs mt-2">₺200-2.000</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="consultation-service-card group bg-white/10 hover:bg-white/20 border border-white/20 hover:border-amber-400 rounded-xl p-4 cursor-pointer transition-all duration-300">
-                                        <div class="text-center">
-                                            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                                                <i class="fas fa-washing-machine text-white text-xl"></i>
-                                            </div>
-                                            <h4 class="text-white font-semibold text-sm mb-1">Beyaz Eşya</h4>
-                                            <p class="text-purple-200 text-xs">Çamaşır/Bulaşık/Buzdolabı</p>
-                                            <div class="text-amber-400 font-bold text-xs mt-2">₺400-3.000</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="consultation-service-card group bg-white/10 hover:bg-white/20 border border-white/20 hover:border-amber-400 rounded-xl p-4 cursor-pointer transition-all duration-300">
-                                        <div class="text-center">
-                                            <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                                                <i class="fas fa-snowflake text-white text-xl"></i>
-                                            </div>
-                                            <h4 class="text-white font-semibold text-sm mb-1">Klima</h4>
-                                            <p class="text-purple-200 text-xs">Split/VRF/Kaset</p>
-                                            <div class="text-amber-400 font-bold text-xs mt-2">₺300-2.500</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="consultation-service-card group bg-white/10 hover:bg-white/20 border border-white/20 hover:border-amber-400 rounded-xl p-4 cursor-pointer transition-all duration-300">
-                                        <div class="text-center">
-                                            <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                                                <i class="fas fa-volume-up text-white text-xl"></i>
-                                            </div>
-                                            <h4 class="text-white font-semibold text-sm mb-1">Ses Sistemi</h4>
-                                            <p class="text-purple-200 text-xs">Hoparlör/Home Theater</p>
-                                            <div class="text-amber-400 font-bold text-xs mt-2">₺250-3.500</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="consultation-service-card group bg-white/10 hover:bg-white/20 border border-white/20 hover:border-amber-400 rounded-xl p-4 cursor-pointer transition-all duration-300">
-                                        <div class="text-center">
-                                            <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                                                <i class="fas fa-mobile-alt text-white text-xl"></i>
-                                            </div>
-                                            <h4 class="text-white font-semibold text-sm mb-1">Elektronik</h4>
-                                            <p class="text-purple-200 text-xs">Telefon/Tablet/Konsol</p>
-                                            <div class="text-amber-400 font-bold text-xs mt-2">₺150-1.800</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Problem Description -->
-                            <div class="mb-6">
-                                <h3 class="text-white font-bold mb-3 flex items-center">
-                                    <div class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center mr-3">
-                                        <i class="fas fa-comments text-white text-sm"></i>
-                                    </div>
-                                    Sorununuzu Detaylandırın
-                                </h3>
-                                <textarea 
-                                    class="w-full bg-white/10 backdrop-blur border border-white/20 rounded-xl p-4 text-white placeholder-purple-200 focus:border-amber-400 focus:outline-none transition-colors resize-none"
-                                    rows="4"
-                                    placeholder="Cihazınızın marka, model ve yaşadığınız sorunu detaylı olarak açıklayın. Örn: Samsung 55" Smart TV açılıyor ama görüntü gelmiyor, ses var..."
-                                ></textarea>
-                            </div>
-
-                            <!-- Quick Contact -->
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-purple-200 font-medium mb-2">Telefon Numaranız</label>
-                                    <input 
-                                        type="tel"
-                                        class="w-full bg-white/10 backdrop-blur border border-white/20 rounded-xl p-3 text-white placeholder-purple-200 focus:border-amber-400 focus:outline-none transition-colors"
-                                        placeholder="05XX XXX XX XX"
-                                    >
-                                </div>
-                                <div>
-                                    <label class="block text-purple-200 font-medium mb-2">Şehir</label>
-                                    <select class="w-full bg-white/10 backdrop-blur border border-white/20 rounded-xl p-3 text-white focus:border-amber-400 focus:outline-none transition-colors">
-                                        <option value="" class="bg-gray-800">Şehir Seçin</option>
-                                        <option value="istanbul" class="bg-gray-800">İstanbul</option>
-                                        <option value="ankara" class="bg-gray-800">Ankara</option>
-                                        <option value="izmir" class="bg-gray-800">İzmir</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Right: AI Consultant & Pricing -->
-                        <div class="lg:col-span-1">
-                            <!-- AI Consultant Card -->
-                            <div class="bg-gradient-to-br from-amber-500/20 to-orange-500/20 backdrop-blur border border-amber-400/30 rounded-2xl p-6 mb-6">
-                                <div class="text-center mb-4">
-                                    <div class="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full mx-auto mb-3 flex items-center justify-center">
-                                        <i class="fas fa-robot text-white text-2xl"></i>
-                                    </div>
-                                    <h3 class="text-white font-bold text-lg">AI Danışman</h3>
-                                    <p class="text-amber-200 text-sm">Akıllı Fiyat Hesaplama</p>
-                                </div>
-                                <div class="space-y-3">
-                                    <div class="flex justify-between items-center py-2 border-b border-amber-400/20">
-                                        <span class="text-amber-200">Ortalama Süre:</span>
-                                        <span class="text-white font-semibold">45 dakika</span>
-                                    </div>
-                                    <div class="flex justify-between items-center py-2 border-b border-amber-400/20">
-                                        <span class="text-amber-200">Tahmini Maliyet:</span>
-                                        <span class="text-white font-semibold">₺350-750</span>
-                                    </div>
-                                    <div class="flex justify-between items-center py-2">
-                                        <span class="text-amber-200">Garanti Süresi:</span>
-                                        <span class="text-white font-semibold">6 Ay</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Expert Stats -->
-                            <div class="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-6">
-                                <h3 class="text-white font-bold mb-4 flex items-center">
-                                    <i class="fas fa-users text-emerald-400 mr-2"></i>
-                                    Uzman Durumu
-                                </h3>
-                                <div class="space-y-4">
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center">
-                                            <div class="w-3 h-3 bg-emerald-400 rounded-full mr-2 animate-pulse"></div>
-                                            <span class="text-purple-200">Çevrimiçi Uzman:</span>
-                                        </div>
-                                        <span class="text-white font-bold">47 Kişi</span>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center">
-                                            <div class="w-3 h-3 bg-blue-400 rounded-full mr-2"></div>
-                                            <span class="text-purple-200">Ortalama Puanlama:</span>
-                                        </div>
-                                        <span class="text-white font-bold">4.8/5.0</span>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center">
-                                            <div class="w-3 h-3 bg-amber-400 rounded-full mr-2"></div>
-                                            <span class="text-purple-200">Bugün Çözülen:</span>
-                                        </div>
-                                        <span class="text-white font-bold">127 İş</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Action Buttons -->
-                    <div class="flex flex-col md:flex-row gap-4 mt-8">
-                        <button class="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
-                            <i class="fas fa-brain mr-2"></i>
-                            AI ile Ücretsiz Analiz Yap
-                        </button>
-                        <button class="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
-                            <i class="fas fa-phone mr-2"></i>
-                            Hemen Uzmanla Konuş
-                        </button>
-                        <button class="bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center">
-                            <i class="fas fa-whatsapp mr-2"></i>
-                            WhatsApp
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Success Statistics -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                            <i class="fas fa-check-circle text-white text-2xl"></i>
-                        </div>
-                        <div class="text-3xl font-bold text-white mb-2">98.7%</div>
-                        <div class="text-purple-200 text-sm font-medium">Başarı Oranı</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                            <i class="fas fa-clock text-white text-2xl"></i>
-                        </div>
-                        <div class="text-3xl font-bold text-white mb-2">15dk</div>
-                        <div class="text-purple-200 text-sm font-medium">Ortalama Yanıt</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                            <i class="fas fa-shield-alt text-white text-2xl"></i>
-                        </div>
-                        <div class="text-3xl font-bold text-white mb-2">6 Ay</div>
-                        <div class="text-purple-200 text-sm font-medium">Garanti Süresi</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                            <i class="fas fa-users text-white text-2xl"></i>
-                        </div>
-                        <div class="text-3xl font-bold text-white mb-2">50K+</div>
-                        <div class="text-purple-200 text-sm font-medium">Mutlu Müşteri</div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
         <!-- Service Request Form -->
-        <section class="py-8 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white" id="hizmet-al">
+        <section class="py-8 -mt-6 lg:mt-0 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white" id="hizmet-al">
             <div class="max-w-6xl mx-auto px-6">
                 <div class="text-center mb-3">
                     <div class="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-2 rounded-full mb-2">
                         <i class="fas fa-shield-check text-green-300 mr-2"></i>
-                        <span class="text-white font-semibold text-sm">%100 GUVENLI HIZMET BASVURUSU</span>
+                        <span class="text-white font-semibold text-sm">%100 GÜVENLI HIZMET BASVURUSU</span>
                     </div>
                     <h2 class="text-2xl lg:text-3xl font-bold mb-2 text-green-300 tracking-tight">
-                        G&#220;VENL&#304; H&#304;ZMET ALMAK ARTIK &#199;OK KOLAY
+                        G&#220;VENL&#304; HİZMET ALMAK ARTIK &#199;OK KOLAY
                     </h2>
                 </div>
 
@@ -7244,46 +7177,65 @@ app.get('/', (c) => {
                                                 onchange="updateFormProgress(); validateStep(2); showEstimatedPrice();">
                                             <option value="" class="bg-white text-gray-800">Kategori Secin</option>
                                     
-                                    <!-- TEKNIK ONARIM - Detaylandirilmis -->
-                                    <optgroup label=" TEKNIK ONARIM HIZMETLERI">
-                                        <option value="Televizyon Tamiri">Televizyon Tamiri (LED, LCD, OLED, Smart TV)</option>
-                                        <option value="Bilgisayar Tamiri">Bilgisayar Tamiri (Masaustu, Laptop)</option>
-                                        <option value="Camasir Makinesi">Camasir Makinesi Tamiri</option>
-                                        <option value="Bulasik Makinesi">Bulasik Makinesi Tamiri</option>
-                                        <option value="Klima Servisi">Klima Servisi & Tamiri</option>
-                                        <option value="Kombi Servisi">Kombi Servisi & Tamiri</option>
-                                        <option value="Buzdolabi Tamiri">Buzdolabi & Derin Dondurucu Tamiri</option>
-                                        <option value="Firin Ocak">Firin & Ocak Tamiri</option>
-                                        <option value="Mikrodalga">Mikrodalga & Kucuk Ev Aletleri</option>
-                                        <option value="Telefon Tablet">Telefon & Tablet Tamiri</option>
+                                    <!-- DETAYLI KATEGORİLER -->
+                                    
+                                    <!-- TV TAMİRİ -->
+                                    <optgroup label="📺 TV TAMİRİ">
+                                        <option value="TV LCD">LCD TV Tamiri</option>
+                                        <option value="TV LED">LED TV Tamiri</option>
+                                        <option value="TV OLED">OLED TV Tamiri</option>
+                                        <option value="TV Plazma">Plazma TV Tamiri</option>
+                                        <option value="TV Smart">Smart TV Tamiri</option>
                                     </optgroup>
                                     
-                                    <!-- EV BAKIM & TADILAT -->
-                                    <optgroup label=" EV BAKIM & TADILAT">
-                                        <option value="Boyama Badana">Boyama & Badana Isleri</option>
-                                        <option value="Elektrik Isleri">Elektrik Tesisati & Onarim</option>
-                                        <option value="Su Tesisati">Su Tesisati & Sihhi Tesisat</option>
-                                        <option value="Doseme Parke">Doseme, Parke & Laminat</option>
-                                        <option value="Cam Ayna">Cam & Ayna Isleri</option>
-                                        <option value="Kapi Pencere">Kapi & Pencere Tamiri</option>
+                                    <!-- PC TAMİRİ -->
+                                    <optgroup label="💻 PC TAMİRİ">
+                                        <option value="PC Masaüstü">Masaüstü PC Tamiri</option>
+                                        <option value="PC Laptop">Laptop Tamiri</option>
+                                        <option value="PC Monitör">Monitör Tamiri</option>
+                                        <option value="PC Gaming">Gaming PC Tamiri</option>
+                                        <option value="PC İş">İş Bilgisayarı Tamiri</option>
                                     </optgroup>
                                     
-                                    <!-- TEMIZLIK HIZMETLERI -->
-                                    <optgroup label=" TEMIZLIK HIZMETLERI">
-                                        <option value="Ev Temizligi">Genel Ev Temizligi</option>
-                                        <option value="Derin Temizlik">Derin Temizlik & Dezenfeksiyon</option>
-                                        <option value="Hali Yikama">Hali & Koltuk Yikama</option>
-                                        <option value="Cam Temizligi">Cam Temizligi (Ic & Dis)</option>
-                                        <option value="Tasinma Temizlik">Tasinma Sonrasi Temizlik</option>
+                                    <!-- BEYAZ EŞYA -->
+                                    <optgroup label="🏠 BEYAZ EŞYA">
+                                        <option value="Buzdolabı">Buzdolabı Tamiri</option>
+                                        <option value="Çamaşır Makinesi">Çamaşır Makinesi Tamiri</option>
+                                        <option value="Bulaşık Makinesi">Bulaşık Makinesi Tamiri</option>
+                                        <option value="Fırın">Fırın Tamiri</option>
+                                        <option value="Derin Dondurucu">Derin Dondurucu Tamiri</option>
                                     </optgroup>
                                     
-                                    <!-- DIGER HIZMETLER -->
-                                    <optgroup label=" DIGER HIZMETLER">
-                                        <option value="Mobilya Montaj">Mobilya Montaj & Kurulum</option>
-                                        <option value="Asma Tavan">Asma Tavan & Alcipan</option>
-                                        <option value="Bahce Peyzaj">Bahce & Peyzaj Isleri</option>
-                                        <option value="Nakliye">Nakliye & Tasima</option>
-                                        <option value="Diger">Diger (Aciklama kisminda belirtiniz)</option>
+                                    <!-- KLİMA SERVİSİ -->
+                                    <optgroup label="❄️ KLİMA SERVİSİ">
+                                        <option value="Klima Montaj">Klima Montajı</option>
+                                        <option value="Klima Bakım">Klima Bakım & Temizlik</option>
+                                        <option value="Klima Tamiri">Klima Tamiri</option>
+                                        <option value="Klima Split">Split Klima</option>
+                                        <option value="Klima VRV">VRV Sistem</option>
+                                    </optgroup>
+                                    
+                                    <!-- KÜÇÜK EV ALETLERİ -->
+                                    <optgroup label="🔌 KÜÇÜK EV ALETLERİ">
+                                        <option value="Mikrodalga">Mikrodalga Tamiri</option>
+                                        <option value="Blender">Blender & Mutfak Robotları</option>
+                                        <option value="Ütü">Ütü Tamiri</option>
+                                        <option value="Süpürge">Elektrikli Süpürge</option>
+                                        <option value="Kahve Makinesi">Kahve Makinesi</option>
+                                    </optgroup>
+                                    
+                                    <!-- ELEKTRONİK -->
+                                    <optgroup label="📱 ELEKTRONİK">
+                                        <option value="Telefon">Telefon Tamiri</option>
+                                        <option value="Tablet">Tablet Tamiri</option>
+                                        <option value="iPhone">iPhone Tamiri</option>
+                                        <option value="Samsung">Samsung Tamiri</option>
+                                        <option value="Kulaklık">Kulaklık Tamiri</option>
+                                    </optgroup>
+                                    
+                                    <!-- DİĞER -->
+                                    <optgroup label="🔧 DİĞER">
+                                        <option value="Diğer">Diğer Hizmetler</option>
                                     </optgroup>
                                         </select>
                                         <div id="categoryValidation" class="text-xs mt-1 hidden">
@@ -7436,14 +7388,14 @@ app.get('/', (c) => {
                                 </h3>
                             </div>
                             <p class="text-sm mb-1 text-purple-100 relative z-10">
-                                Sorularinizi aninda cevaplayalim! <span class="text-yellow-300 font-bold">7/24</span> aktif temsilci.
+                                Sorularınızı anında cevaplayalım! <span class="text-yellow-300 font-bold">7/24</span> aktif temsilci.
                             </p>
                             <button onclick="toggleAIChat()" 
                                     class="w-full flex items-center justify-center p-1.5 bg-white/20 rounded-lg hover:bg-white/30 transition duration-200 relative z-10">
                                 <i class="fas fa-comments mr-2"></i>
                                 <div>
-                                    <div class="font-bold text-base">Canli Sohbet Baslat</div>
-                                    <div class="text-sm opacity-90">Ucretsiz & Aninda</div>
+                                    <div class="font-bold text-base">Canlı Sohbet Başlat</div>
+                                    <div class="text-sm opacity-90">Ücretsiz & Anında</div>
                                 </div>
                             </button>
                         </div>
@@ -7452,7 +7404,7 @@ app.get('/', (c) => {
                         <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white p-2">
                             <h3 class="text-base font-bold mb-1 text-center">
                                 <i class="fas fa-phone mr-1 text-yellow-400"></i>
-                                <span class="fast-contact-text">HIZLI ILETISIM</span>
+                                <span class="fast-contact-text">HIZLI İLETİŞİM</span>
                             </h3>
                             <div class="space-y-1">
                                 <a href="tel:+905001234567" 
@@ -7460,7 +7412,7 @@ app.get('/', (c) => {
                                     <i class="fas fa-phone mr-2"></i>
                                     <div>
                                         <div class="font-bold text-base">0 500 123 45 67</div>
-                                        <div class="text-sm opacity-90">Aninda Destek</div>
+                                        <div class="text-sm opacity-90">Anında Destek</div>
                                     </div>
                                 </a>
                                 <button onclick="showProcessFlow()" 
@@ -7481,7 +7433,7 @@ app.get('/', (c) => {
                                     <i class="fas fa-shield-alt text-purple-300 text-xs"></i>
                                 </div>
                                 <h4 class="text-sm font-bold text-white mb-1">
-                                    GUVENLIK GARANTILERI
+                                    GÜVENLİK GARANTİLERİ
                                 </h4>
                             </div>
                             
@@ -7490,7 +7442,7 @@ app.get('/', (c) => {
                             <div class="flex items-center p-1.5 bg-white/20 rounded mb-1">
                                 <i id="securityIcon" class="fas fa-tools text-blue-300 mr-1 text-sm"></i>
                                 <div>
-                                    <div id="securityTitle" class="text-sm font-semibold text-white">ISCILIK GARANTISI</div>
+                                    <div id="securityTitle" class="text-sm font-semibold text-white">İŞÇİLİK GARANTİSİ</div>
                                     <div id="securityDetail" class="text-sm text-purple-200">6 ay garanti</div>
                                 </div>
                             </div>
@@ -7520,7 +7472,7 @@ app.get('/', (c) => {
                                 <i class="fas fa-star text-amber-300 mr-1 text-sm"></i>
                                 <div>
                                     <div class="text-sm font-semibold text-white">GARANTOR360 FAYDALARI</div>
-                                    <div class="text-sm text-purple-200">Detayli bilgiler</div>
+                                    <div class="text-sm text-purple-200">Detaylı bilgiler</div>
                                 </div>
                             </div>
                             
@@ -7528,7 +7480,7 @@ app.get('/', (c) => {
                             <div class="p-1.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded text-center">
                                 <a href="/sss" target="_blank" class="text-sm font-semibold text-white hover:text-white">
                                     <i class="fas fa-external-link-alt mr-1"></i>
-                                    SSS Sayfasini Gor
+                                    SSS Sayfasını Gör
                                 </a>
                             </div>
                         </div>
@@ -7746,17 +7698,19 @@ app.get('/', (c) => {
             <!-- Main Footer Content -->
             <div class="py-16">
                 <div class="max-w-7xl mx-auto px-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
                         <!-- Company Info -->
                         <div class="lg:col-span-1">
                             <div class="mb-6">
                                 <div class="flex items-center">
-                                    <img src="/static/garantor360-logo-white.png" alt="Garantor360" class="h-20">
+                                    <div class="text-2xl font-bold">
+                                        <span class="text-white">Garantor</span><span class="text-amber-500">360°</span>
+                                    </div>
                                 </div>
                             </div>
                             <p class="text-blue-200 font-medium mb-6 leading-relaxed">
-                                Turkiye'nin ilk tam guvenceli hizmet platformu. Musteri odakli yaklasimla 
-                                guvenli hizmet alma deneyimi sunan dijital ekosistem.
+                                Türkiye'nin ilk tam güvenceli hizmet platformu. Müşteri odaklı yaklaşımla 
+                                güvenli hizmet alma deneyimi sunan dijital ekosistem.
                             </p>
                             
                             <!-- Trust Indicators -->
@@ -7787,32 +7741,32 @@ app.get('/', (c) => {
 
                         <!-- Service Categories -->
                         <div>
-                            <h4 class="font-bold text-lg mb-6 tracking-tight text-amber-400">H&#304;ZMET ALANLARI</h4>
+                            <h4 class="font-bold text-lg mb-6 tracking-tight text-amber-400">HİZMET ALANLARI</h4>
                             <ul class="space-y-3">
                                 <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
-                                    <i class="fas fa-tools mr-2 text-amber-500 text-sm"></i>Teknik Onarim
+                                    <i class="fas fa-tv mr-2 text-amber-500 text-sm"></i>TV Tamiri
                                 </a></li>
                                 <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
-                                    <i class="fas fa-home mr-2 text-amber-500 text-sm"></i>Ev Bakim & Tadilat
+                                    <i class="fas fa-laptop mr-2 text-amber-500 text-sm"></i>PC Tamiri
                                 </a></li>
                                 <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
-                                    <i class="fas fa-broom mr-2 text-amber-500 text-sm"></i>Temizlik & Hijyen
+                                    <i class="fas fa-home mr-2 text-amber-500 text-sm"></i>Beyaz Eşya
                                 </a></li>
                                 <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
-                                    <i class="fas fa-wrench mr-2 text-amber-500 text-sm"></i>Kombi & Klima
+                                    <i class="fas fa-snowflake mr-2 text-amber-500 text-sm"></i>Klima Servisi
                                 </a></li>
                                 <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
-                                    <i class="fas fa-paint-roller mr-2 text-amber-500 text-sm"></i>Boyama & Badana
+                                    <i class="fas fa-blender mr-2 text-amber-500 text-sm"></i>Küçük Ev Aletleri
                                 </a></li>
                                 <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
-                                    <i class="fas fa-bolt mr-2 text-amber-500 text-sm"></i>Elektrik Isleri
+                                    <i class="fas fa-mobile-alt mr-2 text-amber-500 text-sm"></i>Elektronik
                                 </a></li>
                             </ul>
                         </div>
 
                         <!-- Customer Resources -->
                         <div>
-                            <h4 class="font-bold text-lg mb-6 tracking-tight text-amber-400">MUSTERI KAYNAKLARI</h4>
+                            <h4 class="font-bold text-lg mb-6 tracking-tight text-amber-400">MÜŞTERİ KAYNAKLARI</h4>
                             <ul class="space-y-3">
                                 <li><a href="#hizmet-al" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
                                     <i class="fas fa-search mr-2 text-amber-500 text-sm"></i>Hizmet Talebi
@@ -7821,7 +7775,7 @@ app.get('/', (c) => {
                                     <i class="fas fa-user-tie mr-2 text-amber-500 text-sm"></i>Hizmet Veren Ol
                                 </a></li>
                                 <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
-                                    <i class="fas fa-shield-alt mr-2 text-amber-500 text-sm"></i>Guvence Sistemi
+                                    <i class="fas fa-shield-alt mr-2 text-amber-500 text-sm"></i>Güvence Sistemi
                                 </a></li>
                                 <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
                                     <i class="fas fa-calculator mr-2 text-amber-500 text-sm"></i>Fiyat Hesaplama
@@ -7830,14 +7784,14 @@ app.get('/', (c) => {
                                     <i class="fas fa-question-circle mr-2 text-amber-500 text-sm"></i>SSS
                                 </a></li>
                                 <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
-                                    <i class="fas fa-book mr-2 text-amber-500 text-sm"></i>Musteri Rehberi
+                                    <i class="fas fa-book mr-2 text-amber-500 text-sm"></i>Müşteri Rehberi
                                 </a></li>
                             </ul>
                         </div>
 
                         <!-- Contact & Support -->
                         <div>
-                            <h4 class="font-bold text-lg mb-6 tracking-tight text-amber-400">ILETISIM & DESTEK</h4>
+                            <h4 class="font-bold text-lg mb-6 tracking-tight text-amber-400">İLETİŞİM & DESTEK</h4>
                             
                             <!-- Contact Methods -->
                             <div class="space-y-4 mb-6">
@@ -7847,7 +7801,7 @@ app.get('/', (c) => {
                                     </div>
                                     <div>
                                         <a href="tel:+905001234567" class="text-white font-medium hover:text-amber-400 transition duration-200">0 500 123 45 67</a>
-                                        <p class="text-blue-300 text-xs">Musteri Destek Hatti</p>
+                                        <p class="text-blue-300 text-xs">Müşteri Destek Hattı</p>
                                     </div>
                                 </div>
                                 <div class="flex items-center">
@@ -7856,7 +7810,7 @@ app.get('/', (c) => {
                                     </div>
                                     <div>
                                         <a href="mailto:destek@garantor360.com" class="text-white font-medium hover:text-amber-400 transition duration-200">destek@garantor360.com</a>
-                                        <p class="text-blue-300 text-xs">Musteri Iletisim</p>
+                                        <p class="text-blue-300 text-xs">Müşteri İletişim</p>
                                     </div>
                                 </div>
                                 <div class="flex items-center">
@@ -7864,7 +7818,7 @@ app.get('/', (c) => {
                                         <i class="fas fa-comments text-white text-sm"></i>
                                     </div>
                                     <div>
-                                        <span class="text-white font-medium">Canli Destek</span>
+                                        <span class="text-white font-medium">Canlı Destek</span>
                                         <p class="text-blue-300 text-xs">7/24 Aktif</p>
                                     </div>
                                 </div>
@@ -7873,7 +7827,7 @@ app.get('/', (c) => {
                             <!-- Working Hours -->
                             <div class="mb-6">
                                 <h5 class="font-bold text-sm mb-3 text-amber-400 flex items-center">
-                                    <i class="fas fa-clock mr-2"></i>CALISMA SAATLERI
+                                    <i class="fas fa-clock mr-2"></i>ÇALIŞMA SAATLERİ
                                 </h5>
                                 <div class="text-blue-200 text-sm space-y-1">
                                     <div class="flex justify-between">
@@ -7918,6 +7872,42 @@ app.get('/', (c) => {
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Corporate Services -->
+                        <div>
+                            <h4 class="font-bold text-lg mb-6 tracking-tight text-amber-400">KURUMSAL HİZMETLER</h4>
+                            <ul class="space-y-3">
+                                <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
+                                    <i class="fas fa-building mr-2 text-amber-500 text-sm"></i>Otel Tamir Servisi
+                                </a></li>
+                                <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
+                                    <i class="fas fa-industry mr-2 text-amber-500 text-sm"></i>Fabrika Bakım Hizmetleri
+                                </a></li>
+                                <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
+                                    <i class="fas fa-store mr-2 text-amber-500 text-sm"></i>Mağaza Teknik Destek
+                                </a></li>
+                                <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
+                                    <i class="fas fa-hospital mr-2 text-amber-500 text-sm"></i>Hastane Ekipman Bakımı
+                                </a></li>
+                                <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
+                                    <i class="fas fa-school mr-2 text-amber-500 text-sm"></i>Okul Teknoloji Servisi
+                                </a></li>
+                                <li><a href="#" class="text-blue-200 hover:text-amber-400 font-medium transition duration-200 flex items-center">
+                                    <i class="fas fa-handshake mr-2 text-amber-500 text-sm"></i>Kurumsal Anlaşmalar
+                                </a></li>
+                            </ul>
+                            <div class="mt-4 p-3 bg-amber-500/10 border border-amber-400/30 rounded-lg">
+                                <p class="text-amber-300 text-xs font-semibold mb-1">
+                                    <i class="fas fa-star mr-1"></i>KURUMSAL AVANTAJLAR
+                                </p>
+                                <ul class="text-blue-200 text-xs space-y-1">
+                                    <li>• Toplu hizmet indirimleri</li>
+                                    <li>• 7/24 öncelikli destek</li>
+                                    <li>• Özel fiyatlandırma</li>
+                                    <li>• Aylık bakım anlaşmaları</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -7929,13 +7919,13 @@ app.get('/', (c) => {
                         <div class="flex items-center mb-4 lg:mb-0">
                             <i class="fas fa-search text-blue-900 text-xl mr-3"></i>
                             <div>
-                                <h5 class="text-blue-900 font-bold">HEMEN H&#304;ZMET ALIN</h5>
-                                <p class="text-blue-800 text-sm">Guvenli odeme, 6 ay garanti</p>
+                                <h5 class="text-blue-900 font-bold">HEMEN HİZMET ALIN</h5>
+                                <p class="text-blue-800 text-sm">Güvenli ödeme, 6 ay garanti</p>
                             </div>
                         </div>
                         <div class="flex space-x-4">
                             <button onclick="scrollToServices()" class="bg-blue-900 text-white px-6 py-3 sharp-corner font-bold hover:bg-blue-800 transition duration-200">
-                                H&#304;ZMET AL
+                                HİZMET AL
                             </button>
                             <a href="tel:+905001234567" class="border-2 border-blue-900 text-blue-900 px-6 py-3 sharp-corner font-bold hover:bg-blue-900 hover:text-white transition duration-200">
                                 ARA
@@ -7951,7 +7941,7 @@ app.get('/', (c) => {
                     <div class="flex flex-col lg:flex-row justify-between items-center">
                         <!-- Copyright -->
                         <div class="text-blue-300 text-sm mb-4 lg:mb-0">
-                            &copy; 2024 Garantor360. Tum haklari saklidir. | Guvenli Hizmet Platformu
+                            &copy; 2024 Garantor360. Tüm hakları saklıdır. | Güvenli Hizmet Platformu
                         </div>
 
                         <!-- WhatsApp Support Info -->
@@ -7970,17 +7960,17 @@ app.get('/', (c) => {
                             </div>
                             <p class="text-blue-400 text-xs mt-1">
                                 <i class="fas fa-clock mr-1"></i>
-                                WhatsApp uzerinden 7/24 hizmet takibi
+                                WhatsApp üzerinden 7/24 hizmet takibi
                             </p>
                         </div>
 
                         <!-- Security Badges -->
                         <div class="flex items-center space-x-3">
-                            <span class="text-blue-400 text-xs">Guvenli Platform</span>
+                            <span class="text-blue-400 text-xs">Güvenli Platform</span>
                             <div class="flex space-x-2">
                                 <div class="bg-amber-500 text-blue-900 px-2 py-1 sharp-corner text-xs font-bold">SSL</div>
                                 <div class="bg-amber-500 text-blue-900 px-2 py-1 sharp-corner text-xs font-bold">256BIT</div>
-                                <div class="bg-amber-500 text-blue-900 px-2 py-1 sharp-corner text-xs font-bold">GUVEN</div>
+                                <div class="bg-amber-500 text-blue-900 px-2 py-1 sharp-corner text-xs font-bold">GÜVEN</div>
                             </div>
                         </div>
                     </div>
@@ -8077,7 +8067,7 @@ app.get('/', (c) => {
         }
         
         function scrollToGuarantee() {
-            const guaranteeSection = document.querySelector('section:has(h2:contains("MUSTERI GUVENCELERI"))');
+            const guaranteeSection = document.querySelector('section:has(h2:contains("MUSTERI GÜVENCELERI"))');
             if (guaranteeSection) {
                 guaranteeSection.scrollIntoView({ behavior: 'smooth' });
             }
@@ -10939,12 +10929,16 @@ app.get('/', (c) => {
                     const dynamicActivityText = document.getElementById('dynamicActivityText');
                     if (dynamicActivityText) {
                         const activities = [
-                            'Ahmet K. elektrik hizmeti aldı',
-                            'Zeynep H. 5/5 yıldız verdi', 
-                            'Mehmet S. klima tamiri tamamladı',
-                            'Ayşe D. beyaz eşya servisi aldı',
-                            'Ali R. TV tamiri hizmeti aldı',
-                            'Fatma K. temizlik hizmeti tamamladı'
+                            'Mehmet S. Samsung QLED TV tamiri tamamladı',
+                            'Ayşe D. LG OLED ekran değişimi aldı',
+                            'Ali R. Sony Bravia TV tamiri tamamladı',
+                            'Zeynep H. Philips Smart TV tamiri aldı',
+                            'Can B. TCL Mini LED TV tamiri tamamladı',
+                            'Elif M. Vestel TV anakart tamiri aldı',
+                            'Murat K. Arçelik Smart TV kurulum aldı',
+                            'Seda L. Grundig TV hoparlör tamiri tamamladı',
+                            'Burak Ö. Panasonic plazma TV tamiri aldı',
+                            'Deniz A. Toshiba LED TV tamiri tamamladı'
                         ];
                         const randomActivity = activities[Math.floor(Math.random() * activities.length)];
                         dynamicActivityText.innerHTML = '<i class="fas fa-user-check mr-2 text-green-500"></i><strong>' + randomActivity + '</strong>';
@@ -11036,7 +11030,7 @@ app.get('/', (c) => {
                             class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 px-6 minimal-corner transition duration-200 transform hover:scale-105 shadow-lg"
                         >
                             <i class="fas fa-rocket mr-2"></i>
-                            %20 INDIRIM ILE H&#304;ZMET AL
+                            %20 INDIRIM ILE HİZMET AL
                         </button>
                         <button 
                             onclick="closeExitModal()"
@@ -11132,28 +11126,28 @@ app.get('/', (c) => {
             console.log('Initializing dynamic activities...');
             
             const activityMessages = [
-                { icon: 'fas fa-user-check', text: 'Ahmet K. elektrik hizmeti aldi', color: 'text-green-500' },
-                { icon: 'fas fa-star', text: 'Zeynep H. 5/5 yildiz verdi', color: 'text-yellow-500' },
-                { icon: 'fas fa-wrench', text: 'Ankara da tesisatci onarimlarinin tamamlanmasi', color: 'text-gray-500' },
-                { icon: 'fas fa-paint-brush', text: 'Bursa da boyaci calismasi kabul edildi', color: 'text-purple-500' },
-                { icon: 'fas fa-home', text: 'Ayse K. ev temizligi hizmeti aldi', color: 'text-pink-500' },
-                { icon: 'fas fa-bolt', text: 'Istanbul da elektrik tamiri tamamlandi', color: 'text-yellow-500' },
-                { icon: 'fas fa-snowflake', text: 'Izmir de klima tamiri basladi', color: 'text-blue-400' },
-                { icon: 'fas fa-tools', text: 'Konya da cam tamircisi arandi', color: 'text-orange-500' },
-                { icon: 'fas fa-handshake', text: 'Antalya da temizlik hizmeti tamamlandi', color: 'text-green-500' },
-                { icon: 'fas fa-trophy', text: 'Adana da mobilyaci teklifleri verdi', color: 'text-yellow-600' },
-                { icon: 'fas fa-tv', text: 'Mehmet B. TV tamiri hizmeti aldi', color: 'text-blue-500' },
-                { icon: 'fas fa-hammer', text: 'Gaziantep te marangoz isi kabul edildi', color: 'text-amber-600' },
-                { icon: 'fas fa-car', text: 'Fatma S. nakliye hizmeti tamamlandi', color: 'text-indigo-500' },
-                { icon: 'fas fa-laptop', text: 'Trabzon da bilgisayar tamiri basladi', color: 'text-cyan-500' },
-                { icon: 'fas fa-fire', text: 'Kemal A. kombi bakimi hizmeti aldi', color: 'text-red-500' },
-                { icon: 'fas fa-leaf', text: 'Samsun da bahcivan calismasi tamamlandi', color: 'text-green-600' },
-                { icon: 'fas fa-cogs', text: 'Diyarbakir da makine tamiri kabul edildi', color: 'text-slate-500' },
-                { icon: 'fas fa-phone', text: 'Esra T. telefon tamiri hizmeti aldi', color: 'text-teal-500' },
-                { icon: 'fas fa-couch', text: 'Kayseri de koltuk tamiri basladi', color: 'text-brown-500' },
-                { icon: 'fas fa-shower', text: 'Mersin de banyo tadilati tamamlandi', color: 'text-blue-600' },
-                { icon: 'fas fa-camera', text: 'Halil M. guvenlik kamerasi kuruldu', color: 'text-purple-600' },
-                { icon: 'fas fa-wifi', text: 'Denizli de internet kurulumu yapildi', color: 'text-emerald-500' },
+                { icon: 'fas fa-tv', text: 'Mehmet K. Samsung QLED TV tamiri tamamlandi', color: 'text-blue-500' },
+                { icon: 'fas fa-tv', text: 'Ayse D. LG OLED 65" ekran degisimi yapildi', color: 'text-blue-500' },
+                { icon: 'fas fa-tv', text: 'Ali R. Sony Bravia XR TV tamiri tamamlandi', color: 'text-blue-500' },
+                { icon: 'fas fa-tv', text: 'Zeynep H. Philips Ambilight TV tamiri aldi', color: 'text-blue-500' },
+                { icon: 'fas fa-tv', text: 'Can B. TCL Mini LED TV panel degisimi', color: 'text-blue-500' },
+                { icon: 'fas fa-tv', text: 'Elif M. Vestel Smart TV anakart tamiri', color: 'text-blue-500' },
+                { icon: 'fas fa-tv', text: 'Murat K. Grundig Vision TV hoparlor tamiri', color: 'text-blue-500' },
+                { icon: 'fas fa-tv', text: 'Seda L. Arcelik Smart TV kurulum tamamlandi', color: 'text-blue-500' },
+                { icon: 'fas fa-tv', text: 'Burak O. Sharp Aquos LED TV tamiri', color: 'text-blue-500' },
+                { icon: 'fas fa-tv', text: 'Deniz A. Panasonic Viera plazma TV tamiri', color: 'text-blue-500' },
+                { icon: 'fas fa-tv', text: 'Kemal S. Toshiba Full HD TV ekran tamiri', color: 'text-blue-500' },
+                { icon: 'fas fa-tv', text: 'Fatma T. JVC LCD TV panel degisimi', color: 'text-blue-500' },
+                { icon: 'fas fa-tv', text: 'Emre Y. Telefunken Smart TV kurulum', color: 'text-blue-500' },
+                { icon: 'fas fa-tv', text: 'Pinar G. Beko LED TV anakart tamiri', color: 'text-blue-500' },
+                { icon: 'fas fa-tv', text: 'Oguz B. Regal Full HD TV panel tamiri', color: 'text-blue-500' },
+                { icon: 'fas fa-tv', text: 'Merve S. Altus LED TV ekran degisimi', color: 'text-blue-500' },
+                { icon: 'fas fa-tv', text: 'Serkan M. Sunny 4K Smart TV tamiri', color: 'text-blue-500' },
+                { icon: 'fas fa-tv', text: 'Ebru T. Skyworth Android TV kurulum', color: 'text-blue-500' },
+                { icon: 'fas fa-tv', text: 'Volkan S. Hisense Mini LED TV tamiri', color: 'text-blue-500' },
+                { icon: 'fas fa-tv', text: 'Esra H. Xiaomi Mi TV ekran tamiri', color: 'text-blue-500' },
+                { icon: 'fas fa-star', text: 'Tolga K. 5/5 yildiz verdi', color: 'text-yellow-500' },
+                { icon: 'fas fa-laptop', text: 'Ankara da laptop tamiri basladi', color: 'text-cyan-500' },
                 { icon: 'fas fa-solar-panel', text: 'Erzurum da gunes paneli montaji', color: 'text-orange-600' },
                 { icon: 'fas fa-kitchen-set', text: 'Aylin K. mutfak tadilati hizmeti aldi', color: 'text-rose-500' }
             ];
@@ -11189,8 +11183,8 @@ app.get('/', (c) => {
             console.log('Initializing security guarantees...');
             
             const guarantees = [
-                { icon: 'fas fa-money-bill-wave', title: 'ODEME GUVENCESI', desc: 'Para iade garantisi', color: 'text-green-300' },
-                { icon: 'fas fa-tools', title: 'ISCILIK GARANTISI', desc: '6 ay garanti', color: 'text-blue-300' },
+                { icon: 'fas fa-money-bill-wave', title: 'ODEME GÜVENCESI', desc: 'Para iade garantisi', color: 'text-green-300' },
+                { icon: 'fas fa-tools', title: 'İŞÇİLİK GARANTİSİ', desc: '6 ay garanti', color: 'text-blue-300' },
                 { icon: 'fas fa-user-check', title: 'DOGRULANMIS USTALAR', desc: 'Kimlik kontrolu', color: 'text-purple-300' },
                 { icon: 'fas fa-shield-alt', title: 'SIGORTA KORUMASI', desc: 'Hasar tazminati', color: 'text-orange-300' },
                 { icon: 'fas fa-gavel', title: 'HUKUKI DESTEK', desc: 'Avukat destegi', color: 'text-amber-300' },
@@ -11576,6 +11570,10 @@ app.get('/', (c) => {
             setTimeout(showNextConversionNotification, 8000);
         }
 
+        // The new ultra-smooth navigation script above handles all navigation behavior
+        // This section has been replaced to prevent conflicts and "gidip-geliyor" issues
+        console.log('✅ Ultra-smooth navigation loaded - legacy script removed');
+
         </script>
         <script src="/static/form-handler.js"></script>
     </body>
@@ -11647,15 +11645,27 @@ function updateLiveNotifications() {
     
     // ZENGİN TV-PC-BEYAZ EŞYA SERVİSLERİ
     const services = [
-        // TV TAMİRLERİ - Premium Modeller
-        'TV Tamiri - Samsung Neo QLED 8K 75"',
-        'TV Tamiri - LG OLED evo C3 65"', 
-        'TV Tamiri - Sony Bravia XR A95K',
-        'TV Panel Değişimi - TCL C845 Mini LED',
-        'TV Anakart Tamiri - Philips OLED908',
-        'Smart TV Kurulum - Hisense U8K ULED',
-        'TV Hoparlör Tamiri - Grundig Vision 7',
-        'TV Yazılım Güncelleme - Vestel 4K UHD',
+        // TV TAMİRLERİ - Zengin Çeşitlilik
+        'Samsung QLED 4K TV Tamiri - 55" Ekran',
+        'LG OLED C2 65" TV Panel Değişimi',
+        'Sony Bravia XR A80K OLED TV Tamiri', 
+        'Philips Ambilight 50" LED TV Tamiri',
+        'TCL Mini LED 8K TV Ekran Tamiri',
+        'Vestel Smart TV Anakart Tamiri',
+        'Grundig Vision 7 TV Hoparlör Tamiri',
+        'Arçelik A65 A 860 B Smart TV Tamiri',
+        'Sharp Aquos LC-60 LED TV Tamiri',
+        'Panasonic Viera TX-55 Plazma TV Tamiri',
+        'Toshiba 43" Full HD LED TV Tamiri',
+        'JVC LT-32 LCD TV Ekran Değişimi',
+        'Telefunken 32" Smart TV Kurulum',
+        'Beko B32-LB-5533 LED TV Tamiri',
+        'Regal 40" Full HD TV Panel Tamiri',
+        'Altus AL32L 5531 4B LED TV Tamiri',
+        'Sunny SN43 4K Smart TV Tamiri',
+        'Skyworth 50" Android TV Kurulum',
+        'Hisense U7H Mini LED TV Tamiri',
+        'Xiaomi Mi TV P1 55" Ekran Tamiri',
         
         // PC & LAPTOP TAMİRLERİ - Gaming & İş
         'Gaming PC Kurulum - RTX 4090 + i9-13900K',
@@ -11789,8 +11799,8 @@ function updateLiveNotifications() {
         const div = document.createElement('div');
         div.className = 'bg-white/10 border-l-4 border-green-400 p-3 text-white text-sm rounded-r-lg shadow-lg mb-2 transform opacity-0 scale-95 transition-all duration-300';
         div.innerHTML = 
-            '<div class="font-semibold">' + randomService + '</div>' +
-            '<div class="text-green-200 text-xs">' + randomLocation + ' • ' + randomTime + '</div>';
+            '<div class="font-medium text-sm">' + randomService + '</div>' +
+            '<div class="text-green-200 text-xs opacity-90">' + randomLocation + ' • ' + randomTime + '</div>';
         
         // YENİ İÇERİK EN ÜSTTE GÖRÜNSÜN
         if (notifications.firstChild) {
@@ -11827,10 +11837,10 @@ function updateLiveNotifications() {
         const stars = '⭐'.repeat(starCount);
         
         div.innerHTML = 
-            '<div class="font-medium">' + randomName + '</div>' +
-            '<div class="text-yellow-400 text-sm my-1">' + stars + '</div>' +
-            '<div class="text-blue-200 text-xs">' + randomComment + '</div>' +
-            '<div class="text-green-300 text-xs mt-1 flex items-center">' +
+            '<div class="font-medium text-sm">' + randomName + '</div>' +
+            '<div class="text-yellow-400 text-xs my-1">' + stars + '</div>' +
+            '<div class="text-blue-200 text-xs opacity-90">' + randomComment + '</div>' +
+            '<div class="text-green-300 text-xs mt-1 flex items-center opacity-80">' +
                 '<i class="fas fa-check-circle mr-1"></i>' +
                 'Doğrulanmış Kullanıcı' +
             '</div>';
