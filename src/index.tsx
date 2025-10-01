@@ -7587,7 +7587,9 @@ app.get('/', (c) => {
                         <div class="lg:col-span-2 p-8">
                             <div class="mb-6">
                                 <div class="flex items-center justify-start mb-1">
-                                    <img src="https://page.gensparksite.com/v1/base64_upload/048c4b5ab3a7280d26f5b471c120123b" alt="Garantor360" class="h-16">
+                                    <div class="text-3xl font-bold">
+                                        <span class="text-slate-800">Garantor</span><span class="text-amber-500">360°</span>
+                                    </div>
                                 </div>
                                 <p class="text-slate-600 font-medium">M&#252;&#351;teri Mobil Uygulamas&#305;</p>
                             </div>
