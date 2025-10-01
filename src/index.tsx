@@ -4767,7 +4767,7 @@ app.get('/', (c) => {
                                         <span class="text-xs font-bold text-white md:text-green-600 tracking-wide">CANLI</span>
                                     </div>
                                     <div class="text-sm font-bold text-white md:text-lg md:text-blue-900">
-                                        <span id="activeServiceCount">962</span> <span class="text-xs text-white/80 md:text-sm md:text-blue-700">Kişi</span>
+                                        <span id="activeServiceCount">47</span> <span class="text-xs text-white/80 md:text-sm md:text-blue-700">Kişi</span>
                                     </div>
                                     <div class="hidden md:block text-xs text-blue-600 font-medium">HİZMET VERİYORUM</div>
                                 </div>
@@ -5748,7 +5748,7 @@ app.get('/', (c) => {
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-blue-600 text-xs font-medium mb-1">AKTİF HİZMET VEREN</p>
-                                <p class="text-2xl font-bold stats-counter text-blue-900" id="active-dealers">1,247</p>
+                                <p class="text-2xl font-bold stats-counter text-blue-900" id="active-dealers">67</p>
                             </div>
                             <div class="w-2 h-2 bg-amber-400 sharp-corner"></div>
                         </div>
@@ -5821,7 +5821,7 @@ app.get('/', (c) => {
                                     <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse mr-2"></div>
                                     <span class="text-green-300 font-semibold">ŞU ANDA CANLI:</span>
                                 </div>
-                                <div class="text-xl font-bold text-yellow-300" id="liveUserCount">1,126</div>
+                                <div class="text-xl font-bold text-yellow-300" id="liveUserCount">163</div>
                                 <span class="text-blue-200">kişi</span>
                             </div>
                             <div class="text-xs text-blue-300 text-center mt-1">
@@ -5867,7 +5867,7 @@ app.get('/', (c) => {
                 <!-- Live Statistics -->
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                     <div class="text-center">
-                        <div class="text-xl lg:text-2xl font-bold text-blue-300 mb-1" id="liveCustomers">47,583</div>
+                        <div class="text-xl lg:text-2xl font-bold text-blue-300 mb-1" id="liveCustomers">2,847</div>
                         <div class="text-blue-100 text-sm">Memnun Müşteri</div>
                     </div>
                     <div class="text-center">
@@ -5879,7 +5879,7 @@ app.get('/', (c) => {
                         <div class="text-blue-100 text-sm">Sorunsuz İş</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-xl lg:text-2xl font-bold text-purple-300 mb-1" id="liveJobs">23,891</div>
+                        <div class="text-xl lg:text-2xl font-bold text-purple-300 mb-1" id="liveJobs">1,523</div>
                         <div class="text-blue-100 text-sm">Tamamlanan İş</div>
                     </div>
                 </div>
@@ -7739,7 +7739,7 @@ app.get('/', (c) => {
                             <!-- Trust Indicators -->
                             <div class="grid grid-cols-2 gap-4 mb-6">
                                 <div class="text-center">
-                                    <div class="text-amber-400 font-bold text-2xl">1,247</div>
+                                    <div class="text-amber-400 font-bold text-2xl">67</div>
                                     <div class="text-blue-300 text-xs">Aktif Uzman</div>
                                 </div>
                                 <div class="text-center">
@@ -9864,8 +9864,8 @@ app.get('/', (c) => {
             // Update live user count
             const userCounter = document.getElementById('liveUserCount');
             if (userCounter) {
-                const baseCount = 1800;
-                const variation = Math.floor(Math.random() * 100) - 50; // ±50
+                const baseCount = 157;  // Realistic online user count
+                const variation = Math.floor(Math.random() * 30) - 15; // ±15 (142-172 range)
                 const newCount = baseCount + variation;
                 userCounter.textContent = newCount.toLocaleString('tr-TR');
                 
@@ -9877,8 +9877,8 @@ app.get('/', (c) => {
             }
             
             // Update active services - AYNI DEĞER İKİ YERDE
-            const minServices = 33;
-            const maxServices = 350;
+            const minServices = 28;    // Realistic active service providers
+            const maxServices = 67;    // Max 67 active providers (believable)
             const newServices = Math.floor(Math.random() * (maxServices - minServices + 1)) + minServices;
             const formattedServices = newServices.toLocaleString('tr-TR');
             
@@ -9909,8 +9909,8 @@ app.get('/', (c) => {
             // Update online experts
             const expertsCounter = document.getElementById('onlineExperts');
             if (expertsCounter) {
-                const baseExperts = 150;
-                const variation = Math.floor(Math.random() * 20) - 10; // ±10
+                const baseExperts = 23;  // Realistic online expert count
+                const variation = Math.floor(Math.random() * 8) - 4; // ±4 (19-27 range)
                 const newExperts = baseExperts + variation;
                 expertsCounter.textContent = newExperts.toLocaleString('tr-TR');
                 
@@ -10901,8 +10901,8 @@ app.get('/', (c) => {
                     // Update live user count (ŞU ANDA CANLI)
                     const liveUserCount = document.getElementById('liveUserCount');
                     if (liveUserCount) {
-                        const baseCount = 1800;
-                        const variation = Math.floor(Math.random() * 100) - 50;
+                        const baseCount = 157;  // Realistic online user count 
+                        const variation = Math.floor(Math.random() * 30) - 15; // ±15 (142-172 range)
                         const newCount = baseCount + variation;
                         liveUserCount.textContent = newCount.toLocaleString('tr-TR');
                     }
@@ -10913,8 +10913,8 @@ app.get('/', (c) => {
                     // Update online experts (UZMAN ONLİNE)
                     const onlineExperts = document.getElementById('onlineExperts');
                     if (onlineExperts) {
-                        const baseExperts = 150;
-                        const variation = Math.floor(Math.random() * 20) - 10;
+                        const baseExperts = 23;  // Realistic online expert count
+                        const variation = Math.floor(Math.random() * 8) - 4; // ±4 (19-27 range)
                         const newExperts = baseExperts + variation;
                         onlineExperts.textContent = newExperts.toLocaleString('tr-TR');
                     }
