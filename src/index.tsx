@@ -7379,12 +7379,12 @@ app.get('/', (c) => {
                         <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white p-2 relative overflow-hidden">
                             <div class="absolute top-0 right-0 w-10 h-10 bg-white/10 rounded-full -translate-y-6 translate-x-6"></div>
                             <div class="mb-1 relative z-10 text-center">
-                                <img src="https://page.gensparksite.com/v1/base64_upload/048c4b5ab3a7280d26f5b471c120123b" 
-                                     alt="Garantor360" 
-                                     class="h-6 w-auto mx-auto mb-1">
+                                <div class="text-lg font-bold mb-1">
+                                    <span class="text-white">Garantor</span><span class="text-amber-400">360°</span>
+                                </div>
                                 <h3 class="text-base font-bold text-white">
                                     <i class="fas fa-headset mr-1"></i>
-                                    TEMSILCISI
+                                    TEMSİLCİSİ
                                 </h3>
                             </div>
                             <p class="text-sm mb-1 text-purple-100 relative z-10">
