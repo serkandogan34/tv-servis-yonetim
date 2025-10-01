@@ -6272,10 +6272,10 @@ app.get('/', (c) => {
                             </style>
                             
                             <!-- Superhero Between Containers -->
-                            <div class="hidden md:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
+                            <div class="hidden md:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30" style="transform: translate(calc(-50% - 25px), -50%);">
                                 <img src="/static/garantor360-power-flying-superhero.png" 
                                      alt="Garantor360 Power Flying Superhero" 
-                                     class="w-72 h-72 object-contain opacity-100 floating-animation">
+                                     class="object-contain opacity-100 floating-animation" style="width: 316.8px; height: 316.8px;">
                             </div>
                             
                             <!-- Left: Problems Container -->
