@@ -6211,7 +6211,14 @@ app.get('/', (c) => {
                         </h3>
                         
                         <div id="liveNotifications" class="space-y-2 max-h-40 overflow-hidden">
-                            <!-- JavaScript ile doldurulacak -->
+                            <div class="bg-white/10 border-l-4 border-green-400 p-3 text-white text-sm rounded-r-lg shadow-lg mb-2">
+                                <div class="font-medium text-sm">Samsung QLED 4K TV Tamiri - 55" Ekran</div>
+                                <div class="text-green-200 text-xs opacity-90">Istanbul, Besiktas • 2 dk once</div>
+                            </div>
+                            <div class="bg-white/10 border-l-4 border-blue-400 p-3 text-white text-sm rounded-r-lg shadow-lg mb-2">
+                                <div class="font-medium text-sm">MacBook Tamiri - MacBook Pro 16" M2</div>
+                                <div class="text-blue-200 text-xs opacity-90">Ankara, Cankaya • 1 dk once</div>
+                            </div>
                         </div>
                         
                         <div class="text-center mt-4">
@@ -6230,7 +6237,16 @@ app.get('/', (c) => {
                         </h3>
                         
                         <div id="liveComments" class="space-y-2 max-h-40 overflow-hidden">
-                            <!-- JavaScript ile doldurulacak -->
+                            <div class="bg-white/10 p-3 text-white text-sm rounded-lg shadow-lg mb-2">
+                                <div class="font-medium text-sm">Mehmet K.</div>
+                                <div class="text-yellow-400 text-xs my-1">⭐⭐⭐⭐⭐</div>
+                                <div class="text-blue-200 text-xs opacity-90">Hizmet mukemmel, cok tesekkurler!</div>
+                            </div>
+                            <div class="bg-white/10 p-3 text-white text-sm rounded-lg shadow-lg mb-2">
+                                <div class="font-medium text-sm">Ayse Y.</div>
+                                <div class="text-yellow-400 text-xs my-1">⭐⭐⭐⭐⭐</div>
+                                <div class="text-blue-200 text-xs opacity-90">Cok hizli ve kaliteli servis.</div>
+                            </div>
                         </div>
                         
                         <div class="text-center mt-2">
@@ -11717,29 +11733,29 @@ function updateLiveNotifications() {
     ];
     
     const locations = [
-        'İstanbul, Beşiktaş', 'İstanbul, Kadıköy', 'İstanbul, Şişli', 'İstanbul, Beyoğlu',
-        'Ankara, Çankaya', 'Ankara, Kızılay', 'Ankara, Bahçelievler', 'Ankara, Keçiören',  
-        'İzmir, Konak', 'İzmir, Alsancak', 'İzmir, Bornova', 'İzmir, Karşıyaka',
-        'Bursa, Osmangazi', 'Bursa, Nilüfer', 'Bursa, Yıldırım', 'Bursa, Gemlik',
-        'Antalya, Muratpaşa', 'Antalya, Kepez', 'Antalya, Konyaaltı', 'Antalya, Serik',
-        'Gaziantep, Şahinbey', 'Konya, Selçuklu', 'Adana, Seyhan', 'Kayseri, Melikgazi'
+        'Istanbul, Besiktas', 'Istanbul, Kadikoy', 'Istanbul, Sisli', 'Istanbul, Beyoglu',
+        'Ankara, Cankaya', 'Ankara, Kizilay', 'Ankara, Bahcelievler', 'Ankara, Kecioren',  
+        'Izmir, Konak', 'Izmir, Alsancak', 'Izmir, Bornova', 'Izmir, Karsiyaka',
+        'Bursa, Osmangazi', 'Bursa, Nilufer', 'Bursa, Yildirim', 'Bursa, Gemlik',
+        'Antalya, Muratpasa', 'Antalya, Kepez', 'Antalya, Konyaalti', 'Antalya, Serik',
+        'Gaziantep, Sahinbey', 'Konya, Selcuklu', 'Adana, Seyhan', 'Kayseri, Melikgazi'
     ];
-    const timeAgo = ['şimdi', '1 dk önce', '2 dk önce', '3 dk önce', '30 sn önce', '45 sn önce', '1.5 dk önce'];
+    const timeAgo = ['simdi', '1 dk once', '2 dk once', '3 dk once', '30 sn once', '45 sn once', '1.5 dk once'];
     
     const customerNames = [
-        'Mehmet K.', 'Ayşe Y.', 'Can S.', 'Elif M.', 'Murat D.', 'Zeynep A.', 'Ali R.', 'Fatma B.',
-        'Ahmet T.', 'Seda L.', 'Burak Ö.', 'Deniz K.', 'Cem Y.', 'Pınar G.', 'Oğuz B.', 'Merve S.',
-        'Emre D.', 'Selin A.', 'Barış C.', 'Gizem E.', 'Kaan P.', 'Tuğba R.', 'Serkan M.', 'Ebru T.',
-        'Volkan S.', 'Esra H.', 'Tolga K.', 'Nazlı B.', 'Onur G.', 'Burcu Y.', 'Arda F.', 'İpek L.'
+        'Mehmet K.', 'Ayse Y.', 'Can S.', 'Elif M.', 'Murat D.', 'Zeynep A.', 'Ali R.', 'Fatma B.',
+        'Ahmet T.', 'Seda L.', 'Burak O.', 'Deniz K.', 'Cem Y.', 'Pinar G.', 'Oguz B.', 'Merve S.',
+        'Emre D.', 'Selin A.', 'Baris C.', 'Gizem E.', 'Kaan P.', 'Tugba R.', 'Serkan M.', 'Ebru T.',
+        'Volkan S.', 'Esra H.', 'Tolga K.', 'Nazli B.', 'Onur G.', 'Burcu Y.', 'Arda F.', 'Ipek L.'
     ];
     const customerComments = [
-        // TV Yorumları - Kısa & Noktalı  
-        'OLED TV tamiri mükemmel, artık sinema keyfi evimde...',
-        '8K görüntü kalitesi harika oldu, çok teşekkürler...',
-        'Smart TV kurulumu perfect, tüm uygulamalar çalışıyor...',
-        'Panel değişimi süper, yepyeni gibi görünüyor...',
-        'TV sesinde problem vardı, şimdi müthiş ses kalitesi...',
-        'QLED teknolojisi harika, renkler çok canlı...',
+        // TV Yorumlari - ASCII Safe
+        'OLED TV tamiri mukemmel, artik sinema keyfi evimde...',
+        '8K goruntu kalitesi harika oldu, cok tesekkurler...',
+        'Smart TV kurulumu perfect, tum uygulamalar calisiyor...',
+        'Panel degisimi super, yepyeni gibi gorunuyor...',
+        'TV sesinde problem vardi, simdi muthis ses kalitesi...',
+        'QLED teknolojisi harika, renkler cok canli...',
         
         // PC & Laptop Yorumları - Kısa & Noktalı
         'Gaming PC kurulumu efsane, RTX performansı müthiş...',
@@ -11950,17 +11966,45 @@ function updateSecurityGuarantees() {
 window.updateLiveNotifications = updateLiveNotifications;
 window.updateSecurityGuarantees = updateSecurityGuarantees;
 
-// Auto-start when DOM is ready
+// IMMEDIATE START - Try multiple methods
+console.log('🚀 Script loaded, starting immediately...');
+
+// Method 1: Immediate execution
+setTimeout(function() {
+    console.log('✅ Method 1: Immediate timeout execution');
+    tryStartNotifications();
+}, 100);
+
+// Method 2: DOM ready
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM ready, starting slider...');
+    console.log('✅ DOM ready, starting slider...');
     setTimeout(startSlider, 1000);
     
-    console.log('🚀 Starting live notifications system...');
-    // İlk güncellemeyi hemen başlat
-    setTimeout(updateLiveNotifications, 2000);
+    console.log('✅ Starting live notifications system...');
+    console.log('✅ Checking if containers exist...');
     
-    // Her 3 saniyede bir güncelle  
-    setInterval(updateLiveNotifications, 3000);
+    const notifContainer = document.getElementById('liveNotifications');
+    const commentsContainer = document.getElementById('liveComments');
+    
+    console.log('Notifications container:', notifContainer);
+    console.log('Comments container:', commentsContainer);
+    
+    if (notifContainer && commentsContainer) {
+        console.log('✅ Both containers found, starting timers...');
+        // İlk güncellemeyi hemen başlat
+        setTimeout(function() {
+            console.log('⏰ First update triggered');
+            updateLiveNotifications();
+        }, 2000);
+        
+        // Her 3 saniyede bir güncelle  
+        setInterval(function() {
+            console.log('⏰ Interval update triggered');
+            updateLiveNotifications();
+        }, 3000);
+    } else {
+        console.log('❌ Containers not found!');
+    }
     
     console.log('🛡️ Starting dynamic security guarantees...');
     // İlk güvenlik garantisi güncellemesi
@@ -11969,6 +12013,44 @@ document.addEventListener('DOMContentLoaded', function() {
     // Her 4 saniyede bir güvenlik garantilerini güncelle
     setInterval(updateSecurityGuarantees, 4000);
 });
+
+// Method 3: Window load
+window.addEventListener('load', function() {
+    console.log('✅ Method 3: Window load event');
+    tryStartNotifications();
+});
+
+function tryStartNotifications() {
+    console.log('🔍 Trying to start notifications...');
+    
+    const notifContainer = document.getElementById('liveNotifications');
+    const commentsContainer = document.getElementById('liveComments');
+    
+    console.log('Notifications container found:', !!notifContainer);
+    console.log('Comments container found:', !!commentsContainer);
+    
+    if (notifContainer && commentsContainer) {
+        console.log('✅ Starting live notifications now!');
+        
+        // Clear any existing content
+        notifContainer.innerHTML = '';
+        commentsContainer.innerHTML = '';
+        
+        // Start immediately
+        updateLiveNotifications();
+        
+        // Set intervals
+        setInterval(updateLiveNotifications, 4000);
+        
+        return true;
+    } else {
+        console.log('❌ Containers not ready yet, will retry...');
+        
+        // Retry after 1 second
+        setTimeout(tryStartNotifications, 1000);
+        return false;
+    }
+}
 `, {
     headers: {
       'Content-Type': 'application/javascript',
