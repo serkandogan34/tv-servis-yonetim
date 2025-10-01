@@ -4684,7 +4684,7 @@ app.get('/', (c) => {
         </nav>
 
         <!-- Hero Section - Customer Focused -->
-        <section class="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white py-28 overflow-hidden">
+        <section class="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white py-28 lg:py-24 overflow-hidden">
             <!-- Background Pattern -->
             <div class="absolute inset-0 opacity-10">
                 <div class="absolute top-0 left-0 w-full h-full" style="background-image: radial-gradient(circle at 25% 25%, #f59e0b 2px, transparent 2px); background-size: 60px 60px;"></div>
