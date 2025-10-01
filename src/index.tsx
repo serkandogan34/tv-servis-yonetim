@@ -4839,17 +4839,17 @@ app.get('/', (c) => {
                             document.addEventListener('DOMContentLoaded', function() {
                                 setInterval(rotateSubtleSlogans, 1500);
                                 
-                                // Dynamic Counter Animation - Unified Counter for Both Displays
-                                let sharedCurrentCount = 956;
+                                // Dynamic Counter Animation - REALISTIC Unified Counter for Both Displays
+                                let sharedCurrentCount = 47;  // Start with realistic value
                                 
                                 function animateCounters() {
                                     // Single counter value for both Hero and Live Users
-                                    // Small random change between -8 to +12 (more likely to increase)
-                                    const change = Math.floor(Math.random() * 21) - 8; // -8 to +12
+                                    // Small random change between -2 to +3 (realistic fluctuation)
+                                    const change = Math.floor(Math.random() * 6) - 2; // -2 to +3
                                     sharedCurrentCount += change;
                                     
-                                    // Keep within bounds 558-1488
-                                    sharedCurrentCount = Math.max(558, Math.min(1488, sharedCurrentCount));
+                                    // Keep within REALISTIC bounds 35-78 (believable online users)
+                                    sharedCurrentCount = Math.max(35, Math.min(78, sharedCurrentCount));
                                     
                                     // Update Hero Counter (plain format)
                                     const heroCounter = document.getElementById('activeServiceCount');
@@ -4864,8 +4864,8 @@ app.get('/', (c) => {
                                     }
                                 }
                                 
-                                // Update both counters every 4 seconds
-                                setInterval(animateCounters, 4000);
+                                // Update both counters every 4 seconds - DISABLED for realistic values
+                                // setInterval(animateCounters, 4000);
                                 
                                 // Thought Bubble Animation
                                 const thoughtMessages = [
@@ -5821,7 +5821,7 @@ app.get('/', (c) => {
                                     <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse mr-2"></div>
                                     <span class="text-green-300 font-semibold">ŞU ANDA CANLI:</span>
                                 </div>
-                                <div class="text-xl font-bold text-yellow-300" id="liveUserCount">163</div>
+                                <div class="text-xl font-bold text-yellow-300" id="liveUserCount">47</div>
                                 <span class="text-blue-200">kişi</span>
                             </div>
                             <div class="text-xs text-blue-300 text-center mt-1">
@@ -10870,7 +10870,8 @@ app.get('/', (c) => {
                 try { setInterval(addServiceCompletion, 12000); } catch(e) { console.log('addServiceCompletion not found'); }
                 try { setInterval(showSocialProofNotification, 20000); } catch(e) { console.log('showSocialProofNotification not found'); }
                 try { setInterval(addLiveComment, 6000); } catch(e) { console.log('addLiveComment not found'); }
-                try { setInterval(updateLiveUserCount, 30000); } catch(e) { console.log('updateLiveUserCount not found'); }
+                // Disabled to prevent high counter values (uses updateLiveStats instead)
+                // try { setInterval(updateLiveUserCount, 30000); } catch(e) { console.log('updateLiveUserCount not found'); }
                 
                 // Update ALL LIVE STATS - COMPREHENSIVE DYNAMIC UPDATES
                 setInterval(() => {
@@ -10898,7 +10899,10 @@ app.get('/', (c) => {
                         avgResponse.textContent = times[Math.floor(Math.random() * times.length)];
                     }
                     
-                    // Update live user count (ŞU ANDA CANLI)
+                    // Update live user count (ŞU ANDA CANLI) - DISABLED to prevent conflicts
+                    // Multiple functions updating same counter causes high values
+                    // Using updateLiveStats instead (35-55 range)
+                    /*
                     const liveUserCount = document.getElementById('liveUserCount');
                     if (liveUserCount) {
                         const baseCount = 157;  // Realistic online user count 
@@ -10906,6 +10910,7 @@ app.get('/', (c) => {
                         const newCount = baseCount + variation;
                         liveUserCount.textContent = newCount.toLocaleString('tr-TR');
                     }
+                    */"
                     
                     // Active services güncelleme devre dışı (çakışmayı engellemek için)
                     // updateLiveUserCount fonksiyonu zaten güncelleme yapıyor
