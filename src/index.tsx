@@ -4693,7 +4693,7 @@ app.get('/', (c) => {
             <div class="max-w-7xl mx-auto px-6 relative z-10">
 
                 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mt-2.5">
                     <!-- Left: Buttons and Content -->
                     <div class="text-center lg:text-left order-2 lg:order-1">
                         <!-- KAYIP YOK Banner - Desktop Only, Above Yellow Badge, Left Aligned -->
