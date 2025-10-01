@@ -6878,7 +6878,263 @@ app.get('/', (c) => {
             </div>
         </section>
 
+        <!-- Modern Consultation Interface Style Service Categories -->
+        <section class="py-20 bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 relative overflow-hidden" id="services">
+            <!-- Background Pattern -->
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute inset-0" style="background-image: radial-gradient(circle at 25% 25%, #818cf8 0%, transparent 50%), radial-gradient(circle at 75% 75%, #c084fc 0%, transparent 50%);"></div>
+            </div>
+            
+            <div class="max-w-7xl mx-auto px-6 relative">
+                <!-- Header Section -->
+                <div class="text-center mb-16">
+                    <div class="inline-block bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20 mb-6">
+                        <span class="text-purple-200 font-medium text-sm">
+                            <i class="fas fa-sparkles mr-2"></i>
+                            Size Özel Hizmet Çözümleri
+                        </span>
+                    </div>
+                    <h2 class="text-5xl font-bold text-white mb-6 tracking-tight">
+                        Uzman Konsültasyon
+                        <span class="block text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">
+                            Merkezi
+                        </span>
+                    </h2>
+                    <p class="text-xl text-purple-200 max-w-3xl mx-auto leading-relaxed">
+                        Yapay zeka destekli akıllı eşleştirme sistemi ile size en uygun hizmet sağlayıcısını buluyoruz. 
+                        Profesyonel danışmanlarımız her adımda yanınızda.
+                    </p>
+                </div>
 
+                <!-- Main Consultation Interface -->
+                <div class="bg-white/10 backdrop-blur-lg rounded-3xl border border-white/20 p-8 mb-12">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Left: Quick Service Selection -->
+                        <div class="lg:col-span-2">
+                            <div class="mb-6">
+                                <h3 class="text-2xl font-bold text-white mb-4 flex items-center">
+                                    <div class="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-search text-white"></i>
+                                    </div>
+                                    Hangi Hizmeti Arıyorsunuz?
+                                </h3>
+                                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                    <!-- Service Categories as Interactive Cards -->
+                                    <div class="consultation-service-card group bg-white/10 hover:bg-white/20 border border-white/20 hover:border-amber-400 rounded-xl p-4 cursor-pointer transition-all duration-300">
+                                        <div class="text-center">
+                                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+                                                <i class="fas fa-tv text-white text-xl"></i>
+                                            </div>
+                                            <h4 class="text-white font-semibold text-sm mb-1">Televizyon</h4>
+                                            <p class="text-purple-200 text-xs">LED/OLED/Smart TV</p>
+                                            <div class="text-amber-400 font-bold text-xs mt-2">₺300-2.500</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="consultation-service-card group bg-white/10 hover:bg-white/20 border border-white/20 hover:border-amber-400 rounded-xl p-4 cursor-pointer transition-all duration-300">
+                                        <div class="text-center">
+                                            <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+                                                <i class="fas fa-laptop text-white text-xl"></i>
+                                            </div>
+                                            <h4 class="text-white font-semibold text-sm mb-1">Bilgisayar</h4>
+                                            <p class="text-purple-200 text-xs">PC/Laptop/Gaming</p>
+                                            <div class="text-amber-400 font-bold text-xs mt-2">₺200-2.000</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="consultation-service-card group bg-white/10 hover:bg-white/20 border border-white/20 hover:border-amber-400 rounded-xl p-4 cursor-pointer transition-all duration-300">
+                                        <div class="text-center">
+                                            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+                                                <i class="fas fa-washing-machine text-white text-xl"></i>
+                                            </div>
+                                            <h4 class="text-white font-semibold text-sm mb-1">Beyaz Eşya</h4>
+                                            <p class="text-purple-200 text-xs">Çamaşır/Bulaşık/Buzdolabı</p>
+                                            <div class="text-amber-400 font-bold text-xs mt-2">₺400-3.000</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="consultation-service-card group bg-white/10 hover:bg-white/20 border border-white/20 hover:border-amber-400 rounded-xl p-4 cursor-pointer transition-all duration-300">
+                                        <div class="text-center">
+                                            <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+                                                <i class="fas fa-snowflake text-white text-xl"></i>
+                                            </div>
+                                            <h4 class="text-white font-semibold text-sm mb-1">Klima</h4>
+                                            <p class="text-purple-200 text-xs">Split/VRF/Kaset</p>
+                                            <div class="text-amber-400 font-bold text-xs mt-2">₺300-2.500</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="consultation-service-card group bg-white/10 hover:bg-white/20 border border-white/20 hover:border-amber-400 rounded-xl p-4 cursor-pointer transition-all duration-300">
+                                        <div class="text-center">
+                                            <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+                                                <i class="fas fa-volume-up text-white text-xl"></i>
+                                            </div>
+                                            <h4 class="text-white font-semibold text-sm mb-1">Ses Sistemi</h4>
+                                            <p class="text-purple-200 text-xs">Hoparlör/Home Theater</p>
+                                            <div class="text-amber-400 font-bold text-xs mt-2">₺250-3.500</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="consultation-service-card group bg-white/10 hover:bg-white/20 border border-white/20 hover:border-amber-400 rounded-xl p-4 cursor-pointer transition-all duration-300">
+                                        <div class="text-center">
+                                            <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+                                                <i class="fas fa-mobile-alt text-white text-xl"></i>
+                                            </div>
+                                            <h4 class="text-white font-semibold text-sm mb-1">Elektronik</h4>
+                                            <p class="text-purple-200 text-xs">Telefon/Tablet/Konsol</p>
+                                            <div class="text-amber-400 font-bold text-xs mt-2">₺150-1.800</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Problem Description -->
+                            <div class="mb-6">
+                                <h3 class="text-white font-bold mb-3 flex items-center">
+                                    <div class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-comments text-white text-sm"></i>
+                                    </div>
+                                    Sorununuzu Detaylandırın
+                                </h3>
+                                <textarea 
+                                    class="w-full bg-white/10 backdrop-blur border border-white/20 rounded-xl p-4 text-white placeholder-purple-200 focus:border-amber-400 focus:outline-none transition-colors resize-none"
+                                    rows="4"
+                                    placeholder="Cihazınızın marka, model ve yaşadığınız sorunu detaylı olarak açıklayın. Örn: Samsung 55" Smart TV açılıyor ama görüntü gelmiyor, ses var..."
+                                ></textarea>
+                            </div>
+
+                            <!-- Quick Contact -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-purple-200 font-medium mb-2">Telefon Numaranız</label>
+                                    <input 
+                                        type="tel"
+                                        class="w-full bg-white/10 backdrop-blur border border-white/20 rounded-xl p-3 text-white placeholder-purple-200 focus:border-amber-400 focus:outline-none transition-colors"
+                                        placeholder="05XX XXX XX XX"
+                                    >
+                                </div>
+                                <div>
+                                    <label class="block text-purple-200 font-medium mb-2">Şehir</label>
+                                    <select class="w-full bg-white/10 backdrop-blur border border-white/20 rounded-xl p-3 text-white focus:border-amber-400 focus:outline-none transition-colors">
+                                        <option value="" class="bg-gray-800">Şehir Seçin</option>
+                                        <option value="istanbul" class="bg-gray-800">İstanbul</option>
+                                        <option value="ankara" class="bg-gray-800">Ankara</option>
+                                        <option value="izmir" class="bg-gray-800">İzmir</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: AI Consultant & Pricing -->
+                        <div class="lg:col-span-1">
+                            <!-- AI Consultant Card -->
+                            <div class="bg-gradient-to-br from-amber-500/20 to-orange-500/20 backdrop-blur border border-amber-400/30 rounded-2xl p-6 mb-6">
+                                <div class="text-center mb-4">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full mx-auto mb-3 flex items-center justify-center">
+                                        <i class="fas fa-robot text-white text-2xl"></i>
+                                    </div>
+                                    <h3 class="text-white font-bold text-lg">AI Danışman</h3>
+                                    <p class="text-amber-200 text-sm">Akıllı Fiyat Hesaplama</p>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between items-center py-2 border-b border-amber-400/20">
+                                        <span class="text-amber-200">Ortalama Süre:</span>
+                                        <span class="text-white font-semibold">45 dakika</span>
+                                    </div>
+                                    <div class="flex justify-between items-center py-2 border-b border-amber-400/20">
+                                        <span class="text-amber-200">Tahmini Maliyet:</span>
+                                        <span class="text-white font-semibold">₺350-750</span>
+                                    </div>
+                                    <div class="flex justify-between items-center py-2">
+                                        <span class="text-amber-200">Garanti Süresi:</span>
+                                        <span class="text-white font-semibold">6 Ay</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Expert Stats -->
+                            <div class="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-6">
+                                <h3 class="text-white font-bold mb-4 flex items-center">
+                                    <i class="fas fa-users text-emerald-400 mr-2"></i>
+                                    Uzman Durumu
+                                </h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-3 h-3 bg-emerald-400 rounded-full mr-2 animate-pulse"></div>
+                                            <span class="text-purple-200">Çevrimiçi Uzman:</span>
+                                        </div>
+                                        <span class="text-white font-bold">47 Kişi</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-3 h-3 bg-blue-400 rounded-full mr-2"></div>
+                                            <span class="text-purple-200">Ortalama Puanlama:</span>
+                                        </div>
+                                        <span class="text-white font-bold">4.8/5.0</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-3 h-3 bg-amber-400 rounded-full mr-2"></div>
+                                            <span class="text-purple-200">Bugün Çözülen:</span>
+                                        </div>
+                                        <span class="text-white font-bold">127 İş</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col md:flex-row gap-4 mt-8">
+                        <button class="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
+                            <i class="fas fa-brain mr-2"></i>
+                            AI ile Ücretsiz Analiz Yap
+                        </button>
+                        <button class="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
+                            <i class="fas fa-phone mr-2"></i>
+                            Hemen Uzmanla Konuş
+                        </button>
+                        <button class="bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center">
+                            <i class="fas fa-whatsapp mr-2"></i>
+                            WhatsApp
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Success Statistics -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-check-circle text-white text-2xl"></i>
+                        </div>
+                        <div class="text-3xl font-bold text-white mb-2">98.7%</div>
+                        <div class="text-purple-200 text-sm font-medium">Başarı Oranı</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-clock text-white text-2xl"></i>
+                        </div>
+                        <div class="text-3xl font-bold text-white mb-2">15dk</div>
+                        <div class="text-purple-200 text-sm font-medium">Ortalama Yanıt</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-shield-alt text-white text-2xl"></i>
+                        </div>
+                        <div class="text-3xl font-bold text-white mb-2">6 Ay</div>
+                        <div class="text-purple-200 text-sm font-medium">Garanti Süresi</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-users text-white text-2xl"></i>
+                        </div>
+                        <div class="text-3xl font-bold text-white mb-2">50K+</div>
+                        <div class="text-purple-200 text-sm font-medium">Mutlu Müşteri</div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- Service Request Form -->
         <section class="py-8 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white" id="hizmet-al">
