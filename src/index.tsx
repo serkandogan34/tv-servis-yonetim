@@ -6560,7 +6560,7 @@ app.get('/', (c) => {
                                                     </div>
                                                     <h3 class="text-2xl font-bold text-white">KORUMA</h3>
                                                 </div>
-                                                <p class="text-blue-200 text-base">Art&#305;k kimse sizi doland&#305;ramaz!</p>
+                                                <p class="text-blue-200 text-base">Güvenle hizmet alın, rahat olun!</p>
                                             </div>
                                         </div>
 
