@@ -6552,15 +6552,15 @@ app.get('/', (c) => {
                                     <div class="bg-gradient-to-br from-blue-900 to-blue-800 border border-blue-300 hover:border-blue-200 transition-all duration-300 rounded-2xl shadow-sm hover:shadow-md relative" style="min-height: 600px;">
                                 
                                         <!-- PC Header (ESKİ TASARIM) -->
-                                        <div class="px-3 pt-1 pb-7 border-b border-blue-700">
+                                        <div class="px-3 pt-1 pb-8 border-b border-blue-700">
                                             <div class="text-center">
-                                                <div class="flex items-center justify-center mb-1">
-                                                    <div class="text-lg font-bold mr-2">
+                                                <div class="flex flex-col items-center justify-center mb-1">
+                                                    <div class="text-lg font-bold mb-1">
                                                         <span class="text-white">Garantor</span><span class="text-amber-400">360°</span>
                                                     </div>
                                                     <h3 class="text-2xl font-bold text-white">KORUMA</h3>
                                                 </div>
-                                                <p class="text-blue-200 text-base">Güvenle hizmet alın, rahat olun!</p>
+                                                <p class="text-blue-200 text-base text-center">Güvenle hizmet alın, rahat olun!</p>
                                             </div>
                                         </div>
 
