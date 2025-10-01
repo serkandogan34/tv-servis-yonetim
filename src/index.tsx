@@ -7586,15 +7586,16 @@ app.get('/', (c) => {
                         <!-- Left: App Info (Minimalist) -->
                         <div class="lg:col-span-2 p-8">
                             <div class="mb-6">
-                                <div class="flex items-center mb-1">
-                                    <img src="https://page.gensparksite.com/v1/base64_upload/048c4b5ab3a7280d26f5b471c120123b" alt="Garantor360" class="h-16">
+                                <div class="flex items-start space-x-4 mb-1">
+                                    <img src="https://page.gensparksite.com/v1/base64_upload/048c4b5ab3a7280d26f5b471c120123b" alt="Garantor360" class="h-16 flex-shrink-0">
+                                    <div class="flex-1">
+                                        <h3 class="text-2xl font-bold text-slate-800 mb-2">
+                                            H&#304;ZMET TAK&#304;B&#304;N&#304; CEB&#304;N&#304;ZDEN YAPIN
+                                        </h3>
+                                        <p class="text-slate-600 font-medium">M&#252;&#351;teri Mobil Uygulamas&#305;</p>
+                                    </div>
                                 </div>
-                                <p class="text-slate-600 font-medium">M&#252;&#351;teri Mobil Uygulamas&#305;</p>
                             </div>
-                            
-                            <h3 class="text-2xl font-bold text-slate-800 mb-4">
-                                H&#304;ZMET TAK&#304;B&#304;N&#304; CEB&#304;N&#304;ZDEN YAPIN
-                            </h3>
                             
                             <p class="text-slate-600 mb-6 leading-relaxed">
                                 Mobil uygulamamızla hizmet talebinizi kolayca olu&#351;turun, uzman ustalarla ileti&#351;im kurun 
