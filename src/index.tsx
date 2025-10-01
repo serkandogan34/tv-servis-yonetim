@@ -5097,11 +5097,11 @@ app.get('/', (c) => {
                             <div class="w-4 h-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mr-1 shadow-sm">
                                 <i class="fas fa-shield-check text-white text-xs"></i>
                             </div>
-                            <span class="text-slate-800 font-bold text-xs">GARANTOR360</span>
+                            <span class="text-slate-800 font-bold text-sm">GARANTOR360</span>
                             <div class="w-1.5 h-1.5 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full animate-pulse ml-1"></div>
                         </div>
-                        <h2 class="text-lg font-bold text-slate-800 mb-1">4 Basit Adımda Güvenli Hizmet</h2>
-                        <p class="text-slate-600 text-xs max-w-xl mx-auto">Modern teknoloji ile hızlı hizmet alma süreci</p>
+                        <h2 class="text-xl font-bold text-slate-800 mb-1">4 Basit Adımda Güvenli Hizmet</h2>
+                        <p class="text-slate-600 text-sm max-w-xl mx-auto">Modern teknoloji ile hızlı hizmet alma süreci</p>
                     </div>
 
                     <!-- Tam Kompakt 4-Step Process Cards -->
@@ -5129,8 +5129,8 @@ app.get('/', (c) => {
                             
                             <!-- Mini Content -->
                             <div class="text-center relative z-10">
-                                <h3 class="text-sm font-bold text-slate-800 mb-1 group-hover:text-blue-600 transition-colors duration-300">Talep Oluştur</h3>
-                                <p class="text-slate-600 text-xs leading-tight mb-2">Problem tanımlayın</p>
+                                <h3 class="text-base font-bold text-slate-800 mb-1 group-hover:text-blue-600 transition-colors duration-300">Talep Oluştur</h3>
+                                <p class="text-slate-600 text-sm leading-tight mb-2">Problem tanımlayın</p>
                                 
                                 <!-- Mini Time Badge -->
                                 <div class="inline-flex items-center bg-gradient-to-r from-blue-50 to-blue-100 px-1.5 py-0.5 rounded-full mb-1">
@@ -5181,8 +5181,8 @@ app.get('/', (c) => {
                             
                             <!-- Mini Content -->
                             <div class="text-center relative z-10">
-                                <h3 class="text-sm font-bold text-slate-800 mb-1 group-hover:text-green-600 transition-colors duration-300">Uzman Eşleştirme</h3>
-                                <p class="text-slate-600 text-xs leading-tight mb-2">En uygun uzmanları buluyoruz</p>
+                                <h3 class="text-base font-bold text-slate-800 mb-1 group-hover:text-green-600 transition-colors duration-300">Uzman Eşleştirme</h3>
+                                <p class="text-slate-600 text-sm leading-tight mb-2">En uygun uzmanları buluyoruz</p>
                                 
                                 <!-- Mini Time Badge -->
                                 <div class="inline-flex items-center bg-gradient-to-r from-green-50 to-emerald-50 px-1.5 py-0.5 rounded-full mb-1">
@@ -5233,8 +5233,8 @@ app.get('/', (c) => {
                             
                             <!-- Mini Content -->
                             <div class="text-center relative z-10">
-                                <h3 class="text-sm font-bold text-slate-800 mb-1 group-hover:text-purple-600 transition-colors duration-300">Fiyat & Randevu</h3>
-                                <p class="text-slate-600 text-xs leading-tight mb-2">Şeffaf fiyat alın</p>
+                                <h3 class="text-base font-bold text-slate-800 mb-1 group-hover:text-purple-600 transition-colors duration-300">Fiyat & Randevu</h3>
+                                <p class="text-slate-600 text-sm leading-tight mb-2">Şeffaf fiyat alın</p>
                                 
                                 <!-- Mini Price Badge -->
                                 <div class="inline-flex items-center bg-gradient-to-r from-purple-50 to-pink-50 px-1.5 py-0.5 rounded-full mb-1">
@@ -5285,8 +5285,8 @@ app.get('/', (c) => {
                             
                             <!-- Mini Content -->
                             <div class="text-center relative z-10">
-                                <h3 class="text-sm font-bold text-slate-800 mb-1 group-hover:text-orange-600 transition-colors duration-300">Hizmet Tamamla</h3>
-                                <p class="text-slate-600 text-xs leading-tight mb-2">Güvenle ödeme yapın</p>
+                                <h3 class="text-base font-bold text-slate-800 mb-1 group-hover:text-orange-600 transition-colors duration-300">Hizmet Tamamla</h3>
+                                <p class="text-slate-600 text-sm leading-tight mb-2">Güvenle ödeme yapın</p>
                                 
                                 <!-- Mini Guarantee Badge -->
                                 <div class="inline-flex items-center bg-gradient-to-r from-orange-50 to-red-50 px-1.5 py-0.5 rounded-full mb-1">
