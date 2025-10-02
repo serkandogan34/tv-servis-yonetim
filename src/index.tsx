@@ -1176,36 +1176,80 @@ app.post('/api/service-request', async (c) => {
     
     // n8n webhook icin AI-zenginleştirilmiş data hazirla
     const webhookData = {
+      // Basic request info
       requestCode,
       timestamp,
+      
+      // Customer information
       customer: {
         name: customerName,
         phone: customerPhone,
         city: customerCity || '',
         district: requestData.customerDistrict || ''
       },
+      
+      // Service details
       service: {
         category: serviceCategory,
         description: problemDescription,
         urgency: requestData.urgency || 'normal'
       },
-      // 🚀 AI-Enhanced Fields
+      
+      // 🚀 AI-Enhanced Fields (COMPLETE)
       aiEnhancement: {
         analysis: aiAnalysis,
-        recommendedTechnician: recommendedTechnician ? {
-          id: recommendedTechnician.id,
-          name: recommendedTechnician.firma_adi,
-          rating: recommendedTechnician.rating,
-          specialty: recommendedTechnician.uzmanlik_alani,
-          aiScore: recommendedTechnician.aiScore,
-          activeJobs: recommendedTechnician.aktif_isler
-        } : null,
-        notifications: notificationResults,
+        urgencyLevel: aiAnalysis?.urgencyLevel || 'normal',
+        serviceCategory: aiAnalysis?.serviceCategory || serviceCategory,
+        priorityScore: aiAnalysis?.priorityScore || 50,
+        estimatedDuration: aiAnalysis?.estimatedDuration || '2-4 saat',
+        confidence: aiAnalysis?.aiConfidence || 0.8,
         processedAt: timestamp,
-        aiVersion: 'v1.0'
+        aiVersion: 'v2.5.0'
       },
+      
+      // Technician assignment (COMPLETE)
+      assignedTechnician: recommendedTechnician ? {
+        id: recommendedTechnician.id,
+        name: recommendedTechnician.firma_adi,
+        rating: recommendedTechnician.rating,
+        experience: recommendedTechnician.tamamlanan_is_sayisi,
+        specialization: recommendedTechnician.uzmanlik_alani,
+        currentWorkload: recommendedTechnician.aktif_isler,
+        aiScore: recommendedTechnician.aiScore,
+        location: recommendedTechnician.il_adi
+      } : null,
+      
+      // Notification status (COMPLETE)
+      notifications: notificationResults,
+      
+      // Workflow metadata (NEW)
+      workflow: {
+        processedAt: timestamp,
+        processingTime: Date.now(),
+        workflowVersion: '2.5.0',
+        aiEngine: 'garantor360-ai-v2.5',
+        channel: 'website',
+        platform: 'cloudflare-workers',
+        environment: 'production'
+      },
+      
+      // Customer journey data (NEW)
+      customerJourney: {
+        source: requestData.source || 'website',
+        referrer: requestData.referrer || 'direct',
+        sessionId: requestData.sessionId || `session-${Date.now()}`,
+        previousInteractions: 0,
+        lifetimeValue: 0,
+        entryPoint: 'service_form',
+        userAgent: requestData.userAgent || 'unknown'
+      },
+      
+      // Contact preferences
       contactPreference: requestData.contactPreference || ['phone'],
-      source: 'garantor360_website_ai'
+      
+      // Source identification
+      source: 'garantor360_website_ai',
+      platform: 'garantor360-v2.5.0'
     }
     
     // n8n webhook URL'si (Cloudflare environment variable)
