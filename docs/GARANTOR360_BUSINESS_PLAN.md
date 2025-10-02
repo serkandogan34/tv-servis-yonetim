@@ -657,7 +657,7 @@ Working Capital (10% - 1.5M TL):
 **Next 30 Days:**
 - Finalize Series A investor meetings
 - Complete technical architecture
-- Launch beta platform
+- Launch production platform v2.5.0
 - Sign initial insurance partnerships
 
 **Next 90 Days:**

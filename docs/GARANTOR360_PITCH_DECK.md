@@ -377,7 +377,7 @@ Büyük Sorun: +3 Puan (dolandırıcılık, zarar)
 ### 🎯 Immediate Next Steps (3 Ay)
 1. **Seed Funding Complete**: 15M TL Series A
 2. **Team Building**: CTO, CMO, Legal hiring
-3. **Platform Launch**: Beta version canlı
+3. **Platform Launch**: Production v2.5.0 canlı
 4. **Pilot Partnerships**: 100 usta onboarding
 5. **Legal Setup**: Sigorta & hukuki ortaklıklar
 
