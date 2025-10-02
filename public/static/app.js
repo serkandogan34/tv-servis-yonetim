@@ -1051,6 +1051,581 @@ window.trackFBAIChatQuoteRequest = function(serviceCategory) {
 console.log('📘 Facebook Pixel Enhanced Event Tracking System loaded successfully!');
 
 // =============================================================================
+// GARANTOR360 - Dynamic Meta Tags System
+// =============================================================================
+
+console.log('🏷️ Loading Dynamic Meta Tags System...');
+
+// Dynamic Meta Tags Manager
+window.DynamicMetaTags = {
+    
+    // Configuration
+    config: {
+        apiEndpoint: '/api/meta-tags',
+        adminEndpoint: '/api/admin/meta-tags',
+        performanceEndpoint: '/api/seo/track-performance',
+        defaultPageType: 'home',
+        enableOpenGraph: true,
+        enableTwitterCards: true,
+        enableSchemaOrg: true
+    },
+    
+    // Meta tag templates and cache
+    cache: {
+        metaTags: {},
+        templates: {},
+        lastUpdate: null,
+        ttl: 300000 // 5 minutes TTL
+    },
+    
+    // Initialize meta tags system
+    init: function() {
+        console.log('🚀 Initializing Dynamic Meta Tags System...');
+        
+        // Get current page type
+        const pageType = this.detectPageType();
+        
+        // Load and inject meta tags
+        this.loadMetaTags(pageType);
+        
+        // Track page performance
+        this.trackPagePerformance(pageType);
+        
+        // Setup performance monitoring
+        this.setupPerformanceMonitoring();
+        
+        console.log('✅ Dynamic Meta Tags System initialized for page type:', pageType);
+    },
+    
+    // Detect current page type based on URL and content
+    detectPageType: function() {
+        const path = window.location.pathname.toLowerCase();
+        const params = new URLSearchParams(window.location.search);
+        
+        // Service-specific pages
+        if (path.includes('/televizyon-tamiri')) return 'televizyon_tamiri';
+        if (path.includes('/bilgisayar-tamiri')) return 'bilgisayar_tamiri';
+        if (path.includes('/beyaz-esya-tamiri')) return 'beyaz_esya_tamiri';
+        if (path.includes('/klima-tamiri')) return 'klima_tamiri';
+        if (path.includes('/elektronik-tamiri')) return 'elektronik_tamiri';
+        if (path.includes('/ev-elektrigi')) return 'ev_elektrigi';
+        if (path.includes('/su-tesisati')) return 'su_tesisati';
+        
+        // Admin pages
+        if (path.includes('/admin')) return 'admin';
+        
+        // Content pages
+        if (path.includes('/hakkimizda')) return 'about';
+        if (path.includes('/iletisim')) return 'contact';
+        if (path.includes('/kvkv')) return 'privacy';
+        if (path.includes('/cerez')) return 'cookie_policy';
+        
+        // Service category from URL params
+        const serviceCategory = params.get('service');
+        if (serviceCategory) return serviceCategory;
+        
+        // City-specific pages
+        const city = params.get('city') || this.detectCityFromContent();
+        if (city) return 'city_' + city;
+        
+        // Default to home page
+        return this.config.defaultPageType;
+    },
+    
+    // Detect city from page content
+    detectCityFromContent: function() {
+        const content = document.body.textContent.toLowerCase();
+        const cities = ['istanbul', 'ankara', 'izmir', 'bursa', 'antalya', 'adana', 'konya', 'gaziantep'];
+        
+        for (const city of cities) {
+            if (content.includes(city)) {
+                return city;
+            }
+        }
+        return null;
+    },
+    
+    // Load meta tags from API
+    loadMetaTags: async function(pageType) {
+        try {
+            // Check cache first
+            if (this.isCacheValid(pageType)) {
+                console.log('📦 Using cached meta tags for:', pageType);
+                this.injectMetaTags(this.cache.metaTags[pageType]);
+                return;
+            }
+            
+            console.log('🌐 Loading meta tags from API for:', pageType);
+            
+            const response = await fetch(`${this.config.apiEndpoint}/${pageType}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                
+                // Cache the response
+                this.cache.metaTags[pageType] = data.metaTags;
+                this.cache.lastUpdate = Date.now();
+                
+                // Inject meta tags
+                this.injectMetaTags(data.metaTags);
+                
+                console.log('✅ Meta tags loaded and injected for:', pageType, data.metaTags);
+            } else {
+                console.warn('⚠️ Failed to load meta tags, using defaults');
+                this.injectDefaultMetaTags(pageType);
+            }
+        } catch (error) {
+            console.error('❌ Error loading meta tags:', error);
+            this.injectDefaultMetaTags(pageType);
+        }
+    },
+    
+    // Check if cache is valid
+    isCacheValid: function(pageType) {
+        return (
+            this.cache.metaTags[pageType] &&
+            this.cache.lastUpdate &&
+            (Date.now() - this.cache.lastUpdate) < this.cache.ttl
+        );
+    },
+    
+    // Inject meta tags into page head
+    injectMetaTags: function(metaTags) {
+        if (!metaTags) return;
+        
+        const head = document.head;
+        
+        // Update title
+        if (metaTags.title) {
+            document.title = metaTags.title;
+            this.updateOrCreateMetaTag('og:title', metaTags.title);
+            this.updateOrCreateMetaTag('twitter:title', metaTags.title);
+        }
+        
+        // Update description
+        if (metaTags.description) {
+            this.updateOrCreateMetaTag('description', metaTags.description);
+            this.updateOrCreateMetaTag('og:description', metaTags.description);
+            this.updateOrCreateMetaTag('twitter:description', metaTags.description);
+        }
+        
+        // Update keywords
+        if (metaTags.keywords) {
+            this.updateOrCreateMetaTag('keywords', metaTags.keywords);
+        }
+        
+        // Open Graph tags
+        if (this.config.enableOpenGraph && metaTags.og_title) {
+            this.updateOrCreateMetaTag('og:title', metaTags.og_title);
+            this.updateOrCreateMetaTag('og:description', metaTags.og_description);
+            this.updateOrCreateMetaTag('og:image', metaTags.og_image);
+            this.updateOrCreateMetaTag('og:url', window.location.href);
+            this.updateOrCreateMetaTag('og:type', metaTags.og_type || 'website');
+            this.updateOrCreateMetaTag('og:site_name', 'GARANTOR360');
+        }
+        
+        // Twitter Cards
+        if (this.config.enableTwitterCards && metaTags.twitter_title) {
+            this.updateOrCreateMetaTag('twitter:card', metaTags.twitter_card || 'summary_large_image');
+            this.updateOrCreateMetaTag('twitter:title', metaTags.twitter_title);
+            this.updateOrCreateMetaTag('twitter:description', metaTags.twitter_description);
+            this.updateOrCreateMetaTag('twitter:image', metaTags.twitter_image);
+            this.updateOrCreateMetaTag('twitter:site', '@garantor360');
+        }
+        
+        // Schema.org JSON-LD
+        if (this.config.enableSchemaOrg && metaTags.schema_org) {
+            this.injectSchemaOrg(metaTags.schema_org);
+        }
+        
+        // Additional custom meta tags
+        if (metaTags.custom_tags) {
+            metaTags.custom_tags.forEach(tag => {
+                this.updateOrCreateMetaTag(tag.name, tag.content, tag.property);
+            });
+        }
+        
+        console.log('✅ Meta tags injected successfully');
+    },
+    
+    // Update or create meta tag
+    updateOrCreateMetaTag: function(name, content, property = null) {
+        if (!name || !content) return;
+        
+        let selector = `meta[name="${name}"]`;
+        if (property || name.startsWith('og:') || name.startsWith('twitter:')) {
+            selector = `meta[property="${property || name}"]`;
+        }
+        
+        let metaTag = document.querySelector(selector);
+        
+        if (metaTag) {
+            // Update existing tag
+            metaTag.setAttribute('content', content);
+        } else {
+            // Create new tag
+            metaTag = document.createElement('meta');
+            
+            if (property || name.startsWith('og:') || name.startsWith('twitter:')) {
+                metaTag.setAttribute('property', property || name);
+            } else {
+                metaTag.setAttribute('name', name);
+            }
+            
+            metaTag.setAttribute('content', content);
+            document.head.appendChild(metaTag);
+        }
+    },
+    
+    // Inject Schema.org JSON-LD
+    injectSchemaOrg: function(schemaData) {
+        // Remove existing schema
+        const existingSchema = document.querySelector('script[type="application/ld+json"]');
+        if (existingSchema) {
+            existingSchema.remove();
+        }
+        
+        // Create new schema
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify(schemaData, null, 2);
+        document.head.appendChild(script);
+        
+        console.log('📋 Schema.org JSON-LD injected:', schemaData);
+    },
+    
+    // Inject default meta tags as fallback
+    injectDefaultMetaTags: function(pageType) {
+        const defaults = {
+            home: {
+                title: 'GARANTOR360 - Türkiye\'nin En Güvenilir Teknik Servis Platformu',
+                description: 'Televizyon, bilgisayar, beyaz eşya tamiri ve daha fazlası. Garantili servis, uzman teknisyenler, 7/24 destek. Ücretsiz keşif, hızlı çözüm!',
+                keywords: 'teknik servis, televizyon tamiri, bilgisayar tamiri, beyaz eşya tamiri, klima tamiri, elektronik tamiri, garantor360'
+            },
+            televizyon_tamiri: {
+                title: 'Televizyon Tamiri - GARANTOR360 | Garantili TV Servisi',
+                description: 'Profesyonel televizyon tamiri servisi. LED, LCD, OLED, QLED TV tamiri. Ücretsiz keşif, garantili işçilik, aynı gün servis. ☎️ Hemen ara!',
+                keywords: 'televizyon tamiri, tv tamiri, led tv tamiri, lcd tv tamiri, smart tv tamiri, televizyon servisi'
+            },
+            bilgisayar_tamiri: {
+                title: 'Bilgisayar Tamiri - GARANTOR360 | PC ve Laptop Servisi',
+                description: 'Uzman bilgisayar tamiri servisi. PC, laptop, donanım ve yazılım sorunları. Veri kurtarma, format, upgrade hizmetleri. Hızlı ve güvenilir!',
+                keywords: 'bilgisayar tamiri, pc tamiri, laptop tamiri, donanım tamiri, yazılım tamiri, veri kurtarma'
+            }
+        };
+        
+        const pageDefaults = defaults[pageType] || defaults.home;
+        this.injectMetaTags(pageDefaults);
+    },
+    
+    // Track page performance for SEO analytics
+    trackPagePerformance: function(pageType) {
+        // Collect performance metrics
+        const performanceData = {
+            page_type: pageType,
+            page_url: window.location.href,
+            page_title: document.title,
+            user_agent: navigator.userAgent,
+            viewport_width: window.innerWidth,
+            viewport_height: window.innerHeight,
+            referrer: document.referrer,
+            load_time: performance.timing ? (performance.timing.loadEventEnd - performance.timing.navigationStart) : null,
+            dom_ready_time: performance.timing ? (performance.timing.domContentLoadedEventEnd - performance.timing.navigationStart) : null,
+            timestamp: new Date().toISOString()
+        };
+        
+        // Send to analytics API (async, non-blocking)
+        this.sendPerformanceData(performanceData);
+    },
+    
+    // Send performance data to API
+    sendPerformanceData: async function(performanceData) {
+        try {
+            const response = await fetch(this.config.performanceEndpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(performanceData)
+            });
+            
+            if (response.ok) {
+                console.log('📊 Performance data sent successfully');
+            }
+        } catch (error) {
+            console.warn('📊 Failed to send performance data:', error);
+        }
+    },
+    
+    // Setup advanced performance monitoring
+    setupPerformanceMonitoring: function() {
+        // Monitor Core Web Vitals
+        this.monitorCoreWebVitals();
+        
+        // Monitor scroll depth and engagement
+        this.monitorEngagement();
+        
+        // Monitor click-through rates on meta tag content
+        this.monitorMetaTagPerformance();
+    },
+    
+    // Monitor Core Web Vitals (LCP, FID, CLS)
+    monitorCoreWebVitals: function() {
+        // Largest Contentful Paint (LCP)
+        if ('PerformanceObserver' in window) {
+            new PerformanceObserver((entryList) => {
+                const entries = entryList.getEntries();
+                const lastEntry = entries[entries.length - 1];
+                
+                this.sendPerformanceData({
+                    metric_type: 'lcp',
+                    value: lastEntry.startTime,
+                    page_url: window.location.href,
+                    timestamp: new Date().toISOString()
+                });
+            }).observe({ entryTypes: ['largest-contentful-paint'] });
+            
+            // First Input Delay (FID)
+            new PerformanceObserver((entryList) => {
+                const entries = entryList.getEntries();
+                entries.forEach(entry => {
+                    this.sendPerformanceData({
+                        metric_type: 'fid',
+                        value: entry.processingStart - entry.startTime,
+                        page_url: window.location.href,
+                        timestamp: new Date().toISOString()
+                    });
+                });
+            }).observe({ entryTypes: ['first-input'] });
+            
+            // Cumulative Layout Shift (CLS)
+            let clsScore = 0;
+            new PerformanceObserver((entryList) => {
+                const entries = entryList.getEntries();
+                entries.forEach(entry => {
+                    if (!entry.hadRecentInput) {
+                        clsScore += entry.value;
+                    }
+                });
+                
+                this.sendPerformanceData({
+                    metric_type: 'cls',
+                    value: clsScore,
+                    page_url: window.location.href,
+                    timestamp: new Date().toISOString()
+                });
+            }).observe({ entryTypes: ['layout-shift'] });
+        }
+    },
+    
+    // Monitor user engagement metrics
+    monitorEngagement: function() {
+        let engagementStartTime = Date.now();
+        let maxScrollDepth = 0;
+        let interactions = 0;
+        
+        // Scroll depth tracking
+        window.addEventListener('scroll', () => {
+            const scrollPercentage = Math.round(
+                (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100
+            );
+            maxScrollDepth = Math.max(maxScrollDepth, scrollPercentage);
+        });
+        
+        // Interaction tracking
+        ['click', 'keydown', 'mousemove'].forEach(eventType => {
+            document.addEventListener(eventType, () => {
+                interactions++;
+            });
+        });
+        
+        // Send engagement data when user leaves
+        window.addEventListener('beforeunload', () => {
+            const engagementTime = Date.now() - engagementStartTime;
+            
+            this.sendPerformanceData({
+                metric_type: 'engagement',
+                engagement_time: engagementTime,
+                scroll_depth: maxScrollDepth,
+                interactions: interactions,
+                page_url: window.location.href,
+                timestamp: new Date().toISOString()
+            });
+        });
+    },
+    
+    // Monitor meta tag performance (CTR from search results)
+    monitorMetaTagPerformance: function() {
+        // Check if user came from search engines
+        const referrer = document.referrer;
+        const searchEngines = ['google.com', 'bing.com', 'yahoo.com', 'yandex.com'];
+        
+        if (searchEngines.some(engine => referrer.includes(engine))) {
+            this.sendPerformanceData({
+                metric_type: 'search_ctr',
+                referrer: referrer,
+                page_url: window.location.href,
+                page_title: document.title,
+                meta_description: this.getMetaDescription(),
+                timestamp: new Date().toISOString()
+            });
+        }
+    },
+    
+    // Get current meta description
+    getMetaDescription: function() {
+        const metaDesc = document.querySelector('meta[name="description"]');
+        return metaDesc ? metaDesc.getAttribute('content') : '';
+    },
+    
+    // Update meta tags dynamically (for SPA pages)
+    updatePage: function(pageType, customData = {}) {
+        console.log('🔄 Updating meta tags for page:', pageType);
+        
+        // Clear cache for this page type
+        delete this.cache.metaTags[pageType];
+        
+        // Load new meta tags
+        this.loadMetaTags(pageType);
+        
+        // Track page change
+        this.trackPagePerformance(pageType);
+    },
+    
+    // Admin functions for meta tag management
+    admin: {
+        // Create or update meta tags
+        saveMetaTags: async function(pageType, metaTagsData) {
+            try {
+                const response = await fetch('/api/admin/meta-tags', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        page_type: pageType,
+                        ...metaTagsData
+                    })
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('✅ Meta tags saved successfully:', result);
+                    
+                    // Clear cache to force reload
+                    delete window.DynamicMetaTags.cache.metaTags[pageType];
+                    
+                    return result;
+                } else {
+                    throw new Error('Failed to save meta tags');
+                }
+            } catch (error) {
+                console.error('❌ Error saving meta tags:', error);
+                throw error;
+            }
+        },
+        
+        // Get all meta tags for admin interface
+        getAllMetaTags: async function() {
+            try {
+                const response = await fetch('/api/admin/meta-tags', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                if (response.ok) {
+                    return await response.json();
+                } else {
+                    throw new Error('Failed to fetch meta tags');
+                }
+            } catch (error) {
+                console.error('❌ Error fetching meta tags:', error);
+                throw error;
+            }
+        },
+        
+        // Delete meta tags
+        deleteMetaTags: async function(pageType) {
+            try {
+                const response = await fetch(`/api/admin/meta-tags/${pageType}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                if (response.ok) {
+                    console.log('✅ Meta tags deleted successfully');
+                    
+                    // Clear cache
+                    delete window.DynamicMetaTags.cache.metaTags[pageType];
+                    
+                    return true;
+                } else {
+                    throw new Error('Failed to delete meta tags');
+                }
+            } catch (error) {
+                console.error('❌ Error deleting meta tags:', error);
+                throw error;
+            }
+        },
+        
+        // Get SEO analytics
+        getAnalytics: async function() {
+            try {
+                const response = await fetch('/api/admin/seo/analytics', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                if (response.ok) {
+                    return await response.json();
+                } else {
+                    throw new Error('Failed to fetch analytics');
+                }
+            } catch (error) {
+                console.error('❌ Error fetching analytics:', error);
+                throw error;
+            }
+        }
+    }
+};
+
+// Auto-initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Small delay to ensure other systems are loaded
+    setTimeout(() => {
+        window.DynamicMetaTags.init();
+    }, 100);
+});
+
+// Global helper functions for manual triggers
+window.updateMetaTags = function(pageType, customData = {}) {
+    window.DynamicMetaTags.updatePage(pageType, customData);
+};
+
+window.trackMetaTagPerformance = function(eventType, eventData = {}) {
+    window.DynamicMetaTags.sendPerformanceData({
+        metric_type: 'meta_tag_event',
+        event_type: eventType,
+        ...eventData,
+        page_url: window.location.href,
+        timestamp: new Date().toISOString()
+    });
+};
+
+console.log('✅ Dynamic Meta Tags System loaded successfully!');
+
+// =============================================================================
 // GARANTOR360 - Google Tag Manager Enhanced Integration System
 // =============================================================================
 
@@ -1547,6 +2122,634 @@ window.trackGTMAIChatRecommendation = function(serviceMatch, confidence) {
 };
 
 console.log('🏷️ Google Tag Manager Enhanced Integration System loaded successfully!');
+
+// =============================================================================
+// GARANTOR360 - Lead Scoring System
+// =============================================================================
+
+console.log('🏆 Loading Lead Scoring System...');
+
+// Lead Scoring Manager
+window.LeadScoringManager = {
+    
+    // Configuration
+    config: {
+        apiEndpoint: '/api/lead-scoring/track-event',
+        leadEndpoint: '/api/lead-scoring/lead',
+        sessionKey: 'lead_session_id',
+        profileKey: 'lead_profile',
+        enableAutoTracking: true,
+        scoreUpdateInterval: 30000 // 30 seconds
+    },
+    
+    // Current lead information
+    currentLead: {
+        identifier: null,
+        profile: {},
+        score: 0,
+        grade: 'Cold',
+        isQualified: false,
+        sessionData: {}
+    },
+    
+    // Initialize lead scoring system
+    init: function() {
+        console.log('🚀 Initializing Lead Scoring System...');
+        
+        // Load or create lead session
+        this.initializeLeadSession();
+        
+        // Setup auto-tracking
+        if (this.config.enableAutoTracking) {
+            this.setupAutoTracking();
+        }
+        
+        // Load existing score if available
+        this.loadCurrentScore();
+        
+        console.log('✅ Lead Scoring System initialized for:', this.currentLead.identifier);
+    },
+    
+    // Initialize lead session
+    initializeLeadSession: function() {
+        // Check for existing session
+        let sessionId = localStorage.getItem(this.config.sessionKey);
+        let leadProfile = localStorage.getItem(this.config.profileKey);
+        
+        if (!sessionId) {
+            // Generate new session ID
+            sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substring(2, 15);
+            localStorage.setItem(this.config.sessionKey, sessionId);
+        }
+        
+        if (leadProfile) {
+            try {
+                this.currentLead.profile = JSON.parse(leadProfile);
+            } catch (e) {
+                console.warn('Failed to parse stored lead profile');
+            }
+        }
+        
+        this.currentLead.identifier = sessionId;
+        
+        // Get UTM parameters and referrer
+        this.currentLead.profile.utm_source = this.getUrlParameter('utm_source');
+        this.currentLead.profile.utm_medium = this.getUrlParameter('utm_medium');
+        this.currentLead.profile.utm_campaign = this.getUrlParameter('utm_campaign');
+        this.currentLead.profile.referrer = document.referrer;
+        this.currentLead.profile.first_touch_url = window.location.href;
+        
+        // Detect location from content or URL
+        this.currentLead.profile.location = this.detectLocation();
+        
+        // Detect service interest from page
+        this.currentLead.profile.service_interest = this.detectServiceInterest();
+        
+        // Save updated profile
+        this.saveLeadProfile();
+    },
+    
+    // Setup automatic tracking
+    setupAutoTracking: function() {
+        // Track page views
+        this.trackEvent('page_view', 'behavioral', {
+            page_type: this.detectPageType(),
+            page_title: document.title,
+            page_url: window.location.href,
+            referrer: document.referrer,
+            viewport_width: window.innerWidth,
+            viewport_height: window.innerHeight
+        });
+        
+        // Track session start
+        if (!sessionStorage.getItem('lead_session_started')) {
+            sessionStorage.setItem('lead_session_started', 'true');
+            
+            const sessionCount = parseInt(localStorage.getItem('lead_session_count') || '0') + 1;
+            localStorage.setItem('lead_session_count', sessionCount.toString());
+            
+            this.trackEvent('session_start', 'behavioral', {
+                session_count: sessionCount,
+                is_returning: sessionCount > 1,
+                time_of_day: new Date().getHours(),
+                day_of_week: new Date().getDay()
+            });
+        }
+        
+        // Track scroll depth
+        this.setupScrollTracking();
+        
+        // Track engagement
+        this.setupEngagementTracking();
+        
+        // Track form interactions
+        this.setupFormTracking();
+        
+        // Track contact interactions
+        this.setupContactTracking();
+        
+        // Track session end on page unload
+        this.setupSessionEndTracking();
+    },
+    
+    // Track scoring event
+    trackEvent: async function(eventType, eventCategory, eventData = {}, leadProfile = {}) {
+        try {
+            // Merge with current profile
+            const fullProfile = { ...this.currentLead.profile, ...leadProfile };
+            
+            const requestData = {
+                lead_identifier: this.currentLead.identifier,
+                event_type: eventType,
+                event_category: eventCategory,
+                event_data: {
+                    ...eventData,
+                    timestamp: new Date().toISOString(),
+                    user_agent: navigator.userAgent,
+                    screen_resolution: screen.width + 'x' + screen.height,
+                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+                },
+                page_url: window.location.href,
+                lead_profile: fullProfile
+            };
+            
+            console.log('🎯 Tracking lead event:', eventType, eventData);
+            
+            const response = await fetch(this.config.apiEndpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestData)
+            });
+            
+            if (response.ok) {
+                const result = await response.json();
+                
+                // Update current score
+                this.currentLead.score = result.current_score || 0;
+                this.currentLead.grade = result.score_grade || 'Cold';
+                this.currentLead.isQualified = result.is_qualified || false;
+                
+                console.log('✅ Lead event tracked successfully:', {
+                    score: this.currentLead.score,
+                    grade: this.currentLead.grade,
+                    qualified: this.currentLead.isQualified
+                });
+                
+                // Trigger score update event
+                this.onScoreUpdated(result);
+                
+                return result;
+            } else {
+                console.warn('⚠️ Failed to track lead event:', response.status);
+            }
+        } catch (error) {
+            console.error('❌ Lead scoring tracking error:', error);
+        }
+    },
+    
+    // Update lead profile information
+    updateLeadProfile: function(profileData) {
+        this.currentLead.profile = { ...this.currentLead.profile, ...profileData };
+        this.saveLeadProfile();
+        
+        // Track profile update event
+        this.trackEvent('profile_updated', 'demographic', {
+            updated_fields: Object.keys(profileData),
+            profile_completeness: this.calculateProfileCompleteness()
+        }, profileData);
+    },
+    
+    // Save lead profile to localStorage
+    saveLeadProfile: function() {
+        localStorage.setItem(this.config.profileKey, JSON.stringify(this.currentLead.profile));
+    },
+    
+    // Load current score from API
+    loadCurrentScore: async function() {
+        try {
+            const response = await fetch(`${this.config.leadEndpoint}/${this.currentLead.identifier}`);
+            if (response.ok) {
+                const result = await response.json();
+                if (result.success && result.lead) {
+                    this.currentLead.score = result.lead.profile.total_score || 0;
+                    this.currentLead.grade = result.lead.profile.score_grade || 'Cold';
+                    this.currentLead.isQualified = result.lead.profile.is_qualified || false;
+                }
+            }
+        } catch (error) {
+            console.warn('Could not load current lead score:', error);
+        }
+    },
+    
+    // Setup scroll tracking
+    setupScrollTracking: function() {
+        let maxScrollDepth = 0;
+        let scrollMilestones = new Set();
+        
+        window.addEventListener('scroll', () => {
+            const scrollPercentage = Math.round(
+                (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100
+            );
+            
+            maxScrollDepth = Math.max(maxScrollDepth, scrollPercentage);
+            
+            // Track scroll milestones
+            const milestones = [25, 50, 75, 90];
+            milestones.forEach(milestone => {
+                if (scrollPercentage >= milestone && !scrollMilestones.has(milestone)) {
+                    scrollMilestones.add(milestone);
+                    this.trackEvent('scroll_tracking', 'behavioral', {
+                        scroll_depth: milestone,
+                        max_scroll: maxScrollDepth,
+                        page_height: document.documentElement.scrollHeight
+                    });
+                }
+            });
+        });
+    },
+    
+    // Setup engagement tracking
+    setupEngagementTracking: function() {
+        let startTime = Date.now();
+        let interactions = 0;
+        let keystrokes = 0;
+        let mouseMovements = 0;
+        
+        // Track interactions
+        ['click', 'keydown', 'scroll', 'mousemove'].forEach(eventType => {
+            document.addEventListener(eventType, () => {
+                interactions++;
+                if (eventType === 'keydown') keystrokes++;
+                if (eventType === 'mousemove') mouseMovements++;
+            });
+        });
+        
+        // Calculate engagement score periodically
+        setInterval(() => {
+            const sessionDuration = Date.now() - startTime;
+            const engagementScore = this.calculateEngagementScore({
+                sessionDuration,
+                interactions,
+                keystrokes,
+                mouseMovements,
+                scrollDepth: Math.round((window.scrollY / document.documentElement.scrollHeight) * 100)
+            });
+            
+            if (engagementScore > 75) {
+                this.trackEvent('engagement_calculated', 'behavioral', {
+                    engagement_score: engagementScore,
+                    session_duration: sessionDuration,
+                    total_interactions: interactions
+                });
+            }
+        }, this.config.scoreUpdateInterval);
+    },
+    
+    // Setup form tracking
+    setupFormTracking: function() {
+        // Track form interactions
+        document.addEventListener('change', (e) => {
+            if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') {
+                const field = e.target.name || e.target.id;
+                const value = e.target.value;
+                
+                if (field === 'serviceCategory' && value) {
+                    this.trackEvent('form_interaction', 'interest', {
+                        field: field,
+                        action: 'select',
+                        value: value,
+                        form_type: 'service_request'
+                    });
+                    
+                    // Update lead profile
+                    this.updateLeadProfile({ service_interest: value });
+                }
+                
+                if (field === 'urgency' && value) {
+                    this.trackEvent('form_interaction', 'interest', {
+                        field: field,
+                        value: value,
+                        urgency_level: value
+                    });
+                }
+                
+                // Track email and phone inputs
+                if (field === 'customerEmail' && value && value.includes('@')) {
+                    this.updateLeadProfile({ email: value });
+                }
+                
+                if (field === 'customerPhone' && value) {
+                    this.updateLeadProfile({ phone: value });
+                }
+                
+                if (field === 'customerName' && value) {
+                    this.updateLeadProfile({ name: value });
+                }
+            }
+        });
+        
+        // Track form focus events
+        document.addEventListener('focus', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+                this.trackEvent('form_interaction', 'behavioral', {
+                    action: 'focus',
+                    field: e.target.name || e.target.id,
+                    form_type: 'service_request'
+                });
+            }
+        }, true);
+        
+        // Track form submissions
+        document.addEventListener('submit', (e) => {
+            if (e.target.id === 'serviceRequestForm') {
+                const formData = new FormData(e.target);
+                const formObject = {};
+                for (let [key, value] of formData.entries()) {
+                    formObject[key] = value;
+                }
+                
+                // Calculate problem description quality
+                const problemLength = (formObject.problemDescription || '').length;
+                
+                this.trackEvent('form_interaction', 'intent', {
+                    action: 'submit_attempt',
+                    form_type: 'service_request',
+                    fields_filled: Object.keys(formObject).length,
+                    problem_description_length: problemLength,
+                    has_detailed_description: problemLength > 20
+                });
+                
+                // Update lead profile with form data
+                this.updateLeadProfile({
+                    email: formObject.customerEmail,
+                    phone: formObject.customerPhone,
+                    name: formObject.customerName,
+                    service_interest: formObject.serviceCategory,
+                    location: formObject.customerCity
+                });
+            }
+        });
+    },
+    
+    // Setup contact interaction tracking
+    setupContactTracking: function() {
+        // Track phone clicks
+        document.addEventListener('click', (e) => {
+            const target = e.target.closest('a[href*="tel:"]');
+            if (target) {
+                this.trackEvent('click_interaction', 'intent', {
+                    target: 'phone_number',
+                    contact_method: 'phone',
+                    href: target.href
+                });
+            }
+        });
+        
+        // Track WhatsApp clicks
+        document.addEventListener('click', (e) => {
+            const target = e.target.closest('a[href*="whatsapp"], a[href*="wa.me"]');
+            if (target) {
+                this.trackEvent('click_interaction', 'intent', {
+                    target: 'whatsapp',
+                    contact_method: 'whatsapp',
+                    href: target.href
+                });
+            }
+        });
+        
+        // Track email clicks
+        document.addEventListener('click', (e) => {
+            const target = e.target.closest('a[href*="mailto:"]');
+            if (target) {
+                this.trackEvent('click_interaction', 'intent', {
+                    target: 'email',
+                    contact_method: 'email',
+                    href: target.href
+                });
+            }
+        });
+    },
+    
+    // Setup session end tracking
+    setupSessionEndTracking: function() {
+        let sessionStartTime = Date.now();
+        
+        window.addEventListener('beforeunload', () => {
+            const sessionDuration = Date.now() - sessionStartTime;
+            const pageViews = parseInt(sessionStorage.getItem('page_view_count') || '1');
+            
+            // Use sendBeacon for reliable tracking
+            if (navigator.sendBeacon) {
+                const eventData = {
+                    lead_identifier: this.currentLead.identifier,
+                    event_type: 'session_end',
+                    event_category: 'behavioral',
+                    event_data: {
+                        session_duration: sessionDuration,
+                        page_views: pageViews,
+                        bounce: pageViews === 1 && sessionDuration < 10000
+                    },
+                    page_url: window.location.href,
+                    lead_profile: this.currentLead.profile
+                };
+                
+                navigator.sendBeacon(this.config.apiEndpoint, JSON.stringify(eventData));
+            }
+        });
+    },
+    
+    // Utility functions
+    getUrlParameter: function(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    },
+    
+    detectPageType: function() {
+        const path = window.location.pathname.toLowerCase();
+        
+        if (path.includes('televizyon')) return 'televizyon_tamiri';
+        if (path.includes('bilgisayar')) return 'bilgisayar_tamiri';
+        if (path.includes('beyaz-esya')) return 'beyaz_esya_tamiri';
+        if (path.includes('klima')) return 'klima_tamiri';
+        if (path.includes('elektronik')) return 'elektronik_tamiri';
+        if (path.includes('iletisim')) return 'contact';
+        if (path.includes('hakkimizda')) return 'about';
+        if (path === '/' || path === '') return 'home';
+        
+        return 'other';
+    },
+    
+    detectLocation: function() {
+        const content = document.body.textContent.toLowerCase();
+        const cities = ['istanbul', 'ankara', 'izmir', 'bursa', 'antalya', 'adana', 'konya', 'gaziantep'];
+        
+        for (const city of cities) {
+            if (content.includes(city) || window.location.href.toLowerCase().includes(city)) {
+                return city;
+            }
+        }
+        
+        return null;
+    },
+    
+    detectServiceInterest: function() {
+        const pageType = this.detectPageType();
+        if (pageType !== 'home' && pageType !== 'other') {
+            return pageType;
+        }
+        
+        // Check URL parameters
+        const serviceParam = this.getUrlParameter('service');
+        if (serviceParam) return serviceParam;
+        
+        return null;
+    },
+    
+    calculateEngagementScore: function(metrics) {
+        let score = 0;
+        
+        // Time on page (max 30 points)
+        score += Math.min((metrics.sessionDuration / 1000 / 60) * 5, 30);
+        
+        // Interactions (max 25 points) 
+        score += Math.min(metrics.interactions * 0.5, 25);
+        
+        // Scroll depth (max 20 points)
+        score += Math.min(metrics.scrollDepth * 0.2, 20);
+        
+        // Keystrokes - indicates engagement (max 15 points)
+        score += Math.min(metrics.keystrokes * 0.3, 15);
+        
+        // Mouse movements - indicates attention (max 10 points)
+        score += Math.min(metrics.mouseMovements * 0.01, 10);
+        
+        return Math.min(Math.round(score), 100);
+    },
+    
+    calculateProfileCompleteness: function() {
+        const requiredFields = ['email', 'name', 'phone', 'service_interest', 'location'];
+        const filledFields = requiredFields.filter(field => this.currentLead.profile[field]);
+        return Math.round((filledFields.length / requiredFields.length) * 100);
+    },
+    
+    // Event handler for score updates
+    onScoreUpdated: function(scoreData) {
+        // Trigger custom event for other systems to listen to
+        window.dispatchEvent(new CustomEvent('leadScoreUpdated', {
+            detail: {
+                score: scoreData.current_score,
+                grade: scoreData.score_grade,
+                isQualified: scoreData.is_qualified,
+                leadUuid: scoreData.lead_uuid
+            }
+        }));
+        
+        // Visual notification for qualified leads (optional)
+        if (scoreData.is_qualified && !this.currentLead.isQualified) {
+            this.showQualificationNotification();
+        }
+        
+        // Update any UI elements showing score
+        this.updateScoreDisplay(scoreData);
+    },
+    
+    // Show qualification notification
+    showQualificationNotification: function() {
+        console.log('🎉 Lead qualified! Score:', this.currentLead.score);
+        
+        // You can add a visual notification here
+        // For example, a celebration animation or modal
+    },
+    
+    // Update score display elements
+    updateScoreDisplay: function(scoreData) {
+        // Update any elements that show lead score
+        const scoreElements = document.querySelectorAll('[data-lead-score]');
+        scoreElements.forEach(element => {
+            element.textContent = scoreData.current_score || 0;
+        });
+        
+        const gradeElements = document.querySelectorAll('[data-lead-grade]');
+        gradeElements.forEach(element => {
+            element.textContent = scoreData.score_grade || 'Cold';
+            element.className = `lead-grade grade-${(scoreData.score_grade || 'cold').toLowerCase()}`;
+        });
+    },
+    
+    // Public API methods
+    api: {
+        // Manual event tracking
+        trackCustomEvent: function(eventType, category, data) {
+            return window.LeadScoringManager.trackEvent(eventType, category, data);
+        },
+        
+        // Update profile
+        updateProfile: function(profileData) {
+            window.LeadScoringManager.updateLeadProfile(profileData);
+        },
+        
+        // Get current score
+        getCurrentScore: function() {
+            return {
+                score: window.LeadScoringManager.currentLead.score,
+                grade: window.LeadScoringManager.currentLead.grade,
+                isQualified: window.LeadScoringManager.currentLead.isQualified
+            };
+        },
+        
+        // Get lead identifier
+        getLeadId: function() {
+            return window.LeadScoringManager.currentLead.identifier;
+        }
+    }
+};
+
+// Auto-initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Small delay to ensure other systems are loaded
+    setTimeout(() => {
+        window.LeadScoringManager.init();
+    }, 200);
+});
+
+// Global helper functions for manual use
+window.trackLeadEvent = function(eventType, category, data) {
+    return window.LeadScoringManager.api.trackCustomEvent(eventType, category, data);
+};
+
+window.updateLeadProfile = function(profileData) {
+    return window.LeadScoringManager.api.updateProfile(profileData);
+};
+
+window.getLeadScore = function() {
+    return window.LeadScoringManager.api.getCurrentScore();
+};
+
+// Listen for lead score updates
+window.addEventListener('leadScoreUpdated', function(e) {
+    console.log('🎯 Lead score updated:', e.detail);
+    
+    // Integration with GA4
+    if (typeof window.GA4_EVENTS !== 'undefined') {
+        window.GA4_EVENTS.trackCustomEvent('lead_score_updated', {
+            score: e.detail.score,
+            grade: e.detail.grade,
+            is_qualified: e.detail.isQualified
+        });
+    }
+    
+    // Integration with Facebook Pixel
+    if (typeof window.FB_PIXEL_EVENTS !== 'undefined' && e.detail.isQualified) {
+        window.FB_PIXEL_EVENTS.trackServiceRequestConversion({
+            serviceCategory: 'qualified_lead',
+            leadScore: e.detail.score
+        }, 100); // Qualified lead value
+    }
+});
+
+console.log('✅ Lead Scoring System loaded successfully!');
 
 // =============================================================================
 // GARANTOR360 - KVKV Compliant Cookie Consent Management System

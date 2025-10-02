@@ -3532,6 +3532,20 @@ app.get('/admin', (c) => {
                                 </button>
                             </li>
                             <li>
+                                <a href="/admin/realtime-analytics" 
+                                   class="nav-item w-full text-left px-4 py-3 text-white rounded-lg hover:bg-blue-700 flex items-center gap-3 block">
+                                    <i class="fas fa-chart-line"></i>
+                                    Real-time Analytics
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/kvkv-dashboard" 
+                                   class="nav-item w-full text-left px-4 py-3 text-white rounded-lg hover:bg-blue-700 flex items-center gap-3 block">
+                                    <i class="fas fa-cookie-bite"></i>
+                                    KVKV Cookie Consent
+                                </a>
+                            </li>
+                            <li>
                                 <button onclick="showSection('payments')" 
                                         class="nav-item w-full text-left px-4 py-3 text-white rounded-lg hover:bg-blue-700 flex items-center gap-3">
                                     <i class="fas fa-credit-card"></i>
@@ -14669,6 +14683,144 @@ app.get('/', async (c) => {
         }
 
         </script>
+        
+        <!-- KVKV Cookie Consent System -->
+        <script src="/static/kvkv-cookie-consent.js"></script>
+        
+        <!-- Enhanced Event Tracking System -->
+        <script src="/static/enhanced-event-tracker.js"></script>
+        
+        <script>
+            // Listen for consent updates to enable/disable tracking
+            window.addEventListener('kvkv-consent-updated', function(e) {
+                const settings = e.detail;
+                console.log('KVKV Consent updated:', settings);
+                
+                // Update Google Analytics consent
+                if (window.gtag) {
+                    gtag('consent', 'update', {
+                        'analytics_storage': settings.analytics ? 'granted' : 'denied'
+                    });
+                }
+                
+                // Update Facebook Pixel consent  
+                if (window.fbq) {
+                    if (settings.marketing) {
+                        fbq('consent', 'grant');
+                    } else {
+                        fbq('consent', 'revoke');
+                    }
+                }
+                
+                // Update Enhanced Event Tracker consent
+                if (window.enhancedTracker) {
+                    window.enhancedTracker.consentSettings = settings;
+                    console.log('Enhanced Event Tracker consent updated:', settings);
+                }
+                
+                // Re-initialize tracking if consent was granted
+                if (settings.analytics || settings.marketing) {
+                    setTimeout(function() {
+                        if (typeof initializeAnalyticsTracking === 'function') {
+                            initializeAnalyticsTracking();
+                        }
+                    }, 500);
+                }
+            });
+            
+            // Enhanced event tracking for specific elements
+            document.addEventListener('DOMContentLoaded', function() {
+                // Service category buttons
+                document.querySelectorAll('[data-service-type]').forEach(function(button) {
+                    button.addEventListener('click', function() {
+                        const serviceType = this.getAttribute('data-service-type');
+                        if (window.track) {
+                            window.track('service_category_selected', {
+                                event_category: 'engagement',
+                                event_label: serviceType,
+                                service_type: serviceType,
+                                button_location: 'main_page'
+                            });
+                        }
+                    });
+                });
+                
+                // Phone number clicks
+                document.querySelectorAll('a[href^="tel:"]').forEach(function(link) {
+                    link.addEventListener('click', function() {
+                        if (window.track) {
+                            window.track('phone_number_clicked', {
+                                event_category: 'conversion',
+                                event_label: this.href,
+                                phone_number: this.textContent.trim()
+                            });
+                        }
+                    });
+                });
+                
+                // WhatsApp clicks  
+                document.querySelectorAll('a[href*="whatsapp"], a[href*="wa.me"]').forEach(function(link) {
+                    link.addEventListener('click', function() {
+                        if (window.track) {
+                            window.track('whatsapp_clicked', {
+                                event_category: 'conversion',
+                                event_label: this.href,
+                                contact_method: 'whatsapp'
+                            });
+                        }
+                    });
+                });
+                
+                // CTA buttons
+                document.querySelectorAll('.cta-button, .btn-primary').forEach(function(button) {
+                    button.addEventListener('click', function() {
+                        if (window.track) {
+                            window.track('cta_button_clicked', {
+                                event_category: 'engagement',
+                                event_label: this.textContent.trim(),
+                                button_text: this.textContent.trim(),
+                                button_location: 'main_page'
+                            });
+                        }
+                    });
+                });
+                
+                // Time-based engagement tracking
+                setTimeout(function() {
+                    if (window.track) {
+                        window.track('engagement_10s', {
+                            event_category: 'engagement',
+                            event_label: '10 seconds on page',
+                            engagement_time: 10
+                        });
+                    }
+                }, 10000);
+                
+                setTimeout(function() {
+                    if (window.track) {
+                        window.track('engagement_30s', {
+                            event_category: 'engagement', 
+                            event_label: '30 seconds on page',
+                            engagement_time: 30
+                        });
+                    }
+                }, 30000);
+            });
+            
+            // Enhanced form tracking
+            function trackFormSubmission(formId, formData) {
+                if (window.track) {
+                    window.track('form_submitted_enhanced', {
+                        event_category: 'conversion',
+                        event_label: formId,
+                        form_id: formId,
+                        form_data: formData,
+                        conversion_value: formId.includes('service') ? 50 : 25
+                    });
+                }
+            }
+        </script>
+        
         <script src="/static/form-handler.js"></script>
     </body>
     </html>`
@@ -15794,6 +15946,8392 @@ app.get('/api/admin/security/dashboard', requireAdminAuth(), async (c) => {
   } catch (error) {
     console.error('Security dashboard error:', error)
     return c.json({ error: 'Security dashboard failed' }, 500)
+  }
+})
+
+// IP Management Admin Panel Route
+app.get('/admin/ip-management', (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>IP Yönetimi - GARANTOR360 Admin</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    </head>
+    <body class="bg-gray-900 text-white">
+        <div class="container mx-auto p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h1 class="text-3xl font-bold">
+                    <i class="fas fa-shield-alt mr-2"></i>
+                    IP Yönetimi & Güvenlik Paneli
+                </h1>
+                <a href="/admin" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Admin Panel'e Dön
+                </a>
+            </div>
+
+            <!-- Hızlı İstatistikler -->
+            <div class="grid grid-cols-4 gap-4 mb-6">
+                <div class="bg-red-900/30 border border-red-500 rounded-lg p-4 text-center">
+                    <div id="blockedIPsCount" class="text-2xl font-bold text-red-400">-</div>
+                    <div class="text-sm text-red-300">Engellenmiş IP</div>
+                </div>
+                <div class="bg-orange-900/30 border border-orange-500 rounded-lg p-4 text-center">
+                    <div id="highThreatCount" class="text-2xl font-bold text-orange-400">-</div>
+                    <div class="text-sm text-orange-300">Yüksek Tehdit</div>
+                </div>
+                <div class="bg-blue-900/30 border border-blue-500 rounded-lg p-4 text-center">
+                    <div id="todayDetections" class="text-2xl font-bold text-blue-400">-</div>
+                    <div class="text-sm text-blue-300">Bugünkü Tespit</div>
+                </div>
+                <div class="bg-green-900/30 border border-green-500 rounded-lg p-4 text-center">
+                    <div class="text-2xl font-bold text-green-400" id="systemStatus">🟢</div>
+                    <div class="text-sm text-green-300">Sistem Durumu</div>
+                </div>
+            </div>
+
+            <!-- IP Engelleme Formu -->
+            <div class="bg-gray-800 rounded-lg p-6 mb-6">
+                <h2 class="text-xl font-semibold mb-4">
+                    <i class="fas fa-ban mr-2"></i>
+                    IP Adresini Engelle
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">IP Adresi</label>
+                        <input type="text" id="blockIpInput" placeholder="192.168.1.100" 
+                               class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Engelleme Nedeni</label>
+                        <select id="blockReasonSelect" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:border-blue-500">
+                            <option value="spam">Spam Girişimleri</option>
+                            <option value="bot_activity">Bot Aktivitesi</option>
+                            <option value="malicious_activity">Zararlı Aktivite</option>
+                            <option value="fraud_attempts">Dolandırıcılık Girişimi</option>
+                            <option value="abuse">Kötüye Kullanım</option>
+                            <option value="manual_admin">Manuel Admin Kararı</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="flex gap-4">
+                    <button onclick="blockIP()" class="bg-red-600 hover:bg-red-700 px-6 py-2 rounded font-medium transition-colors">
+                        <i class="fas fa-ban mr-2"></i>
+                        IP Adresini Engelle
+                    </button>
+                    <button onclick="unblockIP()" class="bg-green-600 hover:bg-green-700 px-6 py-2 rounded font-medium transition-colors">
+                        <i class="fas fa-check mr-2"></i>
+                        IP Engelini Kaldır
+                    </button>
+                </div>
+            </div>
+
+            <!-- IP Sorgulama -->
+            <div class="bg-gray-800 rounded-lg p-6 mb-6">
+                <h2 class="text-xl font-semibold mb-4">
+                    <i class="fas fa-search mr-2"></i>
+                    IP Durumu Sorgula
+                </h2>
+                
+                <div class="flex gap-4 mb-4">
+                    <input type="text" id="checkIpInput" placeholder="IP adresini girin..." 
+                           class="flex-1 bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:border-blue-500">
+                    <button onclick="checkIPStatus()" class="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded font-medium transition-colors">
+                        <i class="fas fa-search mr-2"></i>
+                        Sorgula
+                    </button>
+                </div>
+                
+                <div id="ipStatusResult" class="hidden bg-gray-700 rounded-lg p-4"></div>
+            </div>
+
+            <!-- Güvenlik Olayları -->
+            <div class="bg-gray-800 rounded-lg p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold">
+                        <i class="fas fa-chart-line mr-2"></i>
+                        Güvenlik İstatistikleri
+                    </h2>
+                    <button onclick="refreshSecurityStats()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm transition-colors">
+                        <i class="fas fa-sync mr-1"></i>
+                        Yenile
+                    </button>
+                </div>
+                
+                <div id="securityStats" class="space-y-4">
+                    <div class="text-gray-400">Yükleniyor...</div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const adminToken = 'test-token-123';
+            
+            // IP Engelleme
+            async function blockIP() {
+                const ipAddress = document.getElementById('blockIpInput').value.trim();
+                const reason = document.getElementById('blockReasonSelect').value;
+                
+                if (!ipAddress) {
+                    showAlert('Lütfen geçerli bir IP adresi girin!', 'error');
+                    return;
+                }
+                
+                try {
+                    const response = await fetch('/api/security/suspicious-activity', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            activityType: 'manual_block',
+                            confidence: 100,
+                            indicators: ['admin_manual_block', reason],
+                            userAgent: 'Admin Panel - Manual IP Block',
+                            behavioralData: {
+                                manualBlock: true,
+                                targetIP: ipAddress,
+                                reason: reason,
+                                adminAction: true,
+                                timestamp: new Date().toISOString()
+                            }
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        showAlert(\`✅ IP \${ipAddress} başarıyla engellendi!\\nTehdit Seviyesi: \${result.threatLevel}\`, 'success');
+                        document.getElementById('blockIpInput').value = '';
+                        refreshSecurityStats();
+                    } else {
+                        showAlert(\`❌ Engelleme başarısız: \${result.error || 'Bilinmeyen hata'}\`, 'error');
+                    }
+                } catch (error) {
+                    showAlert(\`❌ Bağlantı hatası: \${error.message}\`, 'error');
+                }
+            }
+            
+            // IP Engelini Kaldırma (Placeholder - implement if needed)
+            async function unblockIP() {
+                const ipAddress = document.getElementById('blockIpInput').value.trim();
+                
+                if (!ipAddress) {
+                    showAlert('Lütfen geçerli bir IP adresi girin!', 'error');
+                    return;
+                }
+                
+                // This would need a specific API endpoint to unblock IPs
+                showAlert('IP engeli kaldırma özelliği yakında eklenecek.', 'info');
+            }
+            
+            // IP Durumu Sorgulama
+            async function checkIPStatus() {
+                const ipAddress = document.getElementById('checkIpInput').value.trim();
+                const resultDiv = document.getElementById('ipStatusResult');
+                
+                if (!ipAddress) {
+                    showAlert('Lütfen geçerli bir IP adresi girin!', 'error');
+                    return;
+                }
+                
+                try {
+                    const response = await fetch(\`/api/security/ip-status/\${ipAddress}\`, {
+                        headers: { 'Authorization': \`Bearer \${adminToken}\` }
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.exists) {
+                        resultDiv.innerHTML = \`
+                            <div class="space-y-3">
+                                <h3 class="font-semibold text-lg">IP Durumu: \${ipAddress}</h3>
+                                <div class="grid grid-cols-2 gap-4 text-sm">
+                                    <div class="bg-gray-600 p-3 rounded">
+                                        <strong>Durum:</strong><br>
+                                        <span class="\${result.ipInfo.is_blocked ? 'text-red-400' : 'text-green-400'}">
+                                            \${result.ipInfo.is_blocked ? '🚫 ENGELLİ' : '✅ AKTİF'}
+                                        </span>
+                                    </div>
+                                    <div class="bg-gray-600 p-3 rounded">
+                                        <strong>Tehdit Seviyesi:</strong><br>
+                                        <span class="text-yellow-400 font-bold">\${result.ipInfo.threat_level}/100</span>
+                                    </div>
+                                    <div class="bg-gray-600 p-3 rounded">
+                                        <strong>Toplam İstek:</strong><br>
+                                        <span class="text-blue-400">\${result.ipInfo.request_count}</span>
+                                    </div>
+                                    <div class="bg-gray-600 p-3 rounded">
+                                        <strong>İlk Görülme:</strong><br>
+                                        <span class="text-gray-300">\${new Date(result.ipInfo.first_seen).toLocaleString('tr-TR')}</span>
+                                    </div>
+                                </div>
+                                \${result.ipInfo.block_reason ? \`
+                                    <div class="bg-red-900/30 border border-red-500 p-3 rounded">
+                                        <strong class="text-red-300">Engelleme Nedeni:</strong><br>
+                                        <span class="text-red-200">\${result.ipInfo.block_reason}</span>
+                                    </div>
+                                \` : ''}
+                            </div>
+                        \`;
+                        resultDiv.classList.remove('hidden');
+                    } else {
+                        resultDiv.innerHTML = \`
+                            <div class="bg-green-900/30 border border-green-500 p-4 rounded text-center">
+                                <i class="fas fa-check-circle text-green-400 text-2xl mb-2"></i>
+                                <div class="text-green-300">IP \${ipAddress} sistemde kayıtlı değil</div>
+                                <div class="text-green-200 text-sm">Temiz görünüyor - güvenlik tehdidi tespit edilmemiş</div>
+                            </div>
+                        \`;
+                        resultDiv.classList.remove('hidden');
+                    }
+                } catch (error) {
+                    showAlert(\`❌ Sorgulama hatası: \${error.message}\`, 'error');
+                }
+            }
+            
+            // Güvenlik İstatistiklerini Yenile
+            async function refreshSecurityStats() {
+                const statsDiv = document.getElementById('securityStats');
+                statsDiv.innerHTML = '<div class="text-gray-400">Yükleniyor...</div>';
+                
+                try {
+                    const response = await fetch('/api/admin/security/dashboard', {
+                        headers: { 'Authorization': \`Bearer \${adminToken}\` }
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        // Update quick stats
+                        document.getElementById('blockedIPsCount').textContent = result.stats.blockedIps;
+                        document.getElementById('highThreatCount').textContent = result.stats.highThreatIps;
+                        document.getElementById('todayDetections').textContent = result.stats.todayDetections;
+                        
+                        // Update detailed stats
+                        statsDiv.innerHTML = \`
+                            \${result.stats.topDetectionTypes && result.stats.topDetectionTypes.length > 0 ? \`
+                                <div class="mb-4">
+                                    <h4 class="font-semibold mb-3 text-yellow-400">
+                                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                                        En Sık Tespit Edilen Tehditler
+                                    </h4>
+                                    <div class="space-y-2">
+                                        \${result.stats.topDetectionTypes.map(type => \`
+                                            <div class="flex justify-between items-center bg-gray-700 p-3 rounded-lg">
+                                                <div>
+                                                    <span class="font-medium">\${type.detection_type.replace('_', ' ').toUpperCase()}</span>
+                                                    <div class="text-xs text-gray-400">Güvenlik tehdidi türü</div>
+                                                </div>
+                                                <div class="text-right">
+                                                    <div class="font-bold text-red-400">\${type.count}</div>
+                                                    <div class="text-xs text-gray-400">olay</div>
+                                                </div>
+                                            </div>
+                                        \`).join('')}
+                                    </div>
+                                </div>
+                            \` : ''}
+                            
+                            <div class="bg-gray-700 p-4 rounded-lg">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <i class="fas fa-shield-check text-green-400 mr-2"></i>
+                                        <span class="font-medium">Güvenlik Sistemi Durumu</span>
+                                    </div>
+                                    <span class="text-green-400 font-bold">🟢 AKTİF</span>
+                                </div>
+                                <div class="text-sm text-gray-400 mt-2">
+                                    Son güncelleme: \${new Date().toLocaleString('tr-TR')}
+                                </div>
+                            </div>
+                        \`;
+                    }
+                } catch (error) {
+                    statsDiv.innerHTML = \`<div class="text-red-400">❌ Veri yüklenemedi: \${error.message}</div>\`;
+                }
+            }
+            
+            // Alert gösterme fonksiyonu
+            function showAlert(message, type = 'info') {
+                const colors = {
+                    success: 'bg-green-900 border-green-500 text-green-200',
+                    error: 'bg-red-900 border-red-500 text-red-200',
+                    info: 'bg-blue-900 border-blue-500 text-blue-200'
+                };
+                
+                const alertDiv = document.createElement('div');
+                alertDiv.className = \`fixed top-4 right-4 \${colors[type]} border rounded-lg p-4 shadow-lg z-50 max-w-md\`;
+                alertDiv.innerHTML = \`
+                    <div class="flex justify-between items-start">
+                        <span>\${message}</span>
+                        <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-lg">&times;</button>
+                    </div>
+                \`;
+                
+                document.body.appendChild(alertDiv);
+                
+                // 5 saniye sonra otomatik kaldır
+                setTimeout(() => {
+                    if (alertDiv.parentElement) {
+                        alertDiv.remove();
+                    }
+                }, 5000);
+            }
+            
+            // Sayfa yüklendiğinde istatistikleri yükle
+            document.addEventListener('DOMContentLoaded', function() {
+                refreshSecurityStats();
+            });
+        </script>
+    </body>
+    </html>
+  `)
+})
+
+// =============================================================================
+// Dynamic Meta Tags System API Routes - Task 7 Backend Implementation
+// =============================================================================
+
+// Get meta tags for a specific page
+app.get('/api/meta-tags/:pageType', async (c) => {
+  const { DB } = c.env
+  const pageType = c.req.param('pageType')
+  const pageIdentifier = c.req.query('identifier') || 'main'
+  const language = c.req.query('lang') || 'tr'
+  
+  try {
+    // Get meta tags from database
+    const metaTags = await DB.prepare(`
+      SELECT * FROM dynamic_meta_tags 
+      WHERE page_type = ? 
+        AND (page_identifier = ? OR page_identifier IS NULL)
+        AND language_code = ?
+        AND is_active = 1
+      ORDER BY priority_score DESC, created_at DESC
+      LIMIT 1
+    `).bind(pageType, pageIdentifier, language).first()
+    
+    if (metaTags) {
+      return c.json({
+        success: true,
+        metaTags,
+        cached: true
+      })
+    }
+    
+    // If no specific meta tags found, generate from template
+    const template = await DB.prepare(`
+      SELECT * FROM meta_tag_templates 
+      WHERE page_type = ? AND is_active = 1
+      LIMIT 1
+    `).bind(pageType).first()
+    
+    if (template) {
+      // Get variables for template processing
+      const { results: variables } = await DB.prepare(`
+        SELECT variable_key, variable_data FROM meta_variables WHERE is_active = 1
+      `).all()
+      
+      const variableMap = {}
+      variables.forEach(v => {
+        try {
+          variableMap[v.variable_key] = JSON.parse(v.variable_data)
+        } catch (e) {
+          variableMap[v.variable_key] = v.variable_data
+        }
+      })
+      
+      // Generate meta tags from template (basic implementation)
+      const generatedMeta = {
+        page_type: pageType,
+        page_identifier: pageIdentifier,
+        language_code: language,
+        meta_title: template.title_template || `GARANTOR360 - ${pageType}`,
+        meta_description: template.description_template || 'Professional services by GARANTOR360',
+        og_title: template.og_title_template || template.title_template,
+        og_description: template.og_description_template || template.description_template,
+        twitter_title: template.twitter_title_template || template.title_template,
+        twitter_description: template.twitter_description_template || template.description_template,
+        canonical_url: `https://garantor360.pages.dev/${pageType}`,
+        robots_meta: 'index,follow',
+        priority_score: 50,
+        auto_generate: true
+      }
+      
+      return c.json({
+        success: true,
+        metaTags: generatedMeta,
+        cached: false,
+        generated: true
+      })
+    }
+    
+    // Fallback default meta tags
+    const defaultMeta = {
+      page_type: pageType,
+      page_identifier: pageIdentifier,
+      language_code: language,
+      meta_title: 'GARANTOR360 - Professional Home Services',
+      meta_description: 'Professional TV repair, appliance service, and home electronics solutions.',
+      og_title: 'GARANTOR360 - Home Services',
+      og_description: 'Professional home services and electronics repair.',
+      og_image: '/static/images/garantor360-og-image.jpg',
+      og_url: `https://garantor360.pages.dev/${pageType}`,
+      twitter_card: 'summary_large_image',
+      twitter_title: 'GARANTOR360 - Home Services',
+      twitter_description: 'Professional home services and electronics repair.',
+      twitter_image: '/static/images/garantor360-twitter-card.jpg',
+      canonical_url: `https://garantor360.pages.dev/${pageType}`,
+      robots_meta: 'index,follow'
+    }
+    
+    return c.json({
+      success: true,
+      metaTags: defaultMeta,
+      cached: false,
+      fallback: true
+    })
+    
+  } catch (error) {
+    console.error('Meta tags fetch error:', error)
+    return c.json({ error: 'Failed to fetch meta tags' }, 500)
+  }
+})
+
+// Create or update meta tags for a page
+app.post('/api/admin/meta-tags', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const {
+      pageType,
+      pageIdentifier = 'main',
+      languageCode = 'tr',
+      metaTitle,
+      metaDescription,
+      metaKeywords,
+      canonicalUrl,
+      ogTitle,
+      ogDescription,
+      ogImage,
+      ogUrl,
+      ogType = 'website',
+      twitterTitle,
+      twitterDescription,
+      twitterImage,
+      twitterCard = 'summary_large_image',
+      robotsMeta = 'index,follow',
+      businessHours,
+      serviceArea,
+      priceRange,
+      contactPhone,
+      priorityScore = 50,
+      isActive = true,
+      notes
+    } = await c.req.json()
+    
+    if (!pageType) {
+      return c.json({ error: 'Page type is required' }, 400)
+    }
+    
+    // Insert or update meta tags
+    const result = await DB.prepare(`
+      INSERT OR REPLACE INTO dynamic_meta_tags (
+        page_type, page_identifier, language_code,
+        meta_title, meta_description, meta_keywords, canonical_url,
+        og_title, og_description, og_image, og_url, og_type,
+        twitter_title, twitter_description, twitter_image, twitter_card,
+        robots_meta, business_hours, service_area, price_range, contact_phone,
+        priority_score, is_active, notes, updated_at, updated_by
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, 'admin')
+    `).bind(
+      pageType, pageIdentifier, languageCode,
+      metaTitle, metaDescription, metaKeywords, canonicalUrl,
+      ogTitle, ogDescription, ogImage, ogUrl, ogType,
+      twitterTitle, twitterDescription, twitterImage, twitterCard,
+      robotsMeta, businessHours, serviceArea, priceRange, contactPhone,
+      priorityScore, isActive ? 1 : 0, notes
+    ).run()
+    
+    SystemLogger.info('SEO', 'Meta tags updated', {
+      pageType,
+      pageIdentifier,
+      metaTagId: result.meta.last_row_id
+    })
+    
+    return c.json({
+      success: true,
+      metaTagId: result.meta.last_row_id,
+      message: 'Meta tags updated successfully'
+    })
+    
+  } catch (error) {
+    console.error('Meta tags update error:', error)
+    return c.json({ error: 'Failed to update meta tags' }, 500)
+  }
+})
+
+// Get all meta tags for admin management
+app.get('/api/admin/meta-tags', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  const { page = '1', limit = '20', pageType = '', active = '' } = c.req.query()
+  
+  try {
+    let whereClause = '1=1'
+    const bindings = []
+    
+    if (pageType) {
+      whereClause += ' AND page_type = ?'
+      bindings.push(pageType)
+    }
+    
+    if (active !== '') {
+      whereClause += ' AND is_active = ?'
+      bindings.push(active === 'true' ? 1 : 0)
+    }
+    
+    const offset = (parseInt(page) - 1) * parseInt(limit)
+    bindings.push(parseInt(limit), offset)
+    
+    const { results: metaTags } = await DB.prepare(`
+      SELECT * FROM dynamic_meta_tags 
+      WHERE ${whereClause}
+      ORDER BY priority_score DESC, updated_at DESC
+      LIMIT ? OFFSET ?
+    `).bind(...bindings).all()
+    
+    const totalCount = await DB.prepare(`
+      SELECT COUNT(*) as count FROM dynamic_meta_tags WHERE ${whereClause}
+    `).bind(...bindings.slice(0, -2)).first()
+    
+    return c.json({
+      success: true,
+      metaTags,
+      pagination: {
+        page: parseInt(page),
+        limit: parseInt(limit),
+        total: totalCount?.count || 0,
+        totalPages: Math.ceil((totalCount?.count || 0) / parseInt(limit))
+      }
+    })
+    
+  } catch (error) {
+    console.error('Meta tags list error:', error)
+    return c.json({ error: 'Failed to fetch meta tags list' }, 500)
+  }
+})
+
+// Delete meta tags
+app.delete('/api/admin/meta-tags/:id', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  const metaTagId = c.req.param('id')
+  
+  try {
+    const result = await DB.prepare(`
+      DELETE FROM dynamic_meta_tags WHERE id = ?
+    `).bind(metaTagId).run()
+    
+    if (result.meta.changes === 0) {
+      return c.json({ error: 'Meta tag not found' }, 404)
+    }
+    
+    SystemLogger.info('SEO', 'Meta tags deleted', { metaTagId })
+    
+    return c.json({
+      success: true,
+      message: 'Meta tags deleted successfully'
+    })
+    
+  } catch (error) {
+    console.error('Meta tags delete error:', error)
+    return c.json({ error: 'Failed to delete meta tags' }, 500)
+  }
+})
+
+// SEO Performance tracking
+app.post('/api/seo/track-performance', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const {
+      pageUrl,
+      pageType,
+      pageIdentifier = 'main',
+      performanceData = {}
+    } = await c.req.json()
+    
+    if (!pageUrl) {
+      return c.json({ error: 'Page URL is required' }, 400)
+    }
+    
+    // Find corresponding meta tag
+    const metaTag = await DB.prepare(`
+      SELECT id FROM dynamic_meta_tags 
+      WHERE page_type = ? AND page_identifier = ? AND is_active = 1
+      LIMIT 1
+    `).bind(pageType, pageIdentifier).first()
+    
+    if (!metaTag) {
+      return c.json({ error: 'Meta tag configuration not found' }, 404)
+    }
+    
+    // Update or insert performance data
+    const today = new Date().toISOString().split('T')[0]
+    
+    await DB.prepare(`
+      INSERT OR REPLACE INTO seo_performance (
+        meta_tag_id, page_url, page_views, unique_visitors, bounce_rate,
+        avg_session_duration, conversion_rate, date_recorded, created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+    `).bind(
+      metaTag.id,
+      pageUrl,
+      performanceData.pageViews || 0,
+      performanceData.uniqueVisitors || 0,
+      performanceData.bounceRate || 0,
+      performanceData.avgSessionDuration || 0,
+      performanceData.conversionRate || 0,
+      today
+    ).run()
+    
+    return c.json({
+      success: true,
+      message: 'SEO performance data tracked'
+    })
+    
+  } catch (error) {
+    console.error('SEO performance tracking error:', error)
+    return c.json({ error: 'Failed to track SEO performance' }, 500)
+  }
+})
+
+// Get SEO performance analytics
+app.get('/api/admin/seo/analytics', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  const { days = '30', pageType = '' } = c.req.query()
+  
+  try {
+    let whereClause = `sp.date_recorded >= date('now', '-${parseInt(days)} days')`
+    const bindings = []
+    
+    if (pageType) {
+      whereClause += ' AND dmt.page_type = ?'
+      bindings.push(pageType)
+    }
+    
+    // Get performance trends
+    const { results: performanceTrends } = await DB.prepare(`
+      SELECT 
+        sp.date_recorded,
+        dmt.page_type,
+        dmt.page_identifier,
+        SUM(sp.page_views) as total_views,
+        AVG(sp.bounce_rate) as avg_bounce_rate,
+        AVG(sp.conversion_rate) as avg_conversion_rate,
+        SUM(sp.search_clicks) as total_clicks,
+        AVG(sp.average_position) as avg_position
+      FROM seo_performance sp
+      JOIN dynamic_meta_tags dmt ON sp.meta_tag_id = dmt.id
+      WHERE ${whereClause}
+      GROUP BY sp.date_recorded, dmt.page_type, dmt.page_identifier
+      ORDER BY sp.date_recorded DESC
+    `).bind(...bindings).all()
+    
+    // Get top performing pages
+    const { results: topPages } = await DB.prepare(`
+      SELECT 
+        dmt.page_type,
+        dmt.page_identifier,
+        dmt.meta_title,
+        SUM(sp.page_views) as total_views,
+        AVG(sp.conversion_rate) as avg_conversion,
+        SUM(sp.search_clicks) as total_clicks
+      FROM seo_performance sp
+      JOIN dynamic_meta_tags dmt ON sp.meta_tag_id = dmt.id
+      WHERE ${whereClause}
+      GROUP BY dmt.id
+      ORDER BY total_views DESC
+      LIMIT 10
+    `).bind(...bindings).all()
+    
+    return c.json({
+      success: true,
+      analytics: {
+        performanceTrends,
+        topPages,
+        period: `${days} days`
+      }
+    })
+    
+  } catch (error) {
+    console.error('SEO analytics error:', error)
+    return c.json({ error: 'Failed to fetch SEO analytics' }, 500)
+  }
+})
+
+// Meta tag templates management
+app.get('/api/admin/meta-templates', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { results: templates } = await DB.prepare(`
+      SELECT * FROM meta_tag_templates 
+      WHERE is_active = 1 
+      ORDER BY page_type, template_name
+    `).all()
+    
+    return c.json({
+      success: true,
+      templates
+    })
+    
+  } catch (error) {
+    console.error('Meta templates fetch error:', error)
+    return c.json({ error: 'Failed to fetch meta templates' }, 500)
+  }
+})
+
+// Update SEO configuration
+app.post('/api/admin/seo/config', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { configs } = await c.req.json()
+    
+    if (!configs || !Array.isArray(configs)) {
+      return c.json({ error: 'Configs array is required' }, 400)
+    }
+    
+    // Update multiple configurations
+    for (const config of configs) {
+      await DB.prepare(`
+        INSERT OR REPLACE INTO seo_config (
+          config_key, config_value, config_type, config_category, description, updated_at
+        ) VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+      `).bind(
+        config.key,
+        config.value,
+        config.type || 'string',
+        config.category || 'general',
+        config.description || ''
+      ).run()
+    }
+    
+    return c.json({
+      success: true,
+      message: 'SEO configuration updated successfully'
+    })
+    
+  } catch (error) {
+    console.error('SEO config update error:', error)
+    return c.json({ error: 'Failed to update SEO configuration' }, 500)
+  }
+})
+
+// Get SEO configuration
+app.get('/api/admin/seo/config', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { results: configs } = await DB.prepare(`
+      SELECT * FROM seo_config WHERE is_active = 1 ORDER BY config_category, config_key
+    `).all()
+    
+    const configsByCategory = {}
+    configs.forEach(config => {
+      if (!configsByCategory[config.config_category]) {
+        configsByCategory[config.config_category] = {}
+      }
+      
+      let value = config.config_value
+      try {
+        if (config.config_type === 'boolean') {
+          value = config.config_value === 'true'
+        } else if (config.config_type === 'number') {
+          value = parseFloat(config.config_value)
+        } else if (config.config_type === 'json') {
+          value = JSON.parse(config.config_value)
+        }
+      } catch (e) {
+        // Keep original value if parsing fails
+      }
+      
+      configsByCategory[config.config_category][config.config_key] = {
+        value,
+        type: config.config_type,
+        description: config.description
+      }
+    })
+    
+    return c.json({
+      success: true,
+      config: configsByCategory
+    })
+    
+  } catch (error) {
+    console.error('SEO config fetch error:', error)
+    return c.json({ error: 'Failed to fetch SEO configuration' }, 500)
+  }
+})
+
+// =============================================================================
+// Dynamic Meta Tags System API
+// =============================================================================
+
+// Get meta tags for specific page type
+app.get('/api/meta-tags/:pageType', async (c) => {
+  const { DB } = c.env
+  const pageType = c.req.param('pageType')
+  
+  try {
+    // Get meta tags for the page type
+    const { results: metaTags } = await DB.prepare(`
+      SELECT * FROM dynamic_meta_tags 
+      WHERE page_type = ? AND is_active = 1 
+      ORDER BY created_at DESC 
+      LIMIT 1
+    `).bind(pageType).all()
+    
+    if (metaTags.length === 0) {
+      // Return default meta tags if none found
+      const defaultMetaTags = {
+        title: 'GARANTOR360 - Türkiye\'nin En Güvenilir Teknik Servis Platformu',
+        description: 'Televizyon, bilgisayar, beyaz eşya tamiri ve daha fazlası. Garantili servis, uzman teknisyenler, 7/24 destek.',
+        keywords: 'teknik servis, televizyon tamiri, bilgisayar tamiri, beyaz eşya tamiri'
+      }
+      
+      return c.json({
+        success: true,
+        metaTags: defaultMetaTags,
+        isDefault: true
+      })
+    }
+    
+    const metaTag = metaTags[0]
+    
+    // Parse custom tags JSON if exists
+    let customTags = []
+    if (metaTag.custom_tags) {
+      try {
+        customTags = JSON.parse(metaTag.custom_tags)
+      } catch (e) {
+        console.warn('Failed to parse custom tags JSON:', e)
+      }
+    }
+    
+    // Parse schema.org JSON if exists
+    let schemaOrg = null
+    if (metaTag.schema_org) {
+      try {
+        schemaOrg = JSON.parse(metaTag.schema_org)
+      } catch (e) {
+        console.warn('Failed to parse schema.org JSON:', e)
+      }
+    }
+    
+    const responseMetaTags = {
+      title: metaTag.title,
+      description: metaTag.description,
+      keywords: metaTag.keywords,
+      og_title: metaTag.og_title,
+      og_description: metaTag.og_description,
+      og_image: metaTag.og_image,
+      og_type: metaTag.og_type,
+      twitter_title: metaTag.twitter_title,
+      twitter_description: metaTag.twitter_description,
+      twitter_image: metaTag.twitter_image,
+      twitter_card: metaTag.twitter_card,
+      custom_tags: customTags,
+      schema_org: schemaOrg
+    }
+    
+    return c.json({
+      success: true,
+      metaTags: responseMetaTags,
+      pageType: pageType,
+      isDefault: false
+    })
+    
+  } catch (error) {
+    console.error('Meta tags fetch error:', error)
+    return c.json({ error: 'Failed to fetch meta tags' }, 500)
+  }
+})
+
+// Admin: Create/Update meta tags
+app.post('/api/admin/meta-tags', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const {
+      page_type,
+      title,
+      description,
+      keywords,
+      og_title,
+      og_description,
+      og_image,
+      og_type,
+      twitter_title,
+      twitter_description,
+      twitter_image,
+      twitter_card,
+      custom_tags,
+      schema_org
+    } = await c.req.json()
+    
+    if (!page_type || !title || !description) {
+      return c.json({ error: 'Page type, title ve description gerekli' }, 400)
+    }
+    
+    // Check if meta tags already exist for this page type
+    const { results: existing } = await DB.prepare(`
+      SELECT id FROM dynamic_meta_tags WHERE page_type = ?
+    `).bind(page_type).all()
+    
+    let result
+    if (existing.length > 0) {
+      // Update existing meta tags
+      result = await DB.prepare(`
+        UPDATE dynamic_meta_tags 
+        SET 
+          title = ?,
+          description = ?,
+          keywords = ?,
+          og_title = ?,
+          og_description = ?,
+          og_image = ?,
+          og_type = ?,
+          twitter_title = ?,
+          twitter_description = ?,
+          twitter_image = ?,
+          twitter_card = ?,
+          custom_tags = ?,
+          schema_org = ?,
+          updated_at = ?
+        WHERE page_type = ?
+      `).bind(
+        title,
+        description,
+        keywords || '',
+        og_title || title,
+        og_description || description,
+        og_image || '',
+        og_type || 'website',
+        twitter_title || title,
+        twitter_description || description,
+        twitter_image || '',
+        twitter_card || 'summary_large_image',
+        custom_tags ? JSON.stringify(custom_tags) : null,
+        schema_org ? JSON.stringify(schema_org) : null,
+        new Date().toISOString(),
+        page_type
+      ).run()
+      
+      SystemLogger.info('META_TAGS', 'Meta tags updated', { page_type, title })
+    } else {
+      // Create new meta tags
+      result = await DB.prepare(`
+        INSERT INTO dynamic_meta_tags (
+          page_type, title, description, keywords,
+          og_title, og_description, og_image, og_type,
+          twitter_title, twitter_description, twitter_image, twitter_card,
+          custom_tags, schema_org, is_active, created_at, updated_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?)
+      `).bind(
+        page_type,
+        title,
+        description,
+        keywords || '',
+        og_title || title,
+        og_description || description,
+        og_image || '',
+        og_type || 'website',
+        twitter_title || title,
+        twitter_description || description,
+        twitter_image || '',
+        twitter_card || 'summary_large_image',
+        custom_tags ? JSON.stringify(custom_tags) : null,
+        schema_org ? JSON.stringify(schema_org) : null,
+        new Date().toISOString(),
+        new Date().toISOString()
+      ).run()
+      
+      SystemLogger.info('META_TAGS', 'Meta tags created', { page_type, title })
+    }
+    
+    return c.json({
+      success: true,
+      message: existing.length > 0 ? 'Meta tags updated successfully' : 'Meta tags created successfully',
+      id: existing.length > 0 ? existing[0].id : result.meta.last_row_id
+    })
+    
+  } catch (error) {
+    console.error('Meta tags save error:', error)
+    return c.json({ error: 'Failed to save meta tags' }, 500)
+  }
+})
+
+// Admin: Get all meta tags
+app.get('/api/admin/meta-tags', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { results: metaTags } = await DB.prepare(`
+      SELECT 
+        id, page_type, title, description, keywords,
+        og_title, og_description, og_image, og_type,
+        twitter_title, twitter_description, twitter_image, twitter_card,
+        custom_tags, schema_org, is_active, created_at, updated_at
+      FROM dynamic_meta_tags 
+      ORDER BY page_type ASC
+    `).all()
+    
+    // Parse JSON fields for each meta tag
+    const processedMetaTags = metaTags.map(tag => ({
+      ...tag,
+      custom_tags: tag.custom_tags ? JSON.parse(tag.custom_tags) : [],
+      schema_org: tag.schema_org ? JSON.parse(tag.schema_org) : null
+    }))
+    
+    return c.json({
+      success: true,
+      metaTags: processedMetaTags,
+      total: metaTags.length
+    })
+    
+  } catch (error) {
+    console.error('Meta tags list error:', error)
+    return c.json({ error: 'Failed to fetch meta tags' }, 500)
+  }
+})
+
+// Admin: Delete meta tags
+app.delete('/api/admin/meta-tags/:pageType', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  const pageType = c.req.param('pageType')
+  
+  try {
+    const result = await DB.prepare(`
+      DELETE FROM dynamic_meta_tags WHERE page_type = ?
+    `).bind(pageType).run()
+    
+    if (result.changes === 0) {
+      return c.json({ error: 'Meta tags not found' }, 404)
+    }
+    
+    SystemLogger.info('META_TAGS', 'Meta tags deleted', { pageType })
+    
+    return c.json({
+      success: true,
+      message: 'Meta tags deleted successfully'
+    })
+    
+  } catch (error) {
+    console.error('Meta tags delete error:', error)
+    return c.json({ error: 'Failed to delete meta tags' }, 500)
+  }
+})
+
+// Track SEO performance
+app.post('/api/seo/track-performance', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const {
+      page_type,
+      page_url,
+      page_title,
+      user_agent,
+      viewport_width,
+      viewport_height,
+      referrer,
+      load_time,
+      dom_ready_time,
+      metric_type,
+      value,
+      engagement_time,
+      scroll_depth,
+      interactions
+    } = await c.req.json()
+    
+    if (!page_type || !page_url) {
+      return c.json({ error: 'Page type and URL required' }, 400)
+    }
+    
+    const result = await DB.prepare(`
+      INSERT INTO seo_performance (
+        page_type, page_url, page_title, user_agent,
+        viewport_width, viewport_height, referrer,
+        load_time, dom_ready_time, metric_type, metric_value,
+        engagement_time, scroll_depth, interactions,
+        ip_address, created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+      page_type,
+      page_url,
+      page_title || '',
+      user_agent || '',
+      viewport_width || 0,
+      viewport_height || 0,
+      referrer || '',
+      load_time || 0,
+      dom_ready_time || 0,
+      metric_type || 'page_load',
+      value || 0,
+      engagement_time || 0,
+      scroll_depth || 0,
+      interactions || 0,
+      c.req.header('CF-Connecting-IP') || 'Unknown',
+      new Date().toISOString()
+    ).run()
+    
+    return c.json({
+      success: true,
+      performanceId: result.meta.last_row_id,
+      message: 'Performance tracked successfully'
+    })
+    
+  } catch (error) {
+    console.error('SEO performance tracking error:', error)
+    return c.json({ error: 'Failed to track performance' }, 500)
+  }
+})
+
+// Admin: SEO Analytics Dashboard
+app.get('/api/admin/seo/analytics', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    // Page performance summary
+    const { results: performanceSummary } = await DB.prepare(`
+      SELECT 
+        page_type,
+        COUNT(*) as page_views,
+        AVG(load_time) as avg_load_time,
+        AVG(dom_ready_time) as avg_dom_ready_time,
+        AVG(engagement_time) as avg_engagement_time,
+        AVG(scroll_depth) as avg_scroll_depth,
+        COUNT(DISTINCT ip_address) as unique_visitors
+      FROM seo_performance 
+      WHERE created_at >= datetime('now', '-7 days')
+        AND load_time > 0
+      GROUP BY page_type
+      ORDER BY page_views DESC
+    `).all()
+    
+    // Core Web Vitals
+    const { results: coreWebVitals } = await DB.prepare(`
+      SELECT 
+        metric_type,
+        AVG(metric_value) as avg_value,
+        MIN(metric_value) as min_value,
+        MAX(metric_value) as max_value,
+        COUNT(*) as measurement_count
+      FROM seo_performance 
+      WHERE metric_type IN ('lcp', 'fid', 'cls')
+        AND created_at >= datetime('now', '-7 days')
+      GROUP BY metric_type
+    `).all()
+    
+    // SEO engagement metrics
+    const { results: engagementMetrics } = await DB.prepare(`
+      SELECT 
+        page_type,
+        AVG(engagement_time) as avg_engagement,
+        AVG(scroll_depth) as avg_scroll,
+        AVG(interactions) as avg_interactions,
+        COUNT(CASE WHEN engagement_time > 30000 THEN 1 END) as engaged_sessions,
+        COUNT(*) as total_sessions
+      FROM seo_performance 
+      WHERE created_at >= datetime('now', '-7 days')
+        AND engagement_time > 0
+      GROUP BY page_type
+    `).all()
+    
+    // Meta tags usage analytics
+    const { results: metaTagsUsage } = await DB.prepare(`
+      SELECT 
+        page_type,
+        title,
+        description,
+        keywords,
+        is_active,
+        created_at,
+        updated_at
+      FROM dynamic_meta_tags
+      ORDER BY page_type ASC
+    `).all()
+    
+    // Search engine referrals
+    const { results: searchReferrals } = await DB.prepare(`
+      SELECT 
+        CASE 
+          WHEN referrer LIKE '%google%' THEN 'Google'
+          WHEN referrer LIKE '%bing%' THEN 'Bing'
+          WHEN referrer LIKE '%yahoo%' THEN 'Yahoo'
+          WHEN referrer LIKE '%yandex%' THEN 'Yandex'
+          WHEN referrer = '' THEN 'Direct'
+          ELSE 'Other'
+        END as referrer_source,
+        COUNT(*) as referral_count,
+        COUNT(DISTINCT page_url) as pages_visited,
+        AVG(engagement_time) as avg_engagement
+      FROM seo_performance 
+      WHERE created_at >= datetime('now', '-7 days')
+      GROUP BY referrer_source
+      ORDER BY referral_count DESC
+    `).all()
+    
+    // Performance trends over time
+    const { results: performanceTrends } = await DB.prepare(`
+      SELECT 
+        DATE(created_at) as performance_date,
+        COUNT(*) as daily_views,
+        AVG(load_time) as avg_load_time,
+        AVG(engagement_time) as avg_engagement_time,
+        COUNT(DISTINCT ip_address) as unique_visitors
+      FROM seo_performance 
+      WHERE created_at >= datetime('now', '-30 days')
+        AND load_time > 0
+      GROUP BY DATE(created_at)
+      ORDER BY performance_date DESC
+    `).all()
+    
+    return c.json({
+      success: true,
+      data: {
+        performanceSummary,
+        coreWebVitals,
+        engagementMetrics,
+        metaTagsUsage,
+        searchReferrals,
+        performanceTrends,
+        totalPageViews: performanceSummary.reduce((sum, page) => sum + page.page_views, 0),
+        totalUniqueVisitors: performanceSummary.reduce((sum, page) => sum + page.unique_visitors, 0)
+      }
+    })
+    
+  } catch (error) {
+    console.error('SEO analytics fetch error:', error)
+    return c.json({ error: 'Failed to fetch SEO analytics' }, 500)
+  }
+})
+
+// Admin: Meta Tag Management Interface
+app.get('/admin/meta-tag-management', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const trackingConfig = await getTrackingConfig(DB)
+    
+    return c.html(`
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta Tag Yönetimi - GARANTOR360 Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .fade-in { animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .status-indicator { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 8px; }
+        .status-active { background-color: #10b981; }
+        .status-inactive { background-color: #ef4444; }
+        .preview-card { transition: all 0.3s ease; }
+        .preview-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 mb-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-2xl font-bold text-blue-600">
+                        <i class="fas fa-tags mr-2"></i>
+                        Meta Tag Yönetimi
+                    </h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="showCreateModal()" 
+                            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-plus mr-2"></i>
+                        Yeni Meta Tag
+                    </button>
+                    <a href="/admin/dashboard" 
+                       class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Admin Panel
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Toplam Meta Tag</p>
+                        <p class="text-2xl font-bold text-gray-900" id="totalMetaTags">-</p>
+                    </div>
+                    <div class="bg-blue-100 p-3 rounded-lg">
+                        <i class="fas fa-tags text-blue-600 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Aktif Sayfalar</p>
+                        <p class="text-2xl font-bold text-green-600" id="activePages">-</p>
+                    </div>
+                    <div class="bg-green-100 p-3 rounded-lg">
+                        <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">SEO Skoru</p>
+                        <p class="text-2xl font-bold text-yellow-600" id="seoScore">-</p>
+                    </div>
+                    <div class="bg-yellow-100 p-3 rounded-lg">
+                        <i class="fas fa-search text-yellow-600 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Performans</p>
+                        <p class="text-2xl font-bold text-purple-600" id="performanceScore">-</p>
+                    </div>
+                    <div class="bg-purple-100 p-3 rounded-lg">
+                        <i class="fas fa-chart-line text-purple-600 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Meta Tags Table -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-6 border-b border-gray-200">
+                <h2 class="text-xl font-semibold text-gray-900">
+                    <i class="fas fa-list mr-2 text-blue-600"></i>
+                    Meta Tag Listesi
+                </h2>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Sayfa Türü
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Başlık
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Açıklama
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Durum
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Son Güncelleme
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                İşlemler
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="metaTagsTableBody" class="bg-white divide-y divide-gray-200">
+                        <!-- Meta tags will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SEO Analytics Preview -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+            <div class="p-6 border-b border-gray-200">
+                <h2 class="text-xl font-semibold text-gray-900">
+                    <i class="fas fa-chart-bar mr-2 text-green-600"></i>
+                    SEO Performans Özeti
+                </h2>
+            </div>
+            
+            <div class="p-6">
+                <div id="seoAnalyticsContainer">
+                    <div class="text-center text-gray-500 py-8">
+                        <i class="fas fa-spinner fa-spin text-2xl mb-4"></i>
+                        <p>SEO analitik verileri yükleniyor...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create/Edit Meta Tag Modal -->
+    <div id="metaTagModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen px-4">
+            <div class="bg-white rounded-xl shadow-xl max-w-4xl w-full max-h-screen overflow-y-auto">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xl font-semibold text-gray-900" id="modalTitle">
+                            <i class="fas fa-tag mr-2 text-blue-600"></i>
+                            Yeni Meta Tag
+                        </h3>
+                        <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <form id="metaTagForm" class="p-6 space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Basic Meta Tags -->
+                        <div class="space-y-4">
+                            <h4 class="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
+                                Temel Meta Taglar
+                            </h4>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Sayfa Türü *</label>
+                                <select id="pageType" name="page_type" required 
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="">Sayfa türü seçin</option>
+                                    <option value="home">Ana Sayfa</option>
+                                    <option value="televizyon_tamiri">Televizyon Tamiri</option>
+                                    <option value="bilgisayar_tamiri">Bilgisayar Tamiri</option>
+                                    <option value="beyaz_esya_tamiri">Beyaz Eşya Tamiri</option>
+                                    <option value="klima_tamiri">Klima Tamiri</option>
+                                    <option value="elektronik_tamiri">Elektronik Tamiri</option>
+                                    <option value="ev_elektrigi">Ev Elektriği</option>
+                                    <option value="su_tesisati">Su Tesisatı</option>
+                                    <option value="about">Hakkımızda</option>
+                                    <option value="contact">İletişim</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Başlık *</label>
+                                <input type="text" id="title" name="title" required maxlength="60"
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                       placeholder="SEO başlığı (60 karakter önerilir)">
+                                <div class="text-sm text-gray-500 mt-1">
+                                    <span id="titleLength">0</span>/60 karakter
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Açıklama *</label>
+                                <textarea id="description" name="description" required maxlength="160" rows="3"
+                                          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                          placeholder="Meta açıklama (160 karakter önerilir)"></textarea>
+                                <div class="text-sm text-gray-500 mt-1">
+                                    <span id="descriptionLength">0</span>/160 karakter
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Anahtar Kelimeler</label>
+                                <input type="text" id="keywords" name="keywords"
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                       placeholder="anahtar, kelime, listesi">
+                            </div>
+                        </div>
+
+                        <!-- Open Graph Tags -->
+                        <div class="space-y-4">
+                            <h4 class="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
+                                Open Graph (Facebook)
+                            </h4>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">OG Başlık</label>
+                                <input type="text" id="ogTitle" name="og_title"
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                       placeholder="Facebook paylaşım başlığı">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">OG Açıklama</label>
+                                <textarea id="ogDescription" name="og_description" rows="2"
+                                          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                          placeholder="Facebook paylaşım açıklaması"></textarea>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">OG Görsel URL</label>
+                                <input type="url" id="ogImage" name="og_image"
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                       placeholder="https://example.com/image.jpg">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">OG Türü</label>
+                                <select id="ogType" name="og_type"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="website">Website</option>
+                                    <option value="article">Article</option>
+                                    <option value="product">Product</option>
+                                    <option value="profile">Profile</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Twitter Cards -->
+                        <div class="space-y-4">
+                            <h4 class="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
+                                Twitter Cards
+                            </h4>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Twitter Başlık</label>
+                                <input type="text" id="twitterTitle" name="twitter_title"
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                       placeholder="Twitter paylaşım başlığı">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Twitter Açıklama</label>
+                                <textarea id="twitterDescription" name="twitter_description" rows="2"
+                                          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                          placeholder="Twitter paylaşım açıklaması"></textarea>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Twitter Görsel URL</label>
+                                <input type="url" id="twitterImage" name="twitter_image"
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                       placeholder="https://example.com/image.jpg">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Twitter Card Türü</label>
+                                <select id="twitterCard" name="twitter_card"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="summary">Summary</option>
+                                    <option value="summary_large_image">Summary Large Image</option>
+                                    <option value="app">App</option>
+                                    <option value="player">Player</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Schema.org JSON-LD -->
+                        <div class="space-y-4">
+                            <h4 class="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
+                                Schema.org JSON-LD
+                            </h4>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Schema JSON</label>
+                                <textarea id="schemaOrg" name="schema_org" rows="6"
+                                          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm"
+                                          placeholder='{"@context": "https://schema.org", "@type": "LocalBusiness", ...}'></textarea>
+                                <div class="text-sm text-gray-500 mt-1">
+                                    Geçerli JSON formatında schema.org yapılandırılmış verisi
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end space-x-4 pt-6 border-t border-gray-200">
+                        <button type="button" onclick="closeModal()"
+                                class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                            İptal
+                        </button>
+                        <button type="submit"
+                                class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            <i class="fas fa-save mr-2"></i>
+                            Kaydet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview Modal -->
+    <div id="previewModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen px-4">
+            <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-screen overflow-y-auto">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xl font-semibold text-gray-900">
+                            <i class="fas fa-eye mr-2 text-green-600"></i>
+                            Meta Tag Önizleme
+                        </h3>
+                        <button onclick="closePreviewModal()" class="text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="p-6">
+                    <div id="previewContent">
+                        <!-- Preview content will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+    <script>
+        let allMetaTags = [];
+        let editingMetaTag = null;
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMetaTags();
+            loadSEOAnalytics();
+            setupFormValidation();
+        });
+
+        // Load all meta tags
+        async function loadMetaTags() {
+            try {
+                const response = await axios.get('/api/admin/meta-tags');
+                allMetaTags = response.data.metaTags;
+                
+                updateStats();
+                renderMetaTagsTable();
+                
+                console.log('Meta tags loaded:', allMetaTags.length);
+            } catch (error) {
+                console.error('Failed to load meta tags:', error);
+                showNotification('Meta tag listesi yüklenemedi', 'error');
+            }
+        }
+
+        // Update stats cards
+        function updateStats() {
+            document.getElementById('totalMetaTags').textContent = allMetaTags.length;
+            document.getElementById('activePages').textContent = allMetaTags.filter(tag => tag.is_active).length;
+            
+            // Calculate SEO score based on completeness
+            let totalScore = 0;
+            allMetaTags.forEach(tag => {
+                let score = 0;
+                if (tag.title) score += 20;
+                if (tag.description) score += 20;
+                if (tag.keywords) score += 10;
+                if (tag.og_title) score += 15;
+                if (tag.og_description) score += 15;
+                if (tag.twitter_title) score += 10;
+                if (tag.schema_org) score += 10;
+                totalScore += score;
+            });
+            
+            const avgScore = allMetaTags.length > 0 ? Math.round(totalScore / allMetaTags.length) : 0;
+            document.getElementById('seoScore').textContent = avgScore + '%';
+            document.getElementById('performanceScore').textContent = 'A+'; // Placeholder
+        }
+
+        // Render meta tags table
+        function renderMetaTagsTable() {
+            const tbody = document.getElementById('metaTagsTableBody');
+            
+            if (allMetaTags.length === 0) {
+                tbody.innerHTML = \`
+                    <tr>
+                        <td colspan="6" class="px-6 py-12 text-center text-gray-500">
+                            <i class="fas fa-tags text-4xl mb-4 opacity-50"></i>
+                            <p class="text-lg mb-2">Henüz meta tag oluşturulmamış</p>
+                            <p class="text-sm">İlk meta tag'inizi oluşturmak için "Yeni Meta Tag" butonuna tıklayın</p>
+                        </td>
+                    </tr>
+                \`;
+                return;
+            }
+            
+            tbody.innerHTML = allMetaTags.map(tag => \`
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <span class="status-indicator \${tag.is_active ? 'status-active' : 'status-inactive'}"></span>
+                            <span class="font-medium text-gray-900">\${getPageTypeLabel(tag.page_type)}</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-sm text-gray-900 font-medium max-w-xs truncate" title="\${tag.title}">
+                            \${tag.title}
+                        </div>
+                        <div class="text-xs text-gray-500">
+                            \${tag.title ? tag.title.length : 0} karakter
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-sm text-gray-600 max-w-xs truncate" title="\${tag.description}">
+                            \${tag.description}
+                        </div>
+                        <div class="text-xs text-gray-500">
+                            \${tag.description ? tag.description.length : 0} karakter
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full \${tag.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                            \${tag.is_active ? 'Aktif' : 'Pasif'}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        \${formatDate(tag.updated_at)}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                        <button onclick="previewMetaTag('\${tag.page_type}')" 
+                                class="text-green-600 hover:text-green-900" title="Önizleme">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button onclick="editMetaTag('\${tag.page_type}')" 
+                                class="text-blue-600 hover:text-blue-900" title="Düzenle">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="deleteMetaTag('\${tag.page_type}')" 
+                                class="text-red-600 hover:text-red-900" title="Sil">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            \`).join('');
+        }
+
+        // Get page type label
+        function getPageTypeLabel(pageType) {
+            const labels = {
+                'home': 'Ana Sayfa',
+                'televizyon_tamiri': 'Televizyon Tamiri',
+                'bilgisayar_tamiri': 'Bilgisayar Tamiri',
+                'beyaz_esya_tamiri': 'Beyaz Eşya Tamiri',
+                'klima_tamiri': 'Klima Tamiri',
+                'elektronik_tamiri': 'Elektronik Tamiri',
+                'ev_elektrigi': 'Ev Elektriği',
+                'su_tesisati': 'Su Tesisatı',
+                'about': 'Hakkımızda',
+                'contact': 'İletişim',
+                'admin': 'Admin'
+            };
+            return labels[pageType] || pageType;
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString('tr-TR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Show create modal
+        function showCreateModal() {
+            editingMetaTag = null;
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-tag mr-2 text-blue-600"></i>Yeni Meta Tag';
+            document.getElementById('metaTagForm').reset();
+            document.getElementById('metaTagModal').classList.remove('hidden');
+        }
+
+        // Edit meta tag
+        function editMetaTag(pageType) {
+            editingMetaTag = allMetaTags.find(tag => tag.page_type === pageType);
+            if (!editingMetaTag) return;
+
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit mr-2 text-blue-600"></i>Meta Tag Düzenle';
+            
+            // Fill form with existing data
+            document.getElementById('pageType').value = editingMetaTag.page_type;
+            document.getElementById('title').value = editingMetaTag.title || '';
+            document.getElementById('description').value = editingMetaTag.description || '';
+            document.getElementById('keywords').value = editingMetaTag.keywords || '';
+            document.getElementById('ogTitle').value = editingMetaTag.og_title || '';
+            document.getElementById('ogDescription').value = editingMetaTag.og_description || '';
+            document.getElementById('ogImage').value = editingMetaTag.og_image || '';
+            document.getElementById('ogType').value = editingMetaTag.og_type || 'website';
+            document.getElementById('twitterTitle').value = editingMetaTag.twitter_title || '';
+            document.getElementById('twitterDescription').value = editingMetaTag.twitter_description || '';
+            document.getElementById('twitterImage').value = editingMetaTag.twitter_image || '';
+            document.getElementById('twitterCard').value = editingMetaTag.twitter_card || 'summary_large_image';
+            document.getElementById('schemaOrg').value = editingMetaTag.schema_org ? JSON.stringify(editingMetaTag.schema_org, null, 2) : '';
+            
+            updateCharacterCounts();
+            document.getElementById('metaTagModal').classList.remove('hidden');
+        }
+
+        // Preview meta tag
+        function previewMetaTag(pageType) {
+            const metaTag = allMetaTags.find(tag => tag.page_type === pageType);
+            if (!metaTag) return;
+
+            const previewContent = document.getElementById('previewContent');
+            previewContent.innerHTML = \`
+                <div class="space-y-6">
+                    <!-- Google Search Preview -->
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-gray-900 mb-3 flex items-center">
+                            <i class="fab fa-google mr-2 text-blue-600"></i>
+                            Google Arama Sonucu Önizleme
+                        </h4>
+                        <div class="bg-white p-4 rounded border-l-4 border-blue-500">
+                            <div class="text-blue-600 text-lg hover:underline cursor-pointer">
+                                \${metaTag.title}
+                            </div>
+                            <div class="text-green-700 text-sm mt-1">
+                                https://garantor360.com/\${pageType}
+                            </div>
+                            <div class="text-gray-600 text-sm mt-2">
+                                \${metaTag.description}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Facebook Preview -->
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-gray-900 mb-3 flex items-center">
+                            <i class="fab fa-facebook mr-2 text-blue-600"></i>
+                            Facebook Paylaşım Önizleme
+                        </h4>
+                        <div class="bg-white border rounded-lg overflow-hidden">
+                            \${metaTag.og_image ? \`<div class="bg-gray-200 h-32 flex items-center justify-center">
+                                <img src="\${metaTag.og_image}" alt="OG Image" class="max-h-full" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="hidden text-gray-500"><i class="fas fa-image text-2xl"></i></div>
+                            </div>\` : ''}
+                            <div class="p-4">
+                                <div class="font-semibold text-gray-900">\${metaTag.og_title || metaTag.title}</div>
+                                <div class="text-gray-600 text-sm mt-1">\${metaTag.og_description || metaTag.description}</div>
+                                <div class="text-gray-500 text-xs mt-2 uppercase">GARANTOR360.COM</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Twitter Preview -->
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-gray-900 mb-3 flex items-center">
+                            <i class="fab fa-twitter mr-2 text-blue-400"></i>
+                            Twitter Card Önizleme
+                        </h4>
+                        <div class="bg-white border rounded-lg overflow-hidden">
+                            \${metaTag.twitter_image ? \`<div class="bg-gray-200 h-32 flex items-center justify-center">
+                                <img src="\${metaTag.twitter_image}" alt="Twitter Image" class="max-h-full" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="hidden text-gray-500"><i class="fas fa-image text-2xl"></i></div>
+                            </div>\` : ''}
+                            <div class="p-4">
+                                <div class="font-semibold text-gray-900">\${metaTag.twitter_title || metaTag.title}</div>
+                                <div class="text-gray-600 text-sm mt-1">\${metaTag.twitter_description || metaTag.description}</div>
+                                <div class="text-gray-500 text-xs mt-2">garantor360.com</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Meta Tags Code -->
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-gray-900 mb-3 flex items-center">
+                            <i class="fas fa-code mr-2 text-gray-600"></i>
+                            Oluşturulan Meta Tag Kodları
+                        </h4>
+                        <pre class="bg-gray-50 p-4 rounded-lg text-sm overflow-x-auto"><code>\${generateMetaTagsHTML(metaTag)}</code></pre>
+                    </div>
+                </div>
+            \`;
+
+            document.getElementById('previewModal').classList.remove('hidden');
+        }
+
+        // Generate meta tags HTML
+        function generateMetaTagsHTML(metaTag) {
+            let html = '';
+            
+            if (metaTag.title) html += \`<title>\${metaTag.title}</title>\\n\`;
+            if (metaTag.description) html += \`<meta name="description" content="\${metaTag.description}">\\n\`;
+            if (metaTag.keywords) html += \`<meta name="keywords" content="\${metaTag.keywords}">\\n\`;
+            
+            // Open Graph
+            if (metaTag.og_title) html += \`<meta property="og:title" content="\${metaTag.og_title}">\\n\`;
+            if (metaTag.og_description) html += \`<meta property="og:description" content="\${metaTag.og_description}">\\n\`;
+            if (metaTag.og_image) html += \`<meta property="og:image" content="\${metaTag.og_image}">\\n\`;
+            if (metaTag.og_type) html += \`<meta property="og:type" content="\${metaTag.og_type}">\\n\`;
+            
+            // Twitter
+            if (metaTag.twitter_card) html += \`<meta name="twitter:card" content="\${metaTag.twitter_card}">\\n\`;
+            if (metaTag.twitter_title) html += \`<meta name="twitter:title" content="\${metaTag.twitter_title}">\\n\`;
+            if (metaTag.twitter_description) html += \`<meta name="twitter:description" content="\${metaTag.twitter_description}">\\n\`;
+            if (metaTag.twitter_image) html += \`<meta name="twitter:image" content="\${metaTag.twitter_image}">\\n\`;
+            
+            // Schema.org
+            if (metaTag.schema_org) {
+                html += \`<script type="application/ld+json">\\n\${JSON.stringify(metaTag.schema_org, null, 2)}\\n</script>\\n\`;
+            }
+            
+            return html || 'Meta tag bulunamadı';
+        }
+
+        // Delete meta tag
+        async function deleteMetaTag(pageType) {
+            if (!confirm('Bu meta tag\'i silmek istediğinizden emin misiniz?')) {
+                return;
+            }
+
+            try {
+                await axios.delete(\`/api/admin/meta-tags/\${pageType}\`);
+                showNotification('Meta tag başarıyla silindi', 'success');
+                loadMetaTags();
+            } catch (error) {
+                console.error('Delete error:', error);
+                showNotification('Meta tag silinirken hata oluştu', 'error');
+            }
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('metaTagModal').classList.add('hidden');
+        }
+
+        // Close preview modal
+        function closePreviewModal() {
+            document.getElementById('previewModal').classList.add('hidden');
+        }
+
+        // Setup form validation
+        function setupFormValidation() {
+            const form = document.getElementById('metaTagForm');
+            const titleInput = document.getElementById('title');
+            const descriptionInput = document.getElementById('description');
+
+            // Character count updates
+            titleInput.addEventListener('input', updateCharacterCounts);
+            descriptionInput.addEventListener('input', updateCharacterCounts);
+
+            // Auto-fill OG and Twitter fields
+            titleInput.addEventListener('input', function() {
+                if (!document.getElementById('ogTitle').value) {
+                    document.getElementById('ogTitle').value = this.value;
+                }
+                if (!document.getElementById('twitterTitle').value) {
+                    document.getElementById('twitterTitle').value = this.value;
+                }
+            });
+
+            descriptionInput.addEventListener('input', function() {
+                if (!document.getElementById('ogDescription').value) {
+                    document.getElementById('ogDescription').value = this.value;
+                }
+                if (!document.getElementById('twitterDescription').value) {
+                    document.getElementById('twitterDescription').value = this.value;
+                }
+            });
+
+            // Form submission
+            form.addEventListener('submit', handleFormSubmit);
+        }
+
+        // Update character counts
+        function updateCharacterCounts() {
+            const titleLength = document.getElementById('title').value.length;
+            const descriptionLength = document.getElementById('description').value.length;
+
+            document.getElementById('titleLength').textContent = titleLength;
+            document.getElementById('descriptionLength').textContent = descriptionLength;
+
+            // Color coding for optimal lengths
+            const titleCounter = document.getElementById('titleLength').parentElement;
+            const descriptionCounter = document.getElementById('descriptionLength').parentElement;
+
+            titleCounter.className = titleLength > 60 ? 'text-sm text-red-500 mt-1' : titleLength > 50 ? 'text-sm text-yellow-600 mt-1' : 'text-sm text-gray-500 mt-1';
+            descriptionCounter.className = descriptionLength > 160 ? 'text-sm text-red-500 mt-1' : descriptionLength > 140 ? 'text-sm text-yellow-600 mt-1' : 'text-sm text-gray-500 mt-1';
+        }
+
+        // Handle form submission
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            // Parse schema.org JSON if provided
+            if (data.schema_org) {
+                try {
+                    data.schema_org = JSON.parse(data.schema_org);
+                } catch (error) {
+                    showNotification('Schema.org JSON formatı geçersiz', 'error');
+                    return;
+                }
+            }
+
+            try {
+                const response = await axios.post('/api/admin/meta-tags', data);
+                showNotification('Meta tag başarıyla kaydedildi', 'success');
+                closeModal();
+                loadMetaTags();
+            } catch (error) {
+                console.error('Save error:', error);
+                showNotification(error.response?.data?.error || 'Meta tag kaydedilirken hata oluştu', 'error');
+            }
+        }
+
+        // Load SEO analytics
+        async function loadSEOAnalytics() {
+            try {
+                const response = await axios.get('/api/admin/seo/analytics');
+                renderSEOAnalytics(response.data.data);
+            } catch (error) {
+                console.error('Failed to load SEO analytics:', error);
+                document.getElementById('seoAnalyticsContainer').innerHTML = \`
+                    <div class="text-center text-red-500 py-8">
+                        <i class="fas fa-exclamation-triangle text-2xl mb-4"></i>
+                        <p>SEO analitik verileri yüklenemedi</p>
+                    </div>
+                \`;
+            }
+        }
+
+        // Render SEO analytics
+        function renderSEOAnalytics(data) {
+            const container = document.getElementById('seoAnalyticsContainer');
+            
+            container.innerHTML = \`
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-blue-900 mb-2">Toplam Sayfa Görüntüleme</h4>
+                        <p class="text-2xl font-bold text-blue-600">\${data.totalPageViews || 0}</p>
+                        <p class="text-sm text-blue-700">Son 7 gün</p>
+                    </div>
+                    
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-green-900 mb-2">Benzersiz Ziyaretçi</h4>
+                        <p class="text-2xl font-bold text-green-600">\${data.totalUniqueVisitors || 0}</p>
+                        <p class="text-sm text-green-700">Son 7 gün</p>
+                    </div>
+                    
+                    <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-purple-900 mb-2">Ortalama Yükleme Süresi</h4>
+                        <p class="text-2xl font-bold text-purple-600">
+                            \${data.performanceSummary.length > 0 ? 
+                                Math.round(data.performanceSummary.reduce((sum, p) => sum + p.avg_load_time, 0) / data.performanceSummary.length) + 'ms' : 
+                                'N/A'
+                            }
+                        </p>
+                        <p class="text-sm text-purple-700">Son 7 gün</p>
+                    </div>
+                </div>
+                
+                <div class="mt-6">
+                    <h4 class="font-semibold text-gray-900 mb-4">En Performanslı Sayfalar</h4>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Sayfa</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Görüntüleme</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ortalama Yükleme</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Etkileşim</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                \${data.performanceSummary.slice(0, 5).map(page => \`
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-medium text-gray-900">
+                                            \${getPageTypeLabel(page.page_type)}
+                                        </td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">\${page.page_views}</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">\${Math.round(page.avg_load_time)}ms</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">\${Math.round(page.avg_engagement_time / 1000)}s</td>
+                                    </tr>
+                                \`).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            \`;
+        }
+
+        // Show notification
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = \`fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full \${
+                type === 'success' ? 'bg-green-500 text-white' :
+                type === 'error' ? 'bg-red-500 text-white' :
+                type === 'warning' ? 'bg-yellow-500 text-white' :
+                'bg-blue-500 text-white'
+            }\`;
+            
+            notification.innerHTML = \`
+                <div class="flex items-center space-x-2">
+                    <i class="fas \${
+                        type === 'success' ? 'fa-check-circle' :
+                        type === 'error' ? 'fa-exclamation-circle' :
+                        type === 'warning' ? 'fa-exclamation-triangle' :
+                        'fa-info-circle'
+                    }"></i>
+                    <span>\${message}</span>
+                </div>
+            \`;
+            
+            document.body.appendChild(notification);
+            
+            // Slide in
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Slide out and remove
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
+    `)
+    
+  } catch (error) {
+    console.error('Meta tag management interface error:', error)
+    return c.html(`
+      <h1>Error</h1>
+      <p>Meta tag yönetimi arayüzü yüklenemedi: ${error.message}</p>
+    `)
+  }
+})
+
+// =============================================================================
+// Lead Scoring System API
+// =============================================================================
+
+// Lead Scoring Engine Class
+class LeadScoringEngine {
+  private db: D1Database
+
+  constructor(db: D1Database) {
+    this.db = db
+  }
+
+  // Generate or get lead UUID
+  async generateLeadUUID(email?: string, phone?: string, ip?: string): Promise<string> {
+    // Check if lead already exists
+    if (email || phone) {
+      const { results: existingLeads } = await this.db.prepare(`
+        SELECT lead_uuid FROM lead_profiles 
+        WHERE email = ? OR phone = ?
+        LIMIT 1
+      `).bind(email || '', phone || '').all()
+      
+      if (existingLeads.length > 0) {
+        return existingLeads[0].lead_uuid as string
+      }
+    }
+    
+    // Generate new UUID
+    return 'lead_' + Date.now() + '_' + Math.random().toString(36).substring(2, 15)
+  }
+
+  // Create or update lead profile
+  async createOrUpdateLead(leadData: any): Promise<string> {
+    const leadUUID = await this.generateLeadUUID(leadData.email, leadData.phone, leadData.ip)
+    
+    const { results: existing } = await this.db.prepare(`
+      SELECT lead_uuid FROM lead_profiles WHERE lead_uuid = ?
+    `).bind(leadUUID).all()
+    
+    if (existing.length > 0) {
+      // Update existing lead
+      await this.db.prepare(`
+        UPDATE lead_profiles 
+        SET 
+          email = COALESCE(?, email),
+          phone = COALESCE(?, phone),
+          name = COALESCE(?, name),
+          company = COALESCE(?, company),
+          service_interest = COALESCE(?, service_interest),
+          location = COALESCE(?, location),
+          source = COALESCE(?, source),
+          utm_source = COALESCE(?, utm_source),
+          utm_medium = COALESCE(?, utm_medium),
+          utm_campaign = COALESCE(?, utm_campaign),
+          last_activity_timestamp = ?,
+          total_sessions = total_sessions + 1,
+          updated_at = ?
+        WHERE lead_uuid = ?
+      `).bind(
+        leadData.email || null,
+        leadData.phone || null,
+        leadData.name || null,
+        leadData.company || null,
+        leadData.service_interest || null,
+        leadData.location || null,
+        leadData.source || null,
+        leadData.utm_source || null,
+        leadData.utm_medium || null,
+        leadData.utm_campaign || null,
+        new Date().toISOString(),
+        new Date().toISOString(),
+        leadUUID
+      ).run()
+    } else {
+      // Create new lead
+      await this.db.prepare(`
+        INSERT INTO lead_profiles (
+          lead_uuid, email, phone, name, company, service_interest, location,
+          source, utm_source, utm_medium, utm_campaign, first_touch_url,
+          first_touch_timestamp, last_activity_timestamp, created_at, updated_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `).bind(
+        leadUUID,
+        leadData.email || null,
+        leadData.phone || null,
+        leadData.name || null,
+        leadData.company || null,
+        leadData.service_interest || null,
+        leadData.location || null,
+        leadData.source || 'website',
+        leadData.utm_source || null,
+        leadData.utm_medium || null,
+        leadData.utm_campaign || null,
+        leadData.first_touch_url || null,
+        new Date().toISOString(),
+        new Date().toISOString(),
+        new Date().toISOString(),
+        new Date().toISOString()
+      ).run()
+
+      // Initialize lead score record
+      await this.db.prepare(`
+        INSERT INTO lead_scores (lead_uuid, last_calculated)
+        VALUES (?, ?)
+      `).bind(leadUUID, new Date().toISOString()).run()
+    }
+    
+    return leadUUID
+  }
+
+  // Add scoring event and calculate new score
+  async addScoringEvent(leadUUID: string, eventType: string, eventCategory: string, eventData?: any, pageUrl?: string): Promise<void> {
+    // Get applicable scoring rules
+    const { results: rules } = await this.db.prepare(`
+      SELECT * FROM lead_scoring_rules 
+      WHERE trigger_event = ? AND is_active = 1
+    `).bind(eventType).all()
+
+    for (const rule of rules) {
+      // Check if rule conditions are met
+      if (await this.evaluateRuleConditions(rule, eventData)) {
+        // Check if rule can still be applied (max_applications)
+        const { results: eventCount } = await this.db.prepare(`
+          SELECT COUNT(*) as count FROM lead_scoring_events 
+          WHERE lead_uuid = ? AND event_type = ? AND score_reason LIKE ?
+        `).bind(leadUUID, eventType, `%${rule.rule_name}%`).all()
+
+        if (eventCount[0].count < rule.max_applications) {
+          // Add scoring event
+          await this.db.prepare(`
+            INSERT INTO lead_scoring_events (
+              lead_uuid, event_type, event_category, score_change, score_reason,
+              event_data, page_url, created_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+          `).bind(
+            leadUUID,
+            eventType,
+            eventCategory,
+            rule.score_value,
+            `${rule.rule_name}: ${rule.description}`,
+            JSON.stringify(eventData || {}),
+            pageUrl || null,
+            new Date().toISOString()
+          ).run()
+
+          // Update lead score
+          await this.updateLeadScore(leadUUID, rule.rule_category, rule.score_value)
+        }
+      }
+    }
+  }
+
+  // Evaluate rule conditions
+  async evaluateRuleConditions(rule: any, eventData: any): Promise<boolean> {
+    if (!rule.trigger_conditions) return true
+
+    try {
+      const conditions = JSON.parse(rule.trigger_conditions)
+      
+      // Simple condition evaluation - can be extended for complex logic
+      for (const [key, expectedValue] of Object.entries(conditions)) {
+        if (eventData && eventData[key] !== undefined) {
+          if (Array.isArray(expectedValue)) {
+            if (!expectedValue.includes(eventData[key])) return false
+          } else if (typeof expectedValue === 'string' && expectedValue.startsWith('>')) {
+            const threshold = parseFloat(expectedValue.substring(1))
+            if (!(parseFloat(eventData[key]) > threshold)) return false
+          } else if (typeof expectedValue === 'string' && expectedValue.startsWith('<')) {
+            const threshold = parseFloat(expectedValue.substring(1))
+            if (!(parseFloat(eventData[key]) < threshold)) return false
+          } else if (eventData[key] !== expectedValue) {
+            return false
+          }
+        }
+      }
+      
+      return true
+    } catch (e) {
+      return true // If condition parsing fails, apply rule
+    }
+  }
+
+  // Update lead score in specific category
+  async updateLeadScore(leadUUID: string, category: string, scoreChange: number): Promise<void> {
+    const column = `${category}_score`
+    
+    await this.db.prepare(`
+      UPDATE lead_scores 
+      SET 
+        ${column} = ${column} + ?,
+        total_score = demographic_score + behavioral_score + interest_score + intent_score,
+        last_calculated = ?
+      WHERE lead_uuid = ?
+    `).bind(scoreChange, new Date().toISOString(), leadUUID).run()
+
+    // Update score grade after calculation
+    await this.updateScoreGrade(leadUUID)
+  }
+
+  // Update score grade based on total score
+  async updateScoreGrade(leadUUID: string): Promise<void> {
+    const { results: scores } = await this.db.prepare(`
+      SELECT total_score FROM lead_scores WHERE lead_uuid = ?
+    `).bind(leadUUID).all()
+
+    if (scores.length > 0) {
+      const totalScore = scores[0].total_score
+      let grade = 'Cold'
+      let isQualified = false
+
+      if (totalScore >= 76) {
+        grade = 'Qualified'
+        isQualified = true
+      } else if (totalScore >= 51) {
+        grade = 'Hot'
+      } else if (totalScore >= 26) {
+        grade = 'Warm'
+      }
+
+      await this.db.prepare(`
+        UPDATE lead_scores 
+        SET 
+          score_grade = ?,
+          is_qualified = ?,
+          qualification_timestamp = ?
+        WHERE lead_uuid = ?
+      `).bind(
+        grade,
+        isQualified ? 1 : 0,
+        isQualified ? new Date().toISOString() : null,
+        leadUUID
+      ).run()
+    }
+  }
+
+  // Get lead score details
+  async getLeadScore(leadUUID: string): Promise<any> {
+    const { results: profile } = await this.db.prepare(`
+      SELECT lp.*, ls.* 
+      FROM lead_profiles lp
+      LEFT JOIN lead_scores ls ON lp.lead_uuid = ls.lead_uuid
+      WHERE lp.lead_uuid = ?
+    `).bind(leadUUID).all()
+
+    if (profile.length > 0) {
+      const { results: events } = await this.db.prepare(`
+        SELECT * FROM lead_scoring_events 
+        WHERE lead_uuid = ? 
+        ORDER BY created_at DESC 
+        LIMIT 20
+      `).bind(leadUUID).all()
+
+      return {
+        profile: profile[0],
+        recent_events: events
+      }
+    }
+
+    return null
+  }
+
+  // Get qualified leads
+  async getQualifiedLeads(limit: number = 50): Promise<any[]> {
+    const { results } = await this.db.prepare(`
+      SELECT lp.*, ls.*
+      FROM lead_profiles lp
+      INNER JOIN lead_scores ls ON lp.lead_uuid = ls.lead_uuid
+      WHERE ls.is_qualified = 1
+      ORDER BY ls.total_score DESC, lp.last_activity_timestamp DESC
+      LIMIT ?
+    `).bind(limit).all()
+
+    return results
+  }
+}
+
+// Track lead scoring event
+app.post('/api/lead-scoring/track-event', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const {
+      lead_identifier, // email, phone, or session_id
+      event_type,
+      event_category,
+      event_data,
+      page_url,
+      lead_profile
+    } = await c.req.json()
+
+    if (!lead_identifier || !event_type) {
+      return c.json({ error: 'Lead identifier and event type are required' }, 400)
+    }
+
+    const scoringEngine = new LeadScoringEngine(DB)
+    
+    // Create or update lead profile
+    const leadUUID = await scoringEngine.createOrUpdateLead({
+      email: lead_profile?.email || (lead_identifier.includes('@') ? lead_identifier : null),
+      phone: lead_profile?.phone || (lead_identifier.startsWith('+') ? lead_identifier : null),
+      name: lead_profile?.name,
+      company: lead_profile?.company,
+      service_interest: lead_profile?.service_interest || event_data?.service_category,
+      location: lead_profile?.location || event_data?.location,
+      source: lead_profile?.source || 'website',
+      utm_source: lead_profile?.utm_source,
+      utm_medium: lead_profile?.utm_medium,
+      utm_campaign: lead_profile?.utm_campaign,
+      first_touch_url: page_url,
+      ip: c.req.header('CF-Connecting-IP')
+    })
+
+    // Add scoring event
+    await scoringEngine.addScoringEvent(
+      leadUUID, 
+      event_type, 
+      event_category || 'engagement',
+      event_data,
+      page_url
+    )
+
+    // Get updated score
+    const scoreDetails = await scoringEngine.getLeadScore(leadUUID)
+
+    SystemLogger.info('LEAD_SCORING', 'Event tracked', { 
+      leadUUID, 
+      event_type, 
+      score: scoreDetails?.profile?.total_score 
+    })
+
+    return c.json({
+      success: true,
+      lead_uuid: leadUUID,
+      current_score: scoreDetails?.profile?.total_score || 0,
+      score_grade: scoreDetails?.profile?.score_grade || 'Cold',
+      is_qualified: scoreDetails?.profile?.is_qualified || false,
+      message: 'Lead scoring event tracked successfully'
+    })
+
+  } catch (error) {
+    console.error('Lead scoring tracking error:', error)
+    return c.json({ error: 'Failed to track lead scoring event' }, 500)
+  }
+})
+
+// Get lead score details
+app.get('/api/lead-scoring/lead/:identifier', async (c) => {
+  const { DB } = c.env
+  const identifier = c.req.param('identifier')
+  
+  try {
+    const scoringEngine = new LeadScoringEngine(DB)
+    
+    // Try to find lead by email, phone, or UUID
+    let leadUUID = identifier
+    if (identifier.includes('@') || identifier.startsWith('+')) {
+      const { results: leads } = await DB.prepare(`
+        SELECT lead_uuid FROM lead_profiles 
+        WHERE email = ? OR phone = ?
+        LIMIT 1
+      `).bind(identifier, identifier).all()
+      
+      if (leads.length === 0) {
+        return c.json({ error: 'Lead not found' }, 404)
+      }
+      leadUUID = leads[0].lead_uuid
+    }
+
+    const scoreDetails = await scoringEngine.getLeadScore(leadUUID)
+    
+    if (!scoreDetails) {
+      return c.json({ error: 'Lead not found' }, 404)
+    }
+
+    return c.json({
+      success: true,
+      lead: scoreDetails
+    })
+
+  } catch (error) {
+    console.error('Lead score fetch error:', error)
+    return c.json({ error: 'Failed to fetch lead score' }, 500)
+  }
+})
+
+// Admin: Get qualified leads dashboard
+app.get('/api/admin/lead-scoring/qualified-leads', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const scoringEngine = new LeadScoringEngine(DB)
+    const qualifiedLeads = await scoringEngine.getQualifiedLeads(100)
+
+    // Get scoring statistics
+    const { results: stats } = await DB.prepare(`
+      SELECT 
+        COUNT(*) as total_leads,
+        COUNT(CASE WHEN ls.is_qualified = 1 THEN 1 END) as qualified_leads,
+        COUNT(CASE WHEN ls.score_grade = 'Hot' THEN 1 END) as hot_leads,
+        COUNT(CASE WHEN ls.score_grade = 'Warm' THEN 1 END) as warm_leads,
+        COUNT(CASE WHEN ls.score_grade = 'Cold' THEN 1 END) as cold_leads,
+        AVG(ls.total_score) as avg_score
+      FROM lead_profiles lp
+      LEFT JOIN lead_scores ls ON lp.lead_uuid = ls.lead_uuid
+      WHERE lp.created_at >= datetime('now', '-30 days')
+    `).all()
+
+    // Get recent activity
+    const { results: recentActivity } = await DB.prepare(`
+      SELECT 
+        lse.*, lp.name, lp.email, lp.service_interest
+      FROM lead_scoring_events lse
+      INNER JOIN lead_profiles lp ON lse.lead_uuid = lp.lead_uuid
+      WHERE lse.created_at >= datetime('now', '-7 days')
+      ORDER BY lse.created_at DESC
+      LIMIT 50
+    `).all()
+
+    return c.json({
+      success: true,
+      data: {
+        qualified_leads: qualifiedLeads,
+        statistics: stats[0] || {},
+        recent_activity: recentActivity
+      }
+    })
+
+  } catch (error) {
+    console.error('Qualified leads fetch error:', error)
+    return c.json({ error: 'Failed to fetch qualified leads' }, 500)
+  }
+})
+
+// Admin: Lead scoring rules management
+app.get('/api/admin/lead-scoring/rules', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { results: rules } = await DB.prepare(`
+      SELECT * FROM lead_scoring_rules 
+      ORDER BY rule_category, score_value DESC
+    `).all()
+
+    // Group rules by category
+    const rulesByCategory = {
+      demographic: [],
+      behavioral: [],
+      interest: [],
+      intent: []
+    }
+
+    rules.forEach(rule => {
+      if (rulesByCategory[rule.rule_category]) {
+        rulesByCategory[rule.rule_category].push(rule)
+      }
+    })
+
+    return c.json({
+      success: true,
+      rules: rulesByCategory,
+      total_rules: rules.length
+    })
+
+  } catch (error) {
+    console.error('Lead scoring rules fetch error:', error)
+    return c.json({ error: 'Failed to fetch lead scoring rules' }, 500)
+  }
+})
+
+// Admin: Update lead scoring rule
+app.post('/api/admin/lead-scoring/rules/:id', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  const ruleId = c.req.param('id')
+  
+  try {
+    const {
+      rule_name,
+      score_value,
+      max_applications,
+      is_active,
+      description
+    } = await c.req.json()
+
+    await DB.prepare(`
+      UPDATE lead_scoring_rules 
+      SET 
+        rule_name = COALESCE(?, rule_name),
+        score_value = COALESCE(?, score_value),
+        max_applications = COALESCE(?, max_applications),
+        is_active = COALESCE(?, is_active),
+        description = COALESCE(?, description),
+        updated_at = ?
+      WHERE id = ?
+    `).bind(
+      rule_name || null,
+      score_value !== undefined ? score_value : null,
+      max_applications !== undefined ? max_applications : null,
+      is_active !== undefined ? (is_active ? 1 : 0) : null,
+      description || null,
+      new Date().toISOString(),
+      ruleId
+    ).run()
+
+    SystemLogger.info('LEAD_SCORING', 'Rule updated', { ruleId, rule_name })
+
+    return c.json({
+      success: true,
+      message: 'Lead scoring rule updated successfully'
+    })
+
+  } catch (error) {
+    console.error('Lead scoring rule update error:', error)
+    return c.json({ error: 'Failed to update lead scoring rule' }, 500)
+  }
+})
+
+// Admin: Lead Scoring Dashboard Interface
+app.get('/admin/lead-scoring-dashboard', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const trackingConfig = await getTrackingConfig(DB)
+    
+    return c.html(`
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Scoring Dashboard - GARANTOR360 Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .fade-in { animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .score-indicator { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 8px; }
+        .score-cold { background-color: #6b7280; }
+        .score-warm { background-color: #f59e0b; }
+        .score-hot { background-color: #ef4444; }
+        .score-qualified { background-color: #10b981; }
+        .lead-card { transition: all 0.3s ease; }
+        .lead-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 mb-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-2xl font-bold text-green-600">
+                        <i class="fas fa-trophy mr-2"></i>
+                        Lead Scoring Dashboard
+                    </h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="refreshData()" 
+                            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-sync mr-2"></i>
+                        Yenile
+                    </button>
+                    <a href="/admin/dashboard" 
+                       class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Admin Panel
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Toplam Lead</p>
+                        <p class="text-2xl font-bold text-gray-900" id="totalLeads">-</p>
+                    </div>
+                    <div class="bg-blue-100 p-3 rounded-lg">
+                        <i class="fas fa-users text-blue-600 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Qualified Leads</p>
+                        <p class="text-2xl font-bold text-green-600" id="qualifiedLeads">-</p>
+                    </div>
+                    <div class="bg-green-100 p-3 rounded-lg">
+                        <i class="fas fa-trophy text-green-600 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Hot Leads</p>
+                        <p class="text-2xl font-bold text-red-600" id="hotLeads">-</p>
+                    </div>
+                    <div class="bg-red-100 p-3 rounded-lg">
+                        <i class="fas fa-fire text-red-600 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Warm Leads</p>
+                        <p class="text-2xl font-bold text-yellow-600" id="warmLeads">-</p>
+                    </div>
+                    <div class="bg-yellow-100 p-3 rounded-lg">
+                        <i class="fas fa-thermometer-half text-yellow-600 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Ortalama Skor</p>
+                        <p class="text-2xl font-bold text-purple-600" id="avgScore">-</p>
+                    </div>
+                    <div class="bg-purple-100 p-3 rounded-lg">
+                        <i class="fas fa-chart-line text-purple-600 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Qualified Leads List -->
+            <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="p-6 border-b border-gray-200">
+                    <h2 class="text-xl font-semibold text-gray-900">
+                        <i class="fas fa-trophy mr-2 text-green-600"></i>
+                        Qualified Leads
+                    </h2>
+                </div>
+                
+                <div class="p-6">
+                    <div id="qualifiedLeadsList">
+                        <div class="text-center text-gray-500 py-8">
+                            <i class="fas fa-spinner fa-spin text-2xl mb-4"></i>
+                            <p>Qualified leads yükleniyor...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lead Score Distribution -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="p-6 border-b border-gray-200">
+                    <h2 class="text-xl font-semibold text-gray-900">
+                        <i class="fas fa-chart-pie mr-2 text-blue-600"></i>
+                        Skor Dağılımı
+                    </h2>
+                </div>
+                
+                <div class="p-6">
+                    <canvas id="scoreDistributionChart" width="300" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="mt-8 bg-white rounded-xl shadow-sm border border-gray-200">
+            <div class="p-6 border-b border-gray-200">
+                <h2 class="text-xl font-semibold text-gray-900">
+                    <i class="fas fa-clock mr-2 text-blue-600"></i>
+                    Son Aktiviteler
+                </h2>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Lead
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Aktivite
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Skor Değişimi
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Zaman
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentActivityTableBody" class="bg-white divide-y divide-gray-200">
+                        <!-- Activities will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Lead Scoring Rules -->
+        <div class="mt-8 bg-white rounded-xl shadow-sm border border-gray-200">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-semibold text-gray-900">
+                        <i class="fas fa-cogs mr-2 text-gray-600"></i>
+                        Scoring Kuralları
+                    </h2>
+                    <button onclick="showRulesModal()" 
+                            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-plus mr-2"></i>
+                        Kural Ekle
+                    </button>
+                </div>
+            </div>
+            
+            <div class="p-6">
+                <div id="scoringRulesContainer">
+                    <div class="text-center text-gray-500 py-8">
+                        <i class="fas fa-spinner fa-spin text-2xl mb-4"></i>
+                        <p>Scoring kuralları yükleniyor...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+    <script>
+        let dashboardData = {};
+        let scoreChart = null;
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDashboardData();
+            setInterval(refreshData, 30000); // Refresh every 30 seconds
+        });
+
+        // Load all dashboard data
+        async function loadDashboardData() {
+            try {
+                const response = await axios.get('/api/admin/lead-scoring/qualified-leads');
+                dashboardData = response.data.data;
+                
+                updateStats();
+                renderQualifiedLeads();
+                renderScoreDistribution();
+                renderRecentActivity();
+                loadScoringRules();
+                
+                console.log('Dashboard data loaded successfully');
+            } catch (error) {
+                console.error('Failed to load dashboard data:', error);
+                showNotification('Dashboard verileri yüklenemedi', 'error');
+            }
+        }
+
+        // Update statistics cards
+        function updateStats() {
+            const stats = dashboardData.statistics || {};
+            
+            document.getElementById('totalLeads').textContent = stats.total_leads || 0;
+            document.getElementById('qualifiedLeads').textContent = stats.qualified_leads || 0;
+            document.getElementById('hotLeads').textContent = stats.hot_leads || 0;
+            document.getElementById('warmLeads').textContent = stats.warm_leads || 0;
+            document.getElementById('avgScore').textContent = Math.round(stats.avg_score || 0);
+        }
+
+        // Render qualified leads list
+        function renderQualifiedLeads() {
+            const container = document.getElementById('qualifiedLeadsList');
+            const leads = dashboardData.qualified_leads || [];
+            
+            if (leads.length === 0) {
+                container.innerHTML = \`
+                    <div class="text-center text-gray-500 py-8">
+                        <i class="fas fa-trophy text-4xl mb-4 opacity-50"></i>
+                        <p class="text-lg mb-2">Henüz qualified lead yok</p>
+                        <p class="text-sm">Lead scoring sistemi çalışmaya başladığında burada görünecekler</p>
+                    </div>
+                \`;
+                return;
+            }
+            
+            container.innerHTML = leads.map(lead => \`
+                <div class="lead-card bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4">
+                    <div class="flex justify-between items-start">
+                        <div class="flex-1">
+                            <div class="flex items-center mb-2">
+                                <span class="score-indicator score-\${lead.score_grade?.toLowerCase() || 'cold'}"></span>
+                                <h3 class="font-semibold text-gray-900">
+                                    \${lead.name || 'Anonim Lead'}
+                                </h3>
+                                <span class="ml-2 px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">
+                                    \${lead.score_grade || 'Unknown'}
+                                </span>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm text-gray-600">
+                                <div>
+                                    <i class="fas fa-envelope mr-1"></i>
+                                    \${lead.email || 'Email yok'}
+                                </div>
+                                <div>
+                                    <i class="fas fa-phone mr-1"></i>
+                                    \${lead.phone || 'Telefon yok'}
+                                </div>
+                                <div>
+                                    <i class="fas fa-map-marker-alt mr-1"></i>
+                                    \${lead.location || 'Konum yok'}
+                                </div>
+                            </div>
+                            
+                            <div class="mt-2 text-sm text-gray-600">
+                                <i class="fas fa-tools mr-1"></i>
+                                Hizmet: \${lead.service_interest || 'Belirtilmemiş'}
+                            </div>
+                        </div>
+                        
+                        <div class="text-right ml-4">
+                            <div class="text-2xl font-bold text-green-600">\${lead.total_score || 0}</div>
+                            <div class="text-xs text-gray-500">puan</div>
+                            <div class="mt-2">
+                                <button onclick="viewLeadDetails('\${lead.lead_uuid}')" 
+                                        class="text-blue-600 hover:text-blue-800 text-sm">
+                                    <i class="fas fa-eye mr-1"></i>
+                                    Detaylar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            \`).join('');
+        }
+
+        // Render score distribution chart
+        function renderScoreDistribution() {
+            const ctx = document.getElementById('scoreDistributionChart').getContext('2d');
+            const stats = dashboardData.statistics || {};
+            
+            if (scoreChart) {
+                scoreChart.destroy();
+            }
+            
+            scoreChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Qualified', 'Hot', 'Warm', 'Cold'],
+                    datasets: [{
+                        data: [
+                            stats.qualified_leads || 0,
+                            stats.hot_leads || 0,
+                            stats.warm_leads || 0,
+                            stats.cold_leads || 0
+                        ],
+                        backgroundColor: [
+                            '#10b981', // Green for Qualified
+                            '#ef4444', // Red for Hot
+                            '#f59e0b', // Yellow for Warm
+                            '#6b7280'  // Gray for Cold
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Render recent activity
+        function renderRecentActivity() {
+            const tbody = document.getElementById('recentActivityTableBody');
+            const activities = dashboardData.recent_activity || [];
+            
+            if (activities.length === 0) {
+                tbody.innerHTML = \`
+                    <tr>
+                        <td colspan="4" class="px-6 py-12 text-center text-gray-500">
+                            <i class="fas fa-clock text-4xl mb-4 opacity-50"></i>
+                            <p>Henüz aktivite yok</p>
+                        </td>
+                    </tr>
+                \`;
+                return;
+            }
+            
+            tbody.innerHTML = activities.map(activity => \`
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div>
+                                <div class="text-sm font-medium text-gray-900">
+                                    \${activity.name || 'Anonim'}
+                                </div>
+                                <div class="text-sm text-gray-500">
+                                    \${activity.email || activity.service_interest || ''}
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">\${activity.event_type}</div>
+                        <div class="text-sm text-gray-500">\${activity.score_reason?.substring(0, 50) || ''}...</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full \${
+                            activity.score_change > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                        }">
+                            \${activity.score_change > 0 ? '+' : ''}\${activity.score_change}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        \${formatDate(activity.created_at)}
+                    </td>
+                </tr>
+            \`).join('');
+        }
+
+        // Load scoring rules
+        async function loadScoringRules() {
+            try {
+                const response = await axios.get('/api/admin/lead-scoring/rules');
+                renderScoringRules(response.data.rules);
+            } catch (error) {
+                console.error('Failed to load scoring rules:', error);
+            }
+        }
+
+        // Render scoring rules
+        function renderScoringRules(rules) {
+            const container = document.getElementById('scoringRulesContainer');
+            
+            container.innerHTML = Object.entries(rules).map(([category, categoryRules]) => \`
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-3 capitalize">
+                        \${getCategoryLabel(category)} (\${categoryRules.length} kural)
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        \${categoryRules.map(rule => \`
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-medium text-gray-900">\${rule.rule_name}</h4>
+                                    <span class="px-2 py-1 text-xs rounded-full \${
+                                        rule.score_value > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                                    }">
+                                        \${rule.score_value > 0 ? '+' : ''}\${rule.score_value}
+                                    </span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-2">\${rule.description}</p>
+                                <div class="flex justify-between items-center text-xs text-gray-500">
+                                    <span>Max: \${rule.max_applications}x</span>
+                                    <span class="\${rule.is_active ? 'text-green-600' : 'text-red-600'}">
+                                        \${rule.is_active ? 'Aktif' : 'Pasif'}
+                                    </span>
+                                </div>
+                            </div>
+                        \`).join('')}
+                    </div>
+                </div>
+            \`).join('');
+        }
+
+        // Utility functions
+        function getCategoryLabel(category) {
+            const labels = {
+                demographic: 'Demografik',
+                behavioral: 'Davranışsal',
+                interest: 'İlgi',
+                intent: 'Niyet'
+            };
+            return labels[category] || category;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString('tr-TR', {
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function refreshData() {
+            loadDashboardData();
+        }
+
+        function viewLeadDetails(leadUuid) {
+            // Implement lead details modal or redirect
+            alert('Lead detay sayfası: ' + leadUuid);
+        }
+
+        function showRulesModal() {
+            // Implement rules management modal
+            alert('Kural yönetimi modalı geliştirme aşamasında');
+        }
+
+        // Show notification
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = \`fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full \${
+                type === 'success' ? 'bg-green-500 text-white' :
+                type === 'error' ? 'bg-red-500 text-white' :
+                type === 'warning' ? 'bg-yellow-500 text-white' :
+                'bg-blue-500 text-white'
+            }\`;
+            
+            notification.innerHTML = \`
+                <div class="flex items-center space-x-2">
+                    <i class="fas \${
+                        type === 'success' ? 'fa-check-circle' :
+                        type === 'error' ? 'fa-exclamation-circle' :
+                        type === 'warning' ? 'fa-exclamation-triangle' :
+                        'fa-info-circle'
+                    }"></i>
+                    <span>\${message}</span>
+                </div>
+            \`;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.classList.remove('translate-x-full'), 100);
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => document.body.removeChild(notification), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
+    `)
+    
+  } catch (error) {
+    console.error('Lead scoring dashboard error:', error)
+    return c.html(`
+      <h1>Error</h1>
+      <p>Lead scoring dashboard yüklenemedi: ${error.message}</p>
+    `)
+  }
+})
+
+// =============================================================================
+// EMAIL MARKETING SYSTEM - BACKEND API
+// =============================================================================
+
+// Email Marketing System - Backend API
+class EmailMarketingEngine {
+  constructor(db) {
+    this.db = db
+  }
+
+  // Email template management
+  async getEmailTemplates() {
+    return await this.db.prepare(`
+      SELECT * FROM email_templates 
+      WHERE is_active = 1 
+      ORDER BY created_at DESC
+    `).all()
+  }
+
+  async getEmailTemplate(id) {
+    return await this.db.prepare(`
+      SELECT * FROM email_templates WHERE id = ?
+    `).bind(id).first()
+  }
+
+  async createEmailTemplate(templateData) {
+    const { name, subject, html_content, text_content, template_type, variables, is_active = 1 } = templateData
+    
+    const result = await this.db.prepare(`
+      INSERT INTO email_templates (
+        name, subject, html_content, text_content, template_type, 
+        variables, is_active, created_at, updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))
+    `).bind(
+      name, subject, html_content, text_content, template_type,
+      JSON.stringify(variables || {}), is_active
+    ).run()
+
+    return { id: result.meta.last_row_id, ...templateData }
+  }
+
+  async updateEmailTemplate(id, templateData) {
+    const { name, subject, html_content, text_content, variables, is_active } = templateData
+    
+    await this.db.prepare(`
+      UPDATE email_templates 
+      SET name = ?, subject = ?, html_content = ?, text_content = ?, 
+          variables = ?, is_active = ?, updated_at = datetime('now')
+      WHERE id = ?
+    `).bind(
+      name, subject, html_content, text_content,
+      JSON.stringify(variables || {}), is_active, id
+    ).run()
+
+    return await this.getEmailTemplate(id)
+  }
+
+  // Email campaign management
+  async createEmailCampaign(campaignData) {
+    const {
+      name, template_id, segment_criteria, schedule_type = 'immediate',
+      scheduled_at, is_active = 1, created_by
+    } = campaignData
+
+    const result = await this.db.prepare(`
+      INSERT INTO email_campaigns (
+        name, template_id, segment_criteria, schedule_type, scheduled_at,
+        is_active, created_by, created_at, updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))
+    `).bind(
+      name, template_id, JSON.stringify(segment_criteria || {}),
+      schedule_type, scheduled_at, is_active, created_by
+    ).run()
+
+    return { id: result.meta.last_row_id, ...campaignData }
+  }
+
+  async getEmailCampaigns(limit = 50, offset = 0) {
+    return await this.db.prepare(`
+      SELECT 
+        c.*,
+        t.name as template_name,
+        t.subject as template_subject,
+        COUNT(s.id) as total_sends,
+        COUNT(CASE WHEN s.status = 'sent' THEN 1 END) as successful_sends,
+        COUNT(CASE WHEN s.opened_at IS NOT NULL THEN 1 END) as opens,
+        COUNT(CASE WHEN s.clicked_at IS NOT NULL THEN 1 END) as clicks
+      FROM email_campaigns c
+      LEFT JOIN email_templates t ON c.template_id = t.id
+      LEFT JOIN email_sends s ON c.id = s.campaign_id
+      GROUP BY c.id
+      ORDER BY c.created_at DESC
+      LIMIT ? OFFSET ?
+    `).bind(limit, offset).all()
+  }
+
+  // Email subscriber management
+  async addEmailSubscriber(subscriberData) {
+    const { email, name, phone, tags, metadata, source = 'manual' } = subscriberData
+    
+    // Check if subscriber exists
+    const existing = await this.db.prepare(`
+      SELECT id FROM email_subscribers WHERE email = ?
+    `).bind(email).first()
+
+    if (existing) {
+      // Update existing subscriber
+      await this.db.prepare(`
+        UPDATE email_subscribers 
+        SET name = ?, phone = ?, tags = ?, metadata = ?, 
+            status = 'subscribed', updated_at = datetime('now')
+        WHERE email = ?
+      `).bind(
+        name, phone, JSON.stringify(tags || []), 
+        JSON.stringify(metadata || {}), email
+      ).run()
+      return { id: existing.id, ...subscriberData }
+    }
+
+    // Create new subscriber
+    const result = await this.db.prepare(`
+      INSERT INTO email_subscribers (
+        email, name, phone, tags, metadata, source, status,
+        subscribed_at, created_at, updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, 'subscribed', datetime('now'), datetime('now'), datetime('now'))
+    `).bind(
+      email, name, phone, JSON.stringify(tags || []), 
+      JSON.stringify(metadata || {}), source
+    ).run()
+
+    return { id: result.meta.last_row_id, ...subscriberData }
+  }
+
+  async getEmailSubscribers(filter = {}, limit = 50, offset = 0) {
+    let query = `
+      SELECT * FROM email_subscribers 
+      WHERE status != 'unsubscribed'
+    `
+    const params = []
+
+    if (filter.tags && filter.tags.length > 0) {
+      query += ` AND (${filter.tags.map(() => 'tags LIKE ?').join(' OR ')})`
+      filter.tags.forEach(tag => params.push(`%"${tag}"%`))
+    }
+
+    if (filter.source) {
+      query += ` AND source = ?`
+      params.push(filter.source)
+    }
+
+    query += ` ORDER BY subscribed_at DESC LIMIT ? OFFSET ?`
+    params.push(limit, offset)
+
+    return await this.db.prepare(query).bind(...params).all()
+  }
+
+  // Email automation workflows
+  async createEmailAutomation(automationData) {
+    const {
+      name, trigger_type, trigger_conditions, template_sequence,
+      is_active = 1, created_by
+    } = automationData
+
+    const result = await this.db.prepare(`
+      INSERT INTO email_automations (
+        name, trigger_type, trigger_conditions, template_sequence,
+        is_active, created_by, created_at, updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))
+    `).bind(
+      name, trigger_type, JSON.stringify(trigger_conditions || {}),
+      JSON.stringify(template_sequence || []), is_active, created_by
+    ).run()
+
+    return { id: result.meta.last_row_id, ...automationData }
+  }
+
+  async triggerEmailAutomation(triggerType, triggerData) {
+    // Find matching automations
+    const automations = await this.db.prepare(`
+      SELECT * FROM email_automations 
+      WHERE trigger_type = ? AND is_active = 1
+    `).bind(triggerType).all()
+
+    const results = []
+    
+    for (const automation of automations.results || automations) {
+      const conditions = JSON.parse(automation.trigger_conditions || '{}')
+      
+      // Check if trigger conditions match
+      if (this.matchesTriggerConditions(triggerData, conditions)) {
+        // Create automation instance
+        const instanceResult = await this.db.prepare(`
+          INSERT INTO email_automation_instances (
+            automation_id, subscriber_email, trigger_data, status,
+            created_at, updated_at
+          ) VALUES (?, ?, ?, 'active', datetime('now'), datetime('now'))
+        `).bind(
+          automation.id, triggerData.email,
+          JSON.stringify(triggerData)
+        ).run()
+
+        results.push({
+          automation_id: automation.id,
+          instance_id: instanceResult.meta.last_row_id,
+          name: automation.name
+        })
+      }
+    }
+
+    return results
+  }
+
+  matchesTriggerConditions(triggerData, conditions) {
+    // Simple condition matching logic
+    if (!conditions || Object.keys(conditions).length === 0) return true
+    
+    for (const [key, value] of Object.entries(conditions)) {
+      if (triggerData[key] !== value) return false
+    }
+    
+    return true
+  }
+
+  // Email sending and tracking
+  async scheduleEmail(emailData) {
+    const {
+      campaign_id, template_id, subscriber_email, scheduled_at,
+      personalization_data = {}
+    } = emailData
+
+    const result = await this.db.prepare(`
+      INSERT INTO email_sends (
+        campaign_id, template_id, subscriber_email, status,
+        personalization_data, scheduled_at, created_at
+      ) VALUES (?, ?, ?, 'scheduled', ?, ?, datetime('now'))
+    `).bind(
+      campaign_id, template_id, subscriber_email,
+      JSON.stringify(personalization_data), scheduled_at
+    ).run()
+
+    return { id: result.meta.last_row_id, ...emailData }
+  }
+
+  async updateEmailSendStatus(sendId, status, metadata = {}) {
+    const updateFields = ['status = ?', 'updated_at = datetime("now")']
+    const params = [status]
+
+    if (status === 'sent') {
+      updateFields.push('sent_at = datetime("now")')
+    } else if (status === 'failed') {
+      updateFields.push('error_message = ?')
+      params.push(metadata.error || 'Unknown error')
+    }
+
+    await this.db.prepare(`
+      UPDATE email_sends 
+      SET ${updateFields.join(', ')}
+      WHERE id = ?
+    `).bind(...params, sendId).run()
+  }
+
+  // Email analytics
+  async getEmailAnalytics(campaignId = null, days = 30) {
+    let query = `
+      SELECT 
+        COUNT(*) as total_sends,
+        COUNT(CASE WHEN status = 'sent' THEN 1 END) as successful_sends,
+        COUNT(CASE WHEN opened_at IS NOT NULL THEN 1 END) as opens,
+        COUNT(CASE WHEN clicked_at IS NOT NULL THEN 1 END) as clicks,
+        COUNT(CASE WHEN status = 'failed' THEN 1 END) as failures
+      FROM email_sends
+      WHERE created_at >= datetime('now', '-${days} days')
+    `
+
+    if (campaignId) {
+      query += ` AND campaign_id = ?`
+      return await this.db.prepare(query).bind(campaignId).first()
+    }
+
+    return await this.db.prepare(query).first()
+  }
+}
+
+// Email Marketing API Endpoints
+app.get('/api/email-marketing/templates', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const emailEngine = new EmailMarketingEngine(DB)
+    const templates = await emailEngine.getEmailTemplates()
+    
+    return c.json({
+      success: true,
+      templates: templates.results || templates
+    })
+  } catch (error) {
+    console.error('Get email templates error:', error)
+    return c.json({ error: 'Email template listesi alınamadı' }, 500)
+  }
+})
+
+app.post('/api/email-marketing/templates', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const templateData = await c.req.json()
+    const emailEngine = new EmailMarketingEngine(DB)
+    const template = await emailEngine.createEmailTemplate(templateData)
+    
+    return c.json({
+      success: true,
+      template,
+      message: 'Email template başarıyla oluşturuldu'
+    })
+  } catch (error) {
+    console.error('Create email template error:', error)
+    return c.json({ error: 'Email template oluşturulamadı' }, 500)
+  }
+})
+
+app.get('/api/email-marketing/templates/:id', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  const templateId = c.req.param('id')
+  
+  try {
+    const emailEngine = new EmailMarketingEngine(DB)
+    const template = await emailEngine.getEmailTemplate(templateId)
+    
+    if (!template) {
+      return c.json({ error: 'Email template bulunamadı' }, 404)
+    }
+    
+    return c.json({
+      success: true,
+      template
+    })
+  } catch (error) {
+    console.error('Get email template error:', error)
+    return c.json({ error: 'Email template alınamadı' }, 500)
+  }
+})
+
+app.put('/api/email-marketing/templates/:id', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  const templateId = c.req.param('id')
+  
+  try {
+    const templateData = await c.req.json()
+    const emailEngine = new EmailMarketingEngine(DB)
+    const template = await emailEngine.updateEmailTemplate(templateId, templateData)
+    
+    return c.json({
+      success: true,
+      template,
+      message: 'Email template başarıyla güncellendi'
+    })
+  } catch (error) {
+    console.error('Update email template error:', error)
+    return c.json({ error: 'Email template güncellenemedi' }, 500)
+  }
+})
+
+app.get('/api/email-marketing/campaigns', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const limit = parseInt(c.req.query('limit')) || 50
+    const offset = parseInt(c.req.query('offset')) || 0
+    
+    const emailEngine = new EmailMarketingEngine(DB)
+    const campaigns = await emailEngine.getEmailCampaigns(limit, offset)
+    
+    return c.json({
+      success: true,
+      campaigns: campaigns.results || campaigns,
+      pagination: { limit, offset }
+    })
+  } catch (error) {
+    console.error('Get email campaigns error:', error)
+    return c.json({ error: 'Email campaign listesi alınamadı' }, 500)
+  }
+})
+
+app.post('/api/email-marketing/campaigns', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const campaignData = await c.req.json()
+    campaignData.created_by = 'admin' // Set from auth context
+    
+    const emailEngine = new EmailMarketingEngine(DB)
+    const campaign = await emailEngine.createEmailCampaign(campaignData)
+    
+    return c.json({
+      success: true,
+      campaign,
+      message: 'Email campaign başarıyla oluşturuldu'
+    })
+  } catch (error) {
+    console.error('Create email campaign error:', error)
+    return c.json({ error: 'Email campaign oluşturulamadı' }, 500)
+  }
+})
+
+app.get('/api/email-marketing/subscribers', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const limit = parseInt(c.req.query('limit')) || 50
+    const offset = parseInt(c.req.query('offset')) || 0
+    const tags = c.req.query('tags') ? c.req.query('tags').split(',') : []
+    const source = c.req.query('source')
+    
+    const emailEngine = new EmailMarketingEngine(DB)
+    const subscribers = await emailEngine.getEmailSubscribers(
+      { tags, source }, limit, offset
+    )
+    
+    return c.json({
+      success: true,
+      subscribers: subscribers.results || subscribers,
+      pagination: { limit, offset }
+    })
+  } catch (error) {
+    console.error('Get email subscribers error:', error)
+    return c.json({ error: 'Email subscriber listesi alınamadı' }, 500)
+  }
+})
+
+app.post('/api/email-marketing/subscribers', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const subscriberData = await c.req.json()
+    const emailEngine = new EmailMarketingEngine(DB)
+    const subscriber = await emailEngine.addEmailSubscriber(subscriberData)
+    
+    return c.json({
+      success: true,
+      subscriber,
+      message: 'Email subscriber başarıyla eklendi'
+    })
+  } catch (error) {
+    console.error('Add email subscriber error:', error)
+    return c.json({ error: 'Email subscriber eklenemedi' }, 500)
+  }
+})
+
+app.get('/api/email-marketing/analytics', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const campaignId = c.req.query('campaign_id')
+    const days = parseInt(c.req.query('days')) || 30
+    
+    const emailEngine = new EmailMarketingEngine(DB)
+    const analytics = await emailEngine.getEmailAnalytics(campaignId, days)
+    
+    // Calculate rates
+    const totalSends = analytics.total_sends || 0
+    const successRate = totalSends > 0 ? (analytics.successful_sends / totalSends * 100) : 0
+    const openRate = totalSends > 0 ? (analytics.opens / totalSends * 100) : 0
+    const clickRate = totalSends > 0 ? (analytics.clicks / totalSends * 100) : 0
+    
+    return c.json({
+      success: true,
+      analytics: {
+        ...analytics,
+        success_rate: successRate.toFixed(2),
+        open_rate: openRate.toFixed(2),
+        click_rate: clickRate.toFixed(2)
+      }
+    })
+  } catch (error) {
+    console.error('Get email analytics error:', error)
+    return c.json({ error: 'Email analytics alınamadı' }, 500)
+  }
+})
+
+app.post('/api/email-marketing/automations', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const automationData = await c.req.json()
+    automationData.created_by = 'admin'
+    
+    const emailEngine = new EmailMarketingEngine(DB)
+    const automation = await emailEngine.createEmailAutomation(automationData)
+    
+    return c.json({
+      success: true,
+      automation,
+      message: 'Email automation başarıyla oluşturuldu'
+    })
+  } catch (error) {
+    console.error('Create email automation error:', error)
+    return c.json({ error: 'Email automation oluşturulamadı' }, 500)
+  }
+})
+
+app.post('/api/email-marketing/trigger-automation', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { trigger_type, trigger_data } = await c.req.json()
+    
+    const emailEngine = new EmailMarketingEngine(DB)
+    const results = await emailEngine.triggerEmailAutomation(trigger_type, trigger_data)
+    
+    return c.json({
+      success: true,
+      triggered_automations: results,
+      message: `${results.length} automation triggered`
+    })
+  } catch (error) {
+    console.error('Trigger email automation error:', error)
+    return c.json({ error: 'Email automation tetiklenemedi' }, 500)
+  }
+})
+
+// =============================================================================
+// CUSTOMER SEGMENTATION ENGINE
+// =============================================================================
+
+class CustomerSegmentationEngine {
+  constructor(db) {
+    this.db = db
+  }
+
+  // Get all customer segments
+  async getSegments() {
+    return await this.db.prepare(`
+      SELECT 
+        s.*,
+        COUNT(DISTINCT csa.customer_identifier) as customer_count,
+        AVG(spm.metric_value) as avg_performance
+      FROM customer_segments s
+      LEFT JOIN customer_segment_assignments csa ON s.id = csa.segment_id AND csa.is_active = 1
+      LEFT JOIN segment_performance_metrics spm ON s.id = spm.segment_id 
+        AND spm.metric_type = 'engagement_score' 
+        AND spm.calculation_date >= date('now', '-30 days')
+      WHERE s.is_active = 1
+      GROUP BY s.id
+      ORDER BY s.priority_score DESC, s.created_at ASC
+    `).all()
+  }
+
+  // Get segment by ID with detailed info
+  async getSegmentDetails(segmentId) {
+    const segment = await this.db.prepare(`
+      SELECT * FROM customer_segments WHERE id = ? AND is_active = 1
+    `).bind(segmentId).first()
+
+    if (!segment) return null
+
+    // Get segment customers
+    const customers = await this.db.prepare(`
+      SELECT 
+        csa.*,
+        cbd.behavior_type,
+        cbd.behavior_category,
+        COUNT(cbd.id) as behavior_count
+      FROM customer_segment_assignments csa
+      LEFT JOIN customer_behavioral_data cbd ON csa.customer_identifier = cbd.customer_identifier
+        AND cbd.timestamp >= date('now', '-30 days')
+      WHERE csa.segment_id = ? AND csa.is_active = 1
+      GROUP BY csa.customer_identifier
+      ORDER BY csa.assigned_at DESC
+      LIMIT 100
+    `).bind(segmentId).all()
+
+    // Get segment rules
+    const rules = await this.db.prepare(`
+      SELECT * FROM segment_rules 
+      WHERE segment_id = ? AND is_active = 1
+      ORDER BY rule_weight DESC
+    `).bind(segmentId).all()
+
+    return {
+      segment,
+      customers: customers.results || customers,
+      rules: rules.results || rules
+    }
+  }
+
+  // Assign customer to segment
+  async assignCustomerToSegment(customerIdentifier, segmentId, source = 'automatic', reason = '') {
+    // Check if customer already in this segment
+    const existing = await this.db.prepare(`
+      SELECT id FROM customer_segment_assignments 
+      WHERE customer_identifier = ? AND segment_id = ? AND is_active = 1
+    `).bind(customerIdentifier, segmentId).first()
+
+    if (existing) {
+      return { success: false, message: 'Customer already in this segment' }
+    }
+
+    // Get customer's current segments for history
+    const currentSegments = await this.db.prepare(`
+      SELECT segment_id FROM customer_segment_assignments 
+      WHERE customer_identifier = ? AND is_active = 1
+    `).bind(customerIdentifier).all()
+
+    // Assign to new segment
+    const result = await this.db.prepare(`
+      INSERT INTO customer_segment_assignments (
+        customer_identifier, segment_id, assignment_source, assignment_reason, assigned_at
+      ) VALUES (?, ?, ?, ?, datetime('now'))
+    `).bind(customerIdentifier, segmentId, source, reason).run()
+
+    // Record segment history
+    for (const currentSeg of (currentSegments.results || currentSegments)) {
+      await this.db.prepare(`
+        INSERT INTO segment_history (
+          customer_identifier, old_segment_id, new_segment_id, change_reason, change_source
+        ) VALUES (?, ?, ?, ?, ?)
+      `).bind(customerIdentifier, currentSeg.segment_id, segmentId, reason, source).run()
+    }
+
+    return { 
+      success: true, 
+      assignmentId: result.meta.last_row_id,
+      message: 'Customer assigned to segment successfully' 
+    }
+  }
+
+  // Automatic segmentation based on rules
+  async runAutomaticSegmentation(customerIdentifier) {
+    // Get customer data for evaluation
+    const customerData = await this.getCustomerDataForSegmentation(customerIdentifier)
+    
+    if (!customerData) {
+      return { success: false, message: 'Customer data not found' }
+    }
+
+    // Get all active automated segments with rules
+    const segments = await this.db.prepare(`
+      SELECT 
+        s.id, s.segment_name, s.segment_criteria, s.priority_score,
+        GROUP_CONCAT(sr.rule_conditions) as rule_conditions,
+        GROUP_CONCAT(sr.rule_weight) as rule_weights
+      FROM customer_segments s
+      LEFT JOIN segment_rules sr ON s.id = sr.segment_id AND sr.is_active = 1
+      WHERE s.is_active = 1 AND s.is_automated = 1
+      GROUP BY s.id
+      ORDER BY s.priority_score DESC
+    `).all()
+
+    const segmentScores = []
+
+    // Evaluate each segment
+    for (const segment of (segments.results || segments)) {
+      const score = this.calculateSegmentScore(customerData, segment)
+      if (score > 0.5) { // Threshold for segment assignment
+        segmentScores.push({
+          segmentId: segment.id,
+          segmentName: segment.segment_name,
+          score: score
+        })
+      }
+    }
+
+    // Sort by score and assign to best matching segment
+    segmentScores.sort((a, b) => b.score - a.score)
+
+    const assignmentResults = []
+    
+    // Assign to top matching segments (max 3)
+    for (let i = 0; i < Math.min(segmentScores.length, 3); i++) {
+      const segmentScore = segmentScores[i]
+      const assignment = await this.assignCustomerToSegment(
+        customerIdentifier, 
+        segmentScore.segmentId, 
+        'automatic', 
+        `Auto-assigned with score ${segmentScore.score.toFixed(2)}`
+      )
+      assignmentResults.push({
+        ...segmentScore,
+        assignment
+      })
+    }
+
+    return {
+      success: true,
+      assignmentResults,
+      message: `Assigned to ${assignmentResults.length} segments`
+    }
+  }
+
+  // Get customer data for segmentation
+  async getCustomerDataForSegmentation(customerIdentifier) {
+    // Get basic customer info
+    const customer = await this.db.prepare(`
+      SELECT * FROM email_subscribers 
+      WHERE email = ? OR phone = ?
+      ORDER BY subscribed_at DESC LIMIT 1
+    `).bind(customerIdentifier, customerIdentifier).first()
+
+    if (!customer) return null
+
+    // Get behavioral data
+    const behaviorData = await this.db.prepare(`
+      SELECT 
+        behavior_type,
+        behavior_category,
+        COUNT(*) as occurrence_count,
+        AVG(behavior_value) as avg_value,
+        MAX(timestamp) as last_occurrence
+      FROM customer_behavioral_data 
+      WHERE customer_identifier = ?
+      GROUP BY behavior_type, behavior_category
+    `).bind(customerIdentifier).all()
+
+    // Get lead scoring data if available
+    const leadScore = await this.db.prepare(`
+      SELECT current_score FROM lead_scores 
+      WHERE lead_identifier = ?
+      ORDER BY updated_at DESC LIMIT 1
+    `).bind(customerIdentifier).first()
+
+    // Get service history (if customer has services)
+    const serviceHistory = await this.db.prepare(`
+      SELECT 
+        COUNT(*) as service_count,
+        SUM(CASE WHEN hizmet_durumu = 'tamamlandi' THEN 1 ELSE 0 END) as completed_services,
+        MAX(created_at) as last_service_date,
+        AVG(CASE WHEN musteri_puani IS NOT NULL THEN musteri_puani ELSE 0 END) as avg_rating
+      FROM hizmet_talepleri 
+      WHERE musteri_telefon = ? OR musteri_email = ?
+    `).bind(customerIdentifier, customerIdentifier).first()
+
+    return {
+      customer,
+      behaviors: behaviorData.results || behaviorData,
+      leadScore: leadScore?.current_score || 0,
+      serviceHistory: serviceHistory || {},
+      calculatedMetrics: this.calculateCustomerMetrics(behaviorData.results || behaviorData, serviceHistory)
+    }
+  }
+
+  // Calculate customer metrics for segmentation
+  calculateCustomerMetrics(behaviors, serviceHistory) {
+    const metrics = {
+      engagement_score: 0,
+      website_visits: 0,
+      email_engagement: 0,
+      service_frequency: 0,
+      last_activity_days: 999
+    }
+
+    // Calculate engagement metrics from behavior data
+    behaviors.forEach(behavior => {
+      switch (behavior.behavior_type) {
+        case 'page_visit':
+          metrics.website_visits += behavior.occurrence_count
+          break
+        case 'email_open':
+        case 'email_click':
+          metrics.email_engagement += behavior.occurrence_count * 0.1
+          break
+      }
+      
+      // Update last activity
+      const daysSinceActivity = Math.floor((new Date() - new Date(behavior.last_occurrence)) / (1000 * 60 * 60 * 24))
+      if (daysSinceActivity < metrics.last_activity_days) {
+        metrics.last_activity_days = daysSinceActivity
+      }
+    })
+
+    // Calculate service frequency
+    if (serviceHistory.service_count > 0) {
+      metrics.service_frequency = serviceHistory.service_count / 12 // services per month
+    }
+
+    // Calculate overall engagement score
+    metrics.engagement_score = (
+      Math.min(metrics.website_visits * 0.1, 1) * 0.3 +
+      Math.min(metrics.email_engagement, 1) * 0.4 +
+      Math.min(metrics.service_frequency * 2, 1) * 0.3
+    )
+
+    return metrics
+  }
+
+  // Calculate segment score for customer
+  calculateSegmentScore(customerData, segment) {
+    let totalScore = 0
+    let totalWeight = 0
+
+    try {
+      // Parse segment criteria
+      const criteria = JSON.parse(segment.segment_criteria || '{}')
+      const ruleConditions = segment.rule_conditions ? segment.rule_conditions.split(',') : []
+      const ruleWeights = segment.rule_weights ? segment.rule_weights.split(',').map(w => parseFloat(w)) : []
+
+      // Evaluate main criteria
+      for (const [field, condition] of Object.entries(criteria)) {
+        const fieldValue = this.getCustomerFieldValue(customerData, field)
+        const conditionScore = this.evaluateCondition(fieldValue, condition)
+        totalScore += conditionScore * 0.5 // Base weight for main criteria
+        totalWeight += 0.5
+      }
+
+      // Evaluate individual rules
+      ruleConditions.forEach((ruleCondition, index) => {
+        try {
+          const rule = JSON.parse(ruleCondition)
+          const fieldValue = this.getCustomerFieldValue(customerData, rule.field)
+          const conditionScore = this.evaluateCondition(fieldValue, {
+            operator: rule.operator,
+            value: rule.value
+          })
+          const weight = ruleWeights[index] || 0.5
+          totalScore += conditionScore * weight
+          totalWeight += weight
+        } catch (e) {
+          console.warn('Invalid rule condition:', ruleCondition)
+        }
+      })
+
+    } catch (error) {
+      console.error('Segment scoring error:', error)
+      return 0
+    }
+
+    return totalWeight > 0 ? totalScore / totalWeight : 0
+  }
+
+  // Get customer field value for evaluation
+  getCustomerFieldValue(customerData, field) {
+    const { customer, behaviors, leadScore, serviceHistory, calculatedMetrics } = customerData
+
+    // Service history fields
+    if (field === 'service_count') return serviceHistory.service_count || 0
+    if (field === 'total_spent') return serviceHistory.total_spent || 0
+    if (field === 'satisfaction_score') return serviceHistory.avg_rating || 0
+    
+    // Calculated metrics
+    if (calculatedMetrics[field] !== undefined) return calculatedMetrics[field]
+    
+    // Lead scoring
+    if (field === 'lead_score') return leadScore
+    
+    // Customer fields
+    if (customer && customer[field] !== undefined) return customer[field]
+    
+    // Time-based calculations
+    if (field === 'registration_days') {
+      return customer ? Math.floor((new Date() - new Date(customer.created_at)) / (1000 * 60 * 60 * 24)) : 999
+    }
+    
+    if (field === 'last_service_days') {
+      return serviceHistory.last_service_date ? 
+        Math.floor((new Date() - new Date(serviceHistory.last_service_date)) / (1000 * 60 * 60 * 24)) : 999
+    }
+
+    return 0
+  }
+
+  // Evaluate condition
+  evaluateCondition(fieldValue, condition) {
+    const { operator, value, min, max } = condition
+
+    if (min !== undefined && max !== undefined) {
+      return (fieldValue >= min && fieldValue <= max) ? 1 : 0
+    }
+
+    if (min !== undefined) {
+      return fieldValue >= min ? 1 : 0
+    }
+
+    if (max !== undefined) {
+      return fieldValue <= max ? 1 : 0
+    }
+
+    switch (operator) {
+      case '>=': return fieldValue >= value ? 1 : 0
+      case '>': return fieldValue > value ? 1 : 0
+      case '<=': return fieldValue <= value ? 1 : 0
+      case '<': return fieldValue < value ? 1 : 0
+      case '==': return fieldValue === value ? 1 : 0
+      case '!=': return fieldValue !== value ? 1 : 0
+      case 'between': 
+        return (fieldValue >= value[0] && fieldValue <= value[1]) ? 1 : 0
+      case 'includes':
+        return Array.isArray(value) && value.some(v => String(fieldValue).includes(v)) ? 1 : 0
+      default: return 0
+    }
+  }
+
+  // Track customer behavior
+  async trackCustomerBehavior(behaviorData) {
+    const {
+      customer_identifier,
+      customer_type = 'email',
+      behavior_type,
+      behavior_data = {},
+      behavior_value = null,
+      behavior_category = 'engagement',
+      session_id = null,
+      page_url = null,
+      referrer_url = null,
+      user_agent = null,
+      ip_address = null
+    } = behaviorData
+
+    await this.db.prepare(`
+      INSERT INTO customer_behavioral_data (
+        customer_identifier, customer_type, behavior_type, behavior_data,
+        behavior_value, behavior_category, session_id, page_url,
+        referrer_url, user_agent, ip_address, timestamp
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
+    `).bind(
+      customer_identifier, customer_type, behavior_type, JSON.stringify(behavior_data),
+      behavior_value, behavior_category, session_id, page_url,
+      referrer_url, user_agent, ip_address
+    ).run()
+
+    // Trigger automatic segmentation after behavior tracking
+    if (['form_submit', 'email_open', 'service_request'].includes(behavior_type)) {
+      await this.runAutomaticSegmentation(customer_identifier)
+    }
+  }
+
+  // Get segment performance analytics
+  async getSegmentAnalytics(segmentId = null, days = 30) {
+    let whereClause = ''
+    const params = [days]
+    
+    if (segmentId) {
+      whereClause = 'AND s.id = ?'
+      params.push(segmentId)
+    }
+
+    return await this.db.prepare(`
+      SELECT 
+        s.id,
+        s.segment_name,
+        COUNT(DISTINCT csa.customer_identifier) as total_customers,
+        COUNT(DISTINCT CASE WHEN csa.assigned_at >= date('now', '-? days') THEN csa.customer_identifier END) as new_customers,
+        AVG(spm.metric_value) as avg_engagement_score,
+        COUNT(DISTINCT cbd.customer_identifier) as active_customers
+      FROM customer_segments s
+      LEFT JOIN customer_segment_assignments csa ON s.id = csa.segment_id AND csa.is_active = 1
+      LEFT JOIN segment_performance_metrics spm ON s.id = spm.segment_id 
+        AND spm.metric_type = 'engagement_score'
+        AND spm.calculation_date >= date('now', '-? days')
+      LEFT JOIN customer_behavioral_data cbd ON csa.customer_identifier = cbd.customer_identifier
+        AND cbd.timestamp >= date('now', '-? days')
+      WHERE s.is_active = 1 ${whereClause}
+      GROUP BY s.id
+      ORDER BY total_customers DESC
+    `).bind(...params, days, days).all()
+  }
+}
+
+// Customer Segmentation API Endpoints
+app.get('/api/customer-segmentation/segments', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const segmentEngine = new CustomerSegmentationEngine(DB)
+    const segments = await segmentEngine.getSegments()
+    
+    return c.json({
+      success: true,
+      segments: segments.results || segments
+    })
+  } catch (error) {
+    console.error('Get segments error:', error)
+    return c.json({ error: 'Segment listesi alınamadı' }, 500)
+  }
+})
+
+app.get('/api/customer-segmentation/segments/:id', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  const segmentId = c.req.param('id')
+  
+  try {
+    const segmentEngine = new CustomerSegmentationEngine(DB)
+    const segmentDetails = await segmentEngine.getSegmentDetails(segmentId)
+    
+    if (!segmentDetails) {
+      return c.json({ error: 'Segment bulunamadı' }, 404)
+    }
+    
+    return c.json({
+      success: true,
+      ...segmentDetails
+    })
+  } catch (error) {
+    console.error('Get segment details error:', error)
+    return c.json({ error: 'Segment detayları alınamadı' }, 500)
+  }
+})
+
+app.post('/api/customer-segmentation/assign', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { customer_identifier, segment_id, reason } = await c.req.json()
+    
+    const segmentEngine = new CustomerSegmentationEngine(DB)
+    const result = await segmentEngine.assignCustomerToSegment(
+      customer_identifier, segment_id, 'manual', reason || 'Manual assignment'
+    )
+    
+    return c.json(result)
+  } catch (error) {
+    console.error('Assign customer error:', error)
+    return c.json({ error: 'Müşteri atama hatası' }, 500)
+  }
+})
+
+app.post('/api/customer-segmentation/auto-segment', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { customer_identifier } = await c.req.json()
+    
+    const segmentEngine = new CustomerSegmentationEngine(DB)
+    const result = await segmentEngine.runAutomaticSegmentation(customer_identifier)
+    
+    return c.json(result)
+  } catch (error) {
+    console.error('Auto segmentation error:', error)
+    return c.json({ error: 'Otomatik segmentasyon hatası' }, 500)
+  }
+})
+
+app.post('/api/customer-segmentation/track-behavior', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const behaviorData = await c.req.json()
+    
+    // Get IP and user agent from request
+    behaviorData.ip_address = c.req.header('cf-connecting-ip') || 
+                               c.req.header('x-forwarded-for') || 
+                               c.req.header('x-real-ip') || '127.0.0.1'
+    behaviorData.user_agent = c.req.header('user-agent') || ''
+    
+    const segmentEngine = new CustomerSegmentationEngine(DB)
+    await segmentEngine.trackCustomerBehavior(behaviorData)
+    
+    return c.json({
+      success: true,
+      message: 'Behavior tracked successfully'
+    })
+  } catch (error) {
+    console.error('Track behavior error:', error)
+    return c.json({ error: 'Davranış kaydı hatası' }, 500)
+  }
+})
+
+app.get('/api/customer-segmentation/analytics', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const segmentId = c.req.query('segment_id')
+    const days = parseInt(c.req.query('days')) || 30
+    
+    const segmentEngine = new CustomerSegmentationEngine(DB)
+    const analytics = await segmentEngine.getSegmentAnalytics(segmentId, days)
+    
+    return c.json({
+      success: true,
+      analytics: analytics.results || analytics
+    })
+  } catch (error) {
+    console.error('Segment analytics error:', error)
+    return c.json({ error: 'Segment analytics alınamadı' }, 500)
+  }
+})
+
+// Email Marketing Admin Dashboard
+app.get('/admin/email-marketing-dashboard', requireAdminAuth(), async (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Email Marketing Dashboard - GARANTOR360</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body class="bg-gray-100">
+        <div class="min-h-screen">
+            <!-- Header -->
+            <div class="bg-white shadow-sm border-b">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between h-16">
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-blue-600 text-xl mr-2"></i>
+                            <h1 class="text-xl font-semibold text-gray-900">Email Marketing Dashboard</h1>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <button onclick="showCreateTemplate()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                                <i class="fas fa-plus mr-2"></i>Template Oluştur
+                            </button>
+                            <button onclick="showCreateCampaign()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                <i class="fas fa-rocket mr-2"></i>Kampanya Oluştur
+                            </button>
+                            <a href="/admin" class="text-gray-600 hover:text-gray-900">
+                                <i class="fas fa-arrow-left mr-2"></i>Geri Dön
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-blue-100">
+                                <i class="fas fa-envelope text-blue-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Email Templates</p>
+                                <p class="text-2xl font-semibold text-gray-900" id="total-templates">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-green-100">
+                                <i class="fas fa-users text-green-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Subscribers</p>
+                                <p class="text-2xl font-semibold text-gray-900" id="total-subscribers">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-yellow-100">
+                                <i class="fas fa-paper-plane text-yellow-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Campaigns</p>
+                                <p class="text-2xl font-semibold text-gray-900" id="total-campaigns">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-purple-100">
+                                <i class="fas fa-chart-line text-purple-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Open Rate</p>
+                                <p class="text-2xl font-semibold text-gray-900" id="open-rate">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="bg-white rounded-lg shadow mb-6">
+                    <div class="border-b border-gray-200">
+                        <nav class="flex space-x-8 px-6">
+                            <button onclick="showTab('templates')" class="tab-btn border-b-2 border-blue-500 py-4 px-1 text-blue-600 font-medium">
+                                Email Templates
+                            </button>
+                            <button onclick="showTab('campaigns')" class="tab-btn border-b-2 border-transparent py-4 px-1 text-gray-500 hover:text-gray-700">
+                                Campaigns
+                            </button>
+                            <button onclick="showTab('subscribers')" class="tab-btn border-b-2 border-transparent py-4 px-1 text-gray-500 hover:text-gray-700">
+                                Subscribers
+                            </button>
+                            <button onclick="showTab('analytics')" class="tab-btn border-b-2 border-transparent py-4 px-1 text-gray-500 hover:text-gray-700">
+                                Analytics
+                            </button>
+                        </nav>
+                    </div>
+
+                    <!-- Templates Tab -->
+                    <div id="templates-tab" class="tab-content p-6">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Template</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Created</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="templates-table" class="bg-white divide-y divide-gray-200">
+                                    <!-- Templates will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Campaigns Tab -->
+                    <div id="campaigns-tab" class="tab-content p-6 hidden">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Campaign</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Template</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Sends</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Opens</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="campaigns-table" class="bg-white divide-y divide-gray-200">
+                                    <!-- Campaigns will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Subscribers Tab -->
+                    <div id="subscribers-tab" class="tab-content p-6 hidden">
+                        <div class="mb-4">
+                            <button onclick="showAddSubscriber()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                                <i class="fas fa-plus mr-2"></i>Subscriber Ekle
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tags</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Source</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="subscribers-table" class="bg-white divide-y divide-gray-200">
+                                    <!-- Subscribers will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Analytics Tab -->
+                    <div id="analytics-tab" class="tab-content p-6 hidden">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Email Performance</h3>
+                                <canvas id="performanceChart" width="400" height="200"></canvas>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Detailed Stats</h3>
+                                <div id="detailed-stats" class="space-y-3">
+                                    <!-- Stats will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            let currentTab = 'templates';
+
+            // Initialize dashboard
+            document.addEventListener('DOMContentLoaded', function() {
+                loadDashboardData();
+            });
+
+            async function loadDashboardData() {
+                try {
+                    // Load templates
+                    await loadTemplates();
+                    // Load campaigns
+                    await loadCampaigns();
+                    // Load subscribers
+                    await loadSubscribers();
+                    // Load analytics
+                    await loadAnalytics();
+                } catch (error) {
+                    console.error('Dashboard loading error:', error);
+                }
+            }
+
+            async function loadTemplates() {
+                try {
+                    const response = await fetch('/api/email-marketing/templates', {
+                        headers: { 'Authorization': \`Bearer \${getAdminToken()}\` }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        updateTemplatesTable(data.templates || []);
+                        document.getElementById('total-templates').textContent = data.templates?.length || 0;
+                    }
+                } catch (error) {
+                    console.error('Load templates error:', error);
+                }
+            }
+
+            async function loadCampaigns() {
+                try {
+                    const response = await fetch('/api/email-marketing/campaigns', {
+                        headers: { 'Authorization': \`Bearer \${getAdminToken()}\` }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        updateCampaignsTable(data.campaigns || []);
+                        document.getElementById('total-campaigns').textContent = data.campaigns?.length || 0;
+                    }
+                } catch (error) {
+                    console.error('Load campaigns error:', error);
+                }
+            }
+
+            async function loadSubscribers() {
+                try {
+                    const response = await fetch('/api/email-marketing/subscribers', {
+                        headers: { 'Authorization': \`Bearer \${getAdminToken()}\` }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        updateSubscribersTable(data.subscribers || []);
+                        document.getElementById('total-subscribers').textContent = data.subscribers?.length || 0;
+                    }
+                } catch (error) {
+                    console.error('Load subscribers error:', error);
+                }
+            }
+
+            async function loadAnalytics() {
+                try {
+                    const response = await fetch('/api/email-marketing/analytics', {
+                        headers: { 'Authorization': \`Bearer \${getAdminToken()}\` }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        updateAnalytics(data.analytics || {});
+                        document.getElementById('open-rate').textContent = \`\${data.analytics?.open_rate || 0}%\`;
+                    }
+                } catch (error) {
+                    console.error('Load analytics error:', error);
+                }
+            }
+
+            function updateTemplatesTable(templates) {
+                const tbody = document.getElementById('templates-table');
+                tbody.innerHTML = '';
+                
+                templates.forEach(template => {
+                    const row = tbody.insertRow();
+                    row.innerHTML = \`
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-gray-900">\${template.name}</div>
+                            <div class="text-sm text-gray-500">\${template.subject}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                \${template.template_type}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium \${template.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                                \${template.is_active ? 'Active' : 'Inactive'}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            \${new Date(template.created_at).toLocaleDateString('tr-TR')}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <button onclick="editTemplate(\${template.id})" class="text-blue-600 hover:text-blue-900 mr-3">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="previewTemplate(\${template.id})" class="text-green-600 hover:text-green-900">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    \`;
+                });
+            }
+
+            function updateCampaignsTable(campaigns) {
+                const tbody = document.getElementById('campaigns-table');
+                tbody.innerHTML = '';
+                
+                campaigns.forEach(campaign => {
+                    const row = tbody.insertRow();
+                    row.innerHTML = \`
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-gray-900">\${campaign.name}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            \${campaign.template_name || 'N/A'}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            \${campaign.total_sends || 0}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            \${campaign.opens || 0}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium \${campaign.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                                \${campaign.is_active ? 'Active' : 'Inactive'}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <button onclick="viewCampaign(\${campaign.id})" class="text-blue-600 hover:text-blue-900">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    \`;
+                });
+            }
+
+            function updateSubscribersTable(subscribers) {
+                const tbody = document.getElementById('subscribers-table');
+                tbody.innerHTML = '';
+                
+                subscribers.forEach(subscriber => {
+                    const tags = JSON.parse(subscriber.tags || '[]');
+                    const row = tbody.insertRow();
+                    row.innerHTML = \`
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-gray-900">\${subscriber.email}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            \${subscriber.name || 'N/A'}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex flex-wrap gap-1">
+                                \${tags.map(tag => \`<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">\${tag}</span>\`).join('')}
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            \${subscriber.source || 'manual'}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium \${subscriber.status === 'subscribed' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                                \${subscriber.status}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <button onclick="editSubscriber(\${subscriber.id})" class="text-blue-600 hover:text-blue-900">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                    \`;
+                });
+            }
+
+            function updateAnalytics(analytics) {
+                document.getElementById('detailed-stats').innerHTML = \`
+                    <div class="flex justify-between">
+                        <span>Total Sends:</span>
+                        <span class="font-medium">\${analytics.total_sends || 0}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Successful Sends:</span>
+                        <span class="font-medium">\${analytics.successful_sends || 0}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Opens:</span>
+                        <span class="font-medium">\${analytics.opens || 0}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Clicks:</span>
+                        <span class="font-medium">\${analytics.clicks || 0}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Success Rate:</span>
+                        <span class="font-medium">\${analytics.success_rate || 0}%</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Open Rate:</span>
+                        <span class="font-medium">\${analytics.open_rate || 0}%</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Click Rate:</span>
+                        <span class="font-medium">\${analytics.click_rate || 0}%</span>
+                    </div>
+                \`;
+            }
+
+            function showTab(tabName) {
+                // Hide all tabs
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.add('hidden');
+                });
+                
+                // Remove active class from all buttons
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('border-blue-500', 'text-blue-600');
+                    btn.classList.add('border-transparent', 'text-gray-500');
+                });
+                
+                // Show selected tab
+                document.getElementById(\`\${tabName}-tab\`).classList.remove('hidden');
+                
+                // Add active class to selected button
+                event.target.classList.remove('border-transparent', 'text-gray-500');
+                event.target.classList.add('border-blue-500', 'text-blue-600');
+                
+                currentTab = tabName;
+            }
+
+            function showCreateTemplate() {
+                alert('Template oluşturma sayfası açılacak');
+            }
+
+            function showCreateCampaign() {
+                alert('Kampanya oluşturma sayfası açılacak');
+            }
+
+            function showAddSubscriber() {
+                alert('Subscriber ekleme sayfası açılacak');
+            }
+
+            function editTemplate(id) {
+                alert(\`Template edit: \${id}\`);
+            }
+
+            function previewTemplate(id) {
+                alert(\`Template preview: \${id}\`);
+            }
+
+            function viewCampaign(id) {
+                alert(\`Campaign view: \${id}\`);
+            }
+
+            function editSubscriber(id) {
+                alert(\`Subscriber edit: \${id}\`);
+            }
+
+            function getAdminToken() {
+                return localStorage.getItem('admin_token') || '';
+            }
+        </script>
+    </body>
+    </html>
+  `)
+})
+
+// =============================================================================
+// MARKETING AUTOMATION WORKFLOWS ENGINE
+// =============================================================================
+
+class MarketingAutomationEngine {
+  constructor(db) {
+    this.db = db
+  }
+
+  // Get all marketing workflows
+  async getWorkflows() {
+    return await this.db.prepare(`
+      SELECT 
+        w.*,
+        COUNT(DISTINCT we.id) as active_executions,
+        COUNT(DISTINCT CASE WHEN we.execution_status = 'completed' THEN we.id END) as completed_executions,
+        AVG(was.conversion_rate) as avg_conversion_rate,
+        MAX(w.last_triggered_at) as last_activity
+      FROM marketing_automation_workflows w
+      LEFT JOIN workflow_executions we ON w.id = we.workflow_id AND we.execution_status IN ('active', 'paused')
+      LEFT JOIN workflow_analytics_summary was ON w.id = was.workflow_id 
+        AND was.analytics_date >= date('now', '-30 days')
+      WHERE w.is_active = 1
+      GROUP BY w.id
+      ORDER BY w.priority_level DESC, w.created_at ASC
+    `).all()
+  }
+
+  // Get workflow details with steps and triggers
+  async getWorkflowDetails(workflowId) {
+    const workflow = await this.db.prepare(`
+      SELECT * FROM marketing_automation_workflows WHERE id = ?
+    `).bind(workflowId).first()
+
+    if (!workflow) return null
+
+    // Get workflow steps
+    const steps = await this.db.prepare(`
+      SELECT * FROM workflow_steps 
+      WHERE workflow_id = ? AND is_active = 1
+      ORDER BY step_index ASC
+    `).bind(workflowId).all()
+
+    // Get workflow triggers
+    const triggers = await this.db.prepare(`
+      SELECT * FROM workflow_triggers 
+      WHERE workflow_id = ? AND is_active = 1
+    `).bind(workflowId).all()
+
+    // Get recent executions
+    const executions = await this.db.prepare(`
+      SELECT 
+        we.*,
+        COUNT(ecp.id) as email_interactions
+      FROM workflow_executions we
+      LEFT JOIN email_campaign_performance ecp ON we.id = ecp.workflow_execution_id
+      WHERE we.workflow_id = ?
+      GROUP BY we.id
+      ORDER BY we.started_at DESC
+      LIMIT 50
+    `).bind(workflowId).all()
+
+    return {
+      workflow,
+      steps: steps.results || steps,
+      triggers: triggers.results || triggers,
+      executions: executions.results || executions
+    }
+  }
+
+  // Trigger workflow for a customer
+  async triggerWorkflow(workflowId, customerIdentifier, triggerSource = 'manual', contextData = {}) {
+    // Check if workflow exists and is active
+    const workflow = await this.db.prepare(`
+      SELECT * FROM marketing_automation_workflows 
+      WHERE id = ? AND is_active = 1 AND is_paused = 0
+    `).bind(workflowId).first()
+
+    if (!workflow) {
+      return { success: false, message: 'Workflow not found or inactive' }
+    }
+
+    // Check if customer already has active execution
+    const existingExecution = await this.db.prepare(`
+      SELECT id FROM workflow_executions 
+      WHERE workflow_id = ? AND customer_identifier = ? 
+        AND execution_status IN ('active', 'paused')
+    `).bind(workflowId, customerIdentifier).first()
+
+    if (existingExecution) {
+      return { success: false, message: 'Customer already in this workflow' }
+    }
+
+    // Get customer data for personalization
+    const customerData = await this.getCustomerDataForWorkflow(customerIdentifier)
+    
+    // Parse workflow steps
+    const workflowSteps = JSON.parse(workflow.workflow_steps || '[]')
+    if (workflowSteps.length === 0) {
+      return { success: false, message: 'Workflow has no steps defined' }
+    }
+
+    // Calculate next action time
+    const firstStep = workflowSteps[0]
+    const delayHours = firstStep.delay_hours || 0
+    const nextActionAt = new Date(Date.now() + (delayHours * 60 * 60 * 1000))
+
+    // Create workflow execution
+    const executionResult = await this.db.prepare(`
+      INSERT INTO workflow_executions (
+        workflow_id, customer_identifier, execution_status, current_step_index,
+        next_action_at, execution_data, personalization_data, started_at
+      ) VALUES (?, ?, 'active', 0, ?, ?, ?, datetime('now'))
+    `).bind(
+      workflowId, customerIdentifier, nextActionAt.toISOString(),
+      JSON.stringify({ customerData, contextData, triggerSource }),
+      JSON.stringify(this.generatePersonalizationData(customerData, contextData))
+    ).run()
+
+    // Update workflow statistics
+    await this.db.prepare(`
+      UPDATE marketing_automation_workflows 
+      SET total_triggered = total_triggered + 1, last_triggered_at = datetime('now')
+      WHERE id = ?
+    `).bind(workflowId).run()
+
+    return {
+      success: true,
+      executionId: executionResult.meta.last_row_id,
+      nextActionAt: nextActionAt.toISOString(),
+      message: 'Workflow triggered successfully'
+    }
+  }
+
+  // Execute pending workflow actions
+  async executePendingActions(limit = 100) {
+    // Get pending workflow executions
+    const pendingExecutions = await this.db.prepare(`
+      SELECT 
+        we.*,
+        w.workflow_steps,
+        w.workflow_settings
+      FROM workflow_executions we
+      JOIN marketing_automation_workflows w ON we.workflow_id = w.id
+      WHERE we.execution_status = 'active'
+        AND we.next_action_at <= datetime('now')
+        AND w.is_active = 1 AND w.is_paused = 0
+      ORDER BY we.next_action_at ASC
+      LIMIT ?
+    `).bind(limit).all()
+
+    const executionResults = []
+
+    for (const execution of (pendingExecutions.results || pendingExecutions)) {
+      try {
+        const result = await this.executeWorkflowStep(execution)
+        executionResults.push(result)
+      } catch (error) {
+        console.error(`Workflow execution error for ${execution.id}:`, error)
+        // Mark execution as failed
+        await this.db.prepare(`
+          UPDATE workflow_executions 
+          SET execution_status = 'failed', last_action_at = datetime('now')
+          WHERE id = ?
+        `).bind(execution.id).run()
+      }
+    }
+
+    return {
+      success: true,
+      processed: executionResults.length,
+      results: executionResults
+    }
+  }
+
+  // Execute a single workflow step
+  async executeWorkflowStep(execution) {
+    const workflowSteps = JSON.parse(execution.workflow_steps || '[]')
+    const currentStepIndex = execution.current_step_index
+    
+    if (currentStepIndex >= workflowSteps.length) {
+      // Workflow completed
+      await this.completeWorkflowExecution(execution.id)
+      return { executionId: execution.id, action: 'completed', success: true }
+    }
+
+    const currentStep = workflowSteps[currentStepIndex]
+    const executionData = JSON.parse(execution.execution_data || '{}')
+    const personalizationData = JSON.parse(execution.personalization_data || '{}')
+
+    let stepResult = { success: true, action: currentStep.step_type }
+
+    // Execute step based on type
+    switch (currentStep.step_type) {
+      case 'email':
+        stepResult = await this.executeEmailStep(execution, currentStep, personalizationData)
+        break
+      
+      case 'delay':
+        stepResult = await this.executeDelayStep(execution, currentStep)
+        break
+      
+      case 'condition':
+        stepResult = await this.executeConditionStep(execution, currentStep, executionData)
+        break
+      
+      case 'segment_update':
+        stepResult = await this.executeSegmentUpdateStep(execution, currentStep)
+        break
+      
+      default:
+        stepResult = { success: false, error: `Unknown step type: ${currentStep.step_type}` }
+    }
+
+    // Update execution based on step result
+    if (stepResult.success) {
+      await this.advanceWorkflowExecution(execution.id, stepResult)
+    } else {
+      await this.handleStepFailure(execution.id, stepResult)
+    }
+
+    return { executionId: execution.id, stepIndex: currentStepIndex, ...stepResult }
+  }
+
+  // Execute email step
+  async executeEmailStep(execution, step, personalizationData) {
+    try {
+      // Get email template
+      const template = await this.db.prepare(`
+        SELECT * FROM email_templates WHERE id = ?
+      `).bind(step.email_template_id).first()
+
+      if (!template) {
+        return { success: false, error: 'Email template not found' }
+      }
+
+      // Apply personalization to template
+      const personalizedSubject = this.applyPersonalization(template.subject, personalizationData)
+      const personalizedContent = this.applyPersonalization(template.html_content, personalizationData)
+
+      // Schedule email sending
+      const emailResult = await this.db.prepare(`
+        INSERT INTO email_sends (
+          template_id, subscriber_email, status, personalization_data,
+          scheduled_at, created_at
+        ) VALUES (?, ?, 'scheduled', ?, datetime('now'), datetime('now'))
+      `).bind(
+        template.id, execution.customer_identifier, 
+        JSON.stringify(personalizationData)
+      ).run()
+
+      // Record email campaign performance tracking
+      await this.db.prepare(`
+        INSERT INTO email_campaign_performance (
+          workflow_execution_id, email_send_id, sent_at
+        ) VALUES (?, ?, datetime('now'))
+      `).bind(execution.id, emailResult.meta.last_row_id).run()
+
+      return { 
+        success: true, 
+        emailSendId: emailResult.meta.last_row_id,
+        action: 'email_sent'
+      }
+    } catch (error) {
+      return { success: false, error: error.message }
+    }
+  }
+
+  // Execute delay step
+  async executeDelayStep(execution, step) {
+    const delayHours = step.delay_hours || 0
+    const nextActionAt = new Date(Date.now() + (delayHours * 60 * 60 * 1000))
+    
+    return { 
+      success: true, 
+      nextActionAt: nextActionAt.toISOString(),
+      action: 'delayed'
+    }
+  }
+
+  // Execute condition step
+  async executeConditionStep(execution, step, executionData) {
+    // Evaluate conditions based on step configuration
+    const conditions = step.conditions || {}
+    let conditionMet = true
+
+    // Example condition checks
+    if (conditions.email_opened) {
+      // Check if previous email was opened
+      const emailOpened = await this.checkEmailOpened(execution.id, conditions.email_opened.step)
+      conditionMet = conditionMet && emailOpened
+    }
+
+    if (conditions.no_service_booked) {
+      // Check if customer has booked a service
+      const serviceBooked = await this.checkServiceBooked(execution.customer_identifier)
+      conditionMet = conditionMet && !serviceBooked
+    }
+
+    return { 
+      success: true, 
+      conditionMet, 
+      action: 'condition_evaluated',
+      skipNextStep: !conditionMet
+    }
+  }
+
+  // Execute segment update step
+  async executeSegmentUpdateStep(execution, step) {
+    // Update customer segment based on step configuration
+    // This would integrate with CustomerSegmentationEngine
+    return { success: true, action: 'segment_updated' }
+  }
+
+  // Advance workflow execution to next step
+  async advanceWorkflowExecution(executionId, stepResult) {
+    const nextStepIndex = stepResult.skipNextStep ? 'skip' : 'advance'
+    const nextActionAt = stepResult.nextActionAt || new Date().toISOString()
+
+    if (nextStepIndex === 'skip') {
+      // Skip to step after next
+      await this.db.prepare(`
+        UPDATE workflow_executions 
+        SET current_step_index = current_step_index + 2,
+            last_action_at = datetime('now'),
+            next_action_at = ?
+        WHERE id = ?
+      `).bind(nextActionAt, executionId).run()
+    } else {
+      // Advance to next step
+      await this.db.prepare(`
+        UPDATE workflow_executions 
+        SET current_step_index = current_step_index + 1,
+            last_action_at = datetime('now'),
+            next_action_at = ?
+        WHERE id = ?
+      `).bind(nextActionAt, executionId).run()
+    }
+
+    // Update step history
+    await this.updateStepHistory(executionId, stepResult)
+  }
+
+  // Complete workflow execution
+  async completeWorkflowExecution(executionId) {
+    await this.db.prepare(`
+      UPDATE workflow_executions 
+      SET execution_status = 'completed', 
+          completed_at = datetime('now'),
+          last_action_at = datetime('now')
+      WHERE id = ?
+    `).bind(executionId).run()
+
+    // Update workflow completion statistics
+    const execution = await this.db.prepare(`
+      SELECT workflow_id FROM workflow_executions WHERE id = ?
+    `).bind(executionId).first()
+
+    if (execution) {
+      await this.db.prepare(`
+        UPDATE marketing_automation_workflows 
+        SET total_completed = total_completed + 1
+        WHERE id = ?
+      `).bind(execution.workflow_id).run()
+    }
+  }
+
+  // Handle step failure
+  async handleStepFailure(executionId, stepResult) {
+    await this.db.prepare(`
+      UPDATE workflow_executions 
+      SET execution_status = 'failed',
+          last_action_at = datetime('now')
+      WHERE id = ?
+    `).bind(executionId).run()
+  }
+
+  // Get customer data for workflow personalization
+  async getCustomerDataForWorkflow(customerIdentifier) {
+    // Get basic customer info
+    const customer = await this.db.prepare(`
+      SELECT * FROM email_subscribers 
+      WHERE email = ? OR phone = ?
+      ORDER BY subscribed_at DESC LIMIT 1
+    `).bind(customerIdentifier, customerIdentifier).first()
+
+    // Get customer segments
+    const segments = await this.db.prepare(`
+      SELECT cs.segment_name, csa.assigned_at
+      FROM customer_segment_assignments csa
+      JOIN customer_segments cs ON csa.segment_id = cs.id
+      WHERE csa.customer_identifier = ? AND csa.is_active = 1
+    `).bind(customerIdentifier).all()
+
+    // Get recent behavior
+    const recentBehavior = await this.db.prepare(`
+      SELECT behavior_type, behavior_category, timestamp
+      FROM customer_behavioral_data 
+      WHERE customer_identifier = ?
+        AND timestamp >= date('now', '-30 days')
+      ORDER BY timestamp DESC LIMIT 10
+    `).bind(customerIdentifier).all()
+
+    return {
+      customer: customer || {},
+      segments: segments.results || segments,
+      recentBehavior: recentBehavior.results || recentBehavior
+    }
+  }
+
+  // Generate personalization data
+  generatePersonalizationData(customerData, contextData) {
+    return {
+      customer_name: customerData.customer?.name || 'Değerli Müşteri',
+      customer_email: customerData.customer?.email || '',
+      customer_segments: customerData.segments?.map(s => s.segment_name) || [],
+      service_interest: contextData.service_type || 'genel hizmet',
+      ...contextData
+    }
+  }
+
+  // Apply personalization to content
+  applyPersonalization(content, personalizationData) {
+    let personalizedContent = content
+    
+    Object.entries(personalizationData).forEach(([key, value]) => {
+      const placeholder = `{{${key}}}`
+      personalizedContent = personalizedContent.replace(new RegExp(placeholder, 'g'), value)
+    })
+    
+    return personalizedContent
+  }
+
+  // Helper methods for condition checking
+  async checkEmailOpened(executionId, stepIndex) {
+    const opened = await this.db.prepare(`
+      SELECT id FROM email_campaign_performance 
+      WHERE workflow_execution_id = ? AND opened_at IS NOT NULL
+    `).bind(executionId).first()
+    
+    return !!opened
+  }
+
+  async checkServiceBooked(customerIdentifier) {
+    const service = await this.db.prepare(`
+      SELECT id FROM hizmet_talepleri 
+      WHERE (musteri_email = ? OR musteri_telefon = ?)
+        AND created_at >= date('now', '-30 days')
+    `).bind(customerIdentifier, customerIdentifier).first()
+    
+    return !!service
+  }
+
+  // Update step history
+  async updateStepHistory(executionId, stepResult) {
+    const execution = await this.db.prepare(`
+      SELECT step_history FROM workflow_executions WHERE id = ?
+    `).bind(executionId).first()
+    
+    const stepHistory = JSON.parse(execution?.step_history || '[]')
+    stepHistory.push({
+      timestamp: new Date().toISOString(),
+      ...stepResult
+    })
+    
+    await this.db.prepare(`
+      UPDATE workflow_executions 
+      SET step_history = ?
+      WHERE id = ?
+    `).bind(JSON.stringify(stepHistory), executionId).run()
+  }
+
+  // Get workflow analytics
+  async getWorkflowAnalytics(workflowId = null, days = 30) {
+    let whereClause = ''
+    const params = [days]
+    
+    if (workflowId) {
+      whereClause = 'AND w.id = ?'
+      params.push(workflowId)
+    }
+
+    return await this.db.prepare(`
+      SELECT 
+        w.id,
+        w.workflow_name,
+        COUNT(DISTINCT we.id) as total_executions,
+        COUNT(DISTINCT CASE WHEN we.execution_status = 'completed' THEN we.id END) as completed_executions,
+        COUNT(DISTINCT CASE WHEN we.execution_status = 'active' THEN we.id END) as active_executions,
+        COUNT(DISTINCT ecp.id) as total_emails_sent,
+        COUNT(DISTINCT CASE WHEN ecp.opened_at IS NOT NULL THEN ecp.id END) as emails_opened,
+        COUNT(DISTINCT CASE WHEN ecp.clicked_at IS NOT NULL THEN ecp.id END) as emails_clicked,
+        AVG(was.conversion_rate) as avg_conversion_rate
+      FROM marketing_automation_workflows w
+      LEFT JOIN workflow_executions we ON w.id = we.workflow_id 
+        AND we.started_at >= date('now', '-? days')
+      LEFT JOIN email_campaign_performance ecp ON we.id = ecp.workflow_execution_id
+      LEFT JOIN workflow_analytics_summary was ON w.id = was.workflow_id
+        AND was.analytics_date >= date('now', '-? days')
+      WHERE w.is_active = 1 ${whereClause}
+      GROUP BY w.id
+      ORDER BY total_executions DESC
+    `).bind(days, days, ...params.slice(1)).all()
+  }
+
+  // Process workflow triggers (should be called periodically)
+  async processWorkflowTriggers() {
+    // This method would check for trigger conditions and start workflows
+    // Implementation would depend on specific trigger types
+    console.log('Processing workflow triggers...')
+  }
+}
+
+// Marketing Automation API Endpoints
+app.get('/api/marketing-automation/workflows', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const automationEngine = new MarketingAutomationEngine(DB)
+    const workflows = await automationEngine.getWorkflows()
+    
+    return c.json({
+      success: true,
+      workflows: workflows.results || workflows
+    })
+  } catch (error) {
+    console.error('Get workflows error:', error)
+    return c.json({ error: 'Workflow listesi alınamadı' }, 500)
+  }
+})
+
+app.get('/api/marketing-automation/workflows/:id', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  const workflowId = c.req.param('id')
+  
+  try {
+    const automationEngine = new MarketingAutomationEngine(DB)
+    const workflowDetails = await automationEngine.getWorkflowDetails(workflowId)
+    
+    if (!workflowDetails) {
+      return c.json({ error: 'Workflow bulunamadı' }, 404)
+    }
+    
+    return c.json({
+      success: true,
+      ...workflowDetails
+    })
+  } catch (error) {
+    console.error('Get workflow details error:', error)
+    return c.json({ error: 'Workflow detayları alınamadı' }, 500)
+  }
+})
+
+app.post('/api/marketing-automation/trigger-workflow', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { workflow_id, customer_identifier, context_data } = await c.req.json()
+    
+    const automationEngine = new MarketingAutomationEngine(DB)
+    const result = await automationEngine.triggerWorkflow(
+      workflow_id, customer_identifier, 'manual', context_data || {}
+    )
+    
+    return c.json(result)
+  } catch (error) {
+    console.error('Trigger workflow error:', error)
+    return c.json({ error: 'Workflow tetikleme hatası' }, 500)
+  }
+})
+
+app.post('/api/marketing-automation/execute-pending', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const limit = parseInt(c.req.query('limit')) || 100
+    
+    const automationEngine = new MarketingAutomationEngine(DB)
+    const result = await automationEngine.executePendingActions(limit)
+    
+    return c.json(result)
+  } catch (error) {
+    console.error('Execute pending actions error:', error)
+    return c.json({ error: 'Bekleyen aksiyonlar çalıştırılamadı' }, 500)
+  }
+})
+
+app.get('/api/marketing-automation/analytics', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const workflowId = c.req.query('workflow_id')
+    const days = parseInt(c.req.query('days')) || 30
+    
+    const automationEngine = new MarketingAutomationEngine(DB)
+    const analytics = await automationEngine.getWorkflowAnalytics(workflowId, days)
+    
+    return c.json({
+      success: true,
+      analytics: analytics.results || analytics
+    })
+  } catch (error) {
+    console.error('Workflow analytics error:', error)
+    return c.json({ error: 'Workflow analytics alınamadı' }, 500)
+  }
+})
+
+// Customer Segmentation Admin Dashboard
+app.get('/admin/customer-segmentation-dashboard', requireAdminAuth(), async (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Customer Segmentation Dashboard - GARANTOR360</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body class="bg-gray-100">
+        <div class="min-h-screen">
+            <!-- Header -->
+            <div class="bg-white shadow-sm border-b">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between h-16">
+                        <div class="flex items-center">
+                            <i class="fas fa-users-cog text-blue-600 text-xl mr-2"></i>
+                            <h1 class="text-xl font-semibold text-gray-900">Customer Segmentation Dashboard</h1>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <button onclick="runBulkSegmentation()" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">
+                                <i class="fas fa-magic mr-2"></i>Bulk Segmentation
+                            </button>
+                            <button onclick="refreshDashboard()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                <i class="fas fa-sync mr-2"></i>Refresh
+                            </button>
+                            <a href="/admin" class="text-gray-600 hover:text-gray-900">
+                                <i class="fas fa-arrow-left mr-2"></i>Back
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                
+                <!-- Stats Overview -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-blue-100">
+                                <i class="fas fa-layer-group text-blue-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Total Segments</p>
+                                <p class="text-2xl font-semibold text-gray-900" id="total-segments">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-green-100">
+                                <i class="fas fa-users text-green-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Segmented Customers</p>
+                                <p class="text-2xl font-semibold text-gray-900" id="segmented-customers">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-yellow-100">
+                                <i class="fas fa-star text-yellow-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">VIP Customers</p>
+                                <p class="text-2xl font-semibold text-gray-900" id="vip-customers">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-purple-100">
+                                <i class="fas fa-chart-line text-purple-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Avg Engagement</p>
+                                <p class="text-2xl font-semibold text-gray-900" id="avg-engagement">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <!-- Segment Distribution Chart -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Segment Distribution</h3>
+                        <canvas id="segmentChart" width="400" height="300"></canvas>
+                    </div>
+
+                    <!-- Engagement Trends -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Engagement Trends</h3>
+                        <canvas id="engagementChart" width="400" height="300"></canvas>
+                    </div>
+                </div>
+
+                <!-- Segments Table -->
+                <div class="bg-white rounded-lg shadow">
+                    <div class="p-6 border-b border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-medium text-gray-900">Customer Segments</h3>
+                            <div class="flex space-x-2">
+                                <select id="segment-filter" class="rounded-md border-gray-300 text-sm">
+                                    <option value="">All Segments</option>
+                                    <option value="vip">VIP Only</option>
+                                    <option value="active">Active Only</option>
+                                    <option value="at-risk">At-Risk Only</option>
+                                </select>
+                                <button onclick="exportSegments()" class="bg-gray-600 text-white px-3 py-2 rounded-md text-sm hover:bg-gray-700">
+                                    <i class="fas fa-download"></i> Export
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Segment
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Customers
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Performance
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Priority
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Status
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Actions
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="segments-table" class="bg-white divide-y divide-gray-200">
+                                <!-- Segments will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Customer Assignment Modal -->
+                <div id="assignmentModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50">
+                    <div class="flex items-center justify-center min-h-screen p-4">
+                        <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+                            <div class="p-6">
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Assign Customer to Segment</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Customer Identifier</label>
+                                        <input type="text" id="customerIdentifier" placeholder="Email or phone" 
+                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Segment</label>
+                                        <select id="assignmentSegment" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                            <option value="">Select Segment</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Reason</label>
+                                        <textarea id="assignmentReason" rows="3" placeholder="Assignment reason..."
+                                                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+                                    </div>
+                                </div>
+                                <div class="mt-6 flex justify-end space-x-3">
+                                    <button onclick="closeAssignmentModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">
+                                        Cancel
+                                    </button>
+                                    <button onclick="assignCustomer()" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                                        Assign
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            let segmentChart, engagementChart;
+            let allSegments = [];
+
+            // Initialize dashboard
+            document.addEventListener('DOMContentLoaded', function() {
+                loadDashboard();
+            });
+
+            async function loadDashboard() {
+                try {
+                    await loadSegments();
+                    await loadAnalytics();
+                    updateCharts();
+                } catch (error) {
+                    console.error('Dashboard loading error:', error);
+                    showNotification('Dashboard loading failed', 'error');
+                }
+            }
+
+            async function loadSegments() {
+                try {
+                    const response = await fetch('/api/customer-segmentation/segments', {
+                        headers: { 'Authorization': \`Bearer \${getAdminToken()}\` }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        allSegments = data.segments || [];
+                        updateSegmentsTable(allSegments);
+                        updateSegmentSelector(allSegments);
+                        
+                        // Update stats
+                        document.getElementById('total-segments').textContent = allSegments.length;
+                        const totalCustomers = allSegments.reduce((sum, seg) => sum + (seg.customer_count || 0), 0);
+                        document.getElementById('segmented-customers').textContent = totalCustomers;
+                        
+                        const vipSegment = allSegments.find(seg => seg.segment_name === 'VIP Customers');
+                        document.getElementById('vip-customers').textContent = vipSegment ? vipSegment.customer_count : 0;
+                    }
+                } catch (error) {
+                    console.error('Load segments error:', error);
+                }
+            }
+
+            async function loadAnalytics() {
+                try {
+                    const response = await fetch('/api/customer-segmentation/analytics', {
+                        headers: { 'Authorization': \`Bearer \${getAdminToken()}\` }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        const analytics = data.analytics || [];
+                        
+                        // Calculate average engagement
+                        const avgEngagement = analytics.reduce((sum, a) => sum + (a.avg_engagement_score || 0), 0) / analytics.length || 0;
+                        document.getElementById('avg-engagement').textContent = \`\${(avgEngagement * 100).toFixed(1)}%\`;
+                    }
+                } catch (error) {
+                    console.error('Load analytics error:', error);
+                }
+            }
+
+            function updateSegmentsTable(segments) {
+                const tbody = document.getElementById('segments-table');
+                tbody.innerHTML = '';
+                
+                segments.forEach(segment => {
+                    const row = tbody.insertRow();
+                    row.innerHTML = \`
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 rounded-full mr-3" style="background-color: \${segment.segment_color}"></div>
+                                <div>
+                                    <div class="text-sm font-medium text-gray-900">\${segment.segment_name}</div>
+                                    <div class="text-sm text-gray-500">\${segment.segment_description || 'No description'}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">\${segment.customer_count || 0}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                                    <div class="bg-blue-600 h-2 rounded-full" style="width: \${(segment.avg_performance || 0) * 100}%"></div>
+                                </div>
+                                <span class="text-sm text-gray-600">\${((segment.avg_performance || 0) * 100).toFixed(0)}%</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium \${
+                                segment.priority_score >= 90 ? 'bg-red-100 text-red-800' :
+                                segment.priority_score >= 80 ? 'bg-yellow-100 text-yellow-800' :
+                                'bg-green-100 text-green-800'
+                            }">
+                                \${segment.priority_score}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium \${
+                                segment.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                            }">
+                                \${segment.is_active ? 'Active' : 'Inactive'}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <button onclick="viewSegment(\${segment.id})" class="text-blue-600 hover:text-blue-900 mr-3">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button onclick="showAssignmentModal(\${segment.id})" class="text-green-600 hover:text-green-900 mr-3">
+                                <i class="fas fa-user-plus"></i>
+                            </button>
+                            <button onclick="analyzeSegment(\${segment.id})" class="text-purple-600 hover:text-purple-900">
+                                <i class="fas fa-chart-bar"></i>
+                            </button>
+                        </td>
+                    \`;
+                });
+            }
+
+            function updateSegmentSelector(segments) {
+                const selector = document.getElementById('assignmentSegment');
+                selector.innerHTML = '<option value="">Select Segment</option>';
+                
+                segments.forEach(segment => {
+                    const option = document.createElement('option');
+                    option.value = segment.id;
+                    option.textContent = segment.segment_name;
+                    selector.appendChild(option);
+                });
+            }
+
+            function updateCharts() {
+                updateSegmentChart();
+                updateEngagementChart();
+            }
+
+            function updateSegmentChart() {
+                const ctx = document.getElementById('segmentChart').getContext('2d');
+                
+                if (segmentChart) {
+                    segmentChart.destroy();
+                }
+                
+                const labels = allSegments.map(s => s.segment_name);
+                const data = allSegments.map(s => s.customer_count || 0);
+                const colors = allSegments.map(s => s.segment_color || '#3B82F6');
+                
+                segmentChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: data,
+                            backgroundColor: colors,
+                            borderWidth: 2,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    usePointStyle: true,
+                                    padding: 15
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function updateEngagementChart() {
+                const ctx = document.getElementById('engagementChart').getContext('2d');
+                
+                if (engagementChart) {
+                    engagementChart.destroy();
+                }
+                
+                // Mock engagement trend data
+                const labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+                const vipData = [85, 87, 89, 92];
+                const regularData = [65, 68, 70, 72];
+                const atRiskData = [25, 22, 28, 30];
+                
+                engagementChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'VIP Customers',
+                                data: vipData,
+                                borderColor: '#FFD700',
+                                backgroundColor: 'rgba(255, 215, 0, 0.1)',
+                                tension: 0.3
+                            },
+                            {
+                                label: 'Regular Customers',
+                                data: regularData,
+                                borderColor: '#4CAF50',
+                                backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                                tension: 0.3
+                            },
+                            {
+                                label: 'At-Risk Customers',
+                                data: atRiskData,
+                                borderColor: '#FF9800',
+                                backgroundColor: 'rgba(255, 152, 0, 0.1)',
+                                tension: 0.3
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + '%';
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+
+            function showAssignmentModal(segmentId = null) {
+                if (segmentId) {
+                    document.getElementById('assignmentSegment').value = segmentId;
+                }
+                document.getElementById('assignmentModal').classList.remove('hidden');
+            }
+
+            function closeAssignmentModal() {
+                document.getElementById('assignmentModal').classList.add('hidden');
+                document.getElementById('customerIdentifier').value = '';
+                document.getElementById('assignmentSegment').value = '';
+                document.getElementById('assignmentReason').value = '';
+            }
+
+            async function assignCustomer() {
+                const customerIdentifier = document.getElementById('customerIdentifier').value;
+                const segmentId = document.getElementById('assignmentSegment').value;
+                const reason = document.getElementById('assignmentReason').value;
+
+                if (!customerIdentifier || !segmentId) {
+                    showNotification('Please fill in all required fields', 'error');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/api/customer-segmentation/assign', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': \`Bearer \${getAdminToken()}\`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            customer_identifier: customerIdentifier,
+                            segment_id: parseInt(segmentId),
+                            reason: reason
+                        })
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                        showNotification('Customer assigned successfully', 'success');
+                        closeAssignmentModal();
+                        loadDashboard();
+                    } else {
+                        showNotification(result.message || 'Assignment failed', 'error');
+                    }
+                } catch (error) {
+                    console.error('Assignment error:', error);
+                    showNotification('Assignment failed', 'error');
+                }
+            }
+
+            async function runBulkSegmentation() {
+                // This would run automatic segmentation for all customers
+                showNotification('Bulk segmentation started. This may take a while...', 'info');
+                
+                // Here you would call an endpoint that processes all customers
+                // For now, just show a success message
+                setTimeout(() => {
+                    showNotification('Bulk segmentation completed!', 'success');
+                    loadDashboard();
+                }, 3000);
+            }
+
+            function refreshDashboard() {
+                loadDashboard();
+                showNotification('Dashboard refreshed', 'success');
+            }
+
+            function viewSegment(segmentId) {
+                window.open(\`/api/customer-segmentation/segments/\${segmentId}\`, '_blank');
+            }
+
+            function analyzeSegment(segmentId) {
+                // Open detailed analytics for this segment
+                alert(\`Analyze segment: \${segmentId}\`);
+            }
+
+            function exportSegments() {
+                // Export segment data
+                alert('Export functionality would be implemented here');
+            }
+
+            function getAdminToken() {
+                return localStorage.getItem('admin_token') || 'test-token-123';
+            }
+
+            function showNotification(message, type = 'info') {
+                // Simple notification - in production use a proper notification library
+                console.log(\`[\${type.toUpperCase()}] \${message}\`);
+                
+                const notification = document.createElement('div');
+                notification.className = \`fixed top-4 right-4 p-4 rounded-md shadow-lg z-50 \${
+                    type === 'error' ? 'bg-red-500 text-white' :
+                    type === 'success' ? 'bg-green-500 text-white' :
+                    type === 'warning' ? 'bg-yellow-500 text-white' :
+                    'bg-blue-500 text-white'
+                }\`;
+                notification.textContent = message;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 3000);
+            }
+        </script>
+    </body>
+    </html>
+  `)
+})
+
+// Marketing Automation Admin Dashboard
+app.get('/admin/marketing-automation-dashboard', requireAdminAuth(), async (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Marketing Automation Dashboard - GARANTOR360</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body class="bg-gray-100">
+        <div class="min-h-screen">
+            <!-- Header -->
+            <div class="bg-white shadow-sm border-b">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between h-16">
+                        <div class="flex items-center">
+                            <i class="fas fa-magic text-purple-600 text-xl mr-2"></i>
+                            <h1 class="text-xl font-semibold text-gray-900">Marketing Automation Dashboard</h1>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <button onclick="executePendingActions()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                                <i class="fas fa-play mr-2"></i>Execute Pending
+                            </button>
+                            <button onclick="showTriggerModal()" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">
+                                <i class="fas fa-rocket mr-2"></i>Trigger Workflow
+                            </button>
+                            <button onclick="refreshDashboard()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                <i class="fas fa-sync mr-2"></i>Refresh
+                            </button>
+                            <a href="/admin" class="text-gray-600 hover:text-gray-900">
+                                <i class="fas fa-arrow-left mr-2"></i>Back
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                
+                <!-- Stats Overview -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-purple-100">
+                                <i class="fas fa-sitemap text-purple-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Active Workflows</p>
+                                <p class="text-2xl font-semibold text-gray-900" id="active-workflows">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-blue-100">
+                                <i class="fas fa-running text-blue-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Active Executions</p>
+                                <p class="text-2xl font-semibold text-gray-900" id="active-executions">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-green-100">
+                                <i class="fas fa-check-circle text-green-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Completed Today</p>
+                                <p class="text-2xl font-semibold text-gray-900" id="completed-today">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-yellow-100">
+                                <i class="fas fa-percentage text-yellow-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Avg Conversion</p>
+                                <p class="text-2xl font-semibold text-gray-900" id="avg-conversion">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <!-- Workflow Performance Chart -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Workflow Performance</h3>
+                        <canvas id="performanceChart" width="400" height="300"></canvas>
+                    </div>
+
+                    <!-- Execution Status Chart -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Execution Status</h3>
+                        <canvas id="statusChart" width="400" height="300"></canvas>
+                    </div>
+                </div>
+
+                <!-- Workflows Table -->
+                <div class="bg-white rounded-lg shadow">
+                    <div class="p-6 border-b border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-medium text-gray-900">Marketing Workflows</h3>
+                            <div class="flex space-x-2">
+                                <select id="workflow-filter" class="rounded-md border-gray-300 text-sm">
+                                    <option value="">All Workflows</option>
+                                    <option value="lifecycle">Lifecycle</option>
+                                    <option value="behavioral_trigger">Behavioral</option>
+                                    <option value="event_based">Event-based</option>
+                                </select>
+                                <button onclick="exportWorkflows()" class="bg-gray-600 text-white px-3 py-2 rounded-md text-sm hover:bg-gray-700">
+                                    <i class="fas fa-download"></i> Export
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Workflow
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Type
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Active Executions
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Completion Rate
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Priority
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Status
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Actions
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="workflows-table" class="bg-white divide-y divide-gray-200">
+                                <!-- Workflows will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Trigger Workflow Modal -->
+                <div id="triggerModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50">
+                    <div class="flex items-center justify-center min-h-screen p-4">
+                        <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+                            <div class="p-6">
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Trigger Marketing Workflow</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Workflow</label>
+                                        <select id="triggerWorkflow" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500">
+                                            <option value="">Select Workflow</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Customer Identifier</label>
+                                        <input type="text" id="triggerCustomer" placeholder="Email or phone" 
+                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Context Data (JSON)</label>
+                                        <textarea id="triggerContext" rows="3" placeholder='{"service_type": "kombi", "source": "manual"}'
+                                                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"></textarea>
+                                    </div>
+                                </div>
+                                <div class="mt-6 flex justify-end space-x-3">
+                                    <button onclick="closeTriggerModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">
+                                        Cancel
+                                    </button>
+                                    <button onclick="triggerWorkflow()" class="px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded-md hover:bg-purple-700">
+                                        Trigger
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            let performanceChart, statusChart;
+            let allWorkflows = [];
+
+            // Initialize dashboard
+            document.addEventListener('DOMContentLoaded', function() {
+                loadDashboard();
+            });
+
+            async function loadDashboard() {
+                try {
+                    await loadWorkflows();
+                    await loadAnalytics();
+                    updateCharts();
+                } catch (error) {
+                    console.error('Dashboard loading error:', error);
+                    showNotification('Dashboard loading failed', 'error');
+                }
+            }
+
+            async function loadWorkflows() {
+                try {
+                    const response = await fetch('/api/marketing-automation/workflows', {
+                        headers: { 'Authorization': \`Bearer \${getAdminToken()}\` }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        allWorkflows = data.workflows || [];
+                        updateWorkflowsTable(allWorkflows);
+                        updateWorkflowSelector(allWorkflows);
+                        
+                        // Update stats
+                        const activeWorkflows = allWorkflows.filter(w => w.is_active && !w.is_paused).length;
+                        document.getElementById('active-workflows').textContent = activeWorkflows;
+                        
+                        const totalActiveExecs = allWorkflows.reduce((sum, w) => sum + (w.active_executions || 0), 0);
+                        document.getElementById('active-executions').textContent = totalActiveExecs;
+                        
+                        const totalCompleted = allWorkflows.reduce((sum, w) => sum + (w.completed_executions || 0), 0);
+                        document.getElementById('completed-today').textContent = totalCompleted;
+                    }
+                } catch (error) {
+                    console.error('Load workflows error:', error);
+                }
+            }
+
+            async function loadAnalytics() {
+                try {
+                    const response = await fetch('/api/marketing-automation/analytics', {
+                        headers: { 'Authorization': \`Bearer \${getAdminToken()}\` }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        const analytics = data.analytics || [];
+                        
+                        // Calculate average conversion rate
+                        const avgConversion = analytics.reduce((sum, a) => sum + (a.avg_conversion_rate || 0), 0) / analytics.length || 0;
+                        document.getElementById('avg-conversion').textContent = \`\${(avgConversion * 100).toFixed(1)}%\`;
+                    }
+                } catch (error) {
+                    console.error('Load analytics error:', error);
+                }
+            }
+
+            function updateWorkflowsTable(workflows) {
+                const tbody = document.getElementById('workflows-table');
+                tbody.innerHTML = '';
+                
+                workflows.forEach(workflow => {
+                    const completionRate = workflow.total_triggered > 0 
+                        ? ((workflow.completed_executions || 0) / workflow.total_triggered * 100) 
+                        : 0;
+                    
+                    const row = tbody.insertRow();
+                    row.innerHTML = \`
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div>
+                                <div class="text-sm font-medium text-gray-900">\${workflow.workflow_name}</div>
+                                <div class="text-sm text-gray-500">\${workflow.workflow_description || 'No description'}</div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                \${workflow.workflow_type}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">\${workflow.active_executions || 0}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                                    <div class="bg-green-600 h-2 rounded-full" style="width: \${completionRate}%"></div>
+                                </div>
+                                <span class="text-sm text-gray-600">\${completionRate.toFixed(0)}%</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium \${
+                                workflow.priority_level >= 80 ? 'bg-red-100 text-red-800' :
+                                workflow.priority_level >= 50 ? 'bg-yellow-100 text-yellow-800' :
+                                'bg-green-100 text-green-800'
+                            }">
+                                \${workflow.priority_level}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium \${
+                                workflow.is_active && !workflow.is_paused ? 'bg-green-100 text-green-800' : 
+                                workflow.is_paused ? 'bg-yellow-100 text-yellow-800' :
+                                'bg-gray-100 text-gray-800'
+                            }">
+                                \${workflow.is_active && !workflow.is_paused ? 'Active' : 
+                                  workflow.is_paused ? 'Paused' : 'Inactive'}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <button onclick="viewWorkflow(\${workflow.id})" class="text-blue-600 hover:text-blue-900 mr-3">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button onclick="showTriggerModal(\${workflow.id})" class="text-purple-600 hover:text-purple-900 mr-3">
+                                <i class="fas fa-rocket"></i>
+                            </button>
+                            <button onclick="analyzeWorkflow(\${workflow.id})" class="text-green-600 hover:text-green-900">
+                                <i class="fas fa-chart-line"></i>
+                            </button>
+                        </td>
+                    \`;
+                });
+            }
+
+            function updateWorkflowSelector(workflows) {
+                const selector = document.getElementById('triggerWorkflow');
+                selector.innerHTML = '<option value="">Select Workflow</option>';
+                
+                workflows.forEach(workflow => {
+                    if (workflow.is_active && !workflow.is_paused) {
+                        const option = document.createElement('option');
+                        option.value = workflow.id;
+                        option.textContent = workflow.workflow_name;
+                        selector.appendChild(option);
+                    }
+                });
+            }
+
+            function updateCharts() {
+                updatePerformanceChart();
+                updateStatusChart();
+            }
+
+            function updatePerformanceChart() {
+                const ctx = document.getElementById('performanceChart').getContext('2d');
+                
+                if (performanceChart) {
+                    performanceChart.destroy();
+                }
+                
+                const labels = allWorkflows.map(w => w.workflow_name.substring(0, 20));
+                const executionData = allWorkflows.map(w => w.total_triggered || 0);
+                const completionData = allWorkflows.map(w => w.completed_executions || 0);
+                
+                performanceChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Total Triggered',
+                                data: executionData,
+                                backgroundColor: 'rgba(147, 51, 234, 0.6)',
+                                borderColor: 'rgba(147, 51, 234, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Completed',
+                                data: completionData,
+                                backgroundColor: 'rgba(34, 197, 94, 0.6)',
+                                borderColor: 'rgba(34, 197, 94, 1)',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            function updateStatusChart() {
+                const ctx = document.getElementById('statusChart').getContext('2d');
+                
+                if (statusChart) {
+                    statusChart.destroy();
+                }
+                
+                // Calculate status distribution
+                let activeCount = 0, pausedCount = 0, inactiveCount = 0;
+                allWorkflows.forEach(w => {
+                    if (w.is_active && !w.is_paused) activeCount++;
+                    else if (w.is_paused) pausedCount++;
+                    else inactiveCount++;
+                });
+                
+                statusChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Active', 'Paused', 'Inactive'],
+                        datasets: [{
+                            data: [activeCount, pausedCount, inactiveCount],
+                            backgroundColor: [
+                                '#10B981', // Green
+                                '#F59E0B', // Yellow
+                                '#6B7280'  // Gray
+                            ],
+                            borderWidth: 2,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+
+            function showTriggerModal(workflowId = null) {
+                if (workflowId) {
+                    document.getElementById('triggerWorkflow').value = workflowId;
+                }
+                document.getElementById('triggerModal').classList.remove('hidden');
+            }
+
+            function closeTriggerModal() {
+                document.getElementById('triggerModal').classList.add('hidden');
+                document.getElementById('triggerWorkflow').value = '';
+                document.getElementById('triggerCustomer').value = '';
+                document.getElementById('triggerContext').value = '';
+            }
+
+            async function triggerWorkflow() {
+                const workflowId = document.getElementById('triggerWorkflow').value;
+                const customerIdentifier = document.getElementById('triggerCustomer').value;
+                const contextText = document.getElementById('triggerContext').value;
+
+                if (!workflowId || !customerIdentifier) {
+                    showNotification('Please select workflow and enter customer identifier', 'error');
+                    return;
+                }
+
+                let contextData = {};
+                if (contextText) {
+                    try {
+                        contextData = JSON.parse(contextText);
+                    } catch (e) {
+                        showNotification('Invalid JSON in context data', 'error');
+                        return;
+                    }
+                }
+
+                try {
+                    const response = await fetch('/api/marketing-automation/trigger-workflow', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': \`Bearer \${getAdminToken()}\`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            workflow_id: parseInt(workflowId),
+                            customer_identifier: customerIdentifier,
+                            context_data: contextData
+                        })
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                        showNotification('Workflow triggered successfully', 'success');
+                        closeTriggerModal();
+                        loadDashboard();
+                    } else {
+                        showNotification(result.message || 'Workflow trigger failed', 'error');
+                    }
+                } catch (error) {
+                    console.error('Trigger workflow error:', error);
+                    showNotification('Workflow trigger failed', 'error');
+                }
+            }
+
+            async function executePendingActions() {
+                showNotification('Executing pending workflow actions...', 'info');
+                
+                try {
+                    const response = await fetch('/api/marketing-automation/execute-pending', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': \`Bearer \${getAdminToken()}\`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                        showNotification(\`Processed \${result.processed} actions successfully\`, 'success');
+                        loadDashboard();
+                    } else {
+                        showNotification('Failed to execute pending actions', 'error');
+                    }
+                } catch (error) {
+                    console.error('Execute pending error:', error);
+                    showNotification('Failed to execute pending actions', 'error');
+                }
+            }
+
+            function refreshDashboard() {
+                loadDashboard();
+                showNotification('Dashboard refreshed', 'success');
+            }
+
+            function viewWorkflow(workflowId) {
+                window.open(\`/api/marketing-automation/workflows/\${workflowId}\`, '_blank');
+            }
+
+            function analyzeWorkflow(workflowId) {
+                // Open detailed analytics for this workflow
+                alert(\`Analyze workflow: \${workflowId}\`);
+            }
+
+            function exportWorkflows() {
+                // Export workflow data
+                alert('Export functionality would be implemented here');
+            }
+
+            function getAdminToken() {
+                return localStorage.getItem('admin_token') || 'test-token-123';
+            }
+
+            function showNotification(message, type = 'info') {
+                console.log(\`[\${type.toUpperCase()}] \${message}\`);
+                
+                const notification = document.createElement('div');
+                notification.className = \`fixed top-4 right-4 p-4 rounded-md shadow-lg z-50 \${
+                    type === 'error' ? 'bg-red-500 text-white' :
+                    type === 'success' ? 'bg-green-500 text-white' :
+                    type === 'warning' ? 'bg-yellow-500 text-white' :
+                    'bg-blue-500 text-white'
+                }\`;
+                notification.textContent = message;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 3000);
+            }
+        </script>
+    </body>
+    </html>
+  `)
+})
+
+// ====================================
+// KVKV COOKIE CONSENT DASHBOARD
+// ====================================
+
+// Real-time Analytics Dashboard
+app.get('/admin/realtime-analytics', requireAdminAuth(), async (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Real-time Analytics Dashboard - GARANTOR360</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body class="bg-gray-100">
+        <div class="min-h-screen">
+            <!-- Header -->
+            <div class="bg-white shadow-sm border-b">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between h-16">
+                        <div class="flex items-center">
+                            <i class="fas fa-chart-line text-blue-600 text-xl mr-2"></i>
+                            <h1 class="text-xl font-semibold text-gray-900">Real-time Analytics Dashboard</h1>
+                            <div class="ml-4 flex items-center">
+                                <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></div>
+                                <span class="text-sm text-gray-600">Live</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <select id="timeframe-select" class="border border-gray-300 rounded-lg px-3 py-1">
+                                <option value="1h">Last Hour</option>
+                                <option value="24h" selected>Last 24 Hours</option>
+                                <option value="7d">Last 7 Days</option>
+                                <option value="30d">Last 30 Days</option>
+                            </select>
+                            <button onclick="refreshDashboard()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                <i class="fas fa-sync mr-2"></i>Refresh
+                            </button>
+                            <a href="/admin" class="text-gray-600 hover:text-gray-900">
+                                <i class="fas fa-arrow-left mr-2"></i>Back
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                
+                <!-- Real-time Overview -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-blue-100">
+                                <i class="fas fa-eye text-blue-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Active Users</p>
+                                <p class="text-2xl font-semibold text-gray-900" id="active-users">-</p>
+                                <p class="text-xs text-gray-500">Right now</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-green-100">
+                                <i class="fas fa-mouse-pointer text-green-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Events (1h)</p>
+                                <p class="text-2xl font-semibold text-gray-900" id="events-hour">-</p>
+                                <p class="text-xs text-gray-500 flex items-center">
+                                    <span id="events-trend" class="mr-1">-</span>
+                                    <span>vs prev hour</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-purple-100">
+                                <i class="fas fa-bullseye text-purple-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Conversions</p>
+                                <p class="text-2xl font-semibold text-gray-900" id="conversions-total">-</p>
+                                <p class="text-xs text-gray-500">
+                                    <span id="conversion-rate">-</span>% rate
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-yellow-100">
+                                <i class="fas fa-coins text-yellow-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Conv. Value</p>
+                                <p class="text-2xl font-semibold text-gray-900" id="conversion-value">-</p>
+                                <p class="text-xs text-gray-500">Total TRY</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <!-- Real-time Activity Chart -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">
+                            <i class="fas fa-chart-area text-blue-600 mr-2"></i>
+                            Real-time Activity
+                        </h3>
+                        <div class="relative h-64">
+                            <canvas id="realtimeChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Top Events -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">
+                            <i class="fas fa-fire text-red-600 mr-2"></i>
+                            Top Events (Last Hour)
+                        </h3>
+                        <div id="top-events-list" class="space-y-2 max-h-64 overflow-y-auto">
+                            <div class="text-center text-gray-500 py-8">Loading events...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Analytics -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Recent Conversions -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">
+                            <i class="fas fa-trophy text-green-600 mr-2"></i>
+                            Recent Conversions
+                        </h3>
+                        <div id="recent-conversions-list" class="space-y-3 max-h-80 overflow-y-auto">
+                            <div class="text-center text-gray-500 py-8">Loading conversions...</div>
+                        </div>
+                    </div>
+
+                    <!-- Top Pages -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">
+                            <i class="fas fa-file-alt text-blue-600 mr-2"></i>
+                            Top Pages
+                        </h3>
+                        <div id="top-pages-list" class="space-y-3 max-h-80 overflow-y-auto">
+                            <div class="text-center text-gray-500 py-8">Loading pages...</div>
+                        </div>
+                    </div>
+
+                    <!-- Traffic Sources -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">
+                            <i class="fas fa-share-alt text-purple-600 mr-2"></i>
+                            Traffic Sources
+                        </h3>
+                        <div id="traffic-sources-list" class="space-y-3 max-h-80 overflow-y-auto">
+                            <div class="text-center text-gray-500 py-8">Loading sources...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Stream -->
+                <div class="bg-white shadow rounded-lg">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-medium text-gray-900">
+                            <i class="fas fa-stream text-indigo-600 mr-2"></i>
+                            Live Event Stream
+                        </h3>
+                        <p class="text-sm text-gray-600 mt-1">Real-time user interactions</p>
+                    </div>
+                    <div class="p-6">
+                        <div id="event-stream" class="space-y-2 max-h-96 overflow-y-auto font-mono text-sm">
+                            <div class="text-center text-gray-500 py-8">Waiting for events...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Info -->
+                <div class="mt-8 text-center text-sm text-gray-500">
+                    <p>
+                        <i class="fas fa-clock mr-1"></i>
+                        Auto-refresh every 30 seconds | 
+                        Last updated: <span id="last-update-time">-</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Real-time Analytics JavaScript -->
+        <script>
+            class RealtimeAnalyticsDashboard {
+                constructor() {
+                    this.refreshInterval = null;
+                    this.isLoading = false;
+                    this.eventStreamQueue = [];
+                    this.charts = {};
+                    
+                    this.init();
+                }
+                
+                async init() {
+                    await this.loadDashboardData();
+                    this.setupEventListeners();
+                    this.startAutoRefresh();
+                    
+                    console.log('Real-time Analytics Dashboard initialized');
+                }
+                
+                async loadDashboardData() {
+                    if (this.isLoading) return;
+                    this.isLoading = true;
+                    
+                    try {
+                        const token = localStorage.getItem('adminToken');
+                        const response = await fetch('/api/events/realtime-dashboard', {
+                            headers: { 'Authorization': \`Bearer \${token}\` }
+                        });
+                        
+                        const data = await response.json();
+                        if (data.success) {
+                            this.updateDashboard(data.data);
+                        }
+                        
+                    } catch (error) {
+                        console.error('Dashboard load error:', error);
+                    } finally {
+                        this.isLoading = false;
+                    }
+                }
+                
+                updateDashboard(data) {
+                    // Update overview metrics
+                    this.updateOverviewMetrics(data.journeyStats);
+                    
+                    // Update charts
+                    this.updateRealtimeChart(data.realtimeMetrics);
+                    
+                    // Update lists
+                    this.updateTopEvents(data.recentEvents);
+                    this.updateRecentConversions(data.conversions);
+                    this.updateTopPages(data.topPages);
+                    
+                    // Update last refresh time
+                    document.getElementById('last-update-time').textContent = 
+                        new Date().toLocaleTimeString('tr-TR');
+                }
+                
+                updateOverviewMetrics(stats) {
+                    document.getElementById('active-users').textContent = 
+                        stats.total_users || '0';
+                    document.getElementById('events-hour').textContent = 
+                        stats.total_events || '0';
+                    document.getElementById('conversions-total').textContent = 
+                        '0'; // Will be calculated from conversions data
+                    document.getElementById('conversion-value').textContent = 
+                        'TL 0'; // Will be calculated from conversions data
+                    document.getElementById('conversion-rate').textContent = 
+                        '0';
+                }
+                
+                updateRealtimeChart(metrics) {
+                    const ctx = document.getElementById('realtimeChart');
+                    if (!ctx) return;
+                    
+                    const labels = metrics.map(m => m.time_label);
+                    const events = metrics.map(m => m.events || 0);
+                    const users = metrics.map(m => m.users || 0);
+                    const conversions = metrics.map(m => m.conversions || 0);
+                    
+                    if (this.charts.realtime) {
+                        this.charts.realtime.destroy();
+                    }
+                    
+                    this.charts.realtime = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [
+                                {
+                                    label: 'Events',
+                                    data: events,
+                                    borderColor: '#3b82f6',
+                                    backgroundColor: '#3b82f6',
+                                    tension: 0.4,
+                                    fill: false
+                                },
+                                {
+                                    label: 'Users',
+                                    data: users,
+                                    borderColor: '#10b981',
+                                    backgroundColor: '#10b981',
+                                    tension: 0.4,
+                                    fill: false
+                                },
+                                {
+                                    label: 'Conversions',
+                                    data: conversions,
+                                    borderColor: '#8b5cf6',
+                                    backgroundColor: '#8b5cf6',
+                                    tension: 0.4,
+                                    fill: false
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                }
+                
+                updateTopEvents(events) {
+                    const container = document.getElementById('top-events-list');
+                    if (!events || events.length === 0) {
+                        container.innerHTML = '<div class="text-center text-gray-500 py-4">No events found</div>';
+                        return;
+                    }
+                    
+                    container.innerHTML = events.map((event, index) => \`
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center text-xs font-semibold text-blue-800 mr-3">
+                                    \${index + 1}
+                                </div>
+                                <div>
+                                    <div class="font-medium text-gray-900">\${event.event_name}</div>
+                                    <div class="text-xs text-gray-500">\${event.event_category}</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-semibold text-gray-900">\${event.count}</div>
+                                <div class="text-xs text-gray-500">\${event.unique_users} users</div>
+                            </div>
+                        </div>
+                    \`).join('');
+                }
+                
+                updateRecentConversions(conversions) {
+                    const container = document.getElementById('recent-conversions-list');
+                    if (!conversions || conversions.length === 0) {
+                        container.innerHTML = '<div class="text-center text-gray-500 py-4">No conversions found</div>';
+                        return;
+                    }
+                    
+                    container.innerHTML = conversions.slice(0, 10).map(conv => {
+                        const time = new Date(conv.server_timestamp).toLocaleTimeString('tr-TR');
+                        return \`
+                            <div class="border-l-4 border-green-400 pl-3 py-2">
+                                <div class="flex items-center justify-between">
+                                    <div class="font-medium text-gray-900">\${conv.conversion_type || conv.event_name}</div>
+                                    <div class="text-sm font-semibold text-green-600">TL \${conv.conversion_value || 0}</div>
+                                </div>
+                                <div class="text-xs text-gray-500 mt-1">
+                                    \${time} • \${(conv.utm_source || 'direct')}
+                                </div>
+                            </div>
+                        \`;
+                    }).join('');
+                }
+                
+                updateTopPages(pages) {
+                    const container = document.getElementById('top-pages-list');
+                    if (!pages || pages.length === 0) {
+                        container.innerHTML = '<div class="text-center text-gray-500 py-4">No pages found</div>';
+                        return;
+                    }
+                    
+                    container.innerHTML = pages.slice(0, 10).map(page => \`
+                        <div class="border-b border-gray-100 pb-2">
+                            <div class="font-medium text-gray-900 text-sm truncate" title="\${page.page_url}">
+                                \${page.page_title || page.page_url}
+                            </div>
+                            <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                <span>\${page.pageviews} views • \${page.unique_visitors} visitors</span>
+                                <span>\${Math.round(page.avg_time_on_page || 0)}s avg</span>
+                            </div>
+                        </div>
+                    \`).join('');
+                }
+                
+                setupEventListeners() {
+                    document.getElementById('timeframe-select').addEventListener('change', (e) => {
+                        this.loadAnalyticsData(e.target.value);
+                    });
+                }
+                
+                async loadAnalyticsData(timeframe) {
+                    try {
+                        const token = localStorage.getItem('adminToken');
+                        const response = await fetch(\`/api/events/analytics?timeframe=\${timeframe}\`, {
+                            headers: { 'Authorization': \`Bearer \${token}\` }
+                        });
+                        
+                        const data = await response.json();
+                        if (data.success) {
+                            // Update traffic sources
+                            this.updateTrafficSources(data.data.traffic);
+                        }
+                        
+                    } catch (error) {
+                        console.error('Analytics load error:', error);
+                    }
+                }
+                
+                updateTrafficSources(traffic) {
+                    const container = document.getElementById('traffic-sources-list');
+                    if (!traffic || traffic.length === 0) {
+                        container.innerHTML = '<div class="text-center text-gray-500 py-4">No traffic data</div>';
+                        return;
+                    }
+                    
+                    container.innerHTML = traffic.slice(0, 10).map(source => \`
+                        <div class="flex items-center justify-between p-2 hover:bg-gray-50 rounded">
+                            <div>
+                                <div class="font-medium text-gray-900">\${source.source}</div>
+                                <div class="text-xs text-gray-500">\${source.medium}</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-semibold text-gray-900">\${source.users}</div>
+                                <div class="text-xs text-gray-500">\${source.conversions} conv</div>
+                            </div>
+                        </div>
+                    \`).join('');
+                }
+                
+                startAutoRefresh() {
+                    this.refreshInterval = setInterval(() => {
+                        this.loadDashboardData();
+                    }, 30000); // 30 seconds
+                }
+                
+                stopAutoRefresh() {
+                    if (this.refreshInterval) {
+                        clearInterval(this.refreshInterval);
+                        this.refreshInterval = null;
+                    }
+                }
+            }
+            
+            // Global functions
+            function refreshDashboard() {
+                if (window.realtimeDashboard) {
+                    window.realtimeDashboard.loadDashboardData();
+                }
+            }
+            
+            // Initialize dashboard
+            document.addEventListener('DOMContentLoaded', function() {
+                window.realtimeDashboard = new RealtimeAnalyticsDashboard();
+            });
+        </script>
+    </body>
+    </html>
+  `)
+})
+
+// KVKV Cookie Consent Dashboard
+app.get('/admin/kvkv-dashboard', requireAdminAuth(), async (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>KVKV Cookie Consent Dashboard - GARANTOR360</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link href="/static/kvkv-admin-dashboard.css" rel="stylesheet">
+    </head>
+    <body class="bg-gray-100">
+        <div class="min-h-screen">
+            <!-- Header -->
+            <div class="bg-white shadow-sm border-b">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between h-16">
+                        <div class="flex items-center">
+                            <i class="fas fa-cookie-bite text-orange-600 text-xl mr-2"></i>
+                            <h1 class="text-xl font-semibold text-gray-900">KVKV Cookie Consent Dashboard</h1>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="flex items-center space-x-2">
+                                <label class="text-sm text-gray-600">Auto Refresh:</label>
+                                <input type="checkbox" id="auto-refresh-toggle" checked class="toggle">
+                            </div>
+                            <button id="export-consent-data" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                <i class="fas fa-download mr-2"></i>Export Data
+                            </button>
+                            <button id="refresh-dashboard" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                                <i class="fas fa-sync mr-2"></i>Refresh
+                            </button>
+                            <a href="/admin" class="text-gray-600 hover:text-gray-900">
+                                <i class="fas fa-arrow-left mr-2"></i>Back
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                
+                <!-- Stats Overview -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-lg shadow p-6" id="total-consents">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-blue-100">
+                                <i class="fas fa-users text-blue-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600 stat-label">Toplam Rıza</p>
+                                <p class="text-2xl font-semibold text-gray-900 stat-value">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow p-6" id="analytics-acceptance">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-purple-100">
+                                <i class="fas fa-chart-bar text-purple-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600 stat-label">Analitik Kabul %</p>
+                                <p class="text-2xl font-semibold text-gray-900 stat-value">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow p-6" id="marketing-acceptance">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-orange-100">
+                                <i class="fas fa-bullhorn text-orange-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600 stat-label">Pazarlama Kabul %</p>
+                                <p class="text-2xl font-semibold text-gray-900 stat-value">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow p-6" id="withdrawn-consents">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-red-100">
+                                <i class="fas fa-hand-rock text-red-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600 stat-label">Geri Çekilen</p>
+                                <p class="text-2xl font-semibold text-gray-900 stat-value">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts and Tables Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <!-- Consent Distribution Chart -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">
+                            <i class="fas fa-pie-chart text-purple-600 mr-2"></i>
+                            Consent Distribution
+                        </h3>
+                        <div class="relative h-64">
+                            <canvas id="consent-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">
+                            <i class="fas fa-history text-blue-600 mr-2"></i>
+                            Recent Activity
+                        </h3>
+                        <div class="space-y-3 max-h-64 overflow-y-auto">
+                            <div id="recent-activity-list">
+                                <div class="text-center text-gray-500 py-4">
+                                    Loading recent activity...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Consents Table -->
+                <div class="bg-white shadow rounded-lg mb-8">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-medium text-gray-900">
+                            <i class="fas fa-list text-green-600 mr-2"></i>
+                            Recent Consents
+                        </h3>
+                        <p class="text-sm text-gray-600 mt-1">Latest user consent records (last 20)</p>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        User ID / IP
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Consent Categories
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Method
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Date/Time
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Actions
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="recent-consents-tbody" class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+                                        Loading consent data...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Compliance Logs -->
+                <div class="bg-white shadow rounded-lg">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-medium text-gray-900">
+                            <i class="fas fa-shield-alt text-blue-600 mr-2"></i>
+                            KVKV Compliance Logs
+                        </h3>
+                        <p class="text-sm text-gray-600 mt-1">Legal compliance and audit trail</p>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Event Type
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Description
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Compliance Status
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Date/Time
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="compliance-logs-tbody" class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td colspan="4" class="px-6 py-4 text-center text-gray-500">
+                                        Loading compliance logs...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Footer Info -->
+                <div class="mt-8 text-center text-sm text-gray-500">
+                    <p>
+                        <i class="fas fa-info-circle mr-1"></i>
+                        Last refreshed: <span id="last-refresh-time">-</span> | 
+                        KVKV (Kişisel Verilerin Korunması Kanunu) Compliance Dashboard
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Load Dashboard JavaScript -->
+        <script src="/static/kvkv-admin-dashboard.js"></script>
+        
+        <style>
+            .consent-badge {
+                display: inline-block;
+                padding: 2px 8px;
+                border-radius: 12px;
+                font-size: 12px;
+                font-weight: 500;
+                margin-right: 4px;
+                margin-bottom: 2px;
+            }
+            
+            .consent-badge-accepted {
+                background-color: #d1fae5;
+                color: #065f46;
+            }
+            
+            .consent-badge-rejected {
+                background-color: #fee2e2;
+                color: #991b1b;
+            }
+            
+            .user-id {
+                display: block;
+                font-family: monospace;
+                font-size: 12px;
+                color: #374151;
+            }
+            
+            .ip-address {
+                display: block;
+                font-size: 11px;
+                color: #6b7280;
+                margin-top: 2px;
+            }
+            
+            .consent-method {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                font-size: 13px;
+                color: #4b5563;
+            }
+            
+            .consent-date {
+                font-size: 13px;
+            }
+            
+            .consent-date small {
+                color: #6b7280;
+            }
+            
+            .log-event {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 13px;
+            }
+            
+            .log-description {
+                font-size: 13px;
+                color: #4b5563;
+                max-width: 300px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            
+            .compliance-status {
+                padding: 2px 8px;
+                border-radius: 12px;
+                font-size: 12px;
+                font-weight: 500;
+                text-transform: capitalize;
+            }
+            
+            .compliance-status-compliant {
+                background-color: #d1fae5;
+                color: #065f46;
+            }
+            
+            .compliance-status-pending {
+                background-color: #fef3c7;
+                color: #92400e;
+            }
+            
+            .compliance-status-violation {
+                background-color: #fee2e2;
+                color: #991b1b;
+            }
+            
+            .log-date {
+                font-size: 13px;
+            }
+            
+            .log-date small {
+                color: #6b7280;
+            }
+            
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                padding: 6px 12px;
+                border: 1px solid transparent;
+                border-radius: 6px;
+                font-size: 14px;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+            
+            .btn-sm {
+                padding: 4px 8px;
+                font-size: 12px;
+            }
+            
+            .btn-outline {
+                border-color: #d1d5db;
+                color: #374151;
+                background-color: #ffffff;
+            }
+            
+            .btn-outline:hover {
+                border-color: #9ca3af;
+                color: #111827;
+            }
+            
+            .toggle {
+                width: 40px;
+                height: 20px;
+                -webkit-appearance: none;
+                appearance: none;
+                background-color: #e5e7eb;
+                border-radius: 10px;
+                position: relative;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+            
+            .toggle:checked {
+                background-color: #10b981;
+            }
+            
+            .toggle:before {
+                content: '';
+                position: absolute;
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                background-color: white;
+                top: 2px;
+                left: 2px;
+                transition: transform 0.3s;
+            }
+            
+            .toggle:checked:before {
+                transform: translateX(20px);
+            }
+            
+            .kvkv-modal {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s;
+                padding: 20px;
+            }
+            
+            .kvkv-modal.show {
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .kvkv-modal-content {
+                background: white;
+                border-radius: 12px;
+                max-width: 600px;
+                width: 100%;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+            
+            .kvkv-modal-header {
+                padding: 20px 20px 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .modal-close {
+                background: none;
+                border: none;
+                font-size: 20px;
+                cursor: pointer;
+                color: #6b7280;
+            }
+            
+            .kvkv-modal-body {
+                padding: 20px;
+            }
+            
+            .kvkv-modal-footer {
+                padding: 0 20px 20px;
+                display: flex;
+                justify-content: flex-end;
+            }
+            
+            .consent-details .detail-group {
+                margin-bottom: 15px;
+            }
+            
+            .consent-details label {
+                display: block;
+                font-weight: 500;
+                margin-bottom: 5px;
+                color: #374151;
+            }
+            
+            .user-id-full {
+                font-family: monospace;
+                background: #f3f4f6;
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-size: 12px;
+            }
+            
+            .consent-categories-detail {
+                margin-top: 20px;
+            }
+            
+            .categories-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 10px;
+                margin-top: 10px;
+            }
+            
+            .category-item {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 12px;
+                border: 1px solid #e5e7eb;
+                border-radius: 8px;
+                transition: all 0.2s;
+            }
+            
+            .category-item.enabled {
+                border-color: #10b981;
+                background-color: #f0fdf4;
+            }
+            
+            .category-item.disabled {
+                border-color: #ef4444;
+                background-color: #fef2f2;
+            }
+            
+            .category-item i {
+                font-size: 16px;
+            }
+            
+            .category-item.enabled i {
+                color: #10b981;
+            }
+            
+            .category-item.disabled i {
+                color: #ef4444;
+            }
+            
+            .category-item span {
+                flex: 1;
+                font-size: 14px;
+                font-weight: 500;
+            }
+            
+            .category-item .status {
+                font-size: 12px;
+                padding: 2px 6px;
+                border-radius: 4px;
+                font-weight: 500;
+            }
+            
+            .category-item.enabled .status {
+                background-color: #dcfce7;
+                color: #166534;
+            }
+            
+            .category-item.disabled .status {
+                background-color: #fee2e2;
+                color: #991b1b;
+            }
+            
+            .notification {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                transform: translateX(100%);
+                transition: transform 0.3s;
+                z-index: 1001;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                min-width: 250px;
+            }
+            
+            .notification.show {
+                transform: translateX(0);
+            }
+            
+            .notification-success {
+                border-left: 4px solid #10b981;
+            }
+            
+            .notification-error {
+                border-left: 4px solid #ef4444;
+            }
+            
+            .notification i {
+                font-size: 16px;
+            }
+            
+            .notification-success i {
+                color: #10b981;
+            }
+            
+            .notification-error i {
+                color: #ef4444;
+            }
+        </style>
+    </body>
+    </html>
+  `)
+})
+
+// ====================================
+// ENHANCED EVENT TRACKING API ENDPOINTS
+// ====================================
+
+// Event Batch Processing Endpoint
+app.post('/api/events/batch', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { events, meta } = await c.req.json()
+    
+    if (!events || !Array.isArray(events)) {
+      return c.json({ error: 'Events array is required' }, 400)
+    }
+    
+    const ipAddress = c.req.header('CF-Connecting-IP') || c.req.header('X-Forwarded-For') || 'Unknown'
+    const userAgent = c.req.header('User-Agent') || 'Unknown'
+    const currentTime = new Date().toISOString()
+    
+    let successCount = 0
+    let errorCount = 0
+    
+    // Process each event in the batch
+    for (const event of events) {
+      try {
+        // Insert event into database
+        await DB.prepare(`
+          INSERT INTO user_event_logs (
+            event_id, event_name, event_category, user_identifier, session_id, visitor_id,
+            event_label, event_value, event_data, page_url, page_title, page_referrer,
+            element_id, element_class, element_text, element_type, user_agent, ip_address,
+            page_load_time, time_on_page, scroll_depth, is_conversion, conversion_type,
+            conversion_value, utm_source, utm_medium, utm_campaign, utm_term, utm_content,
+            client_timestamp, server_timestamp, created_at
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `).bind(
+          event.event_id || `evt_${Date.now()}_${Math.random().toString(36).substring(7)}`,
+          event.event_name || 'unknown',
+          event.event_category || 'custom',
+          event.user_identifier || 'anonymous',
+          event.session_id || 'unknown',
+          event.visitor_id || 'unknown',
+          event.event_label || '',
+          event.event_value || 0,
+          event.event_data || '{}',
+          event.page_url || '',
+          event.page_title || '',
+          event.page_referrer || '',
+          event.element_id || '',
+          event.element_class || '',
+          event.element_text || '',
+          event.element_type || '',
+          userAgent,
+          ipAddress,
+          event.page_load_time || 0,
+          event.time_on_page || 0,
+          event.scroll_depth || 0,
+          event.is_conversion ? 1 : 0,
+          event.conversion_type || null,
+          event.conversion_value || 0,
+          event.utm_source || null,
+          event.utm_medium || null,
+          event.utm_campaign || null,
+          event.utm_term || null,
+          event.utm_content || null,
+          event.client_timestamp || currentTime,
+          currentTime,
+          currentTime
+        ).run()
+        
+        successCount++
+        
+        // Update real-time metrics if it's a significant event
+        if (event.is_conversion || ['form_submit', 'button_click', 'page_view'].includes(event.event_name)) {
+          await this.updateRealtimeMetrics(DB, event, currentTime)
+        }
+        
+      } catch (eventError) {
+        console.error(`Error processing event ${event.event_id}:`, eventError)
+        errorCount++
+      }
+    }
+    
+    return c.json({
+      success: true,
+      processed: events.length,
+      successful: successCount,
+      errors: errorCount,
+      message: `Processed ${successCount}/${events.length} events successfully`
+    })
+    
+  } catch (error) {
+    console.error('Event batch processing error:', error)
+    return c.json({ error: 'Event batch processing failed' }, 500)
+  }
+})
+
+// Event Beacon Endpoint (for page unload)
+app.post('/api/events/beacon', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { events } = await c.req.json()
+    
+    if (!events || !Array.isArray(events)) {
+      return new Response('OK', { status: 200 }) // Always return OK for beacon
+    }
+    
+    const ipAddress = c.req.header('CF-Connecting-IP') || 'Unknown'
+    const userAgent = c.req.header('User-Agent') || 'Unknown'
+    const currentTime = new Date().toISOString()
+    
+    // Process beacon events quickly (simpler processing)
+    for (const event of events.slice(0, 10)) { // Limit to 10 events for beacon
+      try {
+        await DB.prepare(`
+          INSERT INTO user_event_logs (
+            event_id, event_name, event_category, user_identifier, session_id,
+            event_data, page_url, user_agent, ip_address, server_timestamp, created_at
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `).bind(
+          event.event_id || `evt_${Date.now()}_${Math.random().toString(36).substring(7)}`,
+          event.event_name || 'beacon_event',
+          event.event_category || 'technical',
+          event.user_identifier || 'anonymous',
+          event.session_id || 'unknown',
+          JSON.stringify(event),
+          event.page_url || '',
+          userAgent,
+          ipAddress,
+          currentTime,
+          currentTime
+        ).run()
+      } catch (eventError) {
+        console.error('Beacon event error:', eventError)
+      }
+    }
+    
+    return new Response('OK', { status: 200 })
+    
+  } catch (error) {
+    console.error('Event beacon error:', error)
+    return new Response('OK', { status: 200 }) // Always return OK for beacon
+  }
+})
+
+// Get Event Tracking Configuration
+app.get('/api/events/config', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { results: config } = await DB.prepare(`
+      SELECT 
+        event_name, event_category, ga4_enabled, ga4_event_name, ga4_parameters,
+        fb_enabled, fb_event_name, fb_parameters, is_conversion, conversion_value, description
+      FROM event_tracking_config 
+      WHERE is_active = 1
+      ORDER BY event_category, event_name
+    `).all()
+    
+    return c.json({
+      success: true,
+      config: config,
+      message: 'Event tracking configuration retrieved'
+    })
+    
+  } catch (error) {
+    console.error('Event config error:', error)
+    return c.json({ error: 'Failed to get event configuration' }, 500)
+  }
+})
+
+// Get Real-time Analytics Dashboard Data  
+app.get('/api/events/realtime-dashboard', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    // Get recent events (last hour)
+    const { results: recentEvents } = await DB.prepare(`
+      SELECT 
+        event_name, event_category, COUNT(*) as count,
+        COUNT(DISTINCT user_identifier) as unique_users,
+        SUM(CASE WHEN is_conversion = 1 THEN 1 ELSE 0 END) as conversions,
+        AVG(time_on_page) as avg_time_on_page,
+        AVG(scroll_depth) as avg_scroll_depth
+      FROM user_event_logs 
+      WHERE server_timestamp >= datetime('now', '-1 hour')
+      GROUP BY event_name, event_category
+      ORDER BY count DESC
+      LIMIT 20
+    `).all()
+    
+    // Get conversion events (last 24 hours)
+    const { results: conversions } = await DB.prepare(`
+      SELECT 
+        event_name, conversion_type, conversion_value, page_url, user_identifier,
+        server_timestamp, utm_source, utm_medium, utm_campaign
+      FROM user_event_logs 
+      WHERE is_conversion = 1 
+      AND server_timestamp >= datetime('now', '-24 hours')
+      ORDER BY server_timestamp DESC
+      LIMIT 50
+    `).all()
+    
+    // Get top pages (last 24 hours)
+    const { results: topPages } = await DB.prepare(`
+      SELECT 
+        page_url, page_title, COUNT(*) as pageviews,
+        COUNT(DISTINCT user_identifier) as unique_visitors,
+        AVG(time_on_page) as avg_time_on_page,
+        AVG(scroll_depth) as avg_scroll_depth,
+        SUM(CASE WHEN is_conversion = 1 THEN 1 ELSE 0 END) as conversions
+      FROM user_event_logs 
+      WHERE server_timestamp >= datetime('now', '-24 hours')
+      AND event_name = 'page_view'
+      GROUP BY page_url, page_title
+      ORDER BY pageviews DESC
+      LIMIT 20
+    `).all()
+    
+    // Get user journey overview
+    const { results: journeyStats } = await DB.prepare(`
+      SELECT 
+        COUNT(DISTINCT user_identifier) as total_users,
+        COUNT(DISTINCT session_id) as total_sessions,
+        AVG(time_on_page) as avg_session_duration,
+        COUNT(*) as total_events
+      FROM user_event_logs 
+      WHERE server_timestamp >= datetime('now', '-24 hours')
+    `).all()
+    
+    // Get real-time metrics (last hour by minute)
+    const { results: realtimeMetrics } = await DB.prepare(`
+      SELECT 
+        strftime('%H:%M', time_bucket) as time_label,
+        SUM(event_count) as events,
+        SUM(unique_users) as users,
+        SUM(conversion_count) as conversions
+      FROM realtime_event_metrics 
+      WHERE time_bucket >= datetime('now', '-1 hour')
+      AND bucket_type = 'minute'
+      GROUP BY time_bucket
+      ORDER BY time_bucket ASC
+    `).all()
+    
+    return c.json({
+      success: true,
+      data: {
+        recentEvents: recentEvents,
+        conversions: conversions,
+        topPages: topPages,
+        journeyStats: journeyStats[0] || {},
+        realtimeMetrics: realtimeMetrics
+      },
+      timestamp: new Date().toISOString()
+    })
+    
+  } catch (error) {
+    console.error('Realtime dashboard error:', error)
+    return c.json({ error: 'Failed to get realtime dashboard data' }, 500)
+  }
+})
+
+// Get Event Analytics (detailed analytics)
+app.get('/api/events/analytics', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  const { timeframe = '7d', event_category = 'all' } = c.req.query()
+  
+  try {
+    let timeFilter = ''
+    switch(timeframe) {
+      case '1h': timeFilter = "datetime('now', '-1 hour')"; break
+      case '24h': timeFilter = "datetime('now', '-24 hours')"; break
+      case '7d': timeFilter = "datetime('now', '-7 days')"; break
+      case '30d': timeFilter = "datetime('now', '-30 days')"; break
+      default: timeFilter = "datetime('now', '-7 days')"
+    }
+    
+    let categoryFilter = ''
+    if (event_category !== 'all') {
+      categoryFilter = `AND event_category = '${event_category}'`
+    }
+    
+    // Event summary
+    const { results: eventSummary } = await DB.prepare(`
+      SELECT 
+        event_name, event_category, COUNT(*) as total_events,
+        COUNT(DISTINCT user_identifier) as unique_users,
+        COUNT(DISTINCT session_id) as unique_sessions,
+        SUM(CASE WHEN is_conversion = 1 THEN 1 ELSE 0 END) as conversions,
+        SUM(conversion_value) as total_conversion_value,
+        AVG(time_on_page) as avg_time_on_page,
+        AVG(scroll_depth) as avg_scroll_depth
+      FROM user_event_logs 
+      WHERE server_timestamp >= ${timeFilter} ${categoryFilter}
+      GROUP BY event_name, event_category
+      ORDER BY total_events DESC
+    `).all()
+    
+    // Daily trends
+    const { results: dailyTrends } = await DB.prepare(`
+      SELECT 
+        DATE(server_timestamp) as date,
+        COUNT(*) as events,
+        COUNT(DISTINCT user_identifier) as users,
+        COUNT(DISTINCT session_id) as sessions,
+        SUM(CASE WHEN is_conversion = 1 THEN 1 ELSE 0 END) as conversions
+      FROM user_event_logs 
+      WHERE server_timestamp >= ${timeFilter} ${categoryFilter}
+      GROUP BY DATE(server_timestamp)
+      ORDER BY date ASC
+    `).all()
+    
+    // Traffic sources
+    const { results: trafficSources } = await DB.prepare(`
+      SELECT 
+        COALESCE(utm_source, 'direct') as source,
+        COALESCE(utm_medium, 'none') as medium,
+        COUNT(*) as events,
+        COUNT(DISTINCT user_identifier) as users,
+        SUM(CASE WHEN is_conversion = 1 THEN 1 ELSE 0 END) as conversions
+      FROM user_event_logs 
+      WHERE server_timestamp >= ${timeFilter} ${categoryFilter}
+      GROUP BY utm_source, utm_medium
+      ORDER BY events DESC
+    `).all()
+    
+    return c.json({
+      success: true,
+      data: {
+        summary: eventSummary,
+        trends: dailyTrends,
+        traffic: trafficSources
+      },
+      filters: {
+        timeframe: timeframe,
+        category: event_category
+      }
+    })
+    
+  } catch (error) {
+    console.error('Event analytics error:', error)
+    return c.json({ error: 'Failed to get event analytics' }, 500)
+  }
+})
+
+// Helper function to update real-time metrics
+async function updateRealtimeMetrics(DB, event, timestamp) {
+  try {
+    const hourBucket = timestamp.substring(0, 13) + ':00:00' // Round to hour
+    const minuteBucket = timestamp.substring(0, 16) + ':00' // Round to minute
+    
+    // Update hourly metrics
+    await DB.prepare(`
+      INSERT INTO realtime_event_metrics (
+        time_bucket, bucket_type, event_name, event_category, 
+        event_count, unique_users, conversion_count, total_conversion_value
+      ) VALUES (?, ?, ?, ?, 1, 1, ?, ?)
+      ON CONFLICT(time_bucket, bucket_type, event_name) 
+      DO UPDATE SET 
+        event_count = event_count + 1,
+        unique_users = unique_users + 1,
+        conversion_count = conversion_count + ?,
+        total_conversion_value = total_conversion_value + ?
+    `).bind(
+      hourBucket, 'hour', event.event_name, event.event_category,
+      event.is_conversion ? 1 : 0, event.conversion_value || 0,
+      event.is_conversion ? 1 : 0, event.conversion_value || 0
+    ).run()
+    
+    // Update minute metrics  
+    await DB.prepare(`
+      INSERT INTO realtime_event_metrics (
+        time_bucket, bucket_type, event_name, event_category,
+        event_count, unique_users, conversion_count, total_conversion_value
+      ) VALUES (?, ?, ?, ?, 1, 1, ?, ?)
+      ON CONFLICT(time_bucket, bucket_type, event_name)
+      DO UPDATE SET 
+        event_count = event_count + 1,
+        unique_users = unique_users + 1,
+        conversion_count = conversion_count + ?,
+        total_conversion_value = total_conversion_value + ?
+    `).bind(
+      minuteBucket, 'minute', event.event_name, event.event_category,
+      event.is_conversion ? 1 : 0, event.conversion_value || 0,
+      event.is_conversion ? 1 : 0, event.conversion_value || 0
+    ).run()
+    
+  } catch (error) {
+    console.error('Error updating realtime metrics:', error)
+  }
+}
+
+// ====================================
+// KVKV COOKIE CONSENT API ENDPOINTS  
+// ====================================
+
+// KVKV Cookie Consent - Get Cookie Categories
+app.get('/api/kvkv/cookie-categories', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { results: categories } = await DB.prepare(`
+      SELECT 
+        category_key,
+        category_name_tr,
+        category_name_en,
+        description_tr,
+        description_en,
+        is_required,
+        default_state,
+        legal_basis_tr,
+        icon_class,
+        color_class
+      FROM cookie_categories 
+      WHERE is_enabled = 1
+      ORDER BY display_order
+    `).all()
+    
+    return c.json({
+      success: true,
+      categories: categories,
+      message: 'Cookie kategorileri getirildi'
+    })
+    
+  } catch (error) {
+    console.error('Cookie categories error:', error)
+    return c.json({ error: 'Cookie kategorileri getirilemedi' }, 500)
+  }
+})
+
+// KVKV Cookie Consent - Get Cookie Details
+app.get('/api/kvkv/cookie-details/:category', async (c) => {
+  const { DB } = c.env
+  const category = c.req.param('category')
+  
+  try {
+    const { results: cookies } = await DB.prepare(`
+      SELECT 
+        cd.cookie_name,
+        cd.purpose_tr,
+        cd.purpose_en,
+        cd.provider,
+        cd.domain,
+        cd.expiry_duration,
+        cd.cookie_type,
+        cd.is_essential,
+        cd.is_third_party,
+        cd.data_collected,
+        cc.category_name_tr,
+        cc.category_name_en
+      FROM cookie_definitions cd
+      JOIN cookie_categories cc ON cd.category_id = cc.id
+      WHERE cc.category_key = ? AND cd.is_active = 1
+      ORDER BY cd.cookie_name
+    `).bind(category).all()
+    
+    return c.json({
+      success: true,
+      cookies: cookies,
+      category: category
+    })
+    
+  } catch (error) {
+    console.error('Cookie details error:', error)
+    return c.json({ error: 'Cookie detayları getirilemedi' }, 500)
+  }
+})
+
+// KVKV Cookie Consent - Save User Consent
+app.post('/api/kvkv/consent', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const {
+      userIdentifier,
+      necessaryCookies = true, // Always true
+      functionalCookies = false,
+      analyticsCookies = false,
+      marketingCookies = false,
+      consentMethod = 'banner',
+      pageUrl,
+      privacyPolicyVersion = '1.0'
+    } = await c.req.json()
+    
+    if (!userIdentifier) {
+      return c.json({ error: 'Kullanıcı tanımlayıcı gerekli' }, 400)
+    }
+    
+    const ipAddress = c.req.header('CF-Connecting-IP') || c.req.header('X-Forwarded-For') || 'Unknown'
+    const userAgent = c.req.header('User-Agent') || 'Unknown'
+    const currentTime = new Date().toISOString()
+    
+    // First, check if user has existing consent
+    const { results: existingConsents } = await DB.prepare(`
+      SELECT id, necessary_cookies, functional_cookies, analytics_cookies, marketing_cookies
+      FROM cookie_consents 
+      WHERE user_identifier = ? AND consent_withdrawn = 0
+      ORDER BY consent_date DESC 
+      LIMIT 1
+    `).bind(userIdentifier).all()
+    
+    const previousConsent = existingConsents[0] || null
+    
+    // Insert new consent record
+    const consentResult = await DB.prepare(`
+      INSERT INTO cookie_consents (
+        user_identifier, ip_address, user_agent,
+        necessary_cookies, functional_cookies, analytics_cookies, marketing_cookies,
+        consent_version, consent_date, consent_method, consent_language,
+        privacy_policy_version, cookie_policy_version, page_url,
+        session_id, created_at, updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+      userIdentifier, ipAddress, userAgent,
+      necessaryCookies ? 1 : 0, functionalCookies ? 1 : 0, 
+      analyticsCookies ? 1 : 0, marketingCookies ? 1 : 0,
+      '1.0', currentTime, consentMethod, 'tr',
+      privacyPolicyVersion, '1.0', pageUrl,
+      userIdentifier, currentTime, currentTime
+    ).run()
+    
+    // Log consent history if this is a change
+    if (previousConsent) {
+      const changedCategories = []
+      if (previousConsent.functional_cookies !== (functionalCookies ? 1 : 0)) changedCategories.push('functional')
+      if (previousConsent.analytics_cookies !== (analyticsCookies ? 1 : 0)) changedCategories.push('analytics')  
+      if (previousConsent.marketing_cookies !== (marketingCookies ? 1 : 0)) changedCategories.push('marketing')
+      
+      if (changedCategories.length > 0) {
+        await DB.prepare(`
+          INSERT INTO consent_history (
+            user_identifier, consent_id, action_type,
+            changed_categories, previous_state, new_state,
+            change_reason, ip_address, user_agent, page_url, created_at
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `).bind(
+          userIdentifier, consentResult.meta.last_row_id, 'update',
+          JSON.stringify(changedCategories),
+          JSON.stringify({
+            functional: previousConsent.functional_cookies,
+            analytics: previousConsent.analytics_cookies, 
+            marketing: previousConsent.marketing_cookies
+          }),
+          JSON.stringify({
+            functional: functionalCookies,
+            analytics: analyticsCookies,
+            marketing: marketingCookies
+          }),
+          'user_action', ipAddress, userAgent, pageUrl, currentTime
+        ).run()
+      }
+    } else {
+      // First time consent
+      await DB.prepare(`
+        INSERT INTO consent_history (
+          user_identifier, consent_id, action_type,
+          changed_categories, new_state, change_reason,
+          ip_address, user_agent, page_url, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `).bind(
+        userIdentifier, consentResult.meta.last_row_id, 'grant',
+        JSON.stringify(['initial']),
+        JSON.stringify({
+          functional: functionalCookies,
+          analytics: analyticsCookies,
+          marketing: marketingCookies
+        }),
+        'user_action', ipAddress, userAgent, pageUrl, currentTime
+      ).run()
+    }
+    
+    // Log KVKV compliance event
+    await DB.prepare(`
+      INSERT INTO kvkv_compliance_logs (
+        event_type, user_identifier, event_description,
+        legal_basis, compliance_status, ip_address, user_agent,
+        request_details, created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+      'consent_request', userIdentifier, 
+      `Cookie consent ${previousConsent ? 'updated' : 'granted'}: Analytics=${analyticsCookies}, Marketing=${marketingCookies}`,
+      'KVKV Madde 5/1 - Açık rıza', 'compliant',
+      ipAddress, userAgent,
+      JSON.stringify({
+        method: consentMethod,
+        categories: { functional: functionalCookies, analytics: analyticsCookies, marketing: marketingCookies },
+        page: pageUrl
+      }), currentTime
+    ).run()
+    
+    return c.json({
+      success: true,
+      consentId: consentResult.meta.last_row_id,
+      message: 'Cookie tercihleri kaydedildi',
+      settings: {
+        necessary: necessaryCookies,
+        functional: functionalCookies,
+        analytics: analyticsCookies,
+        marketing: marketingCookies
+      }
+    })
+    
+  } catch (error) {
+    console.error('Cookie consent error:', error)
+    return c.json({ error: 'Cookie tercihleri kaydedilemedi' }, 500)
+  }
+})
+
+// KVKV Cookie Consent - Get User Consent Status  
+app.get('/api/kvkv/consent-status/:userIdentifier', async (c) => {
+  const { DB } = c.env
+  const userIdentifier = c.req.param('userIdentifier')
+  
+  try {
+    const { results: consents } = await DB.prepare(`
+      SELECT 
+        necessary_cookies,
+        functional_cookies,
+        analytics_cookies, 
+        marketing_cookies,
+        consent_date,
+        consent_version,
+        consent_method
+      FROM cookie_consents
+      WHERE user_identifier = ? AND consent_withdrawn = 0
+      ORDER BY consent_date DESC
+      LIMIT 1
+    `).bind(userIdentifier).all()
+    
+    if (consents.length === 0) {
+      return c.json({
+        success: true,
+        hasConsent: false,
+        message: 'Kullanıcı henüz cookie tercihlerini belirtmemiş'
+      })
+    }
+    
+    const consent = consents[0]
+    return c.json({
+      success: true,
+      hasConsent: true,
+      settings: {
+        necessary: consent.necessary_cookies === 1,
+        functional: consent.functional_cookies === 1,
+        analytics: consent.analytics_cookies === 1,
+        marketing: consent.marketing_cookies === 1
+      },
+      consentDate: consent.consent_date,
+      consentVersion: consent.consent_version,
+      consentMethod: consent.consent_method
+    })
+    
+  } catch (error) {
+    console.error('Consent status error:', error)
+    return c.json({ error: 'Cookie tercihleri getirilemedi' }, 500)
+  }
+})
+
+// KVKV Cookie Consent - Withdraw Consent
+app.post('/api/kvkv/withdraw-consent', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { userIdentifier, withdrawalReason } = await c.req.json()
+    
+    if (!userIdentifier) {
+      return c.json({ error: 'Kullanıcı tanımlayıcı gerekli' }, 400)
+    }
+    
+    const ipAddress = c.req.header('CF-Connecting-IP') || 'Unknown'
+    const userAgent = c.req.header('User-Agent') || 'Unknown'
+    const currentTime = new Date().toISOString()
+    
+    // Mark existing consent as withdrawn
+    await DB.prepare(`
+      UPDATE cookie_consents 
+      SET consent_withdrawn = 1, 
+          withdrawal_date = ?,
+          withdrawal_reason = ?,
+          updated_at = ?
+      WHERE user_identifier = ? AND consent_withdrawn = 0
+    `).bind(currentTime, withdrawalReason || 'User request', currentTime, userIdentifier).run()
+    
+    // Log withdrawal in history
+    await DB.prepare(`
+      INSERT INTO consent_history (
+        user_identifier, action_type, change_reason,
+        ip_address, user_agent, created_at
+      ) VALUES (?, ?, ?, ?, ?, ?)
+    `).bind(
+      userIdentifier, 'withdraw', withdrawalReason || 'User withdrawal',
+      ipAddress, userAgent, currentTime
+    ).run()
+    
+    // Log KVKV compliance event
+    await DB.prepare(`
+      INSERT INTO kvkv_compliance_logs (
+        event_type, user_identifier, event_description,
+        legal_basis, compliance_status, ip_address, user_agent, created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+      'consent_withdrawal', userIdentifier,
+      `Cookie consent withdrawn: ${withdrawalReason || 'User request'}`,
+      'KVKV Madde 11 - Rızanın geri alınması', 'compliant',
+      ipAddress, userAgent, currentTime
+    ).run()
+    
+    return c.json({
+      success: true,
+      message: 'Cookie rızası başarıyla geri çekildi'
+    })
+    
+  } catch (error) {
+    console.error('Withdraw consent error:', error)
+    return c.json({ error: 'Cookie rızası geri çekilemedi' }, 500)
+  }
+})
+
+// KVKV Admin - Cookie Consent Dashboard
+app.get('/api/admin/kvkv/consent-dashboard', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    // Get consent statistics
+    const { results: stats } = await DB.prepare(`
+      SELECT 
+        COUNT(*) as total_consents,
+        SUM(CASE WHEN analytics_cookies = 1 THEN 1 ELSE 0 END) as analytics_accepted,
+        SUM(CASE WHEN marketing_cookies = 1 THEN 1 ELSE 0 END) as marketing_accepted,
+        SUM(CASE WHEN functional_cookies = 1 THEN 1 ELSE 0 END) as functional_accepted,
+        SUM(CASE WHEN consent_withdrawn = 1 THEN 1 ELSE 0 END) as withdrawn_consents
+      FROM cookie_consents
+      WHERE consent_date >= datetime('now', '-30 days')
+    `).all()
+    
+    // Get recent consents
+    const { results: recentConsents } = await DB.prepare(`
+      SELECT 
+        user_identifier,
+        analytics_cookies,
+        marketing_cookies, 
+        functional_cookies,
+        consent_date,
+        consent_method,
+        ip_address
+      FROM cookie_consents
+      WHERE consent_withdrawn = 0
+      ORDER BY consent_date DESC
+      LIMIT 20
+    `).all()
+    
+    // Get compliance logs
+    const { results: complianceLogs } = await DB.prepare(`
+      SELECT 
+        event_type,
+        event_description,
+        compliance_status,
+        created_at
+      FROM kvkv_compliance_logs
+      ORDER BY created_at DESC
+      LIMIT 10
+    `).all()
+    
+    return c.json({
+      success: true,
+      statistics: stats[0],
+      recentConsents: recentConsents,
+      complianceLogs: complianceLogs
+    })
+    
+  } catch (error) {
+    console.error('KVKV dashboard error:', error)
+    return c.json({ error: 'KVKV dashboard verisi getirilemedi' }, 500)
+  }
+})
+
+// KVKV Admin - Cookie Policy Management
+app.post('/api/admin/kvkv/cookie-policy', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const {
+      version,
+      policyTitleTr,
+      policyTitleEn,
+      policyContentTr,
+      policyContentEn,
+      effectiveDate,
+      changeSummaryTr,
+      changeSummaryEn
+    } = await c.req.json()
+    
+    if (!version || !policyTitleTr || !policyContentTr) {
+      return c.json({ error: 'Gerekli alanlar eksik' }, 400)
+    }
+    
+    // Deactivate previous policies
+    await DB.prepare(`
+      UPDATE cookie_policies SET is_active = 0 WHERE is_active = 1
+    `).run()
+    
+    // Insert new policy
+    const result = await DB.prepare(`
+      INSERT INTO cookie_policies (
+        version, policy_title_tr, policy_title_en,
+        policy_content_tr, policy_content_en, effective_date,
+        change_summary_tr, change_summary_en, is_active, created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+      version, policyTitleTr, policyTitleEn || policyTitleTr,
+      policyContentTr, policyContentEn || policyContentTr,
+      effectiveDate || new Date().toISOString(),
+      changeSummaryTr, changeSummaryEn, 1, new Date().toISOString()
+    ).run()
+    
+    return c.json({
+      success: true,
+      policyId: result.meta.last_row_id,
+      message: 'Cookie politikası başarıyla güncellendi'
+    })
+    
+  } catch (error) {
+    console.error('Cookie policy error:', error)
+    return c.json({ error: 'Cookie politikası güncellenemedi' }, 500)
   }
 })
 

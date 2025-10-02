@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Yönetimi - GARANTOR360 Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold mb-6">
+            <i class="fas fa-shield-alt mr-2"></i>
+            IP Yönetimi & Güvenlik Paneli
+        </h1>
+
+        <!-- IP Engelleme Formu -->
+        <div class="bg-gray-800 rounded-lg p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">
+                <i class="fas fa-ban mr-2"></i>
+                IP Adresini Engelle
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2">IP Adresi</label>
+                    <input type="text" id="blockIpInput" placeholder="192.168.1.100" 
+                           class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Engelleme Nedeni</label>
+                    <select id="blockReasonSelect" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white">
+                        <option value="spam">Spam Girişimleri</option>
+                        <option value="bot_activity">Bot Aktivitesi</option>
+                        <option value="malicious">Zararlı Aktivite</option>
+                        <option value="fraud">Dolandırıcılık</option>
+                        <option value="abuse">Kötüye Kullanım</option>
+                        <option value="manual">Manuel Admin Kararı</option>
+                    </select>
+                </div>
+            </div>
+            
+            <button onclick="blockIP()" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-medium">
+                <i class="fas fa-ban mr-2"></i>
+                IP Adresini Engelle
+            </button>
+        </div>
+
+        <!-- IP Sorgulama -->
+        <div class="bg-gray-800 rounded-lg p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">
+                <i class="fas fa-search mr-2"></i>
+                IP Durumu Sorgula
+            </h2>
+            
+            <div class="flex gap-4 mb-4">
+                <input type="text" id="checkIpInput" placeholder="IP adresini girin..." 
+                       class="flex-1 bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white">
+                <button onclick="checkIPStatus()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded font-medium">
+                    <i class="fas fa-search mr-2"></i>
+                    Sorgula
+                </button>
+            </div>
+            
+            <div id="ipStatusResult" class="hidden bg-gray-700 rounded p-4"></div>
+        </div>
+
+        <!-- Engellenmiş IP'ler Listesi -->
+        <div class="bg-gray-800 rounded-lg p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold">
+                    <i class="fas fa-list mr-2"></i>
+                    Engellenmiş IP'ler
+                </h2>
+                <button onclick="refreshBlockedIPs()" class="bg-green-600 hover:bg-green-700 px-3 py-2 rounded text-sm">
+                    <i class="fas fa-sync mr-1"></i>
+                    Yenile
+                </button>
+            </div>
+            
+            <div id="blockedIPsList" class="space-y-2">
+                <div class="text-gray-400">Yükleniyor...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Admin Token (gerçek uygulamada güvenli şekilde saklanacak)
+        const adminToken = 'test-token-123';
+        
+        // IP Engelleme Fonksiyonu
+        async function blockIP() {
+            const ipInput = document.getElementById('blockIpInput');
+            const reasonSelect = document.getElementById('blockReasonSelect');
+            
+            const ipAddress = ipInput.value.trim();
+            const reason = reasonSelect.value;
+            
+            if (!ipAddress) {
+                alert('Lütfen geçerli bir IP adresi girin!');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/security/suspicious-activity', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${adminToken}`
+                    },
+                    body: JSON.stringify({
+                        activityType: 'manual_block',
+                        confidence: 100,
+                        indicators: ['admin_manual_block', reason],
+                        userAgent: 'Admin Panel Manual Block',
+                        behavioralData: {
+                            manualBlock: true,
+                            targetIP: ipAddress,
+                            reason: reason,
+                            adminAction: true
+                        }
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert(`✅ IP ${ipAddress} başarıyla engellendi!\nTehdit Seviyesi: ${result.threatLevel}`);
+                    ipInput.value = '';
+                    refreshBlockedIPs();
+                } else {
+                    alert(`❌ Hata: ${result.error}`);
+                }
+            } catch (error) {
+                alert(`❌ Bağlantı hatası: ${error.message}`);
+            }
+        }
+        
+        // IP Durumu Sorgulama
+        async function checkIPStatus() {
+            const ipInput = document.getElementById('checkIpInput');
+            const resultDiv = document.getElementById('ipStatusResult');
+            
+            const ipAddress = ipInput.value.trim();
+            
+            if (!ipAddress) {
+                alert('Lütfen geçerli bir IP adresi girin!');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/security/ip-status/${ipAddress}`, {
+                    headers: {
+                        'Authorization': `Bearer ${adminToken}`
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.exists) {
+                    resultDiv.innerHTML = `
+                        <div class="mb-3">
+                            <h3 class="font-semibold text-lg mb-2">IP Durumu: ${ipAddress}</h3>
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <strong>Durum:</strong> 
+                                    <span class="${result.ipInfo.is_blocked ? 'text-red-400' : 'text-green-400'}">
+                                        ${result.ipInfo.is_blocked ? '🚫 ENGELLİ' : '✅ AKTİF'}
+                                    </span>
+                                </div>
+                                <div>
+                                    <strong>Tehdit Seviyesi:</strong> 
+                                    <span class="text-yellow-400">${result.ipInfo.threat_level}/100</span>
+                                </div>
+                                <div>
+                                    <strong>İstek Sayısı:</strong> ${result.ipInfo.request_count}
+                                </div>
+                                <div>
+                                    <strong>İlk Görülme:</strong> ${result.ipInfo.first_seen}
+                                </div>
+                            </div>
+                            ${result.ipInfo.block_reason ? `
+                                <div class="mt-2">
+                                    <strong>Engelleme Nedeni:</strong> 
+                                    <span class="text-red-300">${result.ipInfo.block_reason}</span>
+                                </div>
+                            ` : ''}
+                        </div>
+                        
+                        ${result.recentDetections && result.recentDetections.length > 0 ? `
+                            <div>
+                                <h4 class="font-semibold mb-2">Son Güvenlik Olayları:</h4>
+                                <div class="space-y-1 text-xs">
+                                    ${result.recentDetections.map(detection => `
+                                        <div class="flex justify-between bg-gray-600 p-2 rounded">
+                                            <span>${detection.detection_type}</span>
+                                            <span>%${detection.confidence_score} güven</span>
+                                            <span>${detection.timestamp}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        ` : ''}
+                    `;
+                    resultDiv.classList.remove('hidden');
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="text-green-400">
+                            <i class="fas fa-check mr-2"></i>
+                            IP ${ipAddress} sistemde kayıtlı değil - temiz görünüyor.
+                        </div>
+                    `;
+                    resultDiv.classList.remove('hidden');
+                }
+            } catch (error) {
+                alert(`❌ Sorgulama hatası: ${error.message}`);
+            }
+        }
+        
+        // Engellenmiş IP'leri Yenile
+        async function refreshBlockedIPs() {
+            const listDiv = document.getElementById('blockedIPsList');
+            listDiv.innerHTML = '<div class="text-gray-400">Yükleniyor...</div>';
+            
+            try {
+                const response = await fetch('/api/admin/security/dashboard', {
+                    headers: {
+                        'Authorization': `Bearer ${adminToken}`
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    const blockedCount = result.stats.blockedIps;
+                    const threatCount = result.stats.highThreatIps;
+                    const detectionsToday = result.stats.todayDetections;
+                    
+                    listDiv.innerHTML = `
+                        <div class="grid grid-cols-3 gap-4 mb-4 text-center">
+                            <div class="bg-red-900/30 border border-red-500 rounded p-3">
+                                <div class="text-2xl font-bold text-red-400">${blockedCount}</div>
+                                <div class="text-sm text-red-300">Engellenmiş IP</div>
+                            </div>
+                            <div class="bg-orange-900/30 border border-orange-500 rounded p-3">
+                                <div class="text-2xl font-bold text-orange-400">${threatCount}</div>
+                                <div class="text-sm text-orange-300">Yüksek Tehdit</div>
+                            </div>
+                            <div class="bg-blue-900/30 border border-blue-500 rounded p-3">
+                                <div class="text-2xl font-bold text-blue-400">${detectionsToday}</div>
+                                <div class="text-sm text-blue-300">Bugünkü Tespit</div>
+                            </div>
+                        </div>
+                        
+                        ${result.stats.topDetectionTypes && result.stats.topDetectionTypes.length > 0 ? `
+                            <div class="mb-4">
+                                <h4 class="font-semibold mb-2">En Sık Tespit Edilen Tehditler:</h4>
+                                <div class="space-y-1">
+                                    ${result.stats.topDetectionTypes.map(type => `
+                                        <div class="flex justify-between bg-gray-700 p-2 rounded text-sm">
+                                            <span>${type.detection_type}</span>
+                                            <span class="font-semibold">${type.count} olay</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        ` : ''}
+                        
+                        <div class="text-sm text-gray-400">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Son güncelleme: ${new Date().toLocaleString('tr-TR')}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                listDiv.innerHTML = `<div class="text-red-400">❌ Veri yüklenemedi: ${error.message}</div>`;
+            }
+        }
+        
+        // Sayfa yüklendiğinde otomatik yenile
+        document.addEventListener('DOMContentLoaded', function() {
+            refreshBlockedIPs();
+        });
+    </script>
+</body>
+</html>
