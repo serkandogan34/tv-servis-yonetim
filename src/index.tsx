@@ -22481,6 +22481,42 @@ app.get('/admin/realtime-analytics', requireAdminAuth(), async (c) => {
         <script src="https://cdn.tailwindcss.com"></script>
         <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <style>
+            .animate-fade-in {
+                animation: fadeIn 0.5s ease-in-out;
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(-10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            
+            .card-hover:hover {
+                transform: translateY(-2px);
+                transition: all 0.3s ease;
+            }
+            
+            .pulse-dot {
+                animation: pulse 2s infinite;
+            }
+            
+            @keyframes pulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.5; }
+            }
+            
+            .gradient-bg {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            }
+            
+            .animate-number {
+                transition: all 0.3s ease;
+            }
+            
+            .shadow-glow {
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+            }
+        </style>
     </head>
     <body class="bg-gray-100">
         <div class="min-h-screen">
@@ -22517,61 +22553,128 @@ app.get('/admin/realtime-analytics', requireAdminAuth(), async (c) => {
             <!-- Main Content -->
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                 
-                <!-- Real-time Overview -->
+                <!-- Enhanced Filters Bar -->
+                <div class="bg-white rounded-lg shadow p-4 mb-6">
+                    <div class="flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="flex items-center">
+                                <label class="text-sm font-medium text-gray-700 mr-2">Time Range:</label>
+                                <select id="timeframe-select" class="border border-gray-300 rounded-lg px-3 py-2">
+                                    <option value="15m">Last 15 Minutes</option>
+                                    <option value="1h">Last Hour</option>
+                                    <option value="6h">Last 6 Hours</option>
+                                    <option value="24h" selected>Last 24 Hours</option>
+                                    <option value="7d">Last 7 Days</option>
+                                    <option value="30d">Last 30 Days</option>
+                                </select>
+                            </div>
+                            <div class="flex items-center">
+                                <label class="text-sm font-medium text-gray-700 mr-2">Event Type:</label>
+                                <select id="event-type-filter" class="border border-gray-300 rounded-lg px-3 py-2">
+                                    <option value="all">All Events</option>
+                                    <option value="conversion">Conversions Only</option>
+                                    <option value="engagement">Engagement</option>
+                                    <option value="ecommerce">E-commerce</option>
+                                    <option value="technical">Technical</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="exportReport()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center">
+                                <i class="fas fa-download mr-2"></i>Export CSV
+                            </button>
+                            <button onclick="refreshDashboard()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center">
+                                <i class="fas fa-sync mr-2"></i>Refresh
+                            </button>
+                            <a href="/admin" class="text-gray-600 hover:text-gray-900 flex items-center">
+                                <i class="fas fa-arrow-left mr-2"></i>Back
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Real-time Overview with Enhanced Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <div class="flex items-center">
-                            <div class="p-3 rounded-full bg-blue-100">
-                                <i class="fas fa-eye text-blue-600"></i>
+                    <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border-l-4 border-blue-500">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-blue-100 animate-pulse">
+                                    <i class="fas fa-eye text-blue-600 text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-gray-600">Active Users</p>
+                                    <p class="text-3xl font-bold text-gray-900" id="active-users">-</p>
+                                    <p class="text-xs text-gray-500">Right now</p>
+                                </div>
                             </div>
-                            <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-600">Active Users</p>
-                                <p class="text-2xl font-semibold text-gray-900" id="active-users">-</p>
-                                <p class="text-xs text-gray-500">Right now</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <div class="flex items-center">
-                            <div class="p-3 rounded-full bg-green-100">
-                                <i class="fas fa-mouse-pointer text-green-600"></i>
-                            </div>
-                            <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-600">Events (1h)</p>
-                                <p class="text-2xl font-semibold text-gray-900" id="events-hour">-</p>
-                                <p class="text-xs text-gray-500 flex items-center">
-                                    <span id="events-trend" class="mr-1">-</span>
-                                    <span>vs prev hour</span>
-                                </p>
+                            <div class="text-right">
+                                <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center">
+                                    <span class="text-xs font-semibold text-blue-600" id="users-change">-</span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <div class="flex items-center">
-                            <div class="p-3 rounded-full bg-purple-100">
-                                <i class="fas fa-bullseye text-purple-600"></i>
+                    <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border-l-4 border-green-500">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-green-100">
+                                    <i class="fas fa-mouse-pointer text-green-600 text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-gray-600">Events (1h)</p>
+                                    <p class="text-3xl font-bold text-gray-900" id="events-hour">-</p>
+                                    <p class="text-xs text-gray-500 flex items-center">
+                                        <span id="events-trend" class="mr-1 font-semibold">-</span>
+                                        <span>vs prev hour</span>
+                                    </p>
+                                </div>
                             </div>
-                            <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-600">Conversions</p>
-                                <p class="text-2xl font-semibold text-gray-900" id="conversions-total">-</p>
-                                <p class="text-xs text-gray-500">
-                                    <span id="conversion-rate">-</span>% rate
-                                </p>
+                            <div class="text-right">
+                                <div class="text-xs text-gray-500">Events/min</div>
+                                <div class="text-lg font-bold text-green-600" id="events-per-minute">-</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <div class="flex items-center">
-                            <div class="p-3 rounded-full bg-yellow-100">
-                                <i class="fas fa-coins text-yellow-600"></i>
+                    <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border-l-4 border-purple-500">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-purple-100">
+                                    <i class="fas fa-bullseye text-purple-600 text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-gray-600">Conversions</p>
+                                    <p class="text-3xl font-bold text-gray-900" id="conversions-total">-</p>
+                                    <p class="text-xs text-gray-500">
+                                        <span id="conversion-rate" class="font-semibold text-purple-600">-</span>% rate
+                                    </p>
+                                </div>
                             </div>
-                            <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-600">Conv. Value</p>
-                                <p class="text-2xl font-semibold text-gray-900" id="conversion-value">-</p>
-                                <p class="text-xs text-gray-500">Total TRY</p>
+                            <div class="text-right">
+                                <div class="w-16 h-8 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full flex items-center justify-center">
+                                    <span class="text-xs font-bold text-white" id="conv-today">0</span>
+                                </div>
+                                <div class="text-xs text-gray-500 mt-1">Today</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border-l-4 border-yellow-500">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-yellow-100">
+                                    <i class="fas fa-coins text-yellow-600 text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-gray-600">Conv. Value</p>
+                                    <p class="text-3xl font-bold text-gray-900" id="conversion-value">-</p>
+                                    <p class="text-xs text-gray-500">Total TRY</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xs text-gray-500">Avg. Value</div>
+                                <div class="text-lg font-bold text-yellow-600" id="avg-conv-value">-</div>
                             </div>
                         </div>
                     </div>
@@ -22638,18 +22741,102 @@ app.get('/admin/realtime-analytics', requireAdminAuth(), async (c) => {
                     </div>
                 </div>
 
-                <!-- Event Stream -->
-                <div class="bg-white shadow rounded-lg">
-                    <div class="px-6 py-4 border-b border-gray-200">
-                        <h3 class="text-lg font-medium text-gray-900">
-                            <i class="fas fa-stream text-indigo-600 mr-2"></i>
-                            Live Event Stream
-                        </h3>
-                        <p class="text-sm text-gray-600 mt-1">Real-time user interactions</p>
+                <!-- Enhanced Event Stream -->
+                <div class="bg-white shadow-lg rounded-lg">
+                    <div class="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-t-lg">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-lg font-medium flex items-center">
+                                    <i class="fas fa-stream mr-2"></i>
+                                    Live Event Stream
+                                    <div class="ml-3 w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                                </h3>
+                                <p class="text-sm text-indigo-100 mt-1">Real-time user interactions</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm font-semibold">Events/sec: <span id="events-per-sec">0</span></div>
+                                <div class="text-xs text-indigo-100">Auto-refresh: ON</div>
+                            </div>
+                        </div>
                     </div>
                     <div class="p-6">
-                        <div id="event-stream" class="space-y-2 max-h-96 overflow-y-auto font-mono text-sm">
-                            <div class="text-center text-gray-500 py-8">Waiting for events...</div>
+                        <!-- Event Stream Controls -->
+                        <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-200">
+                            <div class="flex items-center space-x-4">
+                                <button id="pause-stream" class="bg-yellow-500 text-white px-3 py-1 rounded text-sm hover:bg-yellow-600">
+                                    <i class="fas fa-pause mr-1"></i>Pause
+                                </button>
+                                <button id="clear-stream" class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600">
+                                    <i class="fas fa-trash mr-1"></i>Clear
+                                </button>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <label class="text-sm text-gray-600">Filter:</label>
+                                <select id="stream-filter" class="border border-gray-300 rounded px-2 py-1 text-sm">
+                                    <option value="all">All Events</option>
+                                    <option value="conversion">Conversions</option>
+                                    <option value="form_submit">Form Submissions</option>
+                                    <option value="button_click">Button Clicks</option>
+                                    <option value="page_view">Page Views</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Event Stream -->
+                        <div id="event-stream" class="space-y-2 max-h-80 overflow-y-auto">
+                            <div class="text-center text-gray-500 py-8 flex items-center justify-center">
+                                <i class="fas fa-satellite-dish mr-2 animate-spin"></i>
+                                Connecting to live stream...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Metrics Section -->
+                <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
+                            <i class="fas fa-tachometer-alt text-green-600 mr-2"></i>
+                            Core Web Vitals
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-600">LCP (Largest Contentful Paint)</span>
+                                <div class="flex items-center">
+                                    <div class="w-24 h-2 bg-gray-200 rounded-full mr-2">
+                                        <div id="lcp-bar" class="h-2 bg-green-500 rounded-full" style="width: 0%"></div>
+                                    </div>
+                                    <span id="lcp-value" class="text-sm font-semibold text-gray-900">-</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-600">FID (First Input Delay)</span>
+                                <div class="flex items-center">
+                                    <div class="w-24 h-2 bg-gray-200 rounded-full mr-2">
+                                        <div id="fid-bar" class="h-2 bg-blue-500 rounded-full" style="width: 0%"></div>
+                                    </div>
+                                    <span id="fid-value" class="text-sm font-semibold text-gray-900">-</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-600">CLS (Cumulative Layout Shift)</span>
+                                <div class="flex items-center">
+                                    <div class="w-24 h-2 bg-gray-200 rounded-full mr-2">
+                                        <div id="cls-bar" class="h-2 bg-purple-500 rounded-full" style="width: 0%"></div>
+                                    </div>
+                                    <span id="cls-value" class="text-sm font-semibold text-gray-900">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
+                            <i class="fas fa-chart-pie text-blue-600 mr-2"></i>
+                            Event Categories
+                        </h3>
+                        <div class="relative h-48">
+                            <canvas id="categoryChart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -22673,6 +22860,11 @@ app.get('/admin/realtime-analytics', requireAdminAuth(), async (c) => {
                     this.isLoading = false;
                     this.eventStreamQueue = [];
                     this.charts = {};
+                    this.streamPaused = false;
+                    this.currentFilter = 'all';
+                    this.eventsPerSecond = 0;
+                    this.eventBuffer = [];
+                    this.lastEventTime = Date.now();
                     
                     this.init();
                 }
@@ -22681,8 +22873,9 @@ app.get('/admin/realtime-analytics', requireAdminAuth(), async (c) => {
                     await this.loadDashboardData();
                     this.setupEventListeners();
                     this.startAutoRefresh();
+                    this.simulateEventStream();
                     
-                    console.log('Real-time Analytics Dashboard initialized');
+                    console.log('Enhanced Real-time Analytics Dashboard initialized');
                 }
                 
                 async loadDashboardData() {
@@ -22692,7 +22885,7 @@ app.get('/admin/realtime-analytics', requireAdminAuth(), async (c) => {
                     try {
                         const token = localStorage.getItem('adminToken');
                         const response = await fetch('/api/events/realtime-dashboard', {
-                            headers: { 'Authorization': \`Bearer \${token}\` }
+                            headers: { 'Authorization': 'Bearer ' + token }
                         });
                         
                         const data = await response.json();
@@ -22805,23 +22998,23 @@ app.get('/admin/realtime-analytics', requireAdminAuth(), async (c) => {
                         return;
                     }
                     
-                    container.innerHTML = events.map((event, index) => \`
-                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                            <div class="flex items-center">
-                                <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center text-xs font-semibold text-blue-800 mr-3">
-                                    \${index + 1}
-                                </div>
-                                <div>
-                                    <div class="font-medium text-gray-900">\${event.event_name}</div>
-                                    <div class="text-xs text-gray-500">\${event.event_category}</div>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <div class="font-semibold text-gray-900">\${event.count}</div>
-                                <div class="text-xs text-gray-500">\${event.unique_users} users</div>
-                            </div>
-                        </div>
-                    \`).join('');
+                    container.innerHTML = events.map((event, index) => 
+                        '<div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">' +
+                            '<div class="flex items-center">' +
+                                '<div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center text-xs font-semibold text-blue-800 mr-3">' +
+                                    (index + 1) +
+                                '</div>' +
+                                '<div>' +
+                                    '<div class="font-medium text-gray-900">' + event.event_name + '</div>' +
+                                    '<div class="text-xs text-gray-500">' + event.event_category + '</div>' +
+                                '</div>' +
+                            '</div>' +
+                            '<div class="text-right">' +
+                                '<div class="font-semibold text-gray-900">' + event.count + '</div>' +
+                                '<div class="text-xs text-gray-500">' + event.unique_users + ' users</div>' +
+                            '</div>' +
+                        '</div>'
+                    ).join('');
                 }
                 
                 updateRecentConversions(conversions) {
@@ -22833,17 +23026,15 @@ app.get('/admin/realtime-analytics', requireAdminAuth(), async (c) => {
                     
                     container.innerHTML = conversions.slice(0, 10).map(conv => {
                         const time = new Date(conv.server_timestamp).toLocaleTimeString('tr-TR');
-                        return \`
-                            <div class="border-l-4 border-green-400 pl-3 py-2">
-                                <div class="flex items-center justify-between">
-                                    <div class="font-medium text-gray-900">\${conv.conversion_type || conv.event_name}</div>
-                                    <div class="text-sm font-semibold text-green-600">TL \${conv.conversion_value || 0}</div>
-                                </div>
-                                <div class="text-xs text-gray-500 mt-1">
-                                    \${time} • \${(conv.utm_source || 'direct')}
-                                </div>
-                            </div>
-                        \`;
+                        return '<div class="border-l-4 border-green-400 pl-3 py-2">' +
+                                '<div class="flex items-center justify-between">' +
+                                    '<div class="font-medium text-gray-900">' + (conv.conversion_type || conv.event_name) + '</div>' +
+                                    '<div class="text-sm font-semibold text-green-600">TL ' + (conv.conversion_value || 0) + '</div>' +
+                                '</div>' +
+                                '<div class="text-xs text-gray-500 mt-1">' +
+                                    time + ' • ' + (conv.utm_source || 'direct') +
+                                '</div>' +
+                            '</div>';
                     }).join('');
                 }
                 
@@ -22854,30 +23045,83 @@ app.get('/admin/realtime-analytics', requireAdminAuth(), async (c) => {
                         return;
                     }
                     
-                    container.innerHTML = pages.slice(0, 10).map(page => \`
-                        <div class="border-b border-gray-100 pb-2">
-                            <div class="font-medium text-gray-900 text-sm truncate" title="\${page.page_url}">
-                                \${page.page_title || page.page_url}
-                            </div>
-                            <div class="flex justify-between text-xs text-gray-500 mt-1">
-                                <span>\${page.pageviews} views • \${page.unique_visitors} visitors</span>
-                                <span>\${Math.round(page.avg_time_on_page || 0)}s avg</span>
-                            </div>
-                        </div>
-                    \`).join('');
+                    container.innerHTML = pages.slice(0, 10).map(page => 
+                        '<div class="border-b border-gray-100 pb-2">' +
+                            '<div class="font-medium text-gray-900 text-sm truncate" title="' + page.page_url + '">' +
+                                (page.page_title || page.page_url) +
+                            '</div>' +
+                            '<div class="flex justify-between text-xs text-gray-500 mt-1">' +
+                                '<span>' + page.pageviews + ' views • ' + page.unique_visitors + ' visitors</span>' +
+                                '<span>' + Math.round(page.avg_time_on_page || 0) + 's avg</span>' +
+                            '</div>' +
+                        '</div>'
+                    ).join('');
                 }
                 
                 setupEventListeners() {
+                    // Timeframe selection
                     document.getElementById('timeframe-select').addEventListener('change', (e) => {
                         this.loadAnalyticsData(e.target.value);
+                    });
+                    
+                    // Event type filter
+                    document.getElementById('event-type-filter').addEventListener('change', (e) => {
+                        this.currentFilter = e.target.value;
+                        this.loadDashboardData();
+                    });
+                    
+                    // Stream controls
+                    document.getElementById('pause-stream').addEventListener('click', () => {
+                        this.toggleStreamPause();
+                    });
+                    
+                    document.getElementById('clear-stream').addEventListener('click', () => {
+                        this.clearEventStream();
+                    });
+                    
+                    document.getElementById('stream-filter').addEventListener('change', (e) => {
+                        this.filterEventStream(e.target.value);
+                    });
+                }
+                
+                toggleStreamPause() {
+                    this.streamPaused = !this.streamPaused;
+                    const btn = document.getElementById('pause-stream');
+                    if (this.streamPaused) {
+                        btn.innerHTML = '<i class="fas fa-play mr-1"></i>Resume';
+                        btn.className = 'bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600';
+                        this.stopAutoRefresh();
+                    } else {
+                        btn.innerHTML = '<i class="fas fa-pause mr-1"></i>Pause';
+                        btn.className = 'bg-yellow-500 text-white px-3 py-1 rounded text-sm hover:bg-yellow-600';
+                        this.startAutoRefresh();
+                    }
+                }
+                
+                clearEventStream() {
+                    document.getElementById('event-stream').innerHTML = 
+                        '<div class="text-center text-gray-500 py-8">Event stream cleared. Waiting for new events...</div>';
+                    this.eventBuffer = [];
+                }
+                
+                filterEventStream(filter) {
+                    // Implement real-time stream filtering
+                    const events = document.querySelectorAll('#event-stream .event-item');
+                    events.forEach(event => {
+                        const eventType = event.dataset.eventType;
+                        if (filter === 'all' || eventType === filter) {
+                            event.style.display = 'block';
+                        } else {
+                            event.style.display = 'none';
+                        }
                     });
                 }
                 
                 async loadAnalyticsData(timeframe) {
                     try {
                         const token = localStorage.getItem('adminToken');
-                        const response = await fetch(\`/api/events/analytics?timeframe=\${timeframe}\`, {
-                            headers: { 'Authorization': \`Bearer \${token}\` }
+                        const response = await fetch('/api/events/analytics?timeframe=' + timeframe, {
+                            headers: { 'Authorization': 'Bearer ' + token }
                         });
                         
                         const data = await response.json();
@@ -22898,18 +23142,18 @@ app.get('/admin/realtime-analytics', requireAdminAuth(), async (c) => {
                         return;
                     }
                     
-                    container.innerHTML = traffic.slice(0, 10).map(source => \`
-                        <div class="flex items-center justify-between p-2 hover:bg-gray-50 rounded">
-                            <div>
-                                <div class="font-medium text-gray-900">\${source.source}</div>
-                                <div class="text-xs text-gray-500">\${source.medium}</div>
-                            </div>
-                            <div class="text-right">
-                                <div class="font-semibold text-gray-900">\${source.users}</div>
-                                <div class="text-xs text-gray-500">\${source.conversions} conv</div>
-                            </div>
-                        </div>
-                    \`).join('');
+                    container.innerHTML = traffic.slice(0, 10).map(source => 
+                        '<div class="flex items-center justify-between p-2 hover:bg-gray-50 rounded">' +
+                            '<div>' +
+                                '<div class="font-medium text-gray-900">' + source.source + '</div>' +
+                                '<div class="text-xs text-gray-500">' + source.medium + '</div>' +
+                            '</div>' +
+                            '<div class="text-right">' +
+                                '<div class="font-semibold text-gray-900">' + source.users + '</div>' +
+                                '<div class="text-xs text-gray-500">' + source.conversions + ' conv</div>' +
+                            '</div>' +
+                        '</div>'
+                    ).join('');
                 }
                 
                 startAutoRefresh() {
@@ -22926,11 +23170,138 @@ app.get('/admin/realtime-analytics', requireAdminAuth(), async (c) => {
                 }
             }
             
+                addEventToStream(event) {
+                    if (this.streamPaused) return;
+                    
+                    const streamContainer = document.getElementById('event-stream');
+                    const time = new Date().toLocaleTimeString('tr-TR');
+                    
+                    // Create event item with enhanced styling
+                    const eventItem = document.createElement('div');
+                    eventItem.className = 'event-item flex items-center justify-between p-3 bg-gray-50 rounded-lg border-l-4 border-blue-400 animate-fade-in';
+                    eventItem.dataset.eventType = event.event_name;
+                    
+                    // Event type icon and color
+                    let iconClass = 'fas fa-circle';
+                    let iconColor = 'text-blue-500';
+                    
+                    if (event.is_conversion) {
+                        iconClass = 'fas fa-star';
+                        iconColor = 'text-yellow-500';
+                        eventItem.className += ' border-yellow-400 bg-yellow-50';
+                    } else if (event.event_category === 'ecommerce') {
+                        iconClass = 'fas fa-shopping-cart';
+                        iconColor = 'text-green-500';
+                        eventItem.className += ' border-green-400 bg-green-50';
+                    } else if (event.event_category === 'engagement') {
+                        iconClass = 'fas fa-mouse-pointer';
+                        iconColor = 'text-purple-500';
+                        eventItem.className += ' border-purple-400 bg-purple-50';
+                    }
+                    
+                    eventItem.innerHTML = 
+                        '<div class="flex items-center">' +
+                            '<i class="' + iconClass + ' ' + iconColor + ' mr-3"></i>' +
+                            '<div>' +
+                                '<div class="font-semibold text-gray-900 text-sm">' + event.event_name + '</div>' +
+                                '<div class="text-xs text-gray-500">' + event.page_url + '</div>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="text-right">' +
+                            '<div class="text-xs font-mono text-gray-600">' + time + '</div>' +
+                            '<div class="text-xs text-gray-500">' + (event.user_identifier || 'anonymous') + '</div>' +
+                        '</div>';
+                    
+                    // Insert at beginning
+                    if (streamContainer.firstChild.className && streamContainer.firstChild.className.includes('text-center')) {
+                        streamContainer.innerHTML = '';
+                    }
+                    
+                    streamContainer.insertBefore(eventItem, streamContainer.firstChild);
+                    
+                    // Keep only last 50 events
+                    const events = streamContainer.querySelectorAll('.event-item');
+                    if (events.length > 50) {
+                        events[events.length - 1].remove();
+                    }
+                    
+                    // Update events per second
+                    this.updateEventsPerSecond();
+                }
+                
+                updateEventsPerSecond() {
+                    const now = Date.now();
+                    this.eventBuffer.push(now);
+                    
+                    // Keep only events from last 10 seconds
+                    this.eventBuffer = this.eventBuffer.filter(time => now - time < 10000);
+                    
+                    // Calculate events per second
+                    this.eventsPerSecond = (this.eventBuffer.length / 10).toFixed(1);
+                    document.getElementById('events-per-sec').textContent = this.eventsPerSecond;
+                }
+                
+                simulateEventStream() {
+                    // Simulate incoming events for demonstration
+                    const sampleEvents = [
+                        { event_name: 'page_view', event_category: 'engagement', page_url: '/', user_identifier: 'user_' + Math.random().toString(36).substr(2, 5) },
+                        { event_name: 'contact_form_submit', event_category: 'conversion', page_url: '/', is_conversion: true, user_identifier: 'user_' + Math.random().toString(36).substr(2, 5) },
+                        { event_name: 'service_request_submit', event_category: 'conversion', page_url: '/', is_conversion: true, user_identifier: 'user_' + Math.random().toString(36).substr(2, 5) },
+                        { event_name: 'cta_button_click', event_category: 'engagement', page_url: '/', user_identifier: 'user_' + Math.random().toString(36).substr(2, 5) },
+                        { event_name: 'phone_click', event_category: 'engagement', page_url: '/', user_identifier: 'user_' + Math.random().toString(36).substr(2, 5) }
+                    ];
+                    
+                    setInterval(() => {
+                        if (!this.streamPaused && Math.random() > 0.7) { // 30% chance every 3 seconds
+                            const event = sampleEvents[Math.floor(Math.random() * sampleEvents.length)];
+                            this.addEventToStream(event);
+                        }
+                    }, 3000);
+                }
+            }
+            
             // Global functions
             function refreshDashboard() {
                 if (window.realtimeDashboard) {
                     window.realtimeDashboard.loadDashboardData();
                 }
+            }
+            
+            function exportReport() {
+                // Create and download CSV report
+                const data = {
+                    timestamp: new Date().toISOString(),
+                    metrics: {
+                        activeUsers: document.getElementById('active-users').textContent,
+                        eventsHour: document.getElementById('events-hour').textContent,
+                        conversionsTotal: document.getElementById('conversions-total').textContent,
+                        conversionValue: document.getElementById('conversion-value').textContent
+                    }
+                };
+                
+                const csvContent = "data:text/csv;charset=utf-8," 
+                    + "Metric,Value,Timestamp\\n"
+                    + "Active Users," + data.metrics.activeUsers + "," + data.timestamp + "\\n"
+                    + "Events (1h)," + data.metrics.eventsHour + "," + data.timestamp + "\\n"
+                    + "Conversions," + data.metrics.conversionsTotal + "," + data.timestamp + "\\n"
+                    + "Conversion Value," + data.metrics.conversionValue + "," + data.timestamp + "\\n";
+                
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", "analytics-report-" + new Date().toISOString().slice(0,10) + ".csv");
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Show success message
+                const notification = document.createElement('div');
+                notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+                notification.innerHTML = '<i class="fas fa-check mr-2"></i>Report exported successfully!';
+                document.body.appendChild(notification);
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
             }
             
             // Initialize dashboard
