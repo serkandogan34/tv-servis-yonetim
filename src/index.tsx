@@ -370,10 +370,21 @@ async function processServiceRequestWithAI(requestData: any) {
 // Intelligent technician routing based on location and service type
 async function findBestTechnician(requestData: any, analysis: any, DB: D1Database) {
   try {
-    // Get available technicians in the area (mock implementation)
+    // Map AI service categories to database uzmanlik_alani terms
+    const categoryMapping: { [key: string]: string } = {
+      'tv_tamiri': 'Televizyon',
+      'beyaz_esya': 'Beyaz Eşya', 
+      'klima_tamiri': 'Klima',
+      'elektrik': 'Elektrik'
+    }
+    
+    const searchCategory = categoryMapping[analysis.serviceCategory] || analysis.serviceCategory
+    console.log(`🔍 Searching technicians for: ${analysis.serviceCategory} -> ${searchCategory}`)
+    
+    // Get available technicians in the area
     const technicians = await DB.prepare(`
       SELECT 
-        b.id, b.firma_adi, b.rating, b.uzmanlik_alani,
+        b.id, b.firma_adi, b.rating, b.uzmanlik_alani, b.tamamlanan_is_sayisi,
         i.il_adi, COUNT(it.id) as aktif_isler
       FROM bayiler b
       JOIN iller i ON b.il_id = i.id
@@ -384,7 +395,7 @@ async function findBestTechnician(requestData: any, analysis: any, DB: D1Databas
       GROUP BY b.id
       ORDER BY b.rating DESC, aktif_isler ASC, b.tamamlanan_is_sayisi DESC
       LIMIT 5
-    `).bind(requestData.customerCity, `%${analysis.serviceCategory}%`).all()
+    `).bind(requestData.customerCity, `%${searchCategory}%`).all()
 
     // AI-powered technician selection
     const scoredTechnicians = technicians.results?.map((tech: any) => {
@@ -8450,7 +8461,50 @@ app.get('/', async (c) => {
         ${JSON.stringify(generateSchemaOrg('organization', {}), null, 2)}
         </script>
         
-        <script src="https://cdn.tailwindcss.com"></script>
+        <!-- Critical CSS inline for faster loading -->
+        <style>
+        /* Critical styles for above-the-fold content */
+        .corporate-gradient { background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); }
+        .card-corporate { transition: all 0.3s ease; border: 2px solid transparent; }
+        .card-corporate:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(30, 58, 138, 0.2); border-color: #f59e0b; }
+        .superhero-glow { filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.3)); transition: all 0.4s ease; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        /* Performance optimizations */
+        * { box-sizing: border-box; }
+        img { max-width: 100%; height: auto; }
+        .lazy-loading { background-color: #f3f4f6; min-height: 200px; }
+        </style>
+        
+        <!-- Cache and Performance Headers -->
+        <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        
+        <!-- DNS prefetch for external resources -->
+        <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+        <link rel="dns-prefetch" href="//cdn.tailwindcss.com">
+        <link rel="dns-prefetch" href="//fonts.googleapis.com">
+        
+        <!-- Resource hints for critical third-party content -->
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+        <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+        
+        <!-- Preload critical resources -->
+        <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"></noscript>
+        
+        <!-- Font display optimization -->
+        <style>
+        @font-face {
+            font-family: 'Font Awesome 6 Free';
+            font-display: swap;
+        }
+        </style>
+        
+        <!-- Non-blocking async script loading -->
+        <script async src="https://cdn.tailwindcss.com"></script>
         <script>
             // Suppress TailwindCSS CDN warning in production
             const originalWarn = console.warn;
@@ -8461,11 +8515,12 @@ app.get('/', async (c) => {
                 originalWarn.apply(console, args);
             };
         </script>
-        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-        <script src="/static/app.js"></script>
-        <script src="/slider.js"></script>
+        
+        <!-- Defer non-critical scripts - Updated versions -->
+        <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/axios@1.7.7/dist/axios.min.js"></script>
+        <script defer src="/static/app.js"></script>
+        <script defer src="/slider.js"></script>
         <style>
             .corporate-gradient { background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); }
             .card-corporate { 
@@ -9241,8 +9296,8 @@ app.get('/', async (c) => {
                             </div>
                         </div>
                         
-                        <!-- 🎯 A/B Testing Enabled Hero Content -->
-                        <h1 id="heroHeadline" class="text-4xl lg:text-6xl font-bold mb-6 tracking-tight leading-tight">
+                        <!-- 🎯 A/B Testing Enabled Hero Content - LCP Optimized -->
+                        <h1 id="heroHeadline" class="text-4xl lg:text-6xl font-bold mb-6 tracking-tight leading-tight" style="font-display: swap;">
                             ${heroVariant.config.headline}
                         </h1>
                         <p class="text-xl mb-8 opacity-90 font-light leading-relaxed">
@@ -9321,9 +9376,21 @@ app.get('/', async (c) => {
                                 </div>
                             </div>
                             
-                            <!-- Superhero -->
+                            <!-- Superhero - Optimized with WebP and lazy loading -->
                             <div class="superhero-glow">
-                                <img src="/static/garantor360-superhero-transparent.png" alt="Garantor360 Süper Kahraman" class="w-80 h-80 lg:w-96 lg:h-96 object-contain mx-auto superhero-image">
+                                <picture>
+                                    <source srcset="/static/garantor360-superhero-transparent.webp" type="image/webp">
+                                    <source srcset="/static/garantor360-superhero-transparent.avif" type="image/avif">
+                                    <img 
+                                        src="/static/garantor360-superhero-transparent.png" 
+                                        alt="Garantor360 Süper Kahraman - Türkiye'nin en güvenilir teknik servis platformu" 
+                                        class="w-80 h-80 lg:w-96 lg:h-96 object-contain mx-auto superhero-image"
+                                        loading="lazy"
+                                        decoding="async"
+                                        width="384"
+                                        height="384"
+                                    >
+                                </picture>
                             </div>
                             
                             <!-- Bottom Text -->
