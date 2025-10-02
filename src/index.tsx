@@ -87,7 +87,7 @@ function generateTrackingScripts(trackingConfig: any, pageTitle: string, pageTyp
     </script>
     ` : '<!-- GA4 Disabled -->'}
     
-    <!-- Facebook Pixel Code -->
+    <!-- Facebook Pixel Enhanced Tracking Code -->
     ${trackingConfig.facebook_pixel_enabled === 'true' ? `
     <script>
         !function(f,b,e,v,n,t,s)
@@ -97,19 +97,51 @@ function generateTrackingScripts(trackingConfig: any, pageTitle: string, pageTyp
         n.queue=[];t=b.createElement(e);t.async=!0;
         t.src=v;s=b.getElementsByTagName(e)[0];
         s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/tr/fbevents.js');
+        'https://connect.facebook.net/en_US/fbevents.js');
+        
+        // Enhanced Facebook Pixel Initialization for GARANTOR360
         fbq('init', '${trackingConfig.facebook_pixel_id}', {
-            em: 'auto'
+            em: 'auto', // Enhanced matching for better attribution
+            fn: 'auto',
+            ln: 'auto', 
+            ph: 'auto',
+            external_id: 'auto'
         });
+        
+        // Standard PageView Event
         fbq('track', 'PageView');
         
-        // Facebook Custom Events for Garantor360
-        fbq('trackCustom', 'Garantor${pageType}View', {
-            page_name: '${pageTitle}',
+        // Enhanced PageView with GARANTOR360 specific data
+        fbq('trackCustom', 'PageViewEnhanced', {
+            page_type: '${pageType}',
+            content_category: 'home_services',
+            content_name: '${pageTitle}',
+            source: 'website',
+            business_type: 'service_provider',
+            service_categories: ['tv_repair', 'appliance_repair', 'computer_repair'],
+            geographic_area: 'turkey',
             user_type: 'visitor',
-            platform: 'website',
-            content_category: 'home_services'
+            platform: 'website'
         });
+        
+        // Initialize Conversion Funnel Tracking
+        fbq('trackCustom', 'FunnelStart', {
+            funnel_name: 'service_request_funnel',
+            entry_point: '${pageType}',
+            user_journey_stage: 'awareness',
+            page_category: 'home_services'
+        });
+        
+        // Audience Building for Lookalike and Custom Audiences
+        fbq('trackCustom', 'AudienceBuilder', {
+            audience_type: 'website_visitors',
+            interest_category: 'home_services',
+            location: 'turkey',
+            device_type: navigator.userAgent.includes('Mobile') ? 'mobile' : 'desktop',
+            visit_source: document.referrer || 'direct'
+        });
+        
+        console.log('🎯 Facebook Pixel Enhanced Tracking loaded for GARANTOR360 - Pixel ID: ${trackingConfig.facebook_pixel_id}');
     </script>
     <noscript><img height="1" width="1" style="display:none"
         src="https://www.facebook.com/tr?id=${trackingConfig.facebook_pixel_id}&ev=PageView&noscript=1"
@@ -2233,6 +2265,922 @@ app.post('/api/admin/payment/paytr-setup', requireAdminAuth(), async (c) => {
   }
 })
 
+// GA4 Event Tracking API Endpoint
+app.post('/api/analytics/track-event', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { eventType, eventData, userAgent, timestamp } = await c.req.json()
+    
+    if (!eventType) {
+      return c.json({ error: 'Event type gerekli' }, 400)
+    }
+    
+    // Analytics events tablosuna kaydet
+    const result = await DB.prepare(`
+      INSERT INTO analytics_events (
+        event_type, 
+        event_data, 
+        user_agent, 
+        ip_address, 
+        timestamp,
+        created_at
+      ) VALUES (?, ?, ?, ?, ?, ?)
+    `).bind(
+      eventType,
+      JSON.stringify(eventData),
+      userAgent || c.req.header('User-Agent') || 'Unknown',
+      c.req.header('CF-Connecting-IP') || c.req.header('X-Forwarded-For') || 'Unknown',
+      timestamp || new Date().toISOString(),
+      new Date().toISOString()
+    ).run()
+    
+    return c.json({
+      success: true,
+      eventId: result.meta.last_row_id,
+      message: 'Event tracked successfully'
+    })
+    
+  } catch (error) {
+    console.error('Event tracking error:', error)
+    return c.json({ error: 'Event tracking failed' }, 500)
+  }
+})
+
+// GA4 Analytics Dashboard Data API
+app.get('/api/admin/analytics/events', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    // Son 24 saat içindeki event'leri getir
+    const { results: recentEvents } = await DB.prepare(`
+      SELECT 
+        event_type,
+        COUNT(*) as event_count,
+        DATE(created_at) as event_date
+      FROM analytics_events 
+      WHERE created_at >= datetime('now', '-24 hours')
+      GROUP BY event_type, DATE(created_at)
+      ORDER BY created_at DESC
+    `).all()
+    
+    // Event type breakdown
+    const { results: eventBreakdown } = await DB.prepare(`
+      SELECT 
+        event_type,
+        COUNT(*) as total_count,
+        COUNT(CASE WHEN created_at >= datetime('now', '-1 hour') THEN 1 END) as last_hour,
+        COUNT(CASE WHEN created_at >= datetime('now', '-24 hours') THEN 1 END) as last_24h
+      FROM analytics_events 
+      GROUP BY event_type
+      ORDER BY total_count DESC
+    `).all()
+    
+    return c.json({
+      success: true,
+      data: {
+        recentEvents,
+        eventBreakdown,
+        totalEvents: recentEvents.reduce((sum, event) => sum + event.event_count, 0)
+      }
+    })
+    
+  } catch (error) {
+    console.error('Analytics events fetch error:', error)
+    return c.json({ error: 'Analytics verisi alınamadı' }, 500)
+  }
+})
+
+// =============================================================================
+// Facebook Pixel Enhanced Event Tracking API Endpoints
+// =============================================================================
+
+// Facebook Pixel Event Tracking API
+app.post('/api/analytics/facebook-pixel-event', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { 
+      pixelEventType, 
+      eventData, 
+      conversionValue, 
+      audienceSegment,
+      funnelStage,
+      userAgent, 
+      timestamp 
+    } = await c.req.json()
+    
+    if (!pixelEventType) {
+      return c.json({ error: 'Pixel event type gerekli' }, 400)
+    }
+    
+    // Facebook Pixel events tablosuna kaydet
+    const result = await DB.prepare(`
+      INSERT INTO facebook_pixel_events (
+        pixel_event_type,
+        event_data,
+        conversion_value,
+        currency,
+        audience_segment,
+        funnel_stage,
+        user_agent,
+        ip_address,
+        page_url,
+        timestamp,
+        created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+      pixelEventType,
+      JSON.stringify(eventData || {}),
+      conversionValue || 0,
+      'TRY',
+      audienceSegment || 'general',
+      funnelStage || 'awareness',
+      userAgent || c.req.header('User-Agent') || 'Unknown',
+      c.req.header('CF-Connecting-IP') || c.req.header('X-Forwarded-For') || 'Unknown',
+      eventData?.page_url || c.req.header('Referer') || 'Unknown',
+      timestamp || new Date().toISOString(),
+      new Date().toISOString()
+    ).run()
+    
+    return c.json({
+      success: true,
+      pixelEventId: result.meta.last_row_id,
+      message: 'Facebook Pixel event tracked successfully'
+    })
+    
+  } catch (error) {
+    console.error('Facebook Pixel event tracking error:', error)
+    return c.json({ error: 'Facebook Pixel event tracking failed' }, 500)
+  }
+})
+
+// Facebook Pixel Conversion Value Optimization API
+app.post('/api/analytics/facebook-conversion-value', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { 
+      conversionType, 
+      conversionValue, 
+      serviceCategory,
+      customerSegment,
+      optimizationTarget,
+      attributionWindow 
+    } = await c.req.json()
+    
+    if (!conversionType || !conversionValue) {
+      return c.json({ error: 'Conversion type ve value gerekli' }, 400)
+    }
+    
+    // Conversion value optimization tablosuna kaydet
+    const result = await DB.prepare(`
+      INSERT INTO fb_conversion_values (
+        conversion_type,
+        conversion_value,
+        currency,
+        service_category,
+        customer_segment,
+        optimization_target,
+        attribution_window,
+        conversion_timestamp,
+        created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+      conversionType,
+      conversionValue,
+      'TRY',
+      serviceCategory || 'unknown',
+      customerSegment || 'general',
+      optimizationTarget || 'conversions',
+      attributionWindow || '7_days',
+      new Date().toISOString(),
+      new Date().toISOString()
+    ).run()
+    
+    return c.json({
+      success: true,
+      conversionId: result.meta.last_row_id,
+      message: 'Conversion value optimization tracked'
+    })
+    
+  } catch (error) {
+    console.error('Conversion value tracking error:', error)
+    return c.json({ error: 'Conversion value tracking failed' }, 500)
+  }
+})
+
+// Facebook Pixel Audience Segmentation API
+app.post('/api/analytics/facebook-audience', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { 
+      segmentType, 
+      segmentCriteria,
+      engagementScore,
+      retargetingPriority,
+      audienceData
+    } = await c.req.json()
+    
+    if (!segmentType) {
+      return c.json({ error: 'Segment type gerekli' }, 400)
+    }
+    
+    // Audience segmentation tablosuna kaydet
+    const result = await DB.prepare(`
+      INSERT INTO fb_audience_segments (
+        segment_type,
+        segment_criteria,
+        engagement_score,
+        retargeting_priority,
+        audience_data,
+        user_agent,
+        ip_address,
+        created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+      segmentType,
+      segmentCriteria || 'behavioral',
+      engagementScore || 0,
+      retargetingPriority || 'medium',
+      JSON.stringify(audienceData || {}),
+      c.req.header('User-Agent') || 'Unknown',
+      c.req.header('CF-Connecting-IP') || 'Unknown',
+      new Date().toISOString()
+    ).run()
+    
+    return c.json({
+      success: true,
+      audienceId: result.meta.last_row_id,
+      message: 'Audience segmentation tracked'
+    })
+    
+  } catch (error) {
+    console.error('Audience segmentation error:', error)
+    return c.json({ error: 'Audience segmentation failed' }, 500)
+  }
+})
+
+// Facebook Pixel Analytics Dashboard API
+app.get('/api/admin/analytics/facebook-pixel', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    // Facebook Pixel events özet
+    const { results: pixelEventsSummary } = await DB.prepare(`
+      SELECT 
+        pixel_event_type,
+        COUNT(*) as event_count,
+        SUM(conversion_value) as total_value,
+        AVG(conversion_value) as avg_value,
+        funnel_stage,
+        audience_segment
+      FROM facebook_pixel_events 
+      WHERE created_at >= datetime('now', '-7 days')
+      GROUP BY pixel_event_type, funnel_stage, audience_segment
+      ORDER BY event_count DESC
+    `).all()
+    
+    // Conversion value trends
+    const { results: conversionTrends } = await DB.prepare(`
+      SELECT 
+        conversion_type,
+        DATE(conversion_timestamp) as conversion_date,
+        COUNT(*) as conversion_count,
+        SUM(conversion_value) as daily_value,
+        AVG(conversion_value) as avg_conversion_value
+      FROM fb_conversion_values 
+      WHERE conversion_timestamp >= datetime('now', '-30 days')
+      GROUP BY conversion_type, DATE(conversion_timestamp)
+      ORDER BY conversion_date DESC
+    `).all()
+    
+    // Audience segment analytics
+    const { results: audienceAnalytics } = await DB.prepare(`
+      SELECT 
+        segment_type,
+        retargeting_priority,
+        COUNT(*) as segment_count,
+        AVG(engagement_score) as avg_engagement,
+        MAX(engagement_score) as max_engagement
+      FROM fb_audience_segments 
+      WHERE created_at >= datetime('now', '-7 days')
+      GROUP BY segment_type, retargeting_priority
+      ORDER BY segment_count DESC
+    `).all()
+    
+    // Funnel progression analytics
+    const { results: funnelAnalytics } = await DB.prepare(`
+      SELECT 
+        funnel_stage,
+        COUNT(*) as stage_count,
+        SUM(conversion_value) as stage_value
+      FROM facebook_pixel_events 
+      WHERE created_at >= datetime('now', '-7 days')
+        AND funnel_stage IS NOT NULL
+      GROUP BY funnel_stage
+      ORDER BY 
+        CASE funnel_stage
+          WHEN 'awareness' THEN 1
+          WHEN 'interest' THEN 2
+          WHEN 'consideration' THEN 3
+          WHEN 'intent' THEN 4
+          WHEN 'conversion' THEN 5
+          ELSE 6
+        END
+    `).all()
+    
+    return c.json({
+      success: true,
+      data: {
+        pixelEventsSummary,
+        conversionTrends,
+        audienceAnalytics,
+        funnelAnalytics,
+        totalPixelEvents: pixelEventsSummary.reduce((sum, event) => sum + event.event_count, 0),
+        totalConversionValue: conversionTrends.reduce((sum, conv) => sum + (conv.daily_value || 0), 0)
+      }
+    })
+    
+  } catch (error) {
+    console.error('Facebook Pixel analytics fetch error:', error)
+    return c.json({ error: 'Facebook Pixel analytics verisi alınamadı' }, 500)
+  }
+})
+
+// Facebook Pixel Configuration Management API
+app.post('/api/admin/facebook-pixel/config', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { 
+      pixelId, 
+      accessToken, 
+      conversionApiEnabled,
+      customEventMappings,
+      audienceSettings,
+      optimizationGoals 
+    } = await c.req.json()
+    
+    if (!pixelId) {
+      return c.json({ error: 'Facebook Pixel ID gerekli' }, 400)
+    }
+    
+    // Facebook Pixel configuration kaydet
+    const configs = [
+      { key: 'facebook_pixel_id', value: pixelId, category: 'facebook' },
+      { key: 'facebook_pixel_enabled', value: 'true', category: 'facebook' },
+      { key: 'facebook_access_token', value: accessToken || '', category: 'facebook', is_sensitive: true },
+      { key: 'facebook_conversion_api_enabled', value: conversionApiEnabled ? 'true' : 'false', category: 'facebook' },
+      { key: 'facebook_custom_event_mappings', value: JSON.stringify(customEventMappings || {}), category: 'facebook' },
+      { key: 'facebook_audience_settings', value: JSON.stringify(audienceSettings || {}), category: 'facebook' },
+      { key: 'facebook_optimization_goals', value: JSON.stringify(optimizationGoals || {}), category: 'facebook' }
+    ]
+    
+    for (const config of configs) {
+      await DB.prepare(`
+        INSERT OR REPLACE INTO tracking_config (
+          config_key, config_value, config_category, is_active, is_sensitive, updated_at
+        ) VALUES (?, ?, ?, ?, ?, ?)
+      `).bind(
+        config.key,
+        config.value,
+        config.category,
+        1,
+        config.is_sensitive ? 1 : 0,
+        new Date().toISOString()
+      ).run()
+    }
+    
+    return c.json({
+      success: true,
+      message: 'Facebook Pixel configuration saved successfully',
+      pixelId: pixelId
+    })
+    
+  } catch (error) {
+    console.error('Facebook Pixel config error:', error)
+    return c.json({ error: 'Facebook Pixel configuration failed' }, 500)
+  }
+})
+
+// =============================================================================
+// Google Tag Manager Enhanced Configuration API Endpoints
+// =============================================================================
+
+// GTM Container Configuration API
+app.post('/api/admin/gtm/config', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { 
+      containerId, 
+      containerName,
+      enabled,
+      tagSettings,
+      triggerSettings,
+      variableSettings 
+    } = await c.req.json()
+    
+    if (!containerId) {
+      return c.json({ error: 'GTM Container ID gerekli' }, 400)
+    }
+    
+    if (!containerId.startsWith('GTM-')) {
+      return c.json({ error: 'GTM Container ID GTM- ile başlamalı' }, 400)
+    }
+    
+    // GTM configuration kaydet
+    const configs = [
+      { key: 'gtm_container_id', value: containerId, category: 'gtm' },
+      { key: 'gtm_container_name', value: containerName || 'GARANTOR360 Container', category: 'gtm' },
+      { key: 'gtm_enabled', value: enabled ? 'true' : 'false', category: 'gtm' },
+      { key: 'gtm_tag_settings', value: JSON.stringify(tagSettings || {}), category: 'gtm' },
+      { key: 'gtm_trigger_settings', value: JSON.stringify(triggerSettings || {}), category: 'gtm' },
+      { key: 'gtm_variable_settings', value: JSON.stringify(variableSettings || {}), category: 'gtm' },
+      { key: 'gtm_datalayer_config', value: JSON.stringify({
+        enhanced_ecommerce: true,
+        custom_events: true,
+        user_journey_tracking: true,
+        engagement_tracking: true
+      }), category: 'gtm' }
+    ]
+    
+    for (const config of configs) {
+      await DB.prepare(`
+        INSERT OR REPLACE INTO tracking_config (
+          config_key, config_value, config_category, is_active, updated_at
+        ) VALUES (?, ?, ?, ?, ?)
+      `).bind(
+        config.key,
+        config.value,
+        config.category,
+        1,
+        new Date().toISOString()
+      ).run()
+    }
+    
+    return c.json({
+      success: true,
+      message: 'GTM Container configuration saved successfully',
+      containerId: containerId,
+      containerName: containerName
+    })
+    
+  } catch (error) {
+    console.error('GTM config error:', error)
+    return c.json({ error: 'GTM configuration failed' }, 500)
+  }
+})
+
+// GTM Event Tracking API
+app.post('/api/analytics/gtm-event', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { 
+      eventName, 
+      eventData,
+      dataLayerPush,
+      gtmEventId,
+      userAgent, 
+      timestamp 
+    } = await c.req.json()
+    
+    if (!eventName) {
+      return c.json({ error: 'GTM event name gerekli' }, 400)
+    }
+    
+    // GTM events tablosuna kaydet
+    const result = await DB.prepare(`
+      INSERT INTO gtm_events (
+        event_name,
+        event_data,
+        datalayer_push,
+        gtm_event_id,
+        user_agent,
+        ip_address,
+        page_url,
+        timestamp,
+        created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+      eventName,
+      JSON.stringify(eventData || {}),
+      JSON.stringify(dataLayerPush || {}),
+      gtmEventId || 'gtm_' + Date.now(),
+      userAgent || c.req.header('User-Agent') || 'Unknown',
+      c.req.header('CF-Connecting-IP') || c.req.header('X-Forwarded-For') || 'Unknown',
+      eventData?.page_url || c.req.header('Referer') || 'Unknown',
+      timestamp || new Date().toISOString(),
+      new Date().toISOString()
+    ).run()
+    
+    return c.json({
+      success: true,
+      gtmEventId: result.meta.last_row_id,
+      message: 'GTM event tracked successfully'
+    })
+    
+  } catch (error) {
+    console.error('GTM event tracking error:', error)
+    return c.json({ error: 'GTM event tracking failed' }, 500)
+  }
+})
+
+// GTM Analytics Dashboard API
+app.get('/api/admin/analytics/gtm', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    // GTM events özet
+    const { results: gtmEventsSummary } = await DB.prepare(`
+      SELECT 
+        event_name,
+        COUNT(*) as event_count,
+        DATE(created_at) as event_date,
+        COUNT(DISTINCT gtm_event_id) as unique_events
+      FROM gtm_events 
+      WHERE created_at >= datetime('now', '-7 days')
+      GROUP BY event_name, DATE(created_at)
+      ORDER BY event_count DESC
+    `).all()
+    
+    // Event category breakdown
+    const { results: eventCategories } = await DB.prepare(`
+      SELECT 
+        CASE 
+          WHEN event_name LIKE '%service%' THEN 'Service Events'
+          WHEN event_name LIKE '%contact%' THEN 'Contact Events'
+          WHEN event_name LIKE '%engagement%' THEN 'Engagement Events'
+          WHEN event_name LIKE '%journey%' THEN 'User Journey Events'
+          WHEN event_name LIKE '%conversion%' THEN 'Conversion Events'
+          ELSE 'Other Events'
+        END as category,
+        COUNT(*) as category_count,
+        COUNT(DISTINCT gtm_event_id) as unique_category_events
+      FROM gtm_events 
+      WHERE created_at >= datetime('now', '-7 days')
+      GROUP BY category
+      ORDER BY category_count DESC
+    `).all()
+    
+    // User journey progression analytics
+    const { results: journeyAnalytics } = await DB.prepare(`
+      SELECT 
+        JSON_EXTRACT(event_data, '$.journey_stage') as journey_stage,
+        COUNT(*) as stage_count,
+        AVG(JSON_EXTRACT(event_data, '$.progress_percentage')) as avg_progress,
+        COUNT(DISTINCT ip_address) as unique_users
+      FROM gtm_events 
+      WHERE event_name = 'user_journey_progress'
+        AND created_at >= datetime('now', '-7 days')
+        AND JSON_EXTRACT(event_data, '$.journey_stage') IS NOT NULL
+      GROUP BY journey_stage
+      ORDER BY 
+        CASE journey_stage
+          WHEN 'awareness' THEN 1
+          WHEN 'interest' THEN 2
+          WHEN 'consideration' THEN 3
+          WHEN 'intent' THEN 4
+          WHEN 'conversion' THEN 5
+          ELSE 6
+        END
+    `).all()
+    
+    // Top performing events
+    const { results: topEvents } = await DB.prepare(`
+      SELECT 
+        event_name,
+        COUNT(*) as total_events,
+        COUNT(DISTINCT ip_address) as unique_users,
+        AVG(JSON_EXTRACT(event_data, '$.engagement_score')) as avg_engagement_score
+      FROM gtm_events 
+      WHERE created_at >= datetime('now', '-7 days')
+      GROUP BY event_name
+      ORDER BY total_events DESC
+      LIMIT 10
+    `).all()
+    
+    return c.json({
+      success: true,
+      data: {
+        gtmEventsSummary,
+        eventCategories,
+        journeyAnalytics,
+        topEvents,
+        totalGTMEvents: gtmEventsSummary.reduce((sum, event) => sum + event.event_count, 0),
+        uniqueUsers: new Set(gtmEventsSummary.map(event => event.event_date)).size
+      }
+    })
+    
+  } catch (error) {
+    console.error('GTM analytics fetch error:', error)
+    return c.json({ error: 'GTM analytics verisi alınamadı' }, 500)
+  }
+})
+
+// GTM Tag Management API
+app.post('/api/admin/gtm/tag-management', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { 
+      tagName,
+      tagType,
+      tagConfig,
+      triggers,
+      variables,
+      enabled 
+    } = await c.req.json()
+    
+    if (!tagName || !tagType) {
+      return c.json({ error: 'Tag name ve type gerekli' }, 400)
+    }
+    
+    // GTM tag configuration kaydet
+    const result = await DB.prepare(`
+      INSERT INTO gtm_tags (
+        tag_name,
+        tag_type,
+        tag_config,
+        triggers,
+        variables,
+        is_enabled,
+        created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+      tagName,
+      tagType,
+      JSON.stringify(tagConfig || {}),
+      JSON.stringify(triggers || []),
+      JSON.stringify(variables || {}),
+      enabled ? 1 : 0,
+      new Date().toISOString()
+    ).run()
+    
+    return c.json({
+      success: true,
+      tagId: result.meta.last_row_id,
+      message: 'GTM tag configuration saved successfully'
+    })
+    
+  } catch (error) {
+    console.error('GTM tag management error:', error)
+    return c.json({ error: 'GTM tag management failed' }, 500)
+  }
+})
+
+// =============================================================================
+// KVKV Compliant Privacy & Cookie Management API Endpoints
+// =============================================================================
+
+// KVKV Cookie Consent Logging API
+app.post('/api/privacy/kvkv-consent-log', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { consentData, pageUrl, timestamp } = await c.req.json()
+    
+    if (!consentData || !consentData.preferences) {
+      return c.json({ error: 'Consent data gerekli' }, 400)
+    }
+    
+    // Log consent to database for KVKV compliance
+    const result = await DB.prepare(`
+      INSERT INTO kvkv_consent_logs (
+        consent_version,
+        consent_timestamp,
+        preferences,
+        user_agent,
+        ip_address,
+        page_url,
+        expires_at,
+        created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+      consentData.version || '1.0',
+      consentData.timestamp || new Date().toISOString(),
+      JSON.stringify(consentData.preferences),
+      consentData.userAgent || c.req.header('User-Agent') || 'Unknown',
+      c.req.header('CF-Connecting-IP') || c.req.header('X-Forwarded-For') || 'Unknown',
+      pageUrl || c.req.header('Referer') || 'Unknown',
+      consentData.expires || new Date(Date.now() + (365 * 24 * 60 * 60 * 1000)).toISOString(),
+      new Date().toISOString()
+    ).run()
+    
+    return c.json({
+      success: true,
+      logId: result.meta.last_row_id,
+      message: 'KVKV consent logged successfully'
+    })
+    
+  } catch (error) {
+    console.error('KVKV consent logging error:', error)
+    return c.json({ error: 'KVKV consent logging failed' }, 500)
+  }
+})
+
+// KVKV Data Subject Rights API (Veri Sahibi Hakları)
+app.post('/api/privacy/data-subject-request', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { 
+      requestType, 
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      identityNumber,
+      requestDetails,
+      documentUrls 
+    } = await c.req.json()
+    
+    if (!requestType || !firstName || !lastName || !email) {
+      return c.json({ error: 'Zorunlu alanlar eksik' }, 400)
+    }
+    
+    const validRequestTypes = [
+      'data_access',        // Veri erişim talebi
+      'data_correction',    // Veri düzeltme talebi
+      'data_deletion',      // Veri silme talebi
+      'data_portability',   // Veri taşınabilirlik
+      'processing_restriction', // İşleme sınırlama
+      'objection_to_processing' // İşlemeye itiraz
+    ]
+    
+    if (!validRequestTypes.includes(requestType)) {
+      return c.json({ error: 'Geçersiz talep türü' }, 400)
+    }
+    
+    // Generate unique request ID\n    const requestId = 'DSR-' + Date.now() + '-' + Math.random().toString(36).substring(7).toUpperCase()
+    
+    // Log data subject request
+    const result = await DB.prepare(`
+      INSERT INTO kvkv_data_subject_requests (
+        request_id,
+        request_type,
+        first_name,
+        last_name,
+        email,
+        phone_number,
+        identity_number,
+        request_details,
+        document_urls,
+        status,
+        ip_address,
+        user_agent,
+        created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+      requestId,
+      requestType,
+      firstName,
+      lastName,
+      email,
+      phoneNumber || null,
+      identityNumber || null,
+      requestDetails || '',
+      JSON.stringify(documentUrls || []),
+      'pending',
+      c.req.header('CF-Connecting-IP') || 'Unknown',
+      c.req.header('User-Agent') || 'Unknown',
+      new Date().toISOString()
+    ).run()
+    
+    // Send confirmation email (would be implemented with SendGrid)
+    // await sendDataSubjectRequestConfirmation(email, requestId, requestType)
+    
+    return c.json({
+      success: true,
+      requestId: requestId,
+      message: 'Veri sahibi talebi başarıyla kaydedildi',
+      estimatedResponseTime: '30 gün içinde'
+    })
+    
+  } catch (error) {
+    console.error('Data subject request error:', error)
+    return c.json({ error: 'Veri sahibi talebi işlenemedi' }, 500)
+  }
+})
+
+// KVKV Privacy Policy Configuration API
+app.post('/api/admin/privacy/kvkv-config', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const {
+      companyName,
+      contactEmail,
+      dataControllerDetails,
+      cookieRetentionDays,
+      consentBannerSettings,
+      privacyPolicyUrl,
+      cookiePolicyUrl
+    } = await c.req.json()
+    
+    if (!companyName || !contactEmail) {
+      return c.json({ error: 'Şirket adı ve iletişim e-postası gerekli' }, 400)
+    }
+    
+    // Save KVKV configuration
+    const configs = [
+      { key: 'kvkv_company_name', value: companyName, category: 'privacy' },
+      { key: 'kvkv_contact_email', value: contactEmail, category: 'privacy' },
+      { key: 'kvkv_data_controller_details', value: JSON.stringify(dataControllerDetails || {}), category: 'privacy' },
+      { key: 'kvkv_cookie_retention_days', value: (cookieRetentionDays || 365).toString(), category: 'privacy' },
+      { key: 'kvkv_consent_banner_settings', value: JSON.stringify(consentBannerSettings || {}), category: 'privacy' },
+      { key: 'kvkv_privacy_policy_url', value: privacyPolicyUrl || '/kvkv-politikasi', category: 'privacy' },
+      { key: 'kvkv_cookie_policy_url', value: cookiePolicyUrl || '/cerez-politikasi', category: 'privacy' }
+    ]
+    
+    for (const config of configs) {
+      await DB.prepare(`
+        INSERT OR REPLACE INTO tracking_config (
+          config_key, config_value, config_category, is_active, updated_at
+        ) VALUES (?, ?, ?, ?, ?)
+      `).bind(
+        config.key,
+        config.value,
+        config.category,
+        1,
+        new Date().toISOString()
+      ).run()
+    }
+    
+    return c.json({
+      success: true,
+      message: 'KVKV configuration saved successfully'
+    })
+    
+  } catch (error) {
+    console.error('KVKV config error:', error)
+    return c.json({ error: 'KVKV configuration failed' }, 500)
+  }
+})
+
+// KVKV Analytics Dashboard API
+app.get('/api/admin/analytics/kvkv', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    // Consent statistics
+    const { results: consentStats } = await DB.prepare(`
+      SELECT 
+        DATE(created_at) as consent_date,
+        COUNT(*) as total_consents,
+        COUNT(CASE WHEN JSON_EXTRACT(preferences, '$.analytics') = 1 THEN 1 END) as analytics_accepted,
+        COUNT(CASE WHEN JSON_EXTRACT(preferences, '$.marketing') = 1 THEN 1 END) as marketing_accepted,
+        COUNT(CASE WHEN JSON_EXTRACT(preferences, '$.functional') = 1 THEN 1 END) as functional_accepted
+      FROM kvkv_consent_logs 
+      WHERE created_at >= datetime('now', '-30 days')
+      GROUP BY DATE(created_at)
+      ORDER BY consent_date DESC
+    `).all()
+    
+    // Data subject requests statistics
+    const { results: dsrStats } = await DB.prepare(`
+      SELECT 
+        request_type,
+        status,
+        COUNT(*) as request_count,
+        DATE(created_at) as request_date
+      FROM kvkv_data_subject_requests 
+      WHERE created_at >= datetime('now', '-90 days')
+      GROUP BY request_type, status, DATE(created_at)
+      ORDER BY request_date DESC
+    `).all()
+    
+    // Overall consent preferences
+    const { results: overallConsent } = await DB.prepare(`
+      SELECT 
+        COUNT(*) as total_users,
+        COUNT(CASE WHEN JSON_EXTRACT(preferences, '$.analytics') = 1 THEN 1 END) as analytics_percentage,
+        COUNT(CASE WHEN JSON_EXTRACT(preferences, '$.marketing') = 1 THEN 1 END) as marketing_percentage,
+        COUNT(CASE WHEN JSON_EXTRACT(preferences, '$.functional') = 1 THEN 1 END) as functional_percentage
+      FROM kvkv_consent_logs 
+      WHERE created_at >= datetime('now', '-30 days')
+    `).all()
+    
+    return c.json({
+      success: true,
+      data: {
+        consentStats,
+        dsrStats,
+        overallConsent: overallConsent[0] || {},
+        totalConsents: consentStats.reduce((sum, stat) => sum + stat.total_consents, 0),
+        totalDSRRequests: dsrStats.reduce((sum, stat) => sum + stat.request_count, 0)
+      }
+    })
+    
+  } catch (error) {
+    console.error('KVKV analytics fetch error:', error)
+    return c.json({ error: 'KVKV analytics verisi alınamadı' }, 500)
+  }
+})
+
 // SEO schema markup setup
 app.post('/api/admin/seo/schema-setup', requireAdminAuth(), async (c) => {
   try {
@@ -2883,6 +3831,16 @@ app.get('/admin', (c) => {
                                         <i class="fas fa-chart-line mr-2"></i>
                                         Analytics & Tracking
                                     </button>
+                                    <button onclick="showTrackingTab('facebook')" 
+                                            class="tracking-tab-btn border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
+                                        <i class="fab fa-facebook mr-2"></i>
+                                        Facebook Pixel
+                                    </button>
+                                    <button onclick="showTrackingTab('gtm')" 
+                                            class="tracking-tab-btn border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
+                                        <i class="fas fa-tags mr-2"></i>
+                                        Google Tag Manager
+                                    </button>
                                     <button onclick="showTrackingTab('webhooks')" 
                                             class="tracking-tab-btn border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
                                         <i class="fas fa-link mr-2"></i>
@@ -2896,7 +3854,7 @@ app.get('/admin', (c) => {
                                     <button onclick="showTrackingTab('privacy')" 
                                             class="tracking-tab-btn border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
                                         <i class="fas fa-shield-alt mr-2"></i>
-                                        Privacy & KVKK
+                                        KVKV & Privacy
                                     </button>
                                 </nav>
                             </div>
@@ -3155,6 +4113,304 @@ app.get('/admin', (c) => {
                     </div>
                         </div>
                         
+                        <!-- Facebook Pixel Tab -->
+                        <div id="tracking-tab-facebook" class="tracking-tab-content hidden">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                                <!-- Facebook Pixel Configuration -->
+                                <div class="bg-white rounded-lg shadow">
+                                    <div class="px-6 py-4 border-b border-gray-200">
+                                        <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+                                            <i class="fab fa-facebook mr-2 text-blue-600"></i>
+                                            Facebook Pixel Configuration
+                                        </h3>
+                                    </div>
+                                    <div class="p-6">
+                                        <div class="space-y-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">Facebook Pixel ID</label>
+                                                <input type="text" id="facebook-pixel-id" 
+                                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                                       placeholder="123456789012345">
+                                                <p class="text-xs text-gray-500 mt-1">Facebook Ads Manager'dan alınan Pixel ID</p>
+                                            </div>
+                                            
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">Facebook Access Token (Opsiyonel)</label>
+                                                <input type="password" id="facebook-access-token" 
+                                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                                       placeholder="Conversion API için token">
+                                                <p class="text-xs text-gray-500 mt-1">Server-side event tracking için (Conversion API)</p>
+                                            </div>
+                                            
+                                            <div class="flex items-center space-x-4">
+                                                <label class="flex items-center">
+                                                    <input type="checkbox" id="facebook-pixel-enabled" class="mr-2">
+                                                    <span class="text-sm text-gray-700">Facebook Pixel'i Etkinleştir</span>
+                                                </label>
+                                                
+                                                <label class="flex items-center">
+                                                    <input type="checkbox" id="facebook-conversion-api-enabled" class="mr-2">
+                                                    <span class="text-sm text-gray-700">Conversion API</span>
+                                                </label>
+                                            </div>
+                                            
+                                            <button onclick="setupFacebookPixel()" 
+                                                    class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200">
+                                                <i class="fab fa-facebook mr-2"></i>
+                                                Facebook Pixel Yapılandır
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Facebook Pixel Features -->
+                                <div class="bg-white rounded-lg shadow">
+                                    <div class="px-6 py-4 border-b border-gray-200">
+                                        <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+                                            <i class="fas fa-rocket mr-2 text-purple-600"></i>
+                                            Enhanced Tracking Features
+                                        </h3>
+                                    </div>
+                                    <div class="p-6">
+                                        <div class="space-y-4">
+                                            <div class="flex items-start space-x-3">
+                                                <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-800">Standard Events</h4>
+                                                    <p class="text-sm text-gray-600">Lead, Purchase, ViewContent, Contact</p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="flex items-start space-x-3">
+                                                <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-800">Custom Events</h4>
+                                                    <p class="text-sm text-gray-600">ServiceRequest, ContactInteraction, AIChatEngagement</p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="flex items-start space-x-3">
+                                                <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-800">Conversion Value Optimization</h4>
+                                                    <p class="text-sm text-gray-600">Service-based value tracking for better ROAS</p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="flex items-start space-x-3">
+                                                <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-800">Audience Segmentation</h4>
+                                                    <p class="text-sm text-gray-600">High-intent users, Service explorers, Retargeting segments</p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="flex items-start space-x-3">
+                                                <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-800">Funnel Tracking</h4>
+                                                    <p class="text-sm text-gray-600">Awareness → Interest → Consideration → Intent → Conversion</p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mt-4 p-3 bg-blue-50 rounded-lg">
+                                                <p class="text-xs text-blue-700">
+                                                    <i class="fas fa-info-circle mr-1"></i>
+                                                    Facebook Pixel enhanced tracking automatically starts when configured. 
+                                                    All user interactions are tracked for conversion optimization.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Facebook Pixel Analytics Dashboard -->
+                            <div class="bg-white rounded-lg shadow">
+                                <div class="px-6 py-4 border-b border-gray-200">
+                                    <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+                                        <i class="fas fa-chart-bar mr-2 text-indigo-600"></i>
+                                        Facebook Pixel Analytics
+                                    </h3>
+                                </div>
+                                <div class="p-6">
+                                    <div id="facebook-pixel-analytics" class="text-center text-gray-500">
+                                        <i class="fas fa-chart-pie text-4xl mb-4 text-gray-300"></i>
+                                        <p>Facebook Pixel yapılandırıldıktan sonra analytics verisi burada görünecek.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Facebook Pixel Preview -->
+                            <div id="facebook-pixel-preview"></div>
+                        </div>
+                        
+                        <!-- Google Tag Manager Tab -->
+                        <div id="tracking-tab-gtm" class="tracking-tab-content hidden">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                                <!-- GTM Container Configuration -->
+                                <div class="bg-white rounded-lg shadow">
+                                    <div class="px-6 py-4 border-b border-gray-200">
+                                        <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+                                            <i class="fas fa-tags mr-2 text-orange-600"></i>
+                                            GTM Container Configuration
+                                        </h3>
+                                    </div>
+                                    <div class="p-6">
+                                        <div class="space-y-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">GTM Container ID</label>
+                                                <input type="text" id="gtm-container-id" 
+                                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
+                                                       placeholder="GTM-XXXXXXX">
+                                                <p class="text-xs text-gray-500 mt-1">Google Tag Manager'dan alınan Container ID</p>
+                                            </div>
+                                            
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">Container Name</label>
+                                                <input type="text" id="gtm-container-name" 
+                                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
+                                                       placeholder="GARANTOR360 Container">
+                                                <p class="text-xs text-gray-500 mt-1">GTM Container'ının tanımlayıcı adı</p>
+                                            </div>
+                                            
+                                            <div class="space-y-2">
+                                                <label class="block text-sm font-medium text-gray-700">DataLayer Features</label>
+                                                <div class="space-y-2">
+                                                    <label class="flex items-center">
+                                                        <input type="checkbox" id="gtm-enhanced-ecommerce" class="mr-2" checked>
+                                                        <span class="text-sm text-gray-700">Enhanced E-commerce Tracking</span>
+                                                    </label>
+                                                    
+                                                    <label class="flex items-center">
+                                                        <input type="checkbox" id="gtm-custom-events" class="mr-2" checked>
+                                                        <span class="text-sm text-gray-700">Custom Events & User Journey</span>
+                                                    </label>
+                                                    
+                                                    <label class="flex items-center">
+                                                        <input type="checkbox" id="gtm-engagement-tracking" class="mr-2" checked>
+                                                        <span class="text-sm text-gray-700">Advanced Engagement Tracking</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="flex items-center">
+                                                <input type="checkbox" id="gtm-enabled" class="mr-2">
+                                                <label class="text-sm text-gray-700">Enable Google Tag Manager</label>
+                                            </div>
+                                            
+                                            <button onclick="setupGTMContainer()" 
+                                                    class="w-full bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 transition duration-200">
+                                                <i class="fas fa-tags mr-2"></i>
+                                                GTM Container Yapılandır
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- GTM Features & Tags -->
+                                <div class="bg-white rounded-lg shadow">
+                                    <div class="px-6 py-4 border-b border-gray-200">
+                                        <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+                                            <i class="fas fa-cog mr-2 text-purple-600"></i>
+                                            Pre-configured Tags & Triggers
+                                        </h3>
+                                    </div>
+                                    <div class="p-6">
+                                        <div class="space-y-4">
+                                            <div class="grid grid-cols-2 gap-3">
+                                                <div class="flex items-start space-x-2">
+                                                    <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
+                                                    <div>
+                                                        <h4 class="font-semibold text-gray-800 text-sm">GA4 Configuration</h4>
+                                                        <p class="text-xs text-gray-600">Enhanced measurement & events</p>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="flex items-start space-x-2">
+                                                    <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
+                                                    <div>
+                                                        <h4 class="font-semibold text-gray-800 text-sm">Facebook Pixel</h4>
+                                                        <p class="text-xs text-gray-600">Base code & custom events</p>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="flex items-start space-x-2">
+                                                    <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
+                                                    <div>
+                                                        <h4 class="font-semibold text-gray-800 text-sm">Service Requests</h4>
+                                                        <p class="text-xs text-gray-600">Form submission tracking</p>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="flex items-start space-x-2">
+                                                    <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
+                                                    <div>
+                                                        <h4 class="font-semibold text-gray-800 text-sm">Contact Tracking</h4>
+                                                        <p class="text-xs text-gray-600">Phone, WhatsApp, Email clicks</p>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="flex items-start space-x-2">
+                                                    <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
+                                                    <div>
+                                                        <h4 class="font-semibold text-gray-800 text-sm">Scroll Depth</h4>
+                                                        <p class="text-xs text-gray-600">25%, 50%, 75%, 90%, 100%</p>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="flex items-start space-x-2">
+                                                    <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
+                                                    <div>
+                                                        <h4 class="font-semibold text-gray-800 text-sm">AI Chat Events</h4>
+                                                        <p class="text-xs text-gray-600">Chat interactions & conversions</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mt-4 p-3 bg-orange-50 rounded-lg">
+                                                <h4 class="font-semibold text-orange-800 mb-2">DataLayer Variables</h4>
+                                                <div class="text-xs text-orange-700 space-y-1">
+                                                    <p>• <strong>service_category</strong> - Seçilen servis kategorisi</p>
+                                                    <p>• <strong>contact_method</strong> - İletişim yöntemi (phone/whatsapp/email)</p>
+                                                    <p>• <strong>conversion_value</strong> - Dönüşüm değeri (TL)</p>
+                                                    <p>• <strong>user_journey_stage</strong> - Kullanıcı yolculuğu aşaması</p>
+                                                    <p>• <strong>engagement_score</strong> - Katılım skoru (0-100)</p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mt-4 p-3 bg-blue-50 rounded-lg">
+                                                <p class="text-xs text-blue-700">
+                                                    <i class="fas fa-info-circle mr-1"></i>
+                                                    GTM Container yapılandırıldıktan sonra tüm events otomatik olarak dataLayer'a push edilir. 
+                                                    Custom triggers ve variables GTM interface'inden düzenlenebilir.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- GTM Analytics Dashboard -->
+                            <div class="bg-white rounded-lg shadow">
+                                <div class="px-6 py-4 border-b border-gray-200">
+                                    <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+                                        <i class="fas fa-chart-line mr-2 text-indigo-600"></i>
+                                        GTM Analytics & Events
+                                    </h3>
+                                </div>
+                                <div class="p-6">
+                                    <div id="gtm-analytics-dashboard" class="text-center text-gray-500">
+                                        <i class="fas fa-tags text-4xl mb-4 text-gray-300"></i>
+                                        <p>GTM Container yapılandırıldıktan sonra event analytics burada görünecek.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- GTM Preview -->
+                            <div id="gtm-preview-container"></div>
+                        </div>
+                        
                         <!-- Webhook & API Tab -->
                         <div id="tracking-tab-webhooks" class="tracking-tab-content hidden">
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
@@ -3346,14 +4602,216 @@ app.get('/admin', (c) => {
                             </div>
                         </div>
                         
-                        <!-- Privacy & KVKK Tab -->
+                        <!-- KVKV & Privacy Tab -->
                         <div id="tracking-tab-privacy" class="tracking-tab-content hidden">
-                            <div class="bg-white rounded-lg shadow p-6">
-                                <h3 class="text-lg font-semibold text-gray-800 mb-4">
-                                    <i class="fas fa-shield-alt mr-2"></i>
-                                    Privacy & KVKK Configuration
-                                </h3>
-                                <p class="text-gray-600">Cookie consent ve KVKK uyumlu privacy ayarları buraya gelecek.</p>
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                                <!-- KVKV Configuration -->
+                                <div class="bg-white rounded-lg shadow">
+                                    <div class="px-6 py-4 border-b border-gray-200">
+                                        <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+                                            <i class="fas fa-shield-alt mr-2 text-green-600"></i>
+                                            KVKV Configuration
+                                        </h3>
+                                    </div>
+                                    <div class="p-6">
+                                        <div class="space-y-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">Şirket Adı</label>
+                                                <input type="text" id="kvkv-company-name" 
+                                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                                                       placeholder="GARANTOR360" value="GARANTOR360">
+                                            </div>
+                                            
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">KVKV İletişim E-postası</label>
+                                                <input type="email" id="kvkv-contact-email" 
+                                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                                                       placeholder="kvkv@garantor360.com">
+                                            </div>
+                                            
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">Cookie Saklama Süresi (Gün)</label>
+                                                <input type="number" id="kvkv-cookie-retention" 
+                                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                                                       value="365" min="1" max="730">
+                                            </div>
+                                            
+                                            <div class="grid grid-cols-2 gap-3">
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">KVKV Politikası URL</label>
+                                                    <input type="text" id="kvkv-privacy-policy-url" 
+                                                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                                                           placeholder="/kvkv-politikasi" value="/kvkv-politikasi">
+                                                </div>
+                                                
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Çerez Politikası URL</label>
+                                                    <input type="text" id="kvkv-cookie-policy-url" 
+                                                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                                                           placeholder="/cerez-politikasi" value="/cerez-politikasi">
+                                                </div>
+                                            </div>
+                                            
+                                            <button onclick="setupKVKVConfig()" 
+                                                    class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition duration-200">
+                                                <i class="fas fa-shield-alt mr-2"></i>
+                                                KVKV Ayarlarını Kaydet
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Cookie Consent Banner Settings -->
+                                <div class="bg-white rounded-lg shadow">
+                                    <div class="px-6 py-4 border-b border-gray-200">
+                                        <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+                                            <i class="fas fa-cookie-bite mr-2 text-amber-600"></i>
+                                            Cookie Consent Banner
+                                        </h3>
+                                    </div>
+                                    <div class="p-6">
+                                        <div class="space-y-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">Banner Position</label>
+                                                <select id="cookie-banner-position" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500">
+                                                    <option value="bottom" selected>Alt (Bottom)</option>
+                                                    <option value="top">Üst (Top)</option>
+                                                    <option value="center">Merkez (Center)</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">Banner Theme</label>
+                                                <select id="cookie-banner-theme" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500">
+                                                    <option value="dark" selected>Koyu (Dark)</option>
+                                                    <option value="light">Açık (Light)</option>
+                                                    <option value="blue">Mavi (Blue)</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="space-y-2">
+                                                <label class="flex items-center">
+                                                    <input type="checkbox" id="cookie-detailed-settings" class="mr-2" checked>
+                                                    <span class="text-sm text-gray-700">Detaylı Ayarlar Butonu Göster</span>
+                                                </label>
+                                                
+                                                <label class="flex items-center">
+                                                    <input type="checkbox" id="cookie-auto-show" class="mr-2" checked>
+                                                    <span class="text-sm text-gray-700">Yeni Kullanıcılara Otomatik Göster</span>
+                                                </label>
+                                            </div>
+                                            
+                                            <button onclick="testCookieBanner()" 
+                                                    class="w-full bg-amber-600 text-white py-2 px-4 rounded-lg hover:bg-amber-700 transition duration-200">
+                                                <i class="fas fa-eye mr-2"></i>
+                                                Banner'ı Test Et
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- KVKV Analytics & Compliance Dashboard -->
+                            <div class="bg-white rounded-lg shadow">
+                                <div class="px-6 py-4 border-b border-gray-200">
+                                    <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+                                        <i class="fas fa-chart-line mr-2 text-blue-600"></i>
+                                        KVKV Compliance Dashboard
+                                    </h3>
+                                </div>
+                                <div class="p-6">
+                                    <div id="kvkv-analytics-dashboard" class="text-center text-gray-500">
+                                        <i class="fas fa-shield-alt text-4xl mb-4 text-gray-300"></i>
+                                        <p>KVKV yapılandırması tamamlandıktan sonra compliance analytics burada görünecek.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Cookie Categories Management -->
+                            <div class="mt-6 bg-white rounded-lg shadow">
+                                <div class="px-6 py-4 border-b border-gray-200">
+                                    <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+                                        <i class="fas fa-layer-group mr-2 text-purple-600"></i>
+                                        Çerez Kategorileri Yönetimi
+                                    </h3>
+                                </div>
+                                <div class="p-6">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                                        <div class="border border-gray-200 rounded-lg p-4">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <h4 class="font-semibold text-gray-800">Gerekli Çerezler</h4>
+                                                <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">Zorunlu</span>
+                                            </div>
+                                            <p class="text-sm text-gray-600 mb-3">Website temel işlevleri</p>
+                                            <div class="text-xs text-gray-500">
+                                                <strong>Çerezler:</strong> session_id, csrf_token, auth_token
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="border border-gray-200 rounded-lg p-4">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <h4 class="font-semibold text-gray-800">Analitik Çerezler</h4>
+                                                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Rıza</span>
+                                            </div>
+                                            <p class="text-sm text-gray-600 mb-3">Google Analytics, GTM</p>
+                                            <div class="text-xs text-gray-500">
+                                                <strong>Çerezler:</strong> _ga, _gid, _gat, gtag
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="border border-gray-200 rounded-lg p-4">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <h4 class="font-semibold text-gray-800">Pazarlama Çerezleri</h4>
+                                                <span class="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded">Rıza</span>
+                                            </div>
+                                            <p class="text-sm text-gray-600 mb-3">Facebook Pixel, Reklamlar</p>
+                                            <div class="text-xs text-gray-500">
+                                                <strong>Çerezler:</strong> _fbp, _fbc, fbq, fr
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="border border-gray-200 rounded-lg p-4">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <h4 class="font-semibold text-gray-800">Fonksiyonel Çerezler</h4>
+                                                <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Meşru</span>
+                                            </div>
+                                            <p class="text-sm text-gray-600 mb-3">Kullanıcı tercihleri</p>
+                                            <div class="text-xs text-gray-500">
+                                                <strong>Çerezler:</strong> preferences, language, theme
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                                        <h4 class="font-semibold text-green-800 mb-2">KVKV Uyumluluk Durumu</h4>
+                                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                                                <span>Açık rıza mekanizması</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                                                <span>Çerez kategorileri ayrımı</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                                                <span>Rıza geri çekme hakkı</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                                                <span>Veri sahibi hakları</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                                                <span>Compliance logging</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                                                <span>Veri işleme kayıtları</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -4392,7 +5850,7 @@ app.get('/bayi', (c) => {
                     <a href="/bayi/login" class="bg-orange-600 text-white px-12 py-4 sharp-corner font-bold text-lg hover:bg-orange-700 transition duration-200 shadow-lg">
                         BASVURU YAP
                     </a>
-                    <a href="tel:+905001234567" class="border-2 border-orange-600 text-orange-600 px-12 py-4 sharp-corner font-bold text-lg hover:bg-orange-600 hover:text-white transition duration-200">
+                    <a href="tel:+905001234567" onclick="trackPhoneCall('+905001234567')" class="border-2 border-orange-600 text-orange-600 px-12 py-4 sharp-corner font-bold text-lg hover:bg-orange-600 hover:text-white transition duration-200">
                         0 500 123 45 67
                     </a>
                 </div>
@@ -4510,7 +5968,7 @@ app.get('/bayi', (c) => {
                                         <i class="fas fa-phone text-white text-sm"></i>
                                     </div>
                                     <div>
-                                        <a href="tel:+905001234567" class="text-white font-medium hover:text-amber-400 transition duration-200">0 500 123 45 67</a>
+                                        <a href="tel:+905001234567" onclick="trackPhoneCall('+905001234567')" onclick="trackPhoneCall('+905001234567')" class="text-white font-medium hover:text-amber-400 transition duration-200">0 500 123 45 67</a>
                                         <p class="text-blue-300 text-xs">Bayi Destek Hatti</p>
                                     </div>
                                 </div>
@@ -4637,7 +6095,7 @@ app.get('/bayi', (c) => {
                             <button onclick="scrollToApplication()" class="bg-blue-900 text-white px-6 py-3 sharp-corner font-bold hover:bg-blue-800 transition duration-200">
                                 BASVUR
                             </button>
-                            <a href="tel:+905001234567" class="border-2 border-blue-900 text-blue-900 px-6 py-3 sharp-corner font-bold hover:bg-blue-900 hover:text-white transition duration-200">
+                            <a href="tel:+905001234567" onclick="trackPhoneCall('+905001234567')" class="border-2 border-blue-900 text-blue-900 px-6 py-3 sharp-corner font-bold hover:bg-blue-900 hover:text-white transition duration-200">
                                 ARA
                             </a>
                         </div>
@@ -8073,7 +9531,7 @@ app.get('/', async (c) => {
                             
                             <div class="space-y-3">
                                 <!-- Main Service Button -->
-                                <button onclick="scrollToServices()" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-blue-900 px-6 py-3 rounded-lg font-semibold text-base inline-flex items-center space-x-2 transition-all duration-300 shadow-sm hover:shadow-md w-full justify-center">
+                                <button onclick="trackServiceRequest(); scrollToServices()" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-blue-900 px-6 py-3 rounded-lg font-semibold text-base inline-flex items-center space-x-2 transition-all duration-300 shadow-sm hover:shadow-md w-full justify-center">
                                     <i class="fas fa-arrow-right text-blue-900 text-sm"></i>
                                     <span>Hizmet Talep Et</span>
                                 </button>
@@ -8811,7 +10269,7 @@ app.get('/', async (c) => {
                                 <span class="fast-contact-text">HIZLI İLETİŞİM</span>
                             </h3>
                             <div class="space-y-1">
-                                <a href="tel:+905001234567" 
+                                <a href="tel:+905001234567" onclick="trackPhoneCall('+905001234567')" 
                                    class="flex items-center p-1.5 bg-white/20 rounded-lg hover:bg-purple-600 transition duration-200">
                                     <i class="fas fa-phone mr-2"></i>
                                     <div>
@@ -9210,7 +10668,7 @@ app.get('/', async (c) => {
                                         <i class="fas fa-phone text-white text-sm"></i>
                                     </div>
                                     <div>
-                                        <a href="tel:+905001234567" class="text-white font-medium hover:text-amber-400 transition duration-200">0 500 123 45 67</a>
+                                        <a href="tel:+905001234567" onclick="trackPhoneCall('+905001234567')" onclick="trackPhoneCall('+905001234567')" class="text-white font-medium hover:text-amber-400 transition duration-200">0 500 123 45 67</a>
                                         <p class="text-blue-300 text-xs">Müşteri Destek Hattı</p>
                                     </div>
                                 </div>
@@ -9334,10 +10792,10 @@ app.get('/', async (c) => {
                             </div>
                         </div>
                         <div class="flex space-x-4">
-                            <button onclick="scrollToServices()" class="bg-blue-900 text-white px-6 py-3 sharp-corner font-bold hover:bg-blue-800 transition duration-200">
+                            <button onclick="trackServiceRequest(); scrollToServices()" class="bg-blue-900 text-white px-6 py-3 sharp-corner font-bold hover:bg-blue-800 transition duration-200">
                                 HİZMET AL
                             </button>
-                            <a href="tel:+905001234567" class="border-2 border-blue-900 text-blue-900 px-6 py-3 sharp-corner font-bold hover:bg-blue-900 hover:text-white transition duration-200">
+                            <a href="tel:+905001234567" onclick="trackPhoneCall('+905001234567')" class="border-2 border-blue-900 text-blue-900 px-6 py-3 sharp-corner font-bold hover:bg-blue-900 hover:text-white transition duration-200">
                                 ARA
                             </a>
                         </div>
@@ -9357,7 +10815,7 @@ app.get('/', async (c) => {
                         <!-- WhatsApp Support Info -->
                         <div class="text-center mb-4 lg:mb-0">
                             <div class="flex items-center justify-center space-x-4 text-sm">
-                                <a href="https://wa.me/905001234567?text=Merhaba%20Garantor360%21%20Hizmet%20durumumu%20%C3%B6%C4%9Frenmek%20istiyorum." 
+                                <a href="https://wa.me/905001234567?text=Merhaba%20Garantor360%21%20Hizmet%20durumumu%20%C3%B6%C4%9Frenmek%20istiyorum." onclick="trackWhatsAppClick()" 
                                    target="_blank"
                                    class="flex items-center text-green-400 hover:text-green-300 transition duration-200 font-medium">
                                     <i class="fab fa-whatsapp mr-2"></i>
@@ -13670,6 +15128,673 @@ function tryStartNotifications() {
       'Cache-Control': 'no-cache'
     }
   })
+})
+
+// =============================================================================
+// Bot Protection & Security API Routes - Task 6 Backend Implementation
+// =============================================================================
+
+// Log suspicious activity endpoint
+app.post('/api/security/suspicious-activity', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const {
+      activityType,
+      confidence,
+      indicators,
+      userAgent,
+      fingerprint,
+      behavioralData,
+      requestData
+    } = await c.req.json()
+    
+    const ipAddress = c.req.header('cf-connecting-ip') || 
+                      c.req.header('x-forwarded-for') || 
+                      c.req.header('x-real-ip') || 
+                      'unknown'
+    
+    // Validate required fields
+    if (!activityType || !confidence) {
+      return c.json({ error: 'Activity type and confidence are required' }, 400)
+    }
+    
+    // Check IP protection status
+    const ipInfo = await DB.prepare(`
+      SELECT threat_level, is_blocked, request_count, last_activity
+      FROM ip_protection 
+      WHERE ip_address = ?
+    `).bind(ipAddress).first()
+    
+    let threatLevel = confidence
+    let shouldBlock = false
+    
+    // Update or create IP protection record
+    if (ipInfo) {
+      // Existing IP - update threat level based on new activity
+      threatLevel = Math.min(100, ipInfo.threat_level + (confidence * 0.3))
+      shouldBlock = threatLevel > 85
+      
+      await DB.prepare(`
+        UPDATE ip_protection 
+        SET threat_level = ?, 
+            is_blocked = ?,
+            last_activity = CURRENT_TIMESTAMP,
+            request_count = request_count + 1,
+            block_reason = CASE WHEN ? THEN 'Automated block - high threat score' ELSE block_reason END,
+            notes = ?
+        WHERE ip_address = ?
+      `).bind(
+        threatLevel,
+        shouldBlock,
+        shouldBlock,
+        `Suspicious activity detected: ${activityType}`,
+        ipAddress
+      ).run()
+    } else {
+      // New IP
+      shouldBlock = confidence > 85
+      
+      await DB.prepare(`
+        INSERT INTO ip_protection (
+          ip_address, threat_level, is_blocked, block_reason, first_seen, 
+          last_activity, request_count, notes
+        ) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, ?)
+      `).bind(
+        ipAddress,
+        confidence,
+        shouldBlock,
+        shouldBlock ? 'Automated block - high initial threat' : null,
+        `Initial suspicious activity: ${activityType}`
+      ).run()
+    }
+    
+    // Log the detection
+    const detectionResult = await DB.prepare(`
+      INSERT INTO bot_detections (
+        ip_address, detection_type, confidence_score, indicators,
+        user_agent, request_fingerprint, mouse_entropy, click_patterns,
+        timing_patterns, navigation_patterns, action_taken, timestamp
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+    `).bind(
+      ipAddress,
+      activityType,
+      confidence,
+      JSON.stringify(indicators || []),
+      userAgent || c.req.header('user-agent'),
+      fingerprint || 'none',
+      behavioralData?.mouseEntropy || null,
+      JSON.stringify(behavioralData?.clickPatterns || {}),
+      JSON.stringify(behavioralData?.timingPatterns || {}),
+      JSON.stringify(behavioralData?.navigationPatterns || {}),
+      shouldBlock ? 'blocked' : 'logged'
+    ).run()
+    
+    // Log detailed request information
+    await DB.prepare(`
+      INSERT INTO request_logs (
+        ip_address, user_agent, request_method, request_path, request_headers,
+        request_body, timestamp, human_score, bot_indicators, is_suspicious,
+        mouse_movements, keyboard_events, scroll_events, click_events
+      ) VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+      ipAddress,
+      userAgent || c.req.header('user-agent'),
+      c.req.method,
+      c.req.path,
+      JSON.stringify({
+        'user-agent': c.req.header('user-agent'),
+        'accept-language': c.req.header('accept-language'),
+        'cf-ray': c.req.header('cf-ray')
+      }),
+      JSON.stringify(requestData || {}),
+      100 - confidence, // human score is inverse of bot confidence
+      JSON.stringify(indicators || []),
+      confidence > 70,
+      behavioralData?.mouseMovements || 0,
+      behavioralData?.keyboardEvents || 0,
+      behavioralData?.scrollEvents || 0,
+      behavioralData?.clickEvents || 0
+    ).run()
+    
+    SystemLogger.warn('Security', 'Suspicious activity detected', {
+      ip: ipAddress,
+      type: activityType,
+      confidence,
+      blocked: shouldBlock,
+      detectionId: detectionResult.meta.last_row_id
+    })
+    
+    return c.json({
+      success: true,
+      threatLevel,
+      blocked: shouldBlock,
+      detectionId: detectionResult.meta.last_row_id,
+      message: shouldBlock ? 'IP blocked due to high threat level' : 'Activity logged'
+    })
+    
+  } catch (error) {
+    console.error('Suspicious activity logging error:', error)
+    return c.json({ error: 'Security logging failed' }, 500)
+  }
+})
+
+// Validate Google Ads click endpoint
+app.post('/api/security/ad-click-validation', async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const {
+      gclid,
+      keyword,
+      adData,
+      clickTimestamp,
+      behavioralScore,
+      validationTests
+    } = await c.req.json()
+    
+    const ipAddress = c.req.header('cf-connecting-ip') || 
+                      c.req.header('x-forwarded-for') || 
+                      'unknown'
+    
+    if (!gclid) {
+      return c.json({ error: 'GCLID is required' }, 400)
+    }
+    
+    // Check for click fraud indicators
+    let fraudConfidence = 0
+    const fraudIndicators = []
+    
+    // 1. Check IP reputation
+    const ipInfo = await DB.prepare(`
+      SELECT threat_level, is_blocked, request_count
+      FROM ip_protection 
+      WHERE ip_address = ?
+    `).bind(ipAddress).first()
+    
+    if (ipInfo) {
+      if (ipInfo.is_blocked) {
+        fraudConfidence += 50
+        fraudIndicators.push('blocked_ip')
+      }
+      if (ipInfo.threat_level > 70) {
+        fraudConfidence += 30
+        fraudIndicators.push('high_threat_ip')
+      }
+      if (ipInfo.request_count > 1000) {
+        fraudConfidence += 20
+        fraudIndicators.push('high_request_volume')
+      }
+    }
+    
+    // 2. Check recent ad clicks from same IP
+    const recentClicks = await DB.prepare(`
+      SELECT COUNT(*) as count
+      FROM request_logs 
+      WHERE ip_address = ? 
+        AND gclid IS NOT NULL 
+        AND timestamp >= datetime('now', '-1 day')
+    `).bind(ipAddress).first()
+    
+    if (recentClicks && recentClicks.count > 5) {
+      fraudConfidence += 40
+      fraudIndicators.push('excessive_ad_clicks')
+    }
+    
+    // 3. Behavioral analysis
+    if (behavioralScore < 40) {
+      fraudConfidence += 35
+      fraudIndicators.push('low_behavioral_score')
+    }
+    
+    // 4. Validation tests results
+    if (validationTests) {
+      if (validationTests.mouseMovement === false) {
+        fraudConfidence += 25
+        fraudIndicators.push('no_mouse_movement')
+      }
+      if (validationTests.humanTiming === false) {
+        fraudConfidence += 20
+        fraudIndicators.push('bot_timing_pattern')
+      }
+      if (validationTests.jsEnabled === false) {
+        fraudConfidence += 30
+        fraudIndicators.push('no_javascript')
+      }
+    }
+    
+    const isValidClick = fraudConfidence < 70
+    const actionTaken = isValidClick ? 'validated' : 'flagged'
+    
+    // Log the ad click validation
+    await DB.prepare(`
+      UPDATE request_logs 
+      SET gclid = ?, 
+          utm_source = ?,
+          utm_campaign = ?,
+          utm_medium = ?,
+          ad_click_validated = ?
+      WHERE ip_address = ? 
+        AND timestamp >= datetime('now', '-5 minutes')
+      ORDER BY timestamp DESC 
+      LIMIT 1
+    `).bind(
+      gclid,
+      adData?.source || 'google',
+      adData?.campaign || keyword,
+      adData?.medium || 'cpc',
+      isValidClick,
+      ipAddress
+    ).run()
+    
+    // Create specific bot detection record for ad fraud
+    await DB.prepare(`
+      INSERT INTO bot_detections (
+        ip_address, detection_type, confidence_score, indicators,
+        user_agent, action_taken, notes, timestamp
+      ) VALUES (?, 'ad_fraud', ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+    `).bind(
+      ipAddress,
+      fraudConfidence,
+      JSON.stringify(fraudIndicators),
+      c.req.header('user-agent'),
+      actionTaken,
+      `Google Ads click validation: ${gclid} - ${keyword || 'no keyword'}`
+    ).run()
+    
+    SystemLogger.info('Security', 'Ad click validation completed', {
+      ip: ipAddress,
+      gclid,
+      keyword,
+      fraudConfidence,
+      valid: isValidClick,
+      indicators: fraudIndicators
+    })
+    
+    return c.json({
+      success: true,
+      valid: isValidClick,
+      fraudConfidence,
+      indicators: fraudIndicators,
+      gclid,
+      message: isValidClick ? 'Valid ad click' : 'Suspicious ad click detected'
+    })
+    
+  } catch (error) {
+    console.error('Ad click validation error:', error)
+    return c.json({ error: 'Ad click validation failed' }, 500)
+  }
+})
+
+// Get IP protection status
+app.get('/api/security/ip-status/:ip', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  const targetIp = c.req.param('ip')
+  
+  try {
+    const ipInfo = await DB.prepare(`
+      SELECT * FROM ip_protection WHERE ip_address = ?
+    `).bind(targetIp).first()
+    
+    if (!ipInfo) {
+      return c.json({ 
+        exists: false, 
+        message: 'IP not found in protection database' 
+      })
+    }
+    
+    // Get recent detection history
+    const { results: recentDetections } = await DB.prepare(`
+      SELECT detection_type, confidence_score, action_taken, timestamp
+      FROM bot_detections 
+      WHERE ip_address = ? 
+      ORDER BY timestamp DESC 
+      LIMIT 10
+    `).bind(targetIp).all()
+    
+    return c.json({
+      success: true,
+      exists: true,
+      ipInfo,
+      recentDetections
+    })
+    
+  } catch (error) {
+    console.error('IP status check error:', error)
+    return c.json({ error: 'IP status check failed' }, 500)
+  }
+})
+
+// =============================================================================
+// Schema.org Structured Data API Routes
+// =============================================================================
+
+// Get schema data for page
+app.get('/api/schema/:pageType', async (c) => {
+  const { DB } = c.env
+  const pageType = c.req.param('pageType')
+  const serviceKey = c.req.query('service')
+  
+  try {
+    // Try to get cached schema first
+    const cachedSchema = await DB.prepare(`
+      SELECT schema_data, schema_type, updated_at
+      FROM schema_cache 
+      WHERE page_type = ? 
+        AND (service_key = ? OR service_key IS NULL)
+        AND is_active = 1
+        AND (expires_at IS NULL OR expires_at > CURRENT_TIMESTAMP)
+      ORDER BY updated_at DESC
+      LIMIT 1
+    `).bind(pageType, serviceKey || null).first()
+    
+    if (cachedSchema) {
+      return c.json({
+        success: true,
+        schema: JSON.parse(cachedSchema.schema_data),
+        type: cachedSchema.schema_type,
+        cached: true,
+        updated: cachedSchema.updated_at
+      })
+    }
+    
+    // Generate fresh schema based on page type
+    let schemaData = null
+    let schemaType = 'LocalBusiness'
+    
+    switch (pageType) {
+      case 'homepage':
+        schemaData = {
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          "name": "GARANTOR360 TV Servisi",
+          "image": "https://tv-servis-yonetim.pages.dev/static/logo.png",
+          "description": "Türkiye'nin en kapsamlı TV servisi ve ev hizmetleri analitik platformu",
+          "telephone": "+90-xxx-xxx-xxxx",
+          "priceRange": "₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Ana Cadde No:123",
+            "addressLocality": "İstanbul",
+            "postalCode": "34000",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "41.0082",
+            "longitude": "28.9784"
+          },
+          "openingHours": "Mo-Fr 09:00-18:00, Sa 09:00-15:00",
+          "serviceArea": {
+            "@type": "GeoCircle",
+            "geoMidpoint": {
+              "@type": "GeoCoordinates",
+              "latitude": "41.0082",
+              "longitude": "28.9784"
+            },
+            "geoRadius": "50000"
+          },
+          "offers": {
+            "@type": "Offer",
+            "description": "Profesyonel TV tamiri ve ev elektronik cihazları servisi",
+            "priceRange": "150-2000 TRY"
+          }
+        }
+        break
+        
+      case 'service':
+        if (serviceKey) {
+          const serviceSchemas = {
+            'tv-tamiri': {
+              "@context": "https://schema.org",
+              "@type": "Service",
+              "name": "TV Tamiri Hizmeti",
+              "description": "Profesyonel televizyon tamiri, LED/OLED/QLED panel tamiri, ses sistemi onarımı",
+              "provider": {
+                "@type": "LocalBusiness",
+                "name": "GARANTOR360"
+              },
+              "serviceType": "Televizyon Tamiri",
+              "areaServed": "İstanbul, Ankara, İzmir",
+              "offers": {
+                "@type": "Offer",
+                "priceRange": "200-1500 TRY",
+                "warranty": "6 ay işçilik garantisi"
+              }
+            },
+            'beyaz-esya': {
+              "@context": "https://schema.org", 
+              "@type": "Service",
+              "name": "Beyaz Eşya Tamiri",
+              "description": "Buzdolabı, çamaşır makinesi, bulaşık makinesi tamiri",
+              "provider": {
+                "@type": "LocalBusiness",
+                "name": "GARANTOR360"
+              },
+              "serviceType": "Beyaz Eşya Tamiri",
+              "areaServed": "Türkiye geneli",
+              "offers": {
+                "@type": "Offer",
+                "priceRange": "300-2000 TRY"
+              }
+            }
+          }
+          schemaData = serviceSchemas[serviceKey] || serviceSchemas['tv-tamiri']
+          schemaType = 'Service'
+        }
+        break
+        
+      case 'faq':
+        schemaData = {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "TV tamiri ne kadar sürer?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Televizyon tamiri genellikle 1-2 saat sürer. Parça değişimi gerektiren durumlar için 1-3 gün sürebilir."
+              }
+            },
+            {
+              "@type": "Question", 
+              "name": "Garanti süresi ne kadar?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Tüm işlerimizde 6 ay işçilik garantisi veriyoruz. Değiştirilen parçalar için üretici garantisi geçerlidir."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Hangi markaları tamir ediyorsunuz?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Samsung, LG, Sony, Vestel, TCL, Philips ve tüm diğer markaları profesyonel olarak tamir ediyoruz."
+              }
+            }
+          ]
+        }
+        schemaType = 'FAQPage'
+        break
+        
+      default:
+        return c.json({ error: 'Unknown page type' }, 404)
+    }
+    
+    if (schemaData) {
+      // Cache the generated schema
+      await DB.prepare(`
+        INSERT OR REPLACE INTO schema_cache (
+          page_type, service_key, schema_type, schema_data, 
+          is_active, created_at, updated_at, expires_at
+        ) VALUES (?, ?, ?, ?, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, datetime('now', '+7 days'))
+      `).bind(
+        pageType,
+        serviceKey || null,
+        schemaType,
+        JSON.stringify(schemaData)
+      ).run()
+      
+      return c.json({
+        success: true,
+        schema: schemaData,
+        type: schemaType,
+        cached: false
+      })
+    } else {
+      return c.json({ error: 'Could not generate schema' }, 500)
+    }
+    
+  } catch (error) {
+    console.error('Schema generation error:', error)
+    return c.json({ error: 'Schema generation failed' }, 500)
+  }
+})
+
+// Update schema cache
+app.post('/api/admin/schema/update', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { pageType, serviceKey, schemaType, schemaData } = await c.req.json()
+    
+    if (!pageType || !schemaType || !schemaData) {
+      return c.json({ error: 'Page type, schema type and data are required' }, 400)
+    }
+    
+    await DB.prepare(`
+      INSERT OR REPLACE INTO schema_cache (
+        page_type, service_key, schema_type, schema_data,
+        is_active, created_at, updated_at, expires_at
+      ) VALUES (?, ?, ?, ?, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, datetime('now', '+30 days'))
+    `).bind(
+      pageType,
+      serviceKey || null,
+      schemaType,
+      JSON.stringify(schemaData)
+    ).run()
+    
+    return c.json({
+      success: true,
+      message: 'Schema cache updated successfully'
+    })
+    
+  } catch (error) {
+    console.error('Schema update error:', error)
+    return c.json({ error: 'Schema update failed' }, 500)
+  }
+})
+
+// Get security configuration
+app.get('/api/admin/security/config', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    const { results: configs } = await DB.prepare(`
+      SELECT config_key, config_value, config_type, description, is_active
+      FROM security_config 
+      WHERE is_active = 1
+      ORDER BY config_key
+    `).all()
+    
+    const configObj = {}
+    configs.forEach(config => {
+      let value = config.config_value
+      
+      // Convert based on type
+      switch (config.config_type) {
+        case 'number':
+          value = parseFloat(value)
+          break
+        case 'boolean':
+          value = value === 'true'
+          break
+        case 'json':
+          try {
+            value = JSON.parse(value)
+          } catch (e) {
+            value = []
+          }
+          break
+      }
+      
+      configObj[config.config_key] = {
+        value,
+        type: config.config_type,
+        description: config.description
+      }
+    })
+    
+    return c.json({
+      success: true,
+      config: configObj
+    })
+    
+  } catch (error) {
+    console.error('Security config error:', error)
+    return c.json({ error: 'Failed to get security config' }, 500)
+  }
+})
+
+// Security dashboard statistics
+app.get('/api/admin/security/dashboard', requireAdminAuth(), async (c) => {
+  const { DB } = c.env
+  
+  try {
+    // Blocked IPs count
+    const blockedIps = await DB.prepare(`
+      SELECT COUNT(*) as count FROM ip_protection WHERE is_blocked = 1
+    `).first()
+    
+    // Bot detections today
+    const todayDetections = await DB.prepare(`
+      SELECT COUNT(*) as count FROM bot_detections 
+      WHERE DATE(timestamp) = DATE('now')
+    `).first()
+    
+    // High threat IPs
+    const highThreatIps = await DB.prepare(`
+      SELECT COUNT(*) as count FROM ip_protection WHERE threat_level > 70
+    `).first()
+    
+    // Top detection types today
+    const { results: topDetectionTypes } = await DB.prepare(`
+      SELECT detection_type, COUNT(*) as count
+      FROM bot_detections 
+      WHERE DATE(timestamp) = DATE('now')
+      GROUP BY detection_type
+      ORDER BY count DESC
+      LIMIT 5
+    `).all()
+    
+    // Suspicious requests trend (last 7 days)
+    const { results: requestTrend } = await DB.prepare(`
+      SELECT 
+        DATE(timestamp) as date,
+        COUNT(*) as total_requests,
+        SUM(CASE WHEN is_suspicious = 1 THEN 1 ELSE 0 END) as suspicious_requests
+      FROM request_logs 
+      WHERE timestamp >= datetime('now', '-7 days')
+      GROUP BY DATE(timestamp)
+      ORDER BY date DESC
+    `).all()
+    
+    return c.json({
+      success: true,
+      stats: {
+        blockedIps: blockedIps?.count || 0,
+        todayDetections: todayDetections?.count || 0,
+        highThreatIps: highThreatIps?.count || 0,
+        topDetectionTypes,
+        requestTrend
+      }
+    })
+    
+  } catch (error) {
+    console.error('Security dashboard error:', error)
+    return c.json({ error: 'Security dashboard failed' }, 500)
+  }
 })
 
 export default app

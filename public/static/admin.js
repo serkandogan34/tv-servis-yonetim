@@ -682,18 +682,41 @@ function saveGA4Config() {
     updateIntegrationStatus('ga4', 'active');
 }
 
-function saveFacebookPixelConfig() {
+async function saveFacebookPixelConfig() {
     const pixelId = document.getElementById('fb-pixel-id').value;
+    const accessToken = document.getElementById('fb-access-token').value;
+    const enableConversions = document.getElementById('fb-enable-conversions').checked;
+    const enableAudiences = document.getElementById('fb-enable-audiences').checked;
+    
     if (!pixelId || pixelId.length < 10) {
         showAlert('Geçerli bir Facebook Pixel ID girin', 'error');
         return;
     }
     
-    localStorage.setItem('fb_pixel_id', pixelId);
-    showAlert('Facebook Pixel yapılandırması kaydedildi', 'success');
-    closeModal();
-    
-    updateIntegrationStatus('facebook', 'active');
+    try {
+        const baseURL = window.location.origin;
+        const adminToken = localStorage.getItem('admin_token');
+        
+        const response = await axios.post(`${baseURL}/api/admin/tracking/facebook-pixel`, {
+            pixelId: pixelId,
+            accessToken: accessToken,
+            enableConversions: enableConversions,
+            enableAudiences: enableAudiences,
+            testMode: false
+        }, {
+            headers: { Authorization: `Bearer ${adminToken}` }
+        });
+        
+        if (response.data.success) {
+            showAlert('Facebook Pixel yapılandırması başarıyla kaydedildi', 'success');
+            closeModal();
+            updateIntegrationStatus('facebook', 'active');
+            loadDigitalTrackingStats();
+        }
+    } catch (error) {
+        console.error('Facebook Pixel config error:', error);
+        showAlert('Yapılandırma kaydedilemedi: ' + (error.response?.data?.message || error.message), 'error');
+    }
 }
 
 function saveGTMConfig() {
@@ -949,6 +972,537 @@ async function setupPayTR() {
     }
 }
 
+// Facebook Pixel Configuration
+async function setupFacebookPixel() {
+    const pixelId = document.getElementById('facebook-pixel-id').value;
+    const accessToken = document.getElementById('facebook-access-token').value;
+    const conversionApiEnabled = document.getElementById('facebook-conversion-api-enabled').checked;
+    const enabled = document.getElementById('facebook-pixel-enabled').checked;
+    
+    if (!pixelId) {
+        showAlert('Facebook Pixel ID gerekli', 'error');
+        return;
+    }
+    
+    try {
+        const baseURL = window.location.origin;
+        const response = await axios.post(`${baseURL}/api/admin/facebook-pixel/config`, {
+            pixelId,
+            accessToken,
+            conversionApiEnabled,
+            enabled,
+            customEventMappings: {
+                service_request: 'ServiceRequestSubmitted',
+                contact_interaction: 'ContactInitiated',
+                ai_chat: 'AIChatStarted'
+            },
+            audienceSettings: {
+                lookalike_countries: ['TR'],
+                retention_days: 30,
+                high_intent_threshold: 80
+            },
+            optimizationGoals: {
+                primary: 'conversions',
+                secondary: 'lead_generation',
+                value_optimization: true
+            }
+        }, {
+            headers: {
+                'Authorization': `Bearer ${adminToken}`
+            }
+        });
+        
+        if (response.data.success) {
+            showAlert('Facebook Pixel başarıyla yapılandırıldı!', 'success');
+            // Clear sensitive inputs
+            document.getElementById('facebook-access-token').value = '';
+            updateAPIStatus();
+            
+            // Show pixel tracking preview
+            showFacebookPixelPreview(pixelId);
+        } else {
+            showAlert(response.data.error || 'Facebook Pixel kurulumu başarısız', 'error');
+        }
+    } catch (error) {
+        console.error('Facebook Pixel setup error:', error);
+        showAlert(error.response?.data?.error || 'Facebook Pixel kurulumu hatası', 'error');
+    }
+}
+
+// Show Facebook Pixel Preview
+function showFacebookPixelPreview(pixelId) {
+    const previewContainer = document.getElementById('facebook-pixel-preview');
+    if (previewContainer) {
+        previewContainer.innerHTML = `
+            <div class="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h4 class="font-semibold text-blue-800 mb-2">✅ Facebook Pixel Aktif</h4>
+                <div class="text-sm text-blue-700 space-y-1">
+                    <p><strong>Pixel ID:</strong> ${pixelId}</p>
+                    <p><strong>Enhanced Events:</strong> Service Requests, Contact Interactions, AI Chat</p>
+                    <p><strong>Conversion Tracking:</strong> Lead Generation, Service Bookings</p>
+                    <p><strong>Audience Building:</strong> High-Intent Users, Service Explorers</p>
+                    <p><strong>Optimization:</strong> Value-based conversions, Funnel tracking</p>
+                </div>
+                
+                <div class="mt-3 text-xs text-blue-600">
+                    <p>🎯 Event Tracking: Form submissions, button clicks, scroll depth</p>
+                    <p>📊 Conversion Value: Service-based value optimization</p>
+                    <p>👥 Audiences: Segmentation for retargeting campaigns</p>
+                </div>
+            </div>
+        `;
+    }
+}
+
+// Load Facebook Pixel Analytics
+async function loadFacebookPixelAnalytics() {
+    try {
+        const baseURL = window.location.origin;
+        const response = await axios.get(`${baseURL}/api/admin/analytics/facebook-pixel`, {
+            headers: {
+                'Authorization': `Bearer ${adminToken}`
+            }
+        });
+        
+        if (response.data.success) {
+            const data = response.data.data;
+            
+            // Update Facebook Pixel dashboard
+            const dashboard = document.getElementById('facebook-pixel-analytics');
+            if (dashboard) {
+                dashboard.innerHTML = `
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="text-sm font-semibold text-gray-700 mb-2">Total Pixel Events</h4>
+                            <p class="text-2xl font-bold text-blue-600">${data.totalPixelEvents || 0}</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="text-sm font-semibold text-gray-700 mb-2">Total Conversion Value</h4>
+                            <p class="text-2xl font-bold text-green-600">₺${(data.totalConversionValue || 0).toLocaleString('tr-TR')}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="text-sm font-semibold text-gray-700 mb-2">Funnel Progression (Son 7 gün)</h4>
+                            <div class="space-y-2">
+                                ${(data.funnelAnalytics || []).map(stage => `
+                                    <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                                        <span class="text-sm capitalize">${stage.funnel_stage}</span>
+                                        <div class="text-right">
+                                            <span class="text-sm font-medium">${stage.stage_count} events</span>
+                                            ${stage.stage_value > 0 ? `<span class="text-xs text-green-600 block">₺${stage.stage_value.toLocaleString('tr-TR')}</span>` : ''}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-sm font-semibold text-gray-700 mb-2">Top Event Types</h4>
+                            <div class="space-y-2">
+                                ${(data.pixelEventsSummary || []).slice(0, 5).map(event => `
+                                    <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                                        <span class="text-sm">${event.pixel_event_type}</span>
+                                        <div class="text-right">
+                                            <span class="text-sm font-medium">${event.event_count} events</span>
+                                            ${event.total_value > 0 ? `<span class="text-xs text-green-600 block">₺${event.total_value.toLocaleString('tr-TR')}</span>` : ''}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+    } catch (error) {
+        console.error('Failed to load Facebook Pixel analytics:', error);
+    }
+}
+
+// Google Tag Manager Container Configuration
+async function setupGTMContainer() {
+    const containerId = document.getElementById('gtm-container-id').value;
+    const containerName = document.getElementById('gtm-container-name').value;
+    const enabled = document.getElementById('gtm-enabled').checked;
+    const enhancedEcommerce = document.getElementById('gtm-enhanced-ecommerce').checked;
+    const customEvents = document.getElementById('gtm-custom-events').checked;
+    const engagementTracking = document.getElementById('gtm-engagement-tracking').checked;
+    
+    if (!containerId) {
+        showAlert('GTM Container ID gerekli', 'error');
+        return;
+    }
+    
+    if (!containerId.startsWith('GTM-')) {
+        showAlert('GTM Container ID GTM- ile başlamalı', 'error');
+        return;
+    }
+    
+    try {
+        const baseURL = window.location.origin;
+        const response = await axios.post(`${baseURL}/api/admin/gtm/config`, {
+            containerId,
+            containerName: containerName || 'GARANTOR360 Container',
+            enabled,
+            tagSettings: {
+                ga4_config: true,
+                facebook_pixel: true,
+                custom_html: true,
+                enhanced_ecommerce: enhancedEcommerce
+            },
+            triggerSettings: {
+                page_view: true,
+                form_submit: true,
+                click_tracking: true,
+                scroll_tracking: true,
+                custom_events: customEvents
+            },
+            variableSettings: {
+                datalayer_variables: true,
+                custom_javascript: true,
+                constants: true,
+                engagement_tracking: engagementTracking
+            }
+        }, {
+            headers: {
+                'Authorization': `Bearer ${adminToken}`
+            }
+        });
+        
+        if (response.data.success) {
+            showAlert('GTM Container başarıyla yapılandırıldı!', 'success');
+            updateAPIStatus();
+            
+            // Show GTM preview
+            showGTMPreview(containerId, containerName);
+            
+            // Load GTM analytics
+            loadGTMAnalytics();
+        } else {
+            showAlert(response.data.error || 'GTM kurulumu başarısız', 'error');
+        }
+    } catch (error) {
+        console.error('GTM setup error:', error);
+        showAlert(error.response?.data?.error || 'GTM kurulumu hatası', 'error');
+    }
+}
+
+// Show GTM Configuration Preview
+function showGTMPreview(containerId, containerName) {
+    const previewContainer = document.getElementById('gtm-preview-container');
+    if (previewContainer) {
+        previewContainer.innerHTML = `
+            <div class="mt-6 bg-white rounded-lg shadow">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-800">✅ GTM Container Active</h3>
+                </div>
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="font-medium text-gray-700">Container ID:</span>
+                                <span class="text-blue-600 font-mono">${containerId}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-medium text-gray-700">Container Name:</span>
+                                <span class="text-gray-800">${containerName}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-medium text-gray-700">DataLayer Events:</span>
+                                <span class="text-green-600">15+ Custom Events</span>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <h4 class="font-semibold text-gray-800">Active Event Tracking:</h4>
+                            <div class="text-sm text-gray-600 space-y-1">
+                                <p>🎯 Service Request Submissions</p>
+                                <p>📞 Contact Interactions (Phone/WhatsApp/Email)</p>
+                                <p>🤖 AI Chat Engagements</p>
+                                <p>📊 Page Engagement & Scroll Depth</p>
+                                <p>🛒 Enhanced E-commerce Events</p>
+                                <p>👤 User Journey Progression</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-orange-50 border border-orange-200 rounded-lg">
+                        <h4 class="font-semibold text-orange-800 mb-2">Next Steps:</h4>
+                        <div class="text-sm text-orange-700 space-y-1">
+                            <p>1. GTM Container'ınızda GA4 ve Facebook Pixel tag'lerini yapılandırın</p>
+                            <p>2. DataLayer variables'ları kullanarak custom triggers oluşturun</p>
+                            <p>3. Enhanced E-commerce events için item parameters'ları ayarlayın</p>
+                            <p>4. GTM Preview Mode'da test edin ve publish yapın</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+}
+
+// Load GTM Analytics Dashboard
+async function loadGTMAnalytics() {
+    try {
+        const baseURL = window.location.origin;
+        const response = await axios.get(`${baseURL}/api/admin/analytics/gtm`, {
+            headers: {
+                'Authorization': `Bearer ${adminToken}`
+            }
+        });
+        
+        if (response.data.success) {
+            const data = response.data.data;
+            
+            // Update GTM analytics dashboard
+            const dashboard = document.getElementById('gtm-analytics-dashboard');
+            if (dashboard) {
+                dashboard.innerHTML = `
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="text-sm font-semibold text-gray-700 mb-2">Total GTM Events</h4>
+                            <p class="text-2xl font-bold text-orange-600">${data.totalGTMEvents || 0}</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="text-sm font-semibold text-gray-700 mb-2">Unique Users</h4>
+                            <p class="text-2xl font-bold text-indigo-600">${data.uniqueUsers || 0}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="text-sm font-semibold text-gray-700 mb-2">Event Categories (Son 7 gün)</h4>
+                            <div class="space-y-2">
+                                ${(data.eventCategories || []).map(category => `
+                                    <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                                        <span class="text-sm">${category.category}</span>
+                                        <div class="text-right">
+                                            <span class="text-sm font-medium">${category.category_count} events</span>
+                                            <span class="text-xs text-indigo-600 block">${category.unique_category_events} unique</span>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-sm font-semibold text-gray-700 mb-2">User Journey Progression</h4>
+                            <div class="space-y-2">
+                                ${(data.journeyAnalytics || []).map(stage => `
+                                    <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                                        <span class="text-sm capitalize">${stage.journey_stage}</span>
+                                        <div class="text-right">
+                                            <span class="text-sm font-medium">${stage.stage_count} progressions</span>
+                                            <span class="text-xs text-green-600 block">${stage.unique_users} users</span>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-sm font-semibold text-gray-700 mb-2">Top Performing Events</h4>
+                            <div class="space-y-2">
+                                ${(data.topEvents || []).slice(0, 5).map(event => `
+                                    <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                                        <span class="text-sm">${event.event_name}</span>
+                                        <div class="text-right">
+                                            <span class="text-sm font-medium">${event.total_events} events</span>
+                                            ${event.avg_engagement_score > 0 ? `<span class="text-xs text-purple-600 block">Score: ${Math.round(event.avg_engagement_score)}</span>` : ''}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+    } catch (error) {
+        console.error('Failed to load GTM analytics:', error);
+    }
+}
+
+// KVKV Configuration Setup
+async function setupKVKVConfig() {
+    const companyName = document.getElementById('kvkv-company-name').value;
+    const contactEmail = document.getElementById('kvkv-contact-email').value;
+    const cookieRetention = document.getElementById('kvkv-cookie-retention').value;
+    const privacyPolicyUrl = document.getElementById('kvkv-privacy-policy-url').value;
+    const cookiePolicyUrl = document.getElementById('kvkv-cookie-policy-url').value;
+    
+    if (!companyName || !contactEmail) {
+        showAlert('Şirket adı ve KVKV iletişim e-postası gerekli', 'error');
+        return;
+    }
+    
+    if (!contactEmail.includes('@')) {
+        showAlert('Geçerli bir e-posta adresi girin', 'error');
+        return;
+    }
+    
+    try {
+        const baseURL = window.location.origin;
+        const response = await axios.post(`${baseURL}/api/admin/privacy/kvkv-config`, {
+            companyName,
+            contactEmail,
+            dataControllerDetails: {
+                name: companyName,
+                address: 'Türkiye',
+                phone: '+90 500 123 45 67',
+                email: contactEmail
+            },
+            cookieRetentionDays: parseInt(cookieRetention),
+            consentBannerSettings: {
+                position: document.getElementById('cookie-banner-position').value,
+                theme: document.getElementById('cookie-banner-theme').value,
+                showDetailedSettings: document.getElementById('cookie-detailed-settings').checked,
+                autoShow: document.getElementById('cookie-auto-show').checked
+            },
+            privacyPolicyUrl,
+            cookiePolicyUrl
+        }, {
+            headers: {
+                'Authorization': `Bearer ${adminToken}`
+            }
+        });
+        
+        if (response.data.success) {
+            showAlert('KVKV konfigürasyonu başarıyla kaydedildi!', 'success');
+            updateAPIStatus();
+            loadKVKVAnalytics();
+        } else {
+            showAlert(response.data.error || 'KVKV konfigürasyonu başarısız', 'error');
+        }
+    } catch (error) {
+        console.error('KVKV config error:', error);
+        showAlert(error.response?.data?.error || 'KVKV konfigürasyon hatası', 'error');
+    }
+}
+
+// Test Cookie Consent Banner
+function testCookieBanner() {
+    // Clear existing consent for testing
+    localStorage.removeItem('kvkv_cookie_consent');
+    
+    // Show test message
+    showAlert('Cookie consent banner test edildi! Sayfayı yenilediğinizde banner görünecek.', 'info');
+    
+    // Reload page after 2 seconds to show banner
+    setTimeout(() => {
+        window.location.reload();
+    }, 2000);
+}
+
+// Load KVKV Analytics Dashboard
+async function loadKVKVAnalytics() {
+    try {
+        const baseURL = window.location.origin;
+        const response = await axios.get(`${baseURL}/api/admin/analytics/kvkv`, {
+            headers: {
+                'Authorization': `Bearer ${adminToken}`
+            }
+        });
+        
+        if (response.data.success) {
+            const data = response.data.data;
+            
+            // Update KVKV analytics dashboard
+            const dashboard = document.getElementById('kvkv-analytics-dashboard');
+            if (dashboard) {
+                dashboard.innerHTML = `
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                        <div class="bg-gray-50 p-4 rounded-lg text-center">
+                            <h4 class="text-sm font-semibold text-gray-700 mb-2">Total Cookie Consents</h4>
+                            <p class="text-3xl font-bold text-green-600">${data.totalConsents || 0}</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg text-center">
+                            <h4 class="text-sm font-semibold text-gray-700 mb-2">Analytics Acceptance</h4>
+                            <p class="text-3xl font-bold text-blue-600">${Math.round(((data.overallConsent.analytics_percentage || 0) / Math.max(data.overallConsent.total_users, 1)) * 100)}%</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg text-center">
+                            <h4 class="text-sm font-semibold text-gray-700 mb-2">Data Subject Requests</h4>
+                            <p class="text-3xl font-bold text-orange-600">${data.totalDSRRequests || 0}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="text-sm font-semibold text-gray-700 mb-3">Cookie Consent Trends (Son 30 gün)</h4>
+                            <div class="space-y-2 max-h-48 overflow-y-auto">
+                                ${(data.consentStats || []).slice(0, 10).map(stat => `
+                                    <div class="flex justify-between items-center p-2 bg-gray-50 rounded text-sm">
+                                        <span>${stat.consent_date}</span>
+                                        <div class="text-right">
+                                            <span class="font-medium">${stat.total_consents} consents</span>
+                                            <div class="text-xs text-gray-500">
+                                                Analytics: ${stat.analytics_accepted}, Marketing: ${stat.marketing_accepted}
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-sm font-semibold text-gray-700 mb-3">Consent Categories Breakdown</h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm">Gerekli Çerezler (Necessary)</span>
+                                    <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">100%</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm">Analitik Çerezler (Analytics)</span>
+                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">
+                                        ${Math.round(((data.overallConsent.analytics_percentage || 0) / Math.max(data.overallConsent.total_users, 1)) * 100)}%
+                                    </span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm">Pazarlama Çerezleri (Marketing)</span>
+                                    <span class="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded">
+                                        ${Math.round(((data.overallConsent.marketing_percentage || 0) / Math.max(data.overallConsent.total_users, 1)) * 100)}%
+                                    </span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm">Fonksiyonel Çerezler (Functional)</span>
+                                    <span class="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded">
+                                        ${Math.round(((data.overallConsent.functional_percentage || 0) / Math.max(data.overallConsent.total_users, 1)) * 100)}%
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                        <h4 class="font-semibold text-blue-800 mb-2">KVKV Compliance Status</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-blue-700">
+                            <div>• Cookie consent logging: Active</div>
+                            <div>• Data subject rights: Available</div>
+                            <div>• Consent withdrawal: Enabled</div>
+                            <div>• Privacy policy: Linked</div>
+                            <div>• Data processing logs: Active</div>
+                            <div>• Breach reporting: Configured</div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+    } catch (error) {
+        console.error('Failed to load KVKV analytics:', error);
+    }
+}
+
+// Show Cookie Settings (for frontend integration)
+window.showKVKVSettings = function() {
+    if (typeof window.KVKVCookieConsent !== 'undefined') {
+        window.KVKVCookieConsent.showDetailedConsent();
+    } else {
+        showAlert('Cookie consent sistemi henüz yüklenmedi', 'warning');
+    }
+};
+
 // Update API Status Dashboard
 async function updateAPIStatus() {
     try {
@@ -989,6 +1543,24 @@ async function updateAPIStatus() {
                         enabled: configs.payment?.paytr_enabled?.value === 'true',
                         configured: configs.payment?.paytr_merchant_id?.value && 
                                   configs.payment.paytr_merchant_id.value !== ''
+                    },
+                    {
+                        name: 'Facebook Pixel',
+                        enabled: configs.facebook?.facebook_pixel_enabled?.value === 'true',
+                        configured: configs.facebook?.facebook_pixel_id?.value && 
+                                  configs.facebook.facebook_pixel_id.value !== 'YOUR_PIXEL_ID_HERE'
+                    },
+                    {
+                        name: 'GA4 Analytics',
+                        enabled: configs.analytics?.ga4_enabled?.value === 'true',
+                        configured: configs.analytics?.ga4_measurement_id?.value && 
+                                  configs.analytics.ga4_measurement_id.value !== 'G-XXXXXXXXXX'
+                    },
+                    {
+                        name: 'Google Tag Manager',
+                        enabled: configs.gtm?.gtm_enabled?.value === 'true',
+                        configured: configs.gtm?.gtm_container_id?.value && 
+                                  configs.gtm.gtm_container_id.value !== 'GTM-XXXXXXX'
                     }
                 ];
                 
